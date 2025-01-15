@@ -1,0 +1,108 @@
+<apex:page standardController="nbavs__Sound__c" extensions="nbavs.SoundController" tabstyle="Settings__tab" >
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__audioplayer, 'yendifplayer.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__audioplayer, 'yendifplayer.js')}" />
+	<apex:sectionHeader title="{!$ObjectType.nbavs__Sound__c.label}" subtitle="{!nbavs__Sound__c.nbavs__Tag__c}" />
+	
+	<style type="text/css">
+		.bPageBlock {
+			border-top: 4px solid #00a0c4;
+		}
+		.pbSubheader {
+			border-top: 2px solid #00a0c4;
+		}
+		.pageTitleIcon {
+			background-image : URL("{!URLFOR($Resource.img, 'settings.png')}");
+		}
+	</style>	
+	
+	<apex:form id="form">
+		<apex:actionFunction name="doInit" action="{!soundDetails}" />
+		<apex:outputPanel rendered="{!NOT(initialised)}">
+			<script>
+				window.onload=function()
+				{
+					doInit();
+				};
+			</script>
+		</apex:outputPanel>
+		
+	   <apex:outputPanel id="contentPanel">
+			<apex:pageMessages id="messages" />
+			<apex:outputPanel rendered="{!initialised}">
+				<apex:pageBlock mode="maindetail">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="Edit" action="{!URLFOR($Action.Sound__c.Edit, Sound__c.Id)}" />
+						<!--<apex:commandButton action="{!cancel}" value="Cancel" /> -->
+						<apex:commandButton value="Delete" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;"/>  
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection title="Sound Information" columns="2">
+						<apex:outputField value="{!nbavs__Sound__c.nbavs__Id__c}" rendered="false" />
+						<apex:outputField id="tag" value="{!nbavs__Sound__c.nbavs__Tag__c}" />
+						<apex:outputField id="description" value="{!nbavs__Sound__c.nbavs__Description__c}" />
+
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="Size" />
+							<apex:outputText id="size" value="{!soundSize}" label="Size" />
+						</apex:pageBlockSectionItem>
+						
+						<apex:outputField id="created" value="{!nbavs__Sound__c.nbavs__Created__c}" />
+						<apex:outputField id="modified" value="{!nbavs__Sound__c.nbavs__Modified__c}" />
+						
+						<apex:inputHidden value="{!nbavs__Sound__c.nbavs__Size__c}" id="theHiddenSize"/>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection title="Sound File" columns="1" id="audio" rendered="{!attachmentId != null}">
+						<div id="player" style="width: 180px;"></div>
+						<!-- <apex:outputLabel value="{!attachmentId}" />		-->
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+
+				<script type="text/javascript"> 
+			
+					// Global configuration
+					yendifplayer.config = {
+						engine      : 'flash',
+						responsive  : 1,
+						ratio       : 9/18,
+						autoplay    : 0,
+						loop        : 0,
+						playbtn     : 1,			
+						controlbar  : 1,
+						playpause   : 1,
+						currenttime : 1,
+						progress    : 1,		
+						duration    : 1,
+						volumebtn   : 1,
+						fullscreen  : 1,
+						embed       : 1,
+						keyboard    : 1
+					}
+					
+					// ensure DOM is ready
+					$(function () {		 
+						// this will install yendifplayer into an element with id="player"
+						$("#player").yendifplayer ({
+						audios:{
+							wav:"/servlet/servlet.FileDownload?file={!attachmentId}"
+						}
+						});	 
+					});
+					if (window.history.replaceState) {
+  					window.history.replaceState(null,null,window.location.href);
+					}
+				</script>
+				<style type="text/css">
+					.yendifplayer {
+						-webkit-box-shadow: 0 45px 20px -40px #000;
+						-moz-box-shadow: 0 45px 20px -40px #000;
+						box-shadow: 0 45px 20px -40px #f00;
+					}
+				</style>
+			</apex:outputPanel>
+	   </apex:outputPanel>
+		
+		
+	</apex:form>
+	
+</apex:page>

@@ -1,0 +1,15 @@
+<apex:page standardController="nbavs__User__c" tabstyle="nbavs__User__c" >
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+<style type="text/css">
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}	
+</style>
+<apex:sectionHeader title="{!$ObjectType.nbavs__User__c.label} Edit" subtitle="{!IF(nbavs__User__c.Id!=null,nbavs__User__c.nbavs__FirstName__c + ' ' + nbavs__User__c.nbavs__LastName__c,'New ' + $ObjectType.nbavs__User__c.label)}" />
+	<apex:form id="form">
+		<c:UserDevicesOrder />
+	</apex:form>
+</apex:page>

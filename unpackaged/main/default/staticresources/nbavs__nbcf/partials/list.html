@@ -1,0 +1,140 @@
+<div ng-include src="'/partials/header.html'"></div>
+<!-- list START -->
+<div class="slds-card list-container slds-scrollable--y">
+    <div class="slds-card__body list-container-inner">
+
+        <table class="slds-table slds-table--bordered slds-table--fixed-layout slds-text-body--small" role="grid">
+            <thead>
+            <tr class="slds-line-height--reset">
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Name" scope="col" ng-click="toggleSortList('Name')" ng-class="model.listOrderBy == 'Name' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Name</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Type" scope="col" ng-click="toggleSortList('Type__c')" ng-class="model.listOrderBy == 'Type__c' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Type</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Status" scope="col" ng-click="toggleSortList('Status__c')" ng-class="model.listOrderBy == 'Status__c' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Status</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Created By" scope="col" ng-click="toggleSortList('CreatedBy.Name')" ng-class="model.listOrderBy == 'CreatedBy.Name' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Created By</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Created Date" scope="col" ng-click="toggleSortList('CreatedDate')" ng-class="model.listOrderBy == 'CreatedDate' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Created time</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Last Modified By" scope="col" ng-click="toggleSortList('LastModifiedBy.Name')" ng-class="model.listOrderBy == 'LastModifiedBy.Name' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Last modified by</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Last Modified Date" scope="col" ng-click="toggleSortList('LastModifiedDate')" ng-class="model.listOrderBy == 'LastModifiedDate' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Last modified time</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+
+                <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" aria-label="Description" scope="col" ng-click="toggleSortList('Description__c')" ng-class="model.listOrderBy == 'Description__c' ? (model.listOrderReverse ? 'slds-is-sorted slds-is-sorted--desc' : 'slds-is-sorted slds-is-sorted--asc') : ''" >
+                    <a class="slds-th__action slds-text-link--reset" href="javascript:void(0);" role="button" tabindex="-1">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <span class="slds-truncate">Description</span>
+                        <div class="slds-icon_container">
+                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                                <use xlink:href="" s="utility" i="arrowdown" svg-link />
+                            </svg>
+                        </div>
+                    </a>
+                </th>
+
+                <th class="slds-cell-shrink" scope="col">
+                    <span class="slds-truncate"></span>
+                </th>
+
+
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr class="slds-hint-parent" ng-repeat="item in model.callFlows | filter:{Name:model.searchPolicyName} | orderBy:model.listOrderBy:model.listOrderReverse" ng-class="{'slds-row-system--local': item.Source__c == 'SYSTEM', 'slds-row-data-analytics--local': item.Type__c == 'POLICY_TYPE_DATA_ANALYTICS'}">
+                <td data-label="name" class="slds-truncate"><a href="javascript:;" ng-click="loadDetail(item.Id)">{{item.Name}}</a></td>
+                <td data-label="type">{{item.Type__c | translate}}</td>
+                <td data-label="status">{{item.Status__c}}</td>
+                <td data-label="createdBy">{{item.Source__c == 'SYSTEM' ? 'SYSTEM' : item.CreatedBy.Name}}</td>
+                <td data-label="createdTime">{{item.CreatedDate | amDateFormat: 'DD/MM/YYYY  |  HH:mm'}}</td>
+                <td data-label="modifiedBy">{{item.LastModifiedBy.Name}}</td>
+                <td data-label="modifiedTime">{{item.LastModifiedDate | amDateFormat: 'DD/MM/YYYY  |  HH:mm'}}</td>
+                <td data-label="description" class="slds-truncate">{{item.Description__c}}</td>
+                <!--  
+                <td class="slds-cell-shrink" data-label="Actions">
+                    <button type="button"  class="slds-button slds-button--destructive" ng-if="model.confirmDelete[item.Id]" ng-click="deleteCallFlow(item.Id)" click-outside="model.confirmDelete[item.Id] = false"><span class="no-wrap">Confirm Delete</span></button>
+                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small"
+                            ng-click="checkCanDeleteCallFlow(item)">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                            <use xlink:href="" i="delete" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">delete</span>
+                    </button>
+                </td>
+                -->
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- list END -->
+<div ng-include src="'/partials/footer.html'"></div>

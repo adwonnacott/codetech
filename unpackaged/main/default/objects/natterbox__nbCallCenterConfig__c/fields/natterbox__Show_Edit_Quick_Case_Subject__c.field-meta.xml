@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>natterbox__Show_Edit_Quick_Case_Subject__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Allows the Quick Case Subject to be edited</description>
+    <inlineHelpText>Allows the Quick Case Subject to be edited</inlineHelpText>
+    <label>Show Edit Quick Case Subject</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

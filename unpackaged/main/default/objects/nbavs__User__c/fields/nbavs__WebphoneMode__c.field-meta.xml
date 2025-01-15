@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__WebphoneMode__c</fullName>
+    <defaultValue>&quot;Use Default&quot;</defaultValue>
+    <deprecated>false</deprecated>
+    <label>WebPhone Mode</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Stable</fullName>
+                <default>false</default>
+                <label>Stable</label>
+            </value>
+            <value>
+                <fullName>Beta</fullName>
+                <default>false</default>
+                <label>Beta</label>
+            </value>
+            <value>
+                <fullName>Use Default</fullName>
+                <default>true</default>
+                <label>Use Default</label>
+            </value>
+            <value>
+                <fullName>Beta WebPhone</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Beta WebPhone</label>
+            </value>
+            <value>
+                <fullName>WebPhone</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WebPhone</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

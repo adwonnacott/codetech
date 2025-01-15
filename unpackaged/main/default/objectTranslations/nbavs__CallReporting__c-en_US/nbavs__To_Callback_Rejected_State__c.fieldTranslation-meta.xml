@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- To Callback Rejected State --></label>
+        <name>nbavs__To_Callback_Rejected_State__c</name>
+        <picklistValues>
+            <masterLabel>Playing CallBack Announcement</masterLabel>
+            <translation><!-- Playing CallBack Announcement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Playing CallBack Voicemail</masterLabel>
+            <translation><!-- Playing CallBack Voicemail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ringing Caller</masterLabel>
+            <translation><!-- Ringing Caller --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

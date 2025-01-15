@@ -1,0 +1,185 @@
+<apex:page standardController="nbavs__Device__c" extensions="nbavs.DeviceListController" action="{!checkAPISetup}" tabstyle="nbavs__Device__c" recordSetVar="items">
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<!-- <apex:sectionHeader title="{!$ObjectType.Device__c.labelPlural}" subtitle="Home" /> -->
+
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'moment/moment-with-locales.min.js')}" />    
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-core.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-api-metadata.min.js')}" />
+	
+	<script type="text/javascript">
+		//Sync Device button disable status is onstart
+        function disableButton() {
+            var btn = document.getElementById("{!$Component.form.body.syncDevice}");
+            btn.style.display = "none";
+            btn.disabled = true;
+            //syncMessage display none when ever refresh button click
+            var btnSyncLabel = document.getElementById("{!$Component.form.body.syncMessage}");
+            btnSyncLabel.style.display = "none";
+        }
+        function enableButton() {
+            var btn = document.getElementById("{!$Component.form.body.syncDevice}");
+            btn.disabled = false;
+        }
+	</script>
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:actionFunction name="handleDelete" action="{!deleteItem}" reRender="paging,list,messages" >
+            <apex:param value="" name="id" assignTo="{!id}" />
+        </apex:actionFunction>
+		<apex:pageBlock id="body">
+			<apex:outputPanel layout="block" styleClass="buttonsBox">
+				<apex:outputPanel layout="block" id="buttons" styleClass="buttonsLeft">
+					<apex:commandButton value="New {!$ObjectType.nbavs__Device__c.label}" action="{!URLFOR($Action.Device__c.New)}" />
+					
+					<apex:commandButton value="" title="Sync" status="syncDeviceStatus" id="syncDevice" style="background: url(/img/alohaSkin/sync.png) no-repeat; width: 23px;height: 22px; background-position: 2px 2px; vertical-align: bottom;" action="{!getSync}" rerender="messages,body" />
+					<apex:outputText id="syncMessage" value="{!syncVal} of {!totalSync} records synced. {!syncMessage}" rendered="{!IF((totalSync != null && totalSync != 0), true, false)}" />
+					<apex:actionStatus id="syncDeviceStatus" onstart="disableButton()" onstop="enableButton()" >
+						<apex:facet name="start">
+					       <apex:outputPanel id="loadingProcessDevice">
+					        	<img src="/img/loading32.gif" width="15" height="15" />										       
+					       </apex:outputPanel>
+	      				</apex:facet>
+					</apex:actionStatus>
+					
+					<apex:actionStatus id="processRegiStatus">
+						<apex:facet name="stop">
+							<apex:commandButton value="Sync Registration Status" status="processRegiStatus" id="syncRegiId" action="{!syncRegistrationStatus}" rerender="messages,body" />
+						</apex:facet>
+						<apex:facet name="start">
+					       <apex:outputPanel id="loadingProcessStatus">
+					        	<img src="/img/loading32.gif" width="15" height="15" />										       
+					       </apex:outputPanel>
+	      				</apex:facet>
+					</apex:actionStatus>
+					
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<apex:outputPanel layout="block" id="list">
+				<table class="list display compact" id="dataTable">
+					<thead>
+						<tr class="headerRow">
+							<th>Action</th>
+							<th>{!$ObjectType['Device__c'].Fields.Extension__c.Label}</th>
+							<th>{!$ObjectType['Device__c'].Fields.Location__c.Label}</th>
+							<th>{!$ObjectType['Device__c'].Fields.Description__c.Label}</th>
+							<th>{!$ObjectType['Device__c'].Fields.Model__c.Label}</th>
+							<th>{!$ObjectType['Device__c'].Fields.Type__c.Label}</th>
+							<th>Assigned to User</th>
+							<th>{!$ObjectType['Device__c'].Fields.Registered__c.Label}</th>
+							<th>{!$ObjectType['Device__c'].Fields.Enabled__c.Label}</th>
+                            <th>{!$ObjectType['Device__c'].Fields.MAC__c.Label}</th>
+							<th>{!$ObjectType['Device__c'].Fields.LastModifiedDate.Label}</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<script type="text/javascript">
+				j$ = jQuery.noConflict();
+				j$('#dataTable').DataTable({
+					"ajax": function(data, callback, settings) {
+						var ret = [];
+						var ajaxcall = function(url) {
+							j$.ajaxSetup({
+								headers:{
+									'Authorization': "Bearer {!$Api.Session_ID}"
+								}
+							});
+							(async function(){
+								let json = await j$.get(url);
+								console.debug('here : '+json);
+								if (json != null) {
+									var sofar = ret.length;
+									for (var i = 0, ien = json.records.length; i < ien; i++) {
+										var item = json.records[i];
+										var ns = item.attributes.type.startsWith('nbavs__') ? 'nbavs__' : '';
+
+										let relatedUser;
+										
+										if(item[ns+'DeviceMappings__r']){
+											if(item[ns+'DeviceMappings__r'].records.length > 0){
+												relatedUser=item[ns+'DeviceMappings__r'].records[0];
+											}
+										}
+
+										r = [];
+										r[0] = (item[ns+'Type__c'] != 'Web Phone') ? actionLink('apex/'+ns+'deviceedit?id='+item['Id'],item['Id']) : actionLink('apex/'+ns+'deviceedit?id='+item['Id']);
+										r[1] = linkCurrentObject(item['Id'],encodeStr(item[ns+'Extension__c']));
+										r[2] = encodeStr(item[ns+'Location__c']);
+										r[3] = encodeStr(item[ns+'Description__c']);
+										r[4] = encodeStr(item[ns+'Model__c']);
+										r[5] = item[ns+'Type__c'];
+										r[6] = relatedUser != null? linkObject(relatedUser[ns+'User__r']) : null; 
+										r[7] = (item[ns+'Registered__c']) ? '✓' : '';
+										r[8] = (item[ns+'Enabled__c']) ? '✓' : '';
+										r[9] = encodeStr(item[ns+'MAC__c']);
+										r[10] = formatDate(item['LastModifiedDate']);
+										
+										ret[i+sofar] = r;
+									}
+									if (json.hasOwnProperty('nextRecordsUrl')) {
+										ajaxcall(json.nextRecordsUrl);
+										return;
+									}
+								}
+								callback({data: ret});
+							})();
+						};
+						ajaxcall('/services/data/v45.0/query/?q='+encodeURI("{!JSENCODE(tableSoql)}"));
+					},
+					"paging": true,
+					"stateSave": true,
+					"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+					"order": [[ 10, "desc" ]],
+					columnDefs: [
+						{ 'sortable': false, 'targets': [ 0 ] },
+						{'targets': [9], "render": function ( data, type, full, meta ) {return (data!= null && data.length > 1) ? data.match( /.{1,2}/g ).join(':') : data; }}
+					]
+				});
+				function encodeStr(eValue){
+				 if(eValue!==null && eValue!=='' && eValue!=='undefined' )
+					{
+						return eValue.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+							return '&#'+i.charCodeAt(0)+';';
+						});
+					}
+					return eValue;
+                }
+				function getIdFromURL(url) {
+                    if (url == null) {
+                        return '';
+                    }
+                    return url.substring(url.lastIndexOf('/') + 1);
+                }
+                function formatDate(datestr) {
+                    if (datestr == null || datestr === '') {
+                        return '';
+                    }
+                    return moment(datestr).format('llll');
+                }
+                function linkObject(ob) {
+                    if (ob == null) {
+                        return '';
+                    }
+                    return '<a href="/'+getIdFromURL(ob.attributes.url)+'">'+encodeStr(ob.Name)+'</a>';
+                }
+                function linkCurrentObject(idVar,nameVar) {
+                    
+                    return '<a href="/'+idVar+'">'+nameVar+'</a>';
+                }
+                function actionLink(url,idVal) {
+					var actionVal = '<a href="/'+url+'" style="text-decoration:none;color:#005FB2;"> Edit </a>';
+
+					if(idVal){
+						actionVal += ' | <a href="#" style="text-decoration:none;color:#005FB2;" onclick="if(!confirm(\'Are you sure?\'))return false; handleDelete(\''+idVal+'\'); return false;"> Del </a>';
+					}
+                    return actionVal;
+				}
+			</script>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

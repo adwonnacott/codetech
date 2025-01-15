@@ -1,0 +1,499 @@
+<div ng-controller="ModActionRule">
+
+
+	<div class="slds-form-element">
+		<svg aria-hidden="true" class="slds-icon slds-icon--x-small slds-icon-text-default">
+			<use xlink:href="" s="utility" i="info" svg-link />
+		</svg>
+		<label class="slds-form-element__label">Different rules types combines using AND operator</label>
+	</div>
+
+	<div class="slds-grid slds-wrap">
+		<div class="slds-col slds-size--1-of-2 slds-m-bottom--x-small" ng-repeat="(key, value) in item.data.config.rules" ng-class="$even?'slds-p-right--xx-small':'slds-p-left--xx-small'">
+			<button type="button"  ng-click="model.selectedTab = key" class="slds-button slds-size--1-of-1 slds-text-align--left" ng-class="{'slds-button--brand':(model.selectedTab == key),'slds-button--neutral':(model.selectedTab != key),'slds-size--1-of-2':($last&&$even), 'slds-size--1-of-1':(!$last)}" >
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+					<use xlink:href="" s="utility" i="clock" svg-link ng-if="key=='timeOfDay'"/>
+					<use xlink:href="" s="utility" i="world" svg-link ng-if="key=='countryCode'"/>
+					<use xlink:href="" s="utility" i="identity" svg-link ng-if="key=='callerIdWithheld'"/>
+					<use xlink:href="" s="utility" i="like" svg-link ng-if="key=='numberMatch'"/>
+					<use xlink:href="" s="utility" i="crossfilter" svg-link ng-if="key=='evaluate'"/>
+				</svg>
+				{{key | translate}} ({{value.length}})
+			</button>
+		</div>
+	</div>
+
+
+	<div class="slds-tabs--scoped slds-p-top--small">
+
+		<div ng-if="model.selectedTab == 'timeOfDay'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--inline" ng-repeat="ruleAnd in item.data.config.rules.timeOfDay">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+						     style="border: 1px solid #006eb3">
+							<div class="slds-form--inline" ng-repeat="rule in ruleAnd">
+								<fieldset class="slds-form--compound">
+									<div class="form-element__group">
+										<div class="slds-form-element__row">
+
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<label class="slds-form-element__label"
+												       for="operator__{{$index}}_{{$parent.$index}}">Date</label>
+												<div class="slds-select_container">
+													<select id="dateBetween__{{$index}}_{{$parent.$index}}"
+													        name="dateBetween__{{$index}}_{{$parent.$index}}"
+													        class="slds-select"
+													        ng-model="rule.dateBetween"
+													        ng-options="itm.value as itm.label for itm in model.operators.timeOfDay">
+													</select>
+												</div>
+											</div>
+
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label"
+												       for="startDate__{{$index}}_{{$parent.$index}}">From</label>
+												<input ng-disabled="rule.dateBetween=='all'" ng-model="rule.startDate" id="startDate__{{$index}}_{{$parent.$index}}" name="startDate__{{$index}}_{{$parent.$index}}" class="slds-input" type="text" ng-flat-datepicker allow-future="true" min-date="minDate" max-date="maxDate" date-format="'YYYY-MM-DD'">
+											</div>
+
+
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label"
+												       for="endDate__{{$index}}_{{$parent.$index}}">To</label>
+												<input ng-disabled="rule.dateBetween=='all'" ng-model="rule.endDate" id="endDate__{{$index}}_{{$parent.$index}}" name="endDate__{{$index}}_{{$parent.$index}}" class="slds-input" type="text" ng-flat-datepicker allow-future="true" min-date="minDate" max-date="maxDate" date-format="'YYYY-MM-DD'">
+											</div>
+
+
+											<div class="slds-form-element__control">
+												<button type="button"  class="slds-button slds-button--icon slds-m-bottom--xx-large"
+														ng-click="ruleAnd.splice($index, 1); checkEmptyRuleAnd('timeOfDay', ruleAnd, $parent.$index);">
+													<svg aria-hidden="true" class="slds-button__icon">
+														<use xlink:href="" i="close" svg-link/>
+													</svg>
+													<span class="slds-assistive-text">delete</span>
+												</button>
+											</div>
+
+										</div>
+
+										<div class="slds-form-element__row">
+
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<label class="slds-form-element__label"
+												       for="operator__{{$index}}_{{$parent.$index}}">Time</label>
+												<div class="slds-select_container">
+													<select id="timeBetween__{{$index}}_{{$parent.$index}}"
+													        name="timeBetween__{{$index}}_{{$parent.$index}}"
+													        class="slds-select"
+													        ng-model="rule.timeBetween"
+													        ng-options="itm.value as itm.label for itm in model.operators.timeOfDay">
+													</select>
+												</div>
+											</div>
+
+											<div class="slds-form-element__control slds-size--4-of-12" ng-class="{'slds-is-required slds-has-error': ItemForm.startTime__{{$index}}_{{$parent.$index}}.$error.pattern}">
+												<label class="slds-form-element__label"
+												       for="startDate__{{$index}}_{{$parent.$index}}">From</label>
+												<input ng-disabled="rule.timeBetween=='all'" ng-model="rule.startTime" id="startTime__{{$index}}_{{$parent.$index}}" name="startTime__{{$index}}_{{$parent.$index}}" class="slds-input" type="text" ng-pattern="model.timeRegex">
+												<span class="slds-form-element__help" ng-show="ItemForm.startTime__{{$index}}_{{$parent.$index}}.$error.pattern">hh:mm:ss</span>
+											</div>
+
+
+											<div class="slds-form-element__control slds-size--4-of-12" ng-class="{'slds-is-required slds-has-error': ItemForm.endTime__{{$index}}_{{$parent.$index}}.$error.pattern}">
+												<label class="slds-form-element__label"
+												       for="endDate__{{$index}}_{{$parent.$index}}">To</label>
+												<input ng-disabled="rule.timeBetween=='all'" ng-model="rule.endTime" id="endTime__{{$index}}_{{$parent.$index}}" name="endTime__{{$index}}_{{$parent.$index}}" class="slds-input" type="text" ng-pattern="model.timeRegex">
+												<span class="slds-form-element__help" ng-show="ItemForm.endTime__{{$index}}_{{$parent.$index}}.$error.pattern">hh:mm:ss</span>
+											</div>
+										</div>
+
+										<div class="slds-form-element__row">
+											<div class="slds-form-element__control slds-size--1-of-1">
+												<label class="slds-form-element__label">Days</label>
+												<week-days days="rule.days" />
+											</div>
+										</div>
+
+										<div class="slds-form-element__row">
+
+											<div class="slds-form-element__control slds-size--11-of-12">
+												<label class="slds-form-element__label"
+												       for="timeZone__{{$index}}_{{$parent.$index}}">Timezone</label>
+												<div class="slds-select_container">
+													<select id="timeZone__{{$index}}_{{$parent.$index}}"
+													        name="timeZone__{{$index}}_{{$parent.$index}}"
+													        class="slds-select"
+													        ng-model="rule.timeZone"
+													        ng-options="itm as itm for itm in model.timeZones">
+													</select>
+												</div>
+											</div>
+										</div>
+
+
+
+
+									</div>
+								</fieldset>
+								<hr class="hr--local-thin">
+							</div>
+							<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleOr(ruleAnd, 'timeOfDay')">
+								<svg aria-hidden="true" class="slds-button__icon">
+									<use xlink:href="" i="add" svg-link/>
+								</svg>
+								<span class="slds-assistive-text">add rule</span>
+								Add Rule (OR)
+							</button>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleAnd('timeOfDay')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Rule (AND)
+					</button>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div ng-if="model.selectedTab == 'callerIdWithheld'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--inline" ng-repeat="ruleAnd in item.data.config.rules.callerIdWithheld">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+						     style="border: 1px solid #006eb3">
+							<div class="slds-form--inline" ng-repeat="rule in ruleAnd">
+								<fieldset class="slds-form--compound">
+									<div class="form-element__group">
+										<div class="slds-form-element__row">
+											<div class="slds-form-element__control slds-size--11-of-12">
+												<label class="slds-checkbox">
+													<input type="checkbox" name="withheld" id="withheld" ng-model="rule.withheld">
+													<span class="slds-checkbox--faux"></span>
+													<span class="slds-form-element__label" translate>Withheld</span>
+												</label>
+											</div>
+
+											<div class="slds-form-element__control" style="padding: 0">
+												<div class="xslds-select_container">
+													<button type="button"  class="slds-button slds-button--icon"
+													        ng-click="ruleAnd.splice($index, 1); checkEmptyRuleAnd('callerIdWithheld', ruleAnd, $parent.$index);">
+														<svg aria-hidden="true" class="slds-button__icon">
+															<use xlink:href="" i="close" svg-link/>
+														</svg>
+														<span class="slds-assistive-text">delete</span>
+													</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleAnd('callerIdWithheld')" ng-if="item.data.config.rules.callerIdWithheld.length==0">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Rule
+					</button>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+		<div ng-if="model.selectedTab == 'countryCode'">
+
+
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--inline" ng-repeat="ruleAnd in item.data.config.rules.countryCode">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+						     style="border: 1px solid #006eb3">
+							<div class="slds-form--inline" ng-repeat="rule in ruleAnd">
+								<fieldset class="slds-form--compound">
+									<div class="form-element__group">
+										<div class="slds-form-element__row">
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label"
+												       for="numberType__{{$index}}_{{$parent.$index}}"
+												       ng-if="$index==0">Number Type</label>
+												<div class="slds-select_container">
+													<select id="numberType__{{$index}}_{{$parent.$index}}"
+													        class="slds-select" ng-model="rule.numberType"
+													        ng-options="item.value as item.label for item in model.numberTypeOptions">
+													</select>
+												</div>
+											</div>
+
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<label class="slds-form-element__label"
+												       for="operator__{{$index}}_{{$parent.$index}}" ng-if="$index==0">Operator</label>
+												<div class="slds-select_container">
+													<select id="operator__{{$index}}_{{$parent.$index}}"
+													        name="operator__{{$index}}_{{$parent.$index}}"
+													        class="slds-select"
+													        ng-model="rule.matches"
+													        ng-options="itm.value as itm.label for itm in model.operators.countryCode">
+													</select>
+												</div>
+											</div>
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label"
+												       for="countryCode__{{$index}}_{{$parent.$index}}"
+												       ng-if="$index==0">Country Code</label>
+												<div class="slds-select_container">
+													<select id="countryCode__{{$index}}_{{$parent.$index}}"
+													        class="slds-select" ng-model="rule.countryCode"
+													        ng-options="itm.alpha3Code as itm.name for itm in model.countryCodeOptions">
+													</select>
+												</div>
+											</div>
+
+
+											<div class="slds-form-element__control" style="padding: 0">
+												<label class="slds-form-element__label" ng-if="$index==0">&nbsp;</label>
+												<div class="xslds-select_container">
+													<button type="button"  class="slds-button slds-button--icon"
+													        ng-click="ruleAnd.splice($index, 1); checkEmptyRuleAnd('countryCode', ruleAnd, $parent.$index);">
+														<svg aria-hidden="true" class="slds-button__icon">
+															<use xlink:href="" i="close" svg-link/>
+														</svg>
+														<span class="slds-assistive-text">delete</span>
+													</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleOr(ruleAnd, 'countryCode')">
+								<svg aria-hidden="true" class="slds-button__icon">
+									<use xlink:href="" i="add" svg-link/>
+								</svg>
+								<span class="slds-assistive-text">add rule</span>
+								Add Rule (OR)
+							</button>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleAnd('countryCode')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Rule (AND)
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div ng-if="model.selectedTab == 'numberMatch'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--inline" ng-repeat="ruleAnd in item.data.config.rules.numberMatch">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+						     style="border: 1px solid #006eb3">
+							<div class="slds-form--inline" ng-repeat="rule in ruleAnd">
+								<fieldset class="slds-form--compound">
+									<div class="form-element__group">
+										<div class="slds-form-element__row--labels-local" ng-if="$index==0">
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label">Number Type</label>
+											</div>
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<label class="slds-form-element__label">Operator</label>
+											</div>
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label">Number</label>
+											</div>
+										</div>
+										<div class="slds-form-element__row">
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<div class="slds-select_container">
+													<select id="numberType__{{$index}}_{{$parent.$index}}"
+													        class="slds-select" ng-model="rule.numberType"
+													        ng-options="item.value as item.label for item in model.numberTypeOptions">
+													</select>
+												</div>
+											</div>
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<div class="slds-select_container">
+													<select id="operator__{{$index}}_{{$parent.$index}}"
+													        name="operator__{{$index}}_{{$parent.$index}}"
+													        class="slds-select"
+													        ng-model="rule.matches"
+													        ng-options="itm.value as itm.label for itm in model.operators.numberMatch">
+													</select>
+												</div>
+											</div>
+											<div class="slds-form-element__control slds-size--4-of-12 slds-input-has-icon slds-input-has-icon--right"
+											     ng-class="{'slds-is-required slds-has-error': ItemForm.numberMatch_number__{{$index}}_{{$parent.$index}}.$error.required}">
+												<svg aria-hidden="true"
+													 class="slds-input__icon slds-icon-text-default"
+													ng-click="showMacros('numberMatch_number__'+$index+'_'+$parent.$index)">
+													<use xlink:href="" i="push" svg-link/>
+												</svg>
+
+												<input id="numberMatch_number__{{$index}}_{{$parent.$index}}"
+												       name="numberMatch_number__{{$index}}_{{$parent.$index}}" class="slds-input"
+												       type="text"
+												       placeholder=""
+												       ng-model="rule.number" aria-describedby="errorName"
+												       required="true"/>
+											</div>
+											<div class="slds-form-element__control" style="padding: 0">
+												<div class="xslds-select_container">
+													<button type="button"  class="slds-button slds-button--icon"
+													        ng-click="ruleAnd.splice($index, 1); checkEmptyRuleAnd('numberMatch', ruleAnd, $parent.$index);">
+														<svg aria-hidden="true" class="slds-button__icon">
+															<use xlink:href="" i="close" svg-link/>
+														</svg>
+														<span class="slds-assistive-text">delete</span>
+													</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleOr(ruleAnd, 'numberMatch')">
+								<svg aria-hidden="true" class="slds-button__icon">
+									<use xlink:href="" i="add" svg-link/>
+								</svg>
+								<span class="slds-assistive-text">add rule</span>
+								Add Rule (OR)
+							</button>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleAnd('numberMatch')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Rule (AND)
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+		<div ng-if="model.selectedTab == 'evaluate'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--inline" ng-repeat="ruleAnd in item.data.config.rules.evaluate">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+						     style="border: 1px solid #006eb3">
+							<div class="slds-form--inline" ng-repeat="rule in ruleAnd">
+								<fieldset class="slds-form--compound">
+									<div class="form-element__group">
+
+										<div class="slds-form-element__row--labels-local" ng-if="$index==0">
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label">Property</label>
+											</div>
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<label class="slds-form-element__label">Operator</label>
+											</div>
+											<div class="slds-form-element__control slds-size--4-of-12">
+												<label class="slds-form-element__label">Value</label>
+											</div>
+										</div>
+
+
+										<div class="slds-form-element__row">
+											<div class="slds-form-element__control slds-size--4-of-12 slds-input-has-icon slds-input-has-icon--right"
+											     ng-class="{'slds-is-required slds-has-error': ItemForm.lhs__{{$index}}_{{$parent.$index}}.$error.required}">
+												<svg aria-hidden="true"
+													 class="slds-input__icon slds-icon-text-default"
+													 ng-click="showMacros('lhs__'+$index+'_'+$parent.$index)">
+													<use xlink:href="" i="push" svg-link/>
+												</svg>
+												<input id="lhs__{{$index}}_{{$parent.$index}}"
+												       name="lhs__{{$index}}_{{$parent.$index}}" class="slds-input"
+												       type="text"
+												       placeholder=""
+												       ng-model="rule.lhs" aria-describedby="errorName"
+												       required="true"/>
+											</div>
+											<div class="slds-form-element__control slds-size--3-of-12">
+												<div class="slds-select_container">
+													<select id="operator__{{$index}}_{{$parent.$index}}"
+													        name="operator__{{$index}}_{{$parent.$index}}"
+													        class="slds-select"
+													        ng-model="rule.operator"
+													        ng-options="itm.value as itm.label for itm in model.operators.evaluate">
+													</select>
+												</div>
+											</div>
+											<div class="slds-form-element__control slds-size--4-of-12 slds-input-has-icon slds-input-has-icon--right"
+											     ng-class="{'slds-is-required slds-has-error': ItemForm.rhs__{{$index}}_{{$parent.$index}}.$error.required}">
+												<svg aria-hidden="true"
+													 class="slds-input__icon slds-icon-text-default"
+													 ng-click="showMacros('rhs__'+$index+'_'+$parent.$index)">
+													<use xlink:href="" i="push" svg-link/>
+												</svg>
+												<input id="rhs__{{$index}}_{{$parent.$index}}"
+												       name="rhs__{{$index}}_{{$parent.$index}}" class="slds-input"
+												       type="text"
+												       placeholder=""
+												       ng-model="rule.rhs" aria-describedby="errorName"
+												       required="true"/>
+											</div>
+											<div class="slds-form-element__control" style="padding: 0">
+												<div class="xslds-select_container">
+													<button type="button"  class="slds-button slds-button--icon"
+													        ng-click="ruleAnd.splice($index, 1); checkEmptyRuleAnd('evaluate', ruleAnd, $parent.$index);">
+														<svg aria-hidden="true" class="slds-button__icon">
+															<use xlink:href="" i="close" svg-link/>
+														</svg>
+														<span class="slds-assistive-text">delete</span>
+													</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleOr(ruleAnd, 'evaluate')">
+								<svg aria-hidden="true" class="slds-button__icon">
+									<use xlink:href="" i="add" svg-link/>
+								</svg>
+								<span class="slds-assistive-text">add rule</span>
+								Add Rule (OR)
+							</button>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addRuleAnd('evaluate')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Rule (AND)
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+
+</div>
+
+

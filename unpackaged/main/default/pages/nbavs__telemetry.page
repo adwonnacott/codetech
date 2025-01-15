@@ -1,0 +1,13 @@
+<apex:page showheader="false" sidebar="false" controller="nbavs.RecordingRemoting" title="Natterbox Telemetry" action="{!recordAccessEventLog}">
+
+    <apex:form id="form" style="padding:10px;padding-top:20px;">
+        <apex:outputPanel style="font-size:12px;" >
+            <apex:pageMessages id="messages" />
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!hasAccess}">
+            <script type="text/javascript">
+                window.location.href = '{!telemetryURL}';
+            </script>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

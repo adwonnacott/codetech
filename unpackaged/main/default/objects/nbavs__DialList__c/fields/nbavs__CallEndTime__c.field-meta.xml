@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__CallEndTime__c</fullName>
+    <defaultValue>TIMEVALUE(&quot;23:59:59&quot;)</defaultValue>
+    <deprecated>false</deprecated>
+    <label>No Calls After</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Time</type>
+</CustomField>

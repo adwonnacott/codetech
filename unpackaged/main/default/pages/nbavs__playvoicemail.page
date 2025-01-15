@@ -1,0 +1,85 @@
+<apex:page showheader="false" sidebar="false" controller="nbavs.RecordVoiceMail" title="Play VoiceMail">
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__voicemailplayer, 'voicemailplayer.css')}" />
+<apex:form id="form">
+<apex:pageMessages id="messages" />
+<div id="phoneContainer">
+	<!-- phoneInner -->
+	<div id="phoneInner">
+		<!-- phoneHeader -->
+		<div id="phoneHeader">
+			<div id="phoneHeaderTopLine">
+				<a id="phoneHeaderLogo" href="http://natterbox.com/" target="_blank"></a>
+			</div>
+			<div id="phoneHeaderBottomLine"><apex:outputText Value="Voicemail" style="font-weight:bold;padding-top:30px;" /></div>
+		</div>
+		<!-- phoneDisplay -->	
+		<div id="phoneDisplay">				
+			<audio id="VoiceMail" preload="none" controls="controls" style=""></audio>
+		</div>
+		<div id="noVoiceMail" style="display:none;font:bold;color:red;">No VoiceMail is available</div>		
+		<div id="authenticationFailed" style="display:none;font:bold;color:red;">Authentication Failed</div>
+	</div>
+</div>
+<script type="text/javascript">
+var uuid = getUrlVars()['uuid'];
+var userId = getUrlVars()['userid'];
+var vmid = getUrlVars()['vmid'];
+
+var voiceM = document.getElementById('VoiceMail') || new Audio();
+
+//xhr directly browser to play start
+var url = '{!JSENCODE(api.Host__c)}organisation/{!orgId}/user/'+userId+'/voicemail/'+uuid;
+
+var authToken = '{!JSENCODE(session.AccessToken__c)}';
+
+xhr = new XMLHttpRequest();
+xhr.open('GET', encodeURI(url), true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.setRequestHeader('Authorization', 'Bearer ' + authToken); 
+xhr.responseType = 'blob';
+
+xhr.onload = function(evt) {   
+    if(xhr.status == 200) {  
+	var blob = new Blob([xhr.response], {type: 'audio/mpeg'});
+	var objectUrl = window.URL.createObjectURL(blob);		
+	voiceM.src = objectUrl;
+    // Release resource when it's loaded
+    voiceM.onload = function(evt) {
+    	URL.revokeObjectUrl(objectUrl);
+    };
+    voiceM.play();
+    } else {
+        if(xhr.status == 401) {    
+       		document.getElementById('VoiceMail').style.display = "none";
+       		document.getElementById('authenticationFailed').style.display = "inline";
+        }
+        if(xhr.status == 404) {
+        	document.getElementById('VoiceMail').style.display = "none";       
+	        Visualforce.remoting.Manager.invokeAction(
+	            '{!$RemoteAction.RecordVoiceMail.updateVoiceMail}',
+	            vmid,false, 
+		        function(result, event){
+					if(result) {
+						  document.getElementById('noVoiceMail').style.display = "inline";
+					}
+		        }, 
+		        { buffer: false, escape: true, timeout: 30000 }
+		      ); 
+	   }            	 
+    }
+};
+
+//var data = JSON.stringify({text: yourTextToSynthesize});
+xhr.send();
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+    function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+ } 
+</script>
+</apex:form>
+</apex:page>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Record: grants group access to listening to call recordings --></help>
+        <label><!-- Record --></label>
+        <name>nbavs__Record__c</name>
+    </CustomFieldTranslation>

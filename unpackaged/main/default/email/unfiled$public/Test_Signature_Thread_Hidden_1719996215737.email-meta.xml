@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Adds a generic footer to case emails with the thread ID hidden in small white text as part of the footer body</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Test - Signature (Thread Hidden)</name>
+    <pageDevName>Test_Signature_Thread_Hidden</pageDevName>
+    <relatedEntityType>Case</relatedEntityType>
+    <style>none</style>
+    <textOnly>Dear {{{Recipient.FirstName}}},
+
+{{{Sender.Name}}}
+
+0207 101 0207 
+
+codeinternational.com &lt; https://www.codeinternational.com &gt; Code Technology Ltd, Building 3, 566 Chiswick High Road, London, W4 5YACode Technology Limited is registered in England and Wales (registered number 12365215) with its registered office at 2nd Floor, 168 Shoreditch High Street, London, United Kingdom, E1 6RA. The contents of this email are confidential and may be protected by legal privilege. If you are not the intended recipient, please notify us as soon as possible and do not copy, forward, disclose or use the contents. Code Technology Limited may monitor mail for business purposes.{{{Case.Thread_Token}}}</textOnly>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_End_Time__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The end time for this interaction. For the last instance, this will be the time the call really hangs up. For all other instances, will be the time the call is bridged to the next party</description>
+    <label>To End Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

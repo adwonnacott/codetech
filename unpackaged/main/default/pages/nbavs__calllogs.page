@@ -1,0 +1,312 @@
+<apex:page controller="nbavs.CallLogsController" action="{!checkAPISetup}" id="callLogsPage" docType="html-5.0" >
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<head>
+<style type="text/css">
+label.labelCls {
+	width: 148px;
+	float: right;
+	display: inline;
+	margin-top: 2.4px;
+}
+
+.bPageBlock {
+	border-top: 4px solid #00a0c4;
+}
+.pageTitleIcon {
+	background-image : URL("{!URLFOR($Resource.img, 'phoneImage.png')}");
+}
+
+table.filters {
+    float: left;
+}
+table.filters td {
+    padding: 4px;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+table.filters td.label {
+    text-align: right;
+    font-weight: bold;
+}
+
+table.filters td input {
+    width: 100px;
+}
+
+table.options {
+    float: right;
+}
+
+table.options td input {
+ 	horizontal-align: right;
+}
+
+#filtersDialog {
+	position: absolute;
+	right: 16px;
+	background-color: white;
+	border: 1px solid #ccc;
+	z-index: 999;
+}
+
+.actionIcon {
+    width:16px;
+	padding-left:4px;
+	display:inline-block;
+}
+</style>
+	</head>
+	<script>
+	//remove default focus on the date input field
+	function setFocusOnLoad() {}
+	function popupRecord(uuid) 
+	{
+		 var width  = 430;
+		 var height = 200;
+		 var left   = (screen.width  - width)/2;
+		 var top    = (screen.height - height)/2;
+		 var params = 'width='+width+', height='+height;
+		 params += ', top='+top+', left='+left;
+		 params += ', directories=no';
+		 params += ', location=no';
+		 params += ', menubar=no';
+		 params += ', resizable=no';
+		 params += ', scrollbars=no';
+		 params += ', status=no';
+		 params += ', toolbar=no';
+		var newwin=window.open('','_blank', params);		
+		newwin.location.href = '/apex/playrecording?id='+uuid;
+		//if (window.focus) {newwin.focus()}
+		 return false;
+	}
+	
+    j$ = jQuery.noConflict();
+    j$(document).ready(function() {
+        buildDataTable();        
+        j$("#filtersDialog").hide();
+    });
+    
+    function showDiv() {    	           
+         j$("#filtersDialog").toggle();
+    }
+	
+	j$("body").click
+	(
+	  function(e)
+	  {
+		  if (j$(e.target).attr('id') != "showFilterDialog" && j$(e.target).attr('id') != "filtersDialog" && j$(e.target).parent().attr('id') != "filtersDialog") {
+		  	j$("#filtersDialog").hide();
+		  } 
+	  }
+	);
+
+    function buildDataTable() {
+
+        var table = j$('#dataTable').DataTable({
+            
+            "paging": true,
+            "stateSave": true,
+            "lengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            "order": [
+                [1, "desc"]
+            ],
+
+            columnDefs: [{
+                    type: 'data-search',
+                    targets: 2
+                }, {
+                    type: 'data-search',
+                    targets: 3
+                },
+
+                {
+                    "targets": [0],
+                    "searchable": false,
+                    "visible": true,
+                    "orderable": false
+                }
+
+            ]
+        });
+
+       table.columns().every( function (index) {
+    		if (this.visible()) {
+    		    j$("[data-column="+(index)+"]").prop('checked', true);
+      		}
+		} );
+        
+        j$('input[type="checkbox"].toggle-vis').on('click', function (e) {
+        	//e.preventDefault();
+        	// Get the column API object
+        	var column = table.column( j$(this).attr('data-column'));
+        	// Toggle the visibility
+        	column.visible( j$(this).is(':checked') );
+    	} );
+    }
+	</script>  
+	<apex:sectionHeader title="Call Logs" subtitle="Home" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock id="pageBlock">
+			
+			<table class="filters">
+				<tr>
+					<td class="label">From Date</td>
+					<td>
+						<apex:inputField value="{!callLogObj.nbavs__FromDate__c}" id="fromDate" />
+					</td>
+					<td class="label">To Date</td>
+					<td> 
+						<apex:inputField value="{!callLogObj.nbavs__ToDate__c}" id="toDate" />
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Natterbox User</td>
+					<td colspan="3">
+					
+						<apex:selectList size="1" value="{!selectedPbxUser}" id="selectUser" >
+							<apex:selectOptions value="{!paginatedPbxUsersOptions.0}"/>
+							<apex:selectOptions value="{!paginatedPbxUsersOptions.1}"/>
+							<apex:selectOptions value="{!paginatedPbxUsersOptions.2}"/>
+							<apex:selectOptions value="{!paginatedPbxUsersOptions.3}"/>
+							<apex:selectOptions value="{!paginatedPbxUsersOptions.4}"/>
+							<apex:selectOptions value="{!paginatedPbxUsersOptions.5}"/>
+						</apex:selectList>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Phone Number</td>
+					<td colspan="3">
+						<apex:input id="PhoneNumber" value="{!phoneNumber}" type="tel"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Limit</td>
+					<td colspan="2">
+						<apex:input id="resultsLimit" html-min="1" html-max="200" value="{!resultsLimit}" type="number" />
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="3">
+					<apex:commandButton value="Search"  action="{!searchItems}" rerender="list,messages" oncomplete="buildDataTable();" status="actStatusId" disabled="{!!valid}" />
+					<apex:actionStatus id="actStatusId" >
+		                <apex:facet name="start" >
+		                  <apex:outputPanel id="logdingImage">
+				            <img src="/img/loading32.gif" width="15" height="15" style="vertical-align:middle"/>
+				           	<apex:outputLabel value="Loading..." style="vertical-align:middle"/>
+        				</apex:outputPanel>                     
+		                </apex:facet>
+            		</apex:actionStatus>
+					</td>
+				</tr>
+			</table>
+			
+			<table class="options">
+				<tr>
+					<td>
+					<input type="button" class="btn" value="Manage Columns" id="showFilterDialog" onclick="showDiv();" />
+					</td>
+				</tr>
+			</table>
+			
+			<div style="display: none;" id="filtersDialog">
+				<input type="checkbox" name="DateTime" id="DateTime" Value="DateTime" class="toggle-vis" data-column="1"  />
+				<label class="labelCls" for="DateTime">Date /Time</label> <br /> 
+				<input type="checkbox" name="From" id="From" Value="From" class="toggle-vis" data-column="2"  />
+				<label class="labelCls" for="From">From </label><br /> 
+				<input type="checkbox" name="To" id="To" Value="TO" class="toggle-vis" data-column="3" />
+				<label class="labelCls" for="To">To</label><br /> 
+				<input type="checkbox" name="FromNumber" id="FromNumber" Value="FromNumber" class="toggle-vis" data-column="4"  />
+				<label class="labelCls" for="FromNumber">From (Number)</label><br /> 
+				<input type="checkbox" name="ToNumber" id="ToNumber" Value="ToNumber" class="toggle-vis" data-column="5"  />
+				<label class="labelCls" for="ToNumber">To (Number)</label> <br /> 
+				<input type="checkbox" name="TimeHunting" id="TimeHunting" Value="TimeHunting" class="toggle-vis" data-column="6" />
+				<label class="labelCls" for="TimeHunting">Time Hunting</label><br /> 
+				<input type="checkbox" name="TimeRinging" id="TimeRinging" Value="TimeRinging" class="toggle-vis" data-column="7" /> 
+				<label class="labelCls" for="TimeRinging">Time Ringing</label><br /> 
+				<input type="checkbox" name="TimeTalking" id="TimeTalking" Value="TimeTalking" class="toggle-vis" data-column="8" /> 
+				<label class="labelCls" for="TimeTalking">Time Talking</label> <br /> 
+				<input type="checkbox" name="FromDevice" id="FromDevice" Value="From Device" class="toggle-vis" data-column="9" /> 
+				<label class="labelCls" for="FromDevice">From Device</label><br /> 
+				<input type="checkbox" name="ToDevice" id="ToDevice" Value="ToDevice" class="toggle-vis" data-column="10" /> 
+				<label class="labelCls" for="ToDevice">To Device</label><br /> 
+				<input type="checkbox" name="Direction" id="Direction" Value="Direction" class="toggle-vis" data-column="11" /> 
+				<label class="labelCls" for="Direction">Direction</label><br /> 
+				<input type="checkbox" name="ToNumberDialled" id="ToNumberDialled" Value="ToNumberDialled" class="toggle-vis" data-column="12" /> 
+				<label class="labelCls" for="ToNumberDialled">To Number Dialled</label><br />
+			</div>
+			
+			
+				<apex:outputPanel layout="block" id="list" style="padding-top:5px;">
+					<table class="list display compact" id="dataTable" style="width: 100%;">
+						<thead>
+							<tr class="headerRow">
+								<th>Actions</th>
+								<th>Date / Time</th>
+								<th>From</th>
+								<th>To</th>
+								<th>From (Number)</th>
+								<th>To (Number)</th>
+								<th>Time Hunting (hh:mm:ss)</th>
+								<th>Time Ringing (hh:mm::ss)</th>
+								<th>Time Talking (hh:mm:ss)</th>
+								<th>From Device</th>
+								<th>To Device</th>
+								<th>Direction</th>
+								<th>To Number Dialled</th>								
+							</tr>
+						</thead>
+						<tbody>
+							<apex:repeat value="{!items}" var="item">
+								<tr class="dataRow">
+								<td style="width:50px;">
+									<a href="javascript:void(0)"><apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'PlayOn.png')}" styleClass="actionIcon" rendered="{!item.nbavs__Recorded_A__c && item.nbavs__hasAccess__c}" onclick="popupRecord('{!JSENCODE(item.nbavs__EncryptUUId1__c)}'); return false;" title="Play recording"/></a>
+									<apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'PlayOff.png')}" styleClass="actionIcon" rendered="{!item.nbavs__Recorded_A__c && !item.nbavs__hasAccess__c}" title="No Access to this recording"/>
+									<apex:outputPanel styleClass="actionIcon" rendered="{!item.nbavs__Recorded_A__c!=true}">&nbsp;</apex:outputPanel>
+									<a href="javascript:void(0)"><apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'PlayOn.png')}"  styleClass="actionIcon" rendered="{!item.nbavs__Recorded_B__c && item.nbavs__hasAccess__c}" onclick="popupRecord('{!JSENCODE(item.nbavs__EncryptUUId2__c)}'); return false;" title="Play recording"/></a>
+									<apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'PlayOff.png')}"  styleClass="actionIcon" rendered="{!item.nbavs__Recorded_B__c && !item.nbavs__hasAccess__c}" title="No Access to this recording" />
+                                    <apex:outputPanel styleClass="actionIcon" rendered="{!item.nbavs__Recorded_B__c!=true}">&nbsp;</apex:outputPanel>
+								</td>
+									<td data-order="{!item.nbavs__DateTime__c}">
+										<apex:outputText value="{0,date,dd/MM/yyyy HH:mm:ss}">  
+											<apex:param value="{!item.nbavs__DateTime__c}" />
+										</apex:outputText></td>
+									<td data-search="{!item.nbavs__FromName__c}"><apex:outputField value="{!item.nbavs__FromUser__c}" rendered="{!item.nbavs__FromUser__c != null}" /> <apex:outputText value="{!item.nbavs__FromName__c}" rendered="{!item.nbavs__FromUser__c == null}" /></td>
+									<td data-search="{!item.nbavs__ToName__c}"><apex:outputField value="{!item.nbavs__ToUser__c}" rendered="{!item.nbavs__ToUser__c != null}" /> <apex:outputText value="{!item.nbavs__ToName__c}" rendered="{!item.nbavs__ToUser__c == null}" /></td>
+									<td><apex:outputField value="{!item.nbavs__FromNumber__c}" /></td>
+									<td><apex:outputField value="{!item.nbavs__ToNumber__c}" /></td>
+									<td>
+									   	<apex:outputtext id="timeHuntingId">
+											<c:SecondsConvertHours timeseconds_value="{!item.nbavs__TimeHunting__c}"></c:SecondsConvertHours>
+										</apex:outputtext>
+									</td>
+									<td>
+										<apex:outputtext id="timeRingingId">
+											<c:SecondsConvertHours timeseconds_value="{!item.nbavs__TimeRinging__c}"></c:SecondsConvertHours>
+										</apex:outputtext>	
+									</td>
+									<td>
+										<apex:outputtext id="timeTalkingId">
+											<c:SecondsConvertHours timeseconds_value="{!item.nbavs__TimeTalking__c}"></c:SecondsConvertHours>
+										</apex:outputtext>										
+									</td>
+									<td><apex:outputField value="{!item.nbavs__FromDevice__c}" rendered="{!item.nbavs__FromDevice__c != null}" /> <apex:outputText value="{!item.nbavs__FromDeviceName__c}" rendered="{!item.nbavs__FromDevice__c == null}" /></td>
+									<td><apex:outputField value="{!item.nbavs__ToDevice__c}" rendered="{!item.nbavs__ToDevice__c != null}" /> <apex:outputText value="{!item.nbavs__ToDeviceName__c}" rendered="{!item.nbavs__ToDevice__c == null}" /></td>
+									<td><apex:outputField value="{!item.nbavs__Direction__c}" /></td>
+									<td><apex:outputField value="{!item.nbavs__ToNumberDialled__c}" /></td>									
+								</tr>
+							</apex:repeat>
+						</tbody>
+					</table>
+				</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

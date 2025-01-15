@@ -1,0 +1,13 @@
+<apex:page docType="html-5.0" standardController="nbavs__User__c" extensions="nbavs.UserController" tabstyle="nbavs__Group__c">
+	<apex:sectionHeader title="{!$ObjectType.nbavs__User__c.label} Skill Edit" subtitle="{!IF(nbavs__User__c.Id!=null,nbavs__User__c.nbavs__FirstName__c + ' ' + nbavs__User__c.nbavs__LastName__c,'New ' + $ObjectType.nbavs__User__c.label)}" />
+    <apex:form id="form">
+        <!-- following added to include these fields in standard controller query - START  -->
+        <apex:inputhidden value="{!nbavs__User__c.nbavs__User__c}"/>
+        <apex:inputhidden value="{!nbavs__User__c.nbavs__PermissionLevel__c}"/>    
+        <!-- following added to include these fields in standard controller query - END  -->
+    
+		<apex:pageMessages id="messages" />
+        
+        <c:UserSkill standalone="true"/>
+    </apex:form>
+</apex:page>

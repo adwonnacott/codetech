@@ -1,0 +1,121 @@
+<apex:page standardController="nbavs__PhoneNumber__c" extensions="nbavs.PhoneNumberController" tabstyle="nbavs__PhoneNumber__c">
+	<style type="text/css">
+		.bPageBlock .pbTitle {
+		 width:0%;
+		} 
+	</style>
+	<apex:sectionHeader title="{!$ObjectType.nbavs__PhoneNumber__c.label}" subtitle="New {!$ObjectType.nbavs__PhoneNumber__c.label}" />	
+	<apex:form id="mainForm">
+	<apex:pageMessages id="messages" />
+	<apex:pageBlock id="pageBlock">	    
+		<apex:pageBlockButtons location="top">
+		        <div style="clear:both;"></div>  
+            	<div style="width:900px;position: relative;padding-left:8px;">  
+				<apex:outputLabel value="How do you want to use this number?" style="width:100x;padding-right:5px;" />
+				<apex:selectList size="1" value="{!selectedAssignNumber}">
+					<apex:actionsupport event="onchange" rerender="phoneNumbersList" />					
+					<apex:selectOptions value="{!assignNumbersOptions}" />
+				</apex:selectList> <br/> <br/>
+		        <apex:outputLabel value="Country" style="width:100px;padding-right:166px;" />
+				<apex:selectList size="1" value="{!selectedCountry}">
+					<apex:actionsupport event="onchange" action="{!buildAreas}" rerender="messages,areaList,listButton,phoneNumbersList,requestCodeButton" />
+					<apex:selectOptions value="{!Countries}" />
+				</apex:selectList> <br/> <br/>
+				<apex:outputLabel value="Area Code" style="width:100px;padding-right:150px;" />
+				<apex:outputPanel id="areaList">
+					<apex:selectList size="1" value="{!selectedArea}">
+						<apex:actionsupport event="onchange" action="{!resetNumbersList}" rerender="messages,listButton,phoneNumbersList,requestCodeButton" />
+						<apex:selectOptions value="{!Areas}" />
+					</apex:selectList>
+				</apex:outputPanel>	<br/> <br/>
+				<apex:outputPanel id="listButton">
+					<apex:commandButton value="List Phone Numbers" action="{!getNumbers}" disabled="{!selectedCountry==null || selectedArea == null}" rerender="messages,phoneNumbersList" status="actStatusId" />
+				</apex:outputPanel>
+				<apex:actionStatus id="actStatusId">
+					<apex:facet name="start">
+						<apex:outputPanel >
+							<img src="/img/loading32.gif" width="15" height="15" />
+							<apex:outputLabel value="Loading..." />
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
+				<apex:outputPanel id="requestCodeButton">
+					<apex:commandButton action="{!URLFOR($Page.numberordering,'',[countryCode=selectedCountry])}" value="Request New Area Code" disabled="{!requestCode == false}" />
+				</apex:outputPanel>
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</div>	
+		</apex:pageBlockButtons>		
+		<apex:outputPanel id="phoneNumbersList">
+			<apex:pageBlockSection collapsible="false" columns="1" >
+			
+				<apex:outputPanel id="processButton" rendered="{!phoneNumbers != null && phoneNumbers.size > 0}">
+					<apex:actionStatus id="process">
+					<apex:facet name="stop">
+						<apex:commandButton value="Get Selected Phone Numbers" action="{!processSelected}" status="process" rerender="messages" />
+					</apex:facet>
+					<apex:facet name="start">
+				       <apex:outputPanel id="loadingProcess">
+				        	<img src="/img/loading32.gif" width="15" height="15" />										       
+				       </apex:outputPanel>
+      				</apex:facet>
+					</apex:actionStatus>
+				</apex:outputPanel>
+				<apex:pageBlockTable value="{!phoneNumbers}" var="item" align="center" rendered="{!phoneNumbers != null && phoneNumbers.size > 0}">
+					<apex:column headerValue="Action">
+						<apex:facet name="header">
+							<apex:inputCheckbox onclick="checkAll(this)">
+							</apex:inputCheckbox>
+						</apex:facet>
+						<apex:inputCheckbox value="{!item.selected}" id="checkedone" styleClass="selectItem" onchange="setValidation(this)" />
+					</apex:column>
+					<apex:column headerValue="Number" value="{!item.sObj.nbavs__Number__c}" />
+					<apex:column headerValue="Friendly Name">
+						<apex:inputField value="{!item.sObj.Name}" styleClass="input-required" />
+					</apex:column>
+					<apex:column headerValue="Assign to User" rendered="{!IF(selectedAssignNumber == 'DDI',true,false)}"> 
+						<apex:inputField value="{!item.sObj.nbavs__User__c}" styleClass="input-lookup"   />
+					</apex:column>
+                    <apex:column headerValue="Local Presence Enabled" rendered="{!IF(selectedAssignNumber == 'DDI',false,true)}">
+                        <apex:inputField value="{!item.sObj.nbavs__Local_Presence_Enabled__c}" />
+                    </apex:column>
+				</apex:pageBlockTable>
+				
+			</apex:pageBlockSection>
+		</apex:outputPanel>
+	</apex:pageBlock>
+	
+	</apex:form>
+
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<script type="text/javascript">
+	    var j$ = jQuery.noConflict();
+	    function setValidation(element)
+	    {
+		    var el = j$(element).closest("tr").find("input.input-required");
+		    var elLook = j$(element).closest("tr").find("input.input-lookup");
+		    if (element.checked) {
+		    if (el.val() == null || el.val() == '') {
+		    		if(el.parent().is("td")) { el.wrap("<div class='requiredInput'></div>").parent().prepend("<div class='requiredBlock'></div>"); }
+		   		}
+		   	 if (elLook.val() == null || elLook.val() == '') {
+		    		if(elLook.parent().is(".dataCell,.lookupInput")) { elLook.parent().wrap("<div class='requiredInput'></div>").parent().prepend("<div class='requiredBlock'></div>"); }
+		   		}
+		    } else {
+		    if(el.parent().is("div.requiredInput")) { 
+		    		el.parent().replaceWith(el);
+		    	}
+		     if(elLook.parent().is("div.requiredInput")) { 
+		    		elLook.parent().replaceWith(elLook);
+		    	}	
+			}
+    	}
+    	
+    	function checkAll(element)
+		{
+			j$('input.selectItem').prop('checked', element.checked);   
+			j$('input.selectItem').each(function () {
+			setValidation(j$(this).get(0));
+			});
+		} 
+	</script>
+</apex:page>

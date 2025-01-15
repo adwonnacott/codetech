@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__LegUser__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>LegUserID Lookup LegUser value.</description>
+    <label>Leg User</label>
+    <referenceTo>nbavs__User__c</referenceTo>
+    <relationshipLabel>User Voicemails (Natterbox User)</relationshipLabel>
+    <relationshipName>LegUser</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

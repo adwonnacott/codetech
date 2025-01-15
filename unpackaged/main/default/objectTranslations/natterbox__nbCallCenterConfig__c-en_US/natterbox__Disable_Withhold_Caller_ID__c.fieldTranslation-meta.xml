@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- If checked, the &apos;Withhold my caller ID&apos; option is not available in settings under &apos;My caller ID&apos; --></help>
+        <label><!-- Disable Withhold Caller ID --></label>
+        <name>natterbox__Disable_Withhold_Caller_ID__c</name>
+    </CustomFieldTranslation>

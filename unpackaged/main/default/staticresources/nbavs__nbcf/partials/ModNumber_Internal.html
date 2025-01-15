@@ -1,0 +1,28 @@
+<div class="slds-form-element">
+    <label class="slds-form-element__label" for="numberType">Criteria for Hooking Internal Numbers</label>
+    <div class="slds-form-element__control">
+        <div class="slds-select_container">
+            <select id="numberType" name="numberType" class="slds-select"
+                    ng-model="node.data.variables.numberType"
+                    ng-options="item.value as item.label for item in model.ModNumberInternalNumberTypeOptions"></select>
+        </div>
+    </div>
+</div>
+<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': NodeForm.internalExtension.$error.required}">
+    <label class="slds-form-element__label" for="internalExtension" ng-if="node.data.variables.numberType == 'NUMBER'">Extension Number</label>
+    <label class="slds-form-element__label" for="internalExtension" ng-if="node.data.variables.numberType == 'REGEX'">Extension Range (Regular Expression)</label>
+    <div class="slds-form-element__control">
+        <input id="internalExtension" name="internalExtension" class="slds-input" type="text" placeholder=""
+               ng-model="node.data.variables.internalExtension" aria-describedby="errorName" required=""/>
+    </div>
+</div>
+<div class="slds-form-element" ng-if="node.data.variables.numberType == 'REGEX'">
+    <div class="slds-form-element__control">
+        <div class="slds-form-element slds-m-top--small">
+            <div class="slds-popover slds-nubbin--top slds-theme--warning" role="dialog">
+                <div class="slds-popover__body">Please be aware of the dangers of enabling regular expression capture.<br/>Incorrect regular expressions may capture all calls inadvertently, and may cause disruption to user policies.<br/>Please refer to documentation for guidance.</div>
+            </div>
+        </div>
+    </div>
+</div>
+

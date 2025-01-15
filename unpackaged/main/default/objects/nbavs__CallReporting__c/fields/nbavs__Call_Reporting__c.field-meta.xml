@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Call_Reporting__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>A field that represents a parent-child relationship to itself. Subsequent callbacks will be children of the original call CRO record.</description>
+    <label>Call Reporting</label>
+    <referenceTo>nbavs__CallReporting__c</referenceTo>
+    <relationshipLabel>Call Reporting Callbacks</relationshipLabel>
+    <relationshipName>Call_Reporting</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

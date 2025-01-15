@@ -1,0 +1,441 @@
+<apex:page standardController="natterbox__nbCallCenterConfig__c"
+    extensions="natterbox.NB_CCC_Edit_Ext">
+    <apex:sectionHeader title="{!$ObjectType.natterbox__nbCallCenterConfig__c.label}"
+        subtitle="{!Subtitle}" />
+<apex:includeScript value="{!URLFOR($Resource.natterbox__jQuery)}"  />
+<script type="text/javascript">if (typeof cticonfig != 'undefined') cticonfig.salesforce_sid="{!$Api.Session_ID}";</script>     
+    <apex:form >
+        <apex:pageBlock title="{!$ObjectType.natterbox__nbCallCenterConfig__c.label} Configuration Clone"
+            mode="edit">
+            <apex:PageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!cloneItem}" value="Add Record" />
+                <apex:commandButton action="{!cancelItem}" value="Cancel"
+                    immediate="true" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2" id="settingsBlockSection">
+
+                <apex:pageBlock mode="edit" title="CTI">
+                    
+                    <apex:pageBlockSection showHeader="false" columns="1">
+                                                                                
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.SetupOwnerId.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.SetupOwnerId.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.SetupOwnerId.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.SetupOwnerId.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.SetupOwnerId}" required="true"/>
+                        </apex:pageBlockSectionItem>
+                         
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__CTI_Service_Host__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__CTI_Service_Host__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__CTI_Service_Host__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__CTI_Service_Host__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__CTI_Service_Host__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__UI_Theme__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__UI_Theme__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__UI_Theme__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__UI_Theme__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:SelectList label="UI Theme" id="UITheme" value="{!natterbox__nbCallCenterConfig__c.natterbox__UI_Theme__c}" multiselect="false" size="1">
+                                <apex:selectOption itemValue="slds" itemLabel="Lightning (CTI 2.0)"/>
+                                <apex:selectOption itemValue="freedom" itemLabel="Freedom"/>
+                                <apex:selectOption itemValue="classic" itemLabel="Classic"/>                                    
+                            </apex:SelectList>
+                        </apex:pageBlockSectionItem>
+                                                        
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Groups_Support__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Groups_Support__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Groups_Support__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Groups_Support__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Groups_Support__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Display_Recording_UI__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Display_Recording_UI__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Display_Recording_UI__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Display_Recording_UI__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Display_Recording_UI__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_star_code_buttons__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_star_code_buttons__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_star_code_buttons__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_star_code_buttons__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Enable_star_code_buttons__c}" />
+                        </apex:pageBlockSectionItem>
+                                                        
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_Withhold_Caller_ID__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_Withhold_Caller_ID__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_Withhold_Caller_ID__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_Withhold_Caller_ID__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Disable_Withhold_Caller_ID__c}" />
+                        </apex:pageBlockSectionItem>
+                            
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__DateTime_Format__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__DateTime_Format__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__DateTime_Format__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__DateTime_Format__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:SelectList label="Date/Time Format" id="DateTimeFormat" value="{!natterbox__nbCallCenterConfig__c.natterbox__DateTime_Format__c}" multiselect="false" size="1" title="Note: setting to automatic uses date/time format of organization locale for {CallDateTimeLocal} log macro formatting and date/time format of user locale for UI time formatting">
+                                <apex:selectOption itemValue="auto" itemLabel="Automatic: use date/time format of organization and user locales"/>
+                                <apex:selectOption itemValue="" itemLabel="Default: dd/mm/yyyy hh:mm (24 hour)"/>
+                            </apex:SelectList>
+                        </apex:pageBlockSectionItem>
+                                                                                                                
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+                            
+                <apex:pageBlock mode="edit" title="Wrapup General">
+                    
+                    <apex:pageBlockSection showHeader="false" columns="1">
+                                                      
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_Wrapup__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_Wrapup__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_Wrapup__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Enable_Wrapup__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Enable_Wrapup__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_wrapup_for_unknown_numbers__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_wrapup_for_unknown_numbers__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_wrapup_for_unknown_numbers__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Disable_wrapup_for_unknown_numbers__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Disable_wrapup_for_unknown_numbers__c}" />
+                        </apex:pageBlockSectionItem>
+                                                        
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Wrapup_and_Notes_available_during_call__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Wrapup_and_Notes_available_during_call__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Wrapup_and_Notes_available_during_call__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Wrapup_and_Notes_available_during_call__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_and_Notes_available_during_call__c}" />
+                         </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Specify_default_wrapup_button__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Specify_default_wrapup_button__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Specify_default_wrapup_button__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Specify_default_wrapup_button__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Specify_default_wrapup_button__c}" />
+                        </apex:pageBlockSectionItem>
+                                                            
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Offer_Skip_Wrapup_Conditions__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Offer_Skip_Wrapup_Conditions__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Offer_Skip_Wrapup_Conditions__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Offer_Skip_Wrapup_Conditions__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:SelectList label="When to show 'Disregard Call' wrapup button" id="SkipWrapupConditions" value="{!natterbox__nbCallCenterConfig__c.natterbox__Offer_Skip_Wrapup_Conditions__c}" multiselect="false" size="1">
+                                <apex:selectOption itemValue="never" itemLabel="Never"/>
+                                <apex:selectOption itemValue="always" itemLabel="Always"/>
+                                <apex:selectOption itemValue="noanswer" itemLabel="When call not answered"/>
+                                <apex:selectOption itemValue="nocontact" itemLabel="When no contact match"/>
+                                <apex:selectOption itemValue="noanswer,nocontact" itemLabel="When call not answered or no contact match"/>
+                            </apex:SelectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Outbound_Call_Wrapup_Limit__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Outbound_Call_Wrapup_Limit__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Outbound_Call_Wrapup_Limit__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Outbound_Call_Wrapup_Limit__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__Outbound_Call_Wrapup_Limit__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Link_To_Current_Item_URL_Regexes__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Link_To_Current_Item_URL_Regexes__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Link_To_Current_Item_URL_Regexes__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Link_To_Current_Item_URL_Regexes__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputTextArea value="{!natterbox__nbCallCenterConfig__c.natterbox__Link_To_Current_Item_URL_Regexes__c}" cols="80" rows="2" title="Regular expressions used to extract the object ID from URL of custom Visualforce pages when clicking on the 'Link to current item' button"/>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__EnableWriteDialItemStatus__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__EnableWriteDialItemStatus__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__EnableWriteDialItemStatus__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__EnableWriteDialItemStatus__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:inputField value="{!natterbox__nbCallCenterConfig__c.natterbox__EnableWriteDialItemStatus__c}">
+                                <apex:actionSupport event="onclick" reRender="wrapupInbound,wrapupOutbound"/>
+                            </apex:inputField>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+
+                <apex:pageBlock mode="edit" title="Natterbox Call Omni-Channel Presence Status" rendered="{!ServicePresenceStatusEnabled}">
+                    <apex:pageBlockSection showHeader="false" columns="1">
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Call_Queue_Status__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Call_Queue_Status__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Call_Queue_Status__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Call_Queue_Status__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:selectList value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Call_Queue_Status__c}" multiselect="false" size="1">
+                                <apex:selectOptions value="{!ServicePresenceStatusOptions}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Inbound_Status__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Inbound_Status__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Inbound_Status__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Inbound_Status__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:selectList value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Inbound_Status__c}" multiselect="false" size="1">
+                                <apex:selectOptions value="{!ServicePresenceStatusOptions}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Outbound_Status__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Outbound_Status__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Outbound_Status__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Outbound_Status__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:selectList value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Outbound_Status__c}" multiselect="false" size="1">
+                                <apex:selectOptions value="{!ServicePresenceStatusOptions}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:pageBlock> 
+                        
+                <apex:pageBlock mode="edit" title="Natterbox Group Login/Logout Omni-Channel Presence Status Triggers" rendered="{!ServicePresenceStatusEnabled}">
+                    <apex:pageBlockSection showHeader="false" columns="1">        
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Login_Statuses__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Login_Statuses__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Login_Statuses__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Login_Statuses__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel >
+                                <apex:selectList value="{!LoginSelectedOptions}" multiselect="true">
+                                    <apex:selectOptions value="{!LoginServicePresenceStatusOptions}"/>
+                                </apex:selectList>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Login_Statuses__c}"/>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Login_Statuses_2__c}"/>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Login_Statuses_3__c}"/>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Login_Statuses_4__c}"/>                                                                        
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem labelStyle="width: 35%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Logout_Statuses__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Logout_Statuses__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Logout_Statuses__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Service_Presence_Logout_Statuses__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel >
+                                <apex:selectList value="{!LogoutSelectedOptions}" multiselect="true">
+                                    <apex:selectOptions value="{!LogoutServicePresenceStatusOptions}"/>
+                                </apex:selectList>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Logout_Statuses__c}"/>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Logout_Statuses_2__c}"/>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Logout_Statuses_3__c}"/>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Service_Presence_Logout_Statuses_4__c}"/>                                    
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        
+                    </apex:pageBlockSection>
+                </apex:pageBlock> 
+                
+                <c:NB_CCC_Query_Label_Map myObject="{!natterbox__nbCallCenterConfig__c}" 
+                myField="{!natterbox__nbCallCenterConfig__c.natterbox__Query_Label_Map__c}" 
+                myMode="edit" />
+                
+                <c:NB_CCC_Custom_Log_Template myObject="{!natterbox__nbCallCenterConfig__c}" 
+                myField1="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Log_Template__c}" 
+                myField2="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Log_Template_2__c}" 
+                myField3="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Log_Template_3__c}" 
+                myField4="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Log_Template_4__c}" 
+                myMode="edit" />
+                                                                
+                <c:NB_CCC_Wrapup_Codes id="wrapupInbound" theObject="{!natterbox__nbCallCenterConfig__c}"
+                theField1="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound__c}"
+                theField2="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_2__c}"
+                theField3="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_3__c}"
+                theField4="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_4__c}"
+                theField5="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_5__c}"
+                theField6="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_6__c}"
+                theField7="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_7__c}"
+                theField8="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_8__c}"
+                theField9="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_9__c}"
+                theField10="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_10__c}"
+                theField11="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_11__c}"
+                theField12="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_12__c}"
+                theField13="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_13__c}"
+                theField14="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_14__c}"
+                theField15="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_15__c}"
+                theField16="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_16__c}"
+                theField17="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_17__c}"
+                theField18="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_18__c}"
+                theField19="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_19__c}"
+                theField20="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_20__c}"
+                theField21="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_21__c}"
+                theField22="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_22__c}"
+                theField23="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_23__c}"
+                theField24="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_24__c}"
+                theField25="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_25__c}"
+                theField26="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_26__c}"
+                theField27="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_27__c}"
+                theField28="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_28__c}"
+                theField29="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_29__c}"
+                theField30="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_30__c}"
+                theField31="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_31__c}"
+                theField32="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_32__c}"
+                theField33="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_33__c}"
+                theField34="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_34__c}"
+                theField35="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_35__c}"
+                theField36="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_36__c}"
+                theField37="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_37__c}"
+                theField38="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_38__c}"
+                theField39="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_39__c}"
+                theField40="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_40__c}"
+                theField41="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_41__c}"
+                theField42="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_42__c}"
+                theField43="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_43__c}"
+                theField44="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_44__c}"
+                theField45="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_45__c}"
+                theField46="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_46__c}"
+                theField47="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_47__c}"
+                theField48="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_48__c}"
+                theField49="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_49__c}"
+                theField50="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_50__c}"
+                theField51="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_51__c}"
+                theField52="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_52__c}"
+                theField53="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_53__c}"
+                theField54="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_54__c}"
+                theField55="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_55__c}"
+                theField56="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_56__c}"
+                theField57="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_57__c}"
+                theField58="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_58__c}"
+                theField59="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_59__c}"
+                theField60="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_60__c}"
+                theField61="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_61__c}"
+                theField62="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_62__c}"
+                theField63="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_63__c}"
+                theField64="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Inbound_64__c}"
+                location="Inbound" 
+                mode="edit" />
+                                
+                <c:NB_CCC_Wrapup_Codes id="wrapupOutbound" theObject="{!natterbox__nbCallCenterConfig__c}"
+                theField1="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound__c}"
+                theField2="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_2__c}"
+                theField3="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_3__c}"
+                theField4="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_4__c}"
+                theField5="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_5__c}"
+                theField6="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_6__c}"
+                theField7="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_7__c}"
+                theField8="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_8__c}"
+                theField9="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_9__c}"
+                theField10="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_10__c}"
+                theField11="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_11__c}"
+                theField12="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_12__c}"
+                theField13="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_13__c}"
+                theField14="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_14__c}"
+                theField15="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_15__c}"
+                theField16="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_16__c}"
+                theField17="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_17__c}"
+                theField18="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_18__c}"
+                theField19="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_19__c}"
+                theField20="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_20__c}"
+                theField21="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_21__c}"
+                theField22="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_22__c}"
+                theField23="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_23__c}"
+                theField24="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_24__c}"
+                theField25="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_25__c}"
+                theField26="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_26__c}"
+                theField27="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_27__c}"
+                theField28="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_28__c}"
+                theField29="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_29__c}"
+                theField30="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_30__c}"
+                theField31="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_31__c}"
+                theField32="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_32__c}"
+                theField33="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_33__c}"
+                theField34="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_34__c}"
+                theField35="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_35__c}"
+                theField36="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_36__c}"
+                theField37="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_37__c}"
+                theField38="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_38__c}"
+                theField39="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_39__c}"
+                theField40="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_40__c}"
+                theField41="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_41__c}"
+                theField42="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_42__c}"
+                theField43="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_43__c}"
+                theField44="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_44__c}"
+                theField45="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_45__c}"
+                theField46="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_46__c}"
+                theField47="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_47__c}"
+                theField48="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_48__c}"
+                theField49="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_49__c}"
+                theField50="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_50__c}"
+                theField51="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_51__c}"
+                theField52="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_52__c}"
+                theField53="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_53__c}"
+                theField54="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_54__c}"
+                theField55="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_55__c}"
+                theField56="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_56__c}"
+                theField57="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_57__c}"
+                theField58="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_58__c}"
+                theField59="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_59__c}"
+                theField60="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_60__c}"
+                theField61="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_61__c}"
+                theField62="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_62__c}"
+                theField63="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_63__c}"
+                theField64="{!natterbox__nbCallCenterConfig__c.natterbox__Wrapup_Codes_Outbound_64__c}"
+                location="Outbound" 
+                mode="edit" />
+                                
+                <c:NB_CCC_Custom_Callback_Tpl myObject="{!natterbox__nbCallCenterConfig__c}" 
+                myField1="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Callback_Template__c}" 
+                myField2="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Callback_Template_2__c}" 
+                myField3="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Callback_Template_3__c}" 
+                myField4="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Callback_Template_4__c}" 
+                myMode="edit" />
+                
+                <c:NB_CCC_Call_List_Template myObject="{!natterbox__nbCallCenterConfig__c}" 
+                myField1="{!natterbox__nbCallCenterConfig__c.natterbox__Call_List_Template__c}" 
+                myField2="{!natterbox__nbCallCenterConfig__c.natterbox__Call_List_Template_2__c}" 
+                myField3="{!natterbox__nbCallCenterConfig__c.natterbox__Call_List_Template_3__c}" 
+                myField4="{!natterbox__nbCallCenterConfig__c.natterbox__Call_List_Template_4__c}" 
+                myMode="edit" />
+                
+                <c:NB_CCC_Custom_Quick_Case_Tpl myObject="{!natterbox__nbCallCenterConfig__c}" 
+                myField1="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Quick_Case_Template__c}" 
+                myField2="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Quick_Case_Template_2__c}" 
+                myField3="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Quick_Case_Template_3__c}" 
+                myField4="{!natterbox__nbCallCenterConfig__c.natterbox__Custom_Quick_Case_Template_4__c}" 
+                myMode="edit" />
+                                
+                <apex:pageBlock mode="edit">
+                    <apex:pageBlockSection showHeader="false" columns="1" rendered="{!showSplitPersonAndRelatedToQueryResultsFeatures}">
+                         <div class="pbHeader" width="100%">
+                            <table width="100%">
+                                <tr>
+                                    <td width="100%">
+                                        <h2 class="mainTitle">Allowed 'Related To' Call Log Record Types</h2>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>               
+                        <apex:pageBlockSectionItem labelStyle="width: 25%;" HelpText="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Allowed_RelatedTo_Record_Types__c.inlineHelpText}">
+                            <apex:outputPanel >
+                                <apex:outputLabel value="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Allowed_RelatedTo_Record_Types__c.label}"/>
+                                <c:NB_CCC_HelpText text="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Allowed_RelatedTo_Record_Types__c.inlineHelpText}" rendered="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Allowed_RelatedTo_Record_Types__c.inlineHelpText != ''}"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel >
+                                <apex:selectList value="{!AllowedRelatedToRecordTypeSelectedOptions}" multiselect="true" size="10">
+                                    <apex:selectOptions value="{!AllowedRelatedToRecordTypeOptions}"/>
+                                </apex:selectList>
+                                <apex:inputHidden value="{!natterbox__nbCallCenterConfig__c.natterbox__Allowed_RelatedTo_Record_Types__c}"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+                                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

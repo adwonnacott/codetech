@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Customer_Experience</fullName>
+    <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+    <columns>NAME</columns>
+    <columns>nbavs__Insights_Player__c</columns>
+    <columns>nbavs__Start_Time__c</columns>
+    <columns>nbavs__Call_Direction__c</columns>
+    <columns>nbavs__Call_Type__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>nbavs__Channel_Duration_Time__c</columns>
+    <columns>nbavs__Number__c</columns>
+    <columns>nbavs__Natterbox_User__c</columns>
+    <columns>nbavs__Natterbox_Group__c</columns>
+    <columns>nbavs__Call_Reporting__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>nbavs__Natterbox_User__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>nbavs__Device_Id__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>nbavs__Caller_Type__c</field>
+        <operation>equals</operation>
+        <value>Customer</value>
+    </filters>
+    <label>Customer Experience</label>
+</ListView>

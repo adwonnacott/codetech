@@ -1,0 +1,24 @@
+<div class="nbvc slds ui-notification">
+    <div class="slds-notify_container">
+        <div class="slds-notify slds-notify--toast" role="alert" ng-class="{'slds-theme--success': t=='s', 'slds-theme--error': t=='e', 'slds-theme--warning': t=='w'}">
+            <span class="slds-assistive-text">Success</span>
+            <button type="button" class="slds-button slds-button--icon-inverse slds-notify__close">
+                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                    <use xlink:href="" i="close" svg-link />
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <div class="notify__content slds-grid">
+                <svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex">
+                    <use xlink:href="" i="notification" svg-link  ng-if="t==''" />
+                    <use xlink:href="" i="success" svg-link ng-if="t=='s'" />
+                    <use xlink:href="" i="error" svg-link ng-if="t=='e'" />
+                    <use xlink:href="" i="warning" svg-link ng-if="t=='w'" />
+                </svg>
+                <div class="slds-col slds-align-middle">
+                    <h2 class="slds-text-heading--small" ng-bind-html="message"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

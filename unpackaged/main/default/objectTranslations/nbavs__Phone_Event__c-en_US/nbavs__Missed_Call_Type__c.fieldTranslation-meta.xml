@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Missed Call Type --></label>
+        <name>nbavs__Missed_Call_Type__c</name>
+        <picklistValues>
+            <masterLabel>All Busy</masterLabel>
+            <translation><!-- All Busy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Devices</masterLabel>
+            <translation><!-- No Devices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ringing</masterLabel>
+            <translation><!-- Ringing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trying</masterLabel>
+            <translation><!-- Trying --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

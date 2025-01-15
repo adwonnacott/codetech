@@ -1,0 +1,53 @@
+{
+  "events": {
+    "uuid": "a3ba8999-6b20-467d-bd7e-47dc9b4f1a9a",
+    "callEvents": [
+      {
+        "event": "CS_QUEUING",
+        "timeStamp": "1556124262767699",
+        "data": {
+          "queue": "37_T00002909"
+        }
+      },
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1556124265625174",
+        "data": {
+          "uuid": "15e31730-6892-4397-b750-4525df0f1a8f"
+        }
+      },
+      {
+        "event": "RECORD_START",
+        "timeStamp": "1556124265865009"
+      },
+      {
+        "event": "UNBRIDGE",
+        "timeStamp": "1556124393845033",
+        "data": {
+          "uuid": "15e31730-6892-4397-b750-4525df0f1a8f",
+          "link": "5cc092e9de2e26.96282633"
+        }
+      },
+      {
+        "event": "RECORD_STOP",
+        "timeStamp": "1556124393931209"
+      },
+      {
+        "event": "CHANNEL_START",
+        "timeStamp": "1556124260993341"
+      },
+      {
+        "event": "CHANNEL_RING",
+        "timeStamp": "1556124261543654"
+      },
+      {
+        "event": "CHANNEL_ANSWER",
+        "timeStamp": "1556124262767699"
+      },
+      {
+        "event": "CHANNEL_END",
+        "timeStamp": "1556124393931209"
+      }
+    ]
+  }
+}

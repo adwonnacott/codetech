@@ -1,0 +1,59 @@
+<apex:page standardController="natterbox__nbCallCenterConfig__c"
+   extensions="natterbox.NB_CCC_List_Ext">
+    <apex:sectionHeader title="{!$ObjectType.natterbox__nbCallCenterConfig__c.label}" />
+    <script type="text/javascript">if (typeof cticonfig != 'undefined') cticonfig.salesforce_sid="{!$Api.Session_ID}";</script>
+    <apex:form >
+        <apex:PageMessages id="Messages" />
+        <apex:pageBlock title="{!$ObjectType.natterbox__nbCallCenterConfig__c.label} Configuration List"
+            mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Add record" action="{!addItem}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable id="List" value="{!items}"
+                var="item">
+                <apex:column headerValue="Action" width="100">
+                    <apex:commandLink value="View" action="{!viewItem}">
+                        <apex:param name="Id" value="{!item.Id}" />
+                    </apex:commandLink>
+                    &nbsp;|&nbsp;
+                    <apex:commandLink value="Edit" action="{!editItem}">
+                        <apex:param name="Id" value="{!item.Id}" />
+                    </apex:commandLink>
+                    &nbsp;|&nbsp;
+                    <apex:commandLink value="Del" action="{!deleteItem}"
+                        onClick="if (!confirmDelete('Press OK to delete this row.')) return;">
+                        <apex:param name="Id" value="{!item.Id}" />
+                    </apex:commandLink>
+                </apex:column>
+                <apex:column value="{!item.Id}" />
+                <apex:column value="{!item.Name}" />
+                <apex:column value="{!item.SetupOwnerId}" />
+                <apex:column value="{!item.natterbox__Enable_Wrapup__c}" />
+                <apex:column headerValue="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Query_Label_Map__c.label}" title="{!item.natterbox__Query_Label_Map__c}">
+                {!if(item.natterbox__Query_Label_Map__c==null,'No','Yes')}
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Wrapup_Codes_Inbound__c.label}" title="{!item.natterbox__Wrapup_Codes_Inbound__c}">
+                {!if(item.natterbox__Wrapup_Codes_Inbound__c==null,'No','Yes')}
+                </apex:column>
+                 <apex:column headerValue="{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Wrapup_Codes_Outbound__c.label}" title="{!item.natterbox__Wrapup_Codes_Outbound__c}">
+                {!if(item.natterbox__Wrapup_Codes_Outbound__c==null,'No','Yes')}
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="Import/Export Configuration">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Import XML configuration file. Browse to the file, then click 'Import'."/>
+                    <apex:panelGroup >
+                        <apex:commandButton id="importButton" value="Import" action="{!import}" />
+                        <apex:inputFile value="{!ImportFileContent}"/>
+                    </apex:panelGroup>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Export configuration to XML file. You will be forwarded to an attachment file - click 'View file' to download it, then the back button to return here."/>
+                    <apex:commandButton value="Export" action="{!export}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>nbavs__Admin_Home</defaultLandingTab>
+    <description>Natterbox offers a complete Cloud PBX with Contact Centre for Salesforce.</description>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>Natterbox</label>
+    <logo>nbavs__cbpx/nbavs__logo.png</logo>
+    <tabs>nbavs__Admin_Home</tabs>
+    <tabs>nbavs__User_Home</tabs>
+    <tabs>nbavs__Settings</tabs>
+    <tabs>nbavs__User__c</tabs>
+    <tabs>nbavs__PhoneNumber__c</tabs>
+    <tabs>nbavs__Device__c</tabs>
+    <tabs>nbavs__Group__c</tabs>
+    <tabs>nbavs__CallFlow__c</tabs>
+    <tabs>nbavs__DialList__c</tabs>
+    <tabs>nbavs__Call_Logs_and_Recordings</tabs>
+    <tabs>nbavs__CallStatus</tabs>
+    <tabs>nbavs__CallReporting__c</tabs>
+    <tabs>nbavs__Wallboards</tabs>
+    <tabs>nbavs__Wallboards_V2</tabs>
+    <tabs>Xero_API_Tokens__c</tabs>
+    <tabs>Xero_Log_Activity__c</tabs>
+    <tabs>Xero_Invoice__c</tabs>
+</CustomApplication>

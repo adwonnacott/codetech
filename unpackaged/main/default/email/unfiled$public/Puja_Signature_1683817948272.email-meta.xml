@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Puja Signature</name>
+    <pageDevName>Puja_Signature</pageDevName>
+    <style>none</style>
+    <textOnly>Dear {{{Recipient.FirstName}}},
+
+Puja Tailor
+
+07824 883524 •0207 101 0207 
+
+codeinternational.com &lt; https://www.codeinternational.com &gt; Code Technology Ltd, Building 3, 566 Chiswick High Road, London, W4 5YACode Technology Limited is registered in England and Wales (registered number 12365215) with its registered office at 2nd Floor, 168 Shoreditch High Street, London, United Kingdom, E1 6RA. The contents of this email are confidential and may be protected by legal privilege. If you are not the intended recipient, please notify us as soon as possible and do not copy, forward, disclose or use the contents. Code Technology Limited may monitor mail for business purposes.</textOnly>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

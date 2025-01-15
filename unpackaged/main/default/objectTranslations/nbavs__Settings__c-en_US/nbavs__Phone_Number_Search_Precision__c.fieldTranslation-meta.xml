@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Default: 4 --></help>
+        <label><!-- Phone Number Search Precision --></label>
+        <name>nbavs__Phone_Number_Search_Precision__c</name>
+    </CustomFieldTranslation>

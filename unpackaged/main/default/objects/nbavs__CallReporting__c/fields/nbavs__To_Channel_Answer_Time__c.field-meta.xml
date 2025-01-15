@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Channel_Answer_Time__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The actual answer time of the physical call regardless of how many times the To leg has been transferred</description>
+    <label>To Channel Answer Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

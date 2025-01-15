@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Author Open Acknowledged Count --></label>
+        <name>nbavs__AuthorOpenAcknowledgedCount__c</name>
+    </CustomFieldTranslation>

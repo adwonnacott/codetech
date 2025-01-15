@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Insight_Search_Opened_Notes__c</fullName>
+    <deprecated>false</deprecated>
+    <description>This field used to order Insights Search results for a basic user.
+Calls with open notes (newest calls first - Time column)</description>
+    <formula>If(NOT(ISBLANK(nbavs__Opened_Notes_Date__c)), nbavs__Start_Time__c,null)</formula>
+    <label>Insight Search Opened Notes</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

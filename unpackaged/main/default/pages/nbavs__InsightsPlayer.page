@@ -1,0 +1,62 @@
+<apex:page docType="html-5.0" sidebar="true" showHeader="true" controller="nbavs.InsightsController">
+     <html lang="en">
+     <apex:form >
+          <apex:actionFunction action="{!updateUserViews}" name="updateUserViewFn" rerender="nothing"/>
+     </apex:form>
+    	<style type="text/css">
+            [id*=app-container]{
+              position: absolute;
+              left:0;
+              right:0;
+              top:0;
+              bottom:0;
+            }
+        </style> 
+
+     <script>
+          function getSessionId(){
+               return '{!GETSESSIONID()}';
+          }
+          function getVisualforce(){
+               return Visualforce.remoting.Manager;
+          }
+          function getAction(action){
+               if(!action) return;
+               switch(action){
+                    case 'getNamespace': return '{!$RemoteAction.InsightsController.getNamespace}';
+                    case 'getEventTypes': return '{!$RemoteAction.InsightsController.getEventTypes}';
+                    case 'getPolarityValues': return '{!$RemoteAction.InsightsController.getPolarityValues}';
+                    case 'getNotes': return '{!$RemoteAction.InsightsController.getNotes}';
+                    case 'createNewNote': return '{!$RemoteAction.InsightsController.createNewNote}';
+                    case 'EditNote': return '{!$RemoteAction.InsightsController.EditNote}';
+                    case 'DeleteNote': return '{!$RemoteAction.InsightsController.DeleteNote}';
+                    case 'getParticipantsInfo': return '{!$RemoteAction.InsightsController.getParticipantInfo}';
+                    case 'canShareRecording': return '{!$RemoteAction.InsightsController.canShareRecording}';
+                    case 'getOrgUrl': return '{!$RemoteAction.InsightsController.getOrgUrl}';
+                    case 'getRatingDetails': return '{!$RemoteAction.InsightsController.getRatingDetails}';
+                    case 'saveRating': return '{!$RemoteAction.InsightsController.saveRating}';
+                    case 'getUserName': return '{!$RemoteAction.InsightsController.getUserName}';
+                    default: return null;
+               }
+          }
+          if({!hasAccess}){
+               updateUserViewFn();
+          }
+     </script>
+
+     <head>
+          <meta charset="utf-8"/>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+     </head>
+     <body  style="scroll-x:hidden;scroll-y:auto;">
+     <div id="app-container" style="display: {!IF(hasAccess == true, 'block', 'none')};">
+          <iframe id="reactFrame" name="reactFrame" width="100%" height="100%" align="top" frameBorder="0" src="{!IF(hasAccess == true,URLFOR($Resource.Insights+ '/index.html'+param),'')}"  />
+     </div>
+     <div id="error-container" style="display: {!IF(hasAccess == true, 'none', 'block')};">
+          <h2> You do not have access to view this recording. Either the recording must be shared with you or you must have been granted access by your system administrator.</h2>
+     </div>
+     </body>
+
+     </html>
+</apex:page>

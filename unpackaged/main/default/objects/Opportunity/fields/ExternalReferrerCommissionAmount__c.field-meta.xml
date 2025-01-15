@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExternalReferrerCommissionAmount__c</fullName>
+    <description>Expected commission amount for the external referrer should the deal be closed. For percentage is % of device + % of annualised monthly subscription</description>
+    <formula>IF(ISBLANK(ExternalReferrer__c),0,
+IF(ISPICKVAL(ExternalReferrer__r.CommissionStructure__c,&#39;Fixed Fee&#39;),ExternalReferrer__r.FixedCommissionAmount__c,
+TotalOpportunityValue__c *  ExternalReferrer__r.CommissionPercentage__c 
+))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>External Referrer Commission Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>

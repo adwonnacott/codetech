@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Flag_Early_Divert__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Leg was the subject of a mobile early divert</description>
+    <label>From Flag Early Divert</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

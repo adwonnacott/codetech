@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Loss_Reason</fullName>
+    <active>true</active>
+    <description>Check loss reason is populated when the opportunity is closed / lost</description>
+    <errorConditionFormula>ISPICKVAL(StageName,&#39;Closed Lost&#39;)
+&amp;&amp; ISBLANK(TEXT(Loss_Reason__c))</errorConditionFormula>
+    <errorDisplayField>Loss_Reason__c</errorDisplayField>
+    <errorMessage>LOSS REASON MUST BE POPULATED WHEN AN OPPORTUNITY IS CLOSED LOST</errorMessage>
+</ValidationRule>

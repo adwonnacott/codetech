@@ -1,0 +1,89 @@
+<html>
+<head><meta /><meta content="telephone=no" name="format-detection" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><meta content="IE=edge" />
+	<title>Code International</title>
+	<style type="text/css">body {
+            width: 100% !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff !important;
+        }
+        .ReadMsgBody { width: 100%;}
+        .ExternalClass { width: 100%;}
+        .ExternalClass * { line-height:110%}
+        table td {border-collapse:collapse;}
+        #maintable {width:650px;}
+        .maincopy a {color: #17314E !important; text-decoration: none !important;}
+        @media screen and (max-width: 649px){
+            table[id=wrapper] #maintable {width:100% !important; max-width:650px !important; min-width:320px !important;}
+            table[id=wrapper] .inner {width:100% !important; max-width:650px; min-width:270px !important;}
+            table[id=wrapper] .hide {width:0px !important; display:none !important;}
+            table[id=wrapper] .header img {width: 100% !important; height: auto !important;}
+            table[id=wrapper] .footer img {width: 100% !important; height: auto !important;}
+            
+            
+        }
+        @media screen and (max-width: 499px){
+            table[id=wrapper] .mob-pad {padding-left: 20px !important; padding-right: 20px !important;}
+            table[id=wrapper] .footer br {display: none;}
+        }
+	</style>
+</head>
+<body style="font-size: 13px; text-size-adjust: none; line-height: 100%; height: auto; min-height: auto;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" id="wrapper" style="table-layout: auto;" width="100%">
+	
+		<tr>
+			<td align="center" style="background-color: rgb(255, 255, 255);">
+			<table align="center" border="0" cellpadding="0" cellspacing="0" id="maintable" style="table-layout: auto;" width="650">
+				
+					<tr>
+						<td align="center" style="background-color: rgb(255, 255, 255);">
+						<table border="0" cellpadding="0" cellspacing="0" class="inner" style="table-layout: auto;" width="650">
+							
+								<tr>
+									<td align="left" class="header" style="text-align: left; line-height: 30px; font-family: 'Roboto',Verdana,Arial, sans-serif; font-size: 24px; font-weight: bold; display: block"><img alt="Code International" height="149" src="https://codeinternational.com/emails/images/header.jpg" style="display: block;" width="650" /></td>
+								</tr>
+								<tr>
+									<td bgcolor="#ffffff" class="mob-pad" style="background-color: rgb(255, 255, 255); padding: 30px 35px 30px;">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										
+											<tr>
+												<td align="left" style="text-align: left; line-height: 30px; font-family: 'Roboto',Verdana,Arial, sans-serif; font-size: 21px; font-weight: bold; display: block; color: #0F1C3D; padding: 0 0 25px;">Message Title</td>
+											</tr>
+											<tr>
+												<td align="left" style="text-align: left; line-height: 20px; font-family: 'Roboto',Verdana,Arial, sans-serif; font-size: 13px; font-weight: normal; display: block; color: #17314E; padding: 0 0 30px;"><span style="font-size:15px;"><b>Customer Name</b></span><br />
+												Message line 1<br />
+												<br />
+												Message line 2<br />
+												<br />
+												With best wishes<br />
+												<br />
+												<span style="font-size:15px;"><b>Code</b></span></td>
+											</tr>
+										
+									</table>
+									</td>
+								</tr>
+								<tr>
+									<td align="left" class="footer" style="text-align: left; line-height: 30px; font-family: 'Roboto',Verdana,Arial, sans-serif; font-size: 24px; font-weight: bold; display: block"><img alt="Footer" height="75" src="https://codeinternational.com/emails/images/footer.jpg" style="display: block;" width="650" /></td>
+								</tr>
+								<tr>
+									<td align="left" bgcolor="#f0f0f0" class="footer" style="padding: 0px 35px 20px; background-color:#f0f0f0;text-align: center; line-height: 20px; font-family: 'Roboto',Verdana,Arial, sans-serif; font-size: 10px; font-weight: normal; display: block">Registered office: 2nd Floor 168 Shoreditch High Street, London, United Kingdom, E1 6RA.<br />
+									Registered in England and Wales No. 12365215</td>
+								</tr>
+							
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td class="hide" style="min-width:650px;">&nbsp;</td>
+					</tr>
+				
+			</table>
+			</td>
+		</tr>
+	
+</table>
+</body>
+</html>

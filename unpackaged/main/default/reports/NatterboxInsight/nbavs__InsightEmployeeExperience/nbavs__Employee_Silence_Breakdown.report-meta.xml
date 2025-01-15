@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_31578137</developerName>
+        <masterLabel>Over Talk Incidents</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>nbavs__Insights__c.nbavs__Metric_Primary_OverTalk_Incidents__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>0</to>
+            </sourceValues>
+            <value>None (0)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>0</from>
+                <to>5</to>
+            </sourceValues>
+            <value>Insignificant (&lt; 5)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>5</from>
+                <to>10</to>
+            </sourceValues>
+            <value>Acceptable (&lt; 10)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>10</from>
+                <to>19</to>
+            </sourceValues>
+            <value>Significant (&lt; 19)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>19</from>
+            </sourceValues>
+            <value>Extreme (&gt; 20)</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_78202008</developerName>
+        <masterLabel>Silence Incidents</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>nbavs__Insights__c.nbavs__Metric_Silence_Incidents__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>0</to>
+            </sourceValues>
+            <value>None (0)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>0</from>
+                <to>10</to>
+            </sourceValues>
+            <value>Insignificant (1 - 10)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>10</from>
+                <to>20</to>
+            </sourceValues>
+            <value>Significant (11 - 20)</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>20</from>
+            </sourceValues>
+            <value>Exceptional (20+)</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>Donut</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>false</expandOthers>
+        <groupingColumn>BucketField_78202008</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>false</showAxisLabels>
+        <showPercentage>true</showPercentage>
+        <showTotal>true</showTotal>
+        <showValues>true</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <title>Employee Exp. Silence Incidents</title>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>BucketField_31578137</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>nbavs__Insights__c.nbavs__Insights_Player__c</field>
+    </columns>
+    <columns>
+        <field>nbavs__Insights__c.nbavs__Answer_Time__c</field>
+    </columns>
+    <columns>
+        <field>nbavs__Insights__c.nbavs__Call_Direction__c</field>
+    </columns>
+    <columns>
+        <field>nbavs__Insights__c.nbavs__Channel_Duration_Time__c</field>
+    </columns>
+    <columns>
+        <field>nbavs__Insights__c.nbavs__Natterbox_User__c</field>
+    </columns>
+    <columns>
+        <field>nbavs__Insights__c.nbavs__Natterbox_Group__c</field>
+    </columns>
+    <description>A count of the number of calls were silence was detected. Call counts are grouped by levels of silence incidents detected, between None and Extreme</description>
+    <filter>
+        <criteriaItems>
+            <column>nbavs__Insights__c.nbavs__Caller_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Employee</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>nbavs__Insights__c.nbavs__Natterbox_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_78202008</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Employee Silence Breakdown</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$nbavs__Insights__c$nbavs__Insight_Category__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>nbavs__Insights__c.nbavs__Answer_Time__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

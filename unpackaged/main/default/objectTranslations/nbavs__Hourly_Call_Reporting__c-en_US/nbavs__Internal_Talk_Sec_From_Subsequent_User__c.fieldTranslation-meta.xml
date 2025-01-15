@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many seconds of talk time have I spent on calls to other internal users in my organisation as a logical From party, but where the call had been transferred to me --></help>
+        <label><!-- Internal From Talk Seconds as Transferee --></label>
+        <name>nbavs__Internal_Talk_Sec_From_Subsequent_User__c</name>
+    </CustomFieldTranslation>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Retry Action --></label>
+        <name>nbavs__Retry_Action__c</name>
+        <picklistValues>
+            <masterLabel>Finished</masterLabel>
+            <translation><!-- Finished --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retry After</masterLabel>
+            <translation><!-- Retry After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retry Day After</masterLabel>
+            <translation><!-- Retry Day After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retry Month After</masterLabel>
+            <translation><!-- Retry Month After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retry Week After</masterLabel>
+            <translation><!-- Retry Week After --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

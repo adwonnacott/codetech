@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Decision --></label>
+        <name>nbavs__decision__c</name>
+        <picklistValues>
+            <masterLabel>ACCEPT</masterLabel>
+            <translation><!-- ACCEPT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>REJECT</masterLabel>
+            <translation><!-- REJECT --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

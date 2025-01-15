@@ -1,0 +1,12 @@
+<div class="slds-form-element" ng-controller="ModPolicyToCall" ng-class="{'slds-is-required slds-has-error': !item.data.variables.nextPolicyId}">
+    <label class="slds-form-element__label" for="nextPolicyId">Select the next Policy to run</label>
+    <div class="slds-form-element__control">
+        <div class="slds-select_container">
+            <select id="nextPolicyId" class="slds-select" ng-model="item.data.variables.nextPolicyId"
+                    ng-options="item.Id__c as item.Name for item in model.callPolicies">
+            </select>
+        </div>
+    </div>
+</div>
+
+

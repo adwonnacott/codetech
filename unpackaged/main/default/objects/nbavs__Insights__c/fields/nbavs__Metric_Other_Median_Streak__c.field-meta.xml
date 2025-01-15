@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Metric_Other_Median_Streak__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The streak talking time value where half the other party talking streaks are below this value and half are above this value</description>
+    <externalId>false</externalId>
+    <label>Metric Other Median Streak</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>3</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

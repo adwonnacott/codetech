@@ -1,0 +1,158 @@
+<div ng-controller="ModNumber_Public">
+    <div class="slds-form-element">
+        <section class="slds-clearfix">
+            <label class="slds-form-element__label slds-float--lef">Numbers handled by this item</label>
+            <div class="slds-float--right">
+                <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                        ng-click="showNumbersDialog()">{{node.data.subItems.length > 0 ? 'Edit ' : 'Add '}}Numbers
+                </button>
+            </div>
+        </section>
+    </div>
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+
+        <div class="slds-scrollable--y" style="max-height:380px;">
+            <table class="slds-table slds-table--bordered slds-text-body--small">
+                <thead>
+                <tr class="slds-text-heading--label">
+                    <th scope="col">
+                        <span class="slds-truncate">Name</span>
+                        <button type="button" class="slds-button slds-button--icon-bare">
+                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                <use xlink:href="" i="arrowdown" svg-link />
+                            </svg>
+                            <span class="slds-assistive-text">Sort</span>
+                        </button>
+                    </th>
+                    <th scope="col">
+                        <span class="slds-truncate">Number</span>
+                        <button type="button" class="slds-button slds-button--icon-bare">
+                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                <use xlink:href="" i="arrowdown" svg-link />
+                            </svg>
+                            <span class="slds-assistive-text">Sort</span>
+                        </button>
+                    </th>
+                </tr>
+
+                </thead>
+                <tbody>
+
+                <tr class="slds-hint-parent" ng-repeat="item in node.data.subItems">
+                    <td data-label="name"><span class="slds-truncate">{{item.name}}</span></td>
+                    <td data-label="number"><span class="slds-truncate">{{item.variables.publicNumber}}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+  </div>
+</div>
+    <div ng-show="model.showNumbersDialog" class="dialog-modal">
+
+        <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h2 class="slds-text-heading--medium">Select Numbers</h2>
+                    <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+                            ng-click="model.showNumbersDialog = false">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            <use xlink:href="" i="close" svg-link />
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </div>
+                <div class="slds-modal__content">
+                    <div class="slds-scrollable--y" style="max-height: 500px">
+                        <table class="slds-table slds-table--bordered slds-text-body--small">
+                            <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-cell-shrink" scope="col">
+                                    <label class="slds-checkbox" for="select-all">
+                                        <input name="checkbox" type="checkbox" id="select-all"
+                                               ng-change="toggleSelectNumbers()" ng-model="model.selectAllNumbers"/>
+                                        <span class="slds-checkbox--faux"></span>
+                                        <span class="slds-form-element__label slds-assistive-text">select all</span>
+                                    </label>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Name</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link />
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Number</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link />
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Policy</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link />
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">DDI</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link />
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr class="slds-hint-parent" ng-repeat="item in model.currentPhoneNumbers" ng-class="{'slds-is-selected': item.selected, 'slds-is-disabled--local': item.disabled}">
+                                <td class="slds-row-select">
+                                    <label class="slds-checkbox" for="select-row{{$index}}" ng-if="!item.disabled">
+                                        <input name="select-row{{$index}}" type="checkbox" id="select-row{{$index}}"
+                                               ng-model="item.selected" ng-disabled="item.disabled" style="display:none"/>
+                                        <span class="slds-checkbox--faux"></span>
+                                        <span class="slds-form-element__label slds-assistive-text">select row{{$index}}</span>
+                                    </label>
+                                </td>
+                                <td data-label="name"><span class="slds-truncate">{{item.Name}}</span></td>
+                                <td data-label="country"><span class="slds-truncate">{{item.Number__c}}</span></td>
+                                <td data-label="callflow" ng-if="item.CallFlow__c== null || item.CallFlow__r.Name=='current Policy'">
+                                    <span class="slds-truncate">{{item.CallFlow__r.Name}}</span>
+                                </td>
+                                <td data-label="callflow" ng-if="item.CallFlow__c!= null && item.CallFlow__r.Name!='current Policy'">
+                                    <a href="javascript:;" ng-click="loadDetail(item.CallFlow__c)"><span class="slds-truncate">{{item.CallFlow__r.Name}}</span></a>
+                                </td>
+                                <td data-label="user">
+                                    <span class="slds-truncate" ng-if="item.User__r != null">{{item.User__r.Name}}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <div class="slds-x-small-buttons--horizontal">
+                        <button type="button" class="slds-button slds-button--neutral" ng-click="cancelSelectedNumbers()">Cancel
+                        </button>
+                        <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                                ng-click="addSelectedNumbers()">Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Keywords_Primary__c</fullName>
+    <deprecated>false</deprecated>
+    <description>A text field (length to be determined), into which the keywords for the Primary channel will be written, e.g. “Trump,Johnson,Natterbox,Big”.</description>
+    <externalId>false</externalId>
+    <label>Keywords Primary</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

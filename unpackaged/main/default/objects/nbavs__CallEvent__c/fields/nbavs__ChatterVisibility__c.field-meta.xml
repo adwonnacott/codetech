@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__ChatterVisibility__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Chatter Visibility</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>internalUsers</fullName>
+                <default>false</default>
+                <label>internalUsers</label>
+            </value>
+            <value>
+                <fullName>allUsers</fullName>
+                <default>false</default>
+                <label>allUsers</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commission_Structure_Check</fullName>
+    <active>true</active>
+    <description>Check commission structure is not blank when account type = External Referrer</description>
+    <errorConditionFormula>ISBLANK(TEXT(CommissionStructure__c))
+&amp;&amp; ISPICKVAL(Type,&#39;External Referrer&#39;)</errorConditionFormula>
+    <errorDisplayField>CommissionStructure__c</errorDisplayField>
+    <errorMessage>COMMISSION STRUCTURE MUST BE SET FOR EXTERNAL REFERRER ACCOUNT TYPE</errorMessage>
+</ValidationRule>

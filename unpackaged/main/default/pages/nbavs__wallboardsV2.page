@@ -1,0 +1,50 @@
+<apex:page docType="html-5.0" controller="nbavs.WallboardsV2Controller">
+    <html>  
+        <head>
+            <title>Wallboards</title>
+            <link href="{!wallboardHost}/static/css/bundle.min.css" rel="stylesheet"/>
+            <script type="text/javascript">
+                window.WbConfig = {
+                    sfSessionId: "{!$Api.Session_ID}",
+                    host: "{!wallboardHost}"
+                };
+            </script>
+            <script src="/soap/ajax/35.0/connection.js" type="text/javascript"></script>
+            <script src="/soap/ajax/35.0/apex.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                sforce.connection.sessionId = '{!$Api.Session_ID}';
+            </script>
+            <script>
+                const usersPhotos = sforce.connection.query('Select id, name, SmallPhotoUrl, FullPhotoUrl From User where IsActive = true limit 10000');
+                let nsPrefix='{!JSENCODE(namespacePrefix)}';
+                let userQuery='Select name, '+nsPrefix+'User__c, '+nsPrefix+'Id__c, id From '+nsPrefix+'User__c where '+nsPrefix+'Enabled__c = true limit 10000';
+                const usersIds = sforce.connection.query(userQuery);
+                let usersAvatars = [];
+                
+                usersPhotos.records.forEach(userPhoto => {
+                  usersIds.records.forEach(userId => {
+                    if(userPhoto.Id === userId.User__c) {
+                      usersAvatars.push({
+                        id: parseInt(userId.Id__c),
+                        smallPhoto: userPhoto.SmallPhotoUrl,
+                        largePhoto: userPhoto.FullPhotoUrl,
+                        name: userPhoto.Name
+                      })
+                    }
+                  })
+                })
+                
+                window.WbConfig.usersAvatars = usersAvatars;
+                // console.log(usersAvatars)
+            </script>
+            
+           
+        </head>
+        <body>
+        <apex:pageMessages id="messages" />
+        <div id="root" style="display: {!IF(ccLicensed == true, 'flex', 'none')};"></div>
+
+        <script src="{!wallboardHost}/static/js/bundle.min.js"></script>
+    </body>
+    </html>
+</apex:page>

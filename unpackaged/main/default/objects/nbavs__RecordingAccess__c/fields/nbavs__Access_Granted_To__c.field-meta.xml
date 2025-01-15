@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Access_Granted_To__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Access Granted To</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Recording</fullName>
+                <default>true</default>
+                <label>Recording (including Insight data)</label>
+            </value>
+            <value>
+                <fullName>Insights Only</fullName>
+                <default>false</default>
+                <label>Insights Only</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

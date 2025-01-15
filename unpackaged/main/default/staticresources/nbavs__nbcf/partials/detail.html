@@ -1,0 +1,35 @@
+<div ng-include src="'/partials/header.html'"></div>
+<!-- canvas START -->
+
+<div class="slds-card canvas-container">
+    <div class="slds-card__body canvas-container-inner" hm-panstart="onHammer($event)" hm-panmove="onHammer($event)" hm-pinchin="onHammer($event)" hm-pinchout="onHammer($event)" hm-pinchend="onHammer($event)">
+        <div id="canvas" mouse-capture="true" ng-cloak="">
+            <flow-chart
+                    chart="chartViewModel"
+                    id="chart"
+            >
+            </flow-chart>
+        </div>
+
+
+
+
+    </div>
+</div>
+<div class="dialog-container"
+     ng-if="chartViewModel.selectedNode && !chartViewModel.selectedItem">
+    <node-edit node="chartViewModel.selectedNode" item="chartViewModel.selectedItem"
+               view-model="chartViewModel"/>
+</div>
+
+<div class="dialog-container"
+     ng-if="chartViewModel.selectedItem">
+    <item-edit node="chartViewModel.selectedNode" item="chartViewModel.selectedItem"
+               view-model="chartViewModel"/>
+</div>
+<div class="dialog-container"
+     ng-if="chartOptionsDialog && chartViewModel.selectedNode== null && chartViewModel.selectedItem== null"
+     ng-include="'/flowchart/flowchart_options.html'">
+</div>
+<!-- canvas END -->
+<div ng-include src="'/partials/footer.html'"></div>

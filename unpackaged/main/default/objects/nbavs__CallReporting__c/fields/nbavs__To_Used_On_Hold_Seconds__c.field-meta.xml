@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Used_On_Hold_Seconds__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The duration in seconds relating to how much time this party placed the other parties on hold</description>
+    <externalId>false</externalId>
+    <label>To Used On Hold Seconds</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

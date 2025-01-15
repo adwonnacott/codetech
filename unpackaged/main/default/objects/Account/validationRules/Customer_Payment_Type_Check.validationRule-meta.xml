@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Payment_Type_Check</fullName>
+    <active>false</active>
+    <description>Check payment type is populated before account is set to Customer</description>
+    <errorConditionFormula>ISPICKVAL(Type, &#39;Customer&#39;)
+&amp;&amp; ISBLANK(TEXT( PaymentType__c ))</errorConditionFormula>
+    <errorMessage>PAYMENT TYPE MUST BE POPULATED BEFORE TYPE CAN BE SET TO CUSTOMER</errorMessage>
+</ValidationRule>

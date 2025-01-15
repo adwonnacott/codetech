@@ -1,0 +1,497 @@
+<div ng-controller="SalesforceQuery">
+
+    <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.resultSet.$error.required}">
+        <label class="slds-form-element__label" for="resultSet">Result Set</label>
+        <div class="slds-form-element__control">
+            <input id="resultSet" name="resultSet" class="slds-input slds-size--3-of-5" type="text" placeholder=""
+                   ng-model="item.data.config.resultSet" aria-describedby="errorName" required="true"
+                   ng-change="updateScript()" result-set-name />
+            <button type="button" class="slds-button slds-button--brand slds-float--right" ng-click="testQuery()">
+                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+                    <use xlink:href="" s="utility" i="preview" svg-link/>
+                </svg>
+                Test Query
+            </button>
+        </div>
+    </div>
+
+    <div class="slds-form-element">
+        <label class="slds-form-element__label">Trigger When</label>
+        <div class="slds-form-element__control">
+            <div>
+                <label class="slds-checkbox">
+                    <input type="checkbox" name="options" id="RECORDS_FOUND"
+                           ng-model="model.triggerOptionsQuery.RECORDS_FOUND" ng-click="updateTrigger()">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label" translate>RECORDS_FOUND</span>
+                </label>
+            </div>
+            <div>
+                <label class="slds-checkbox">
+                    <input type="checkbox" name="options" id="RECORDS_NOT_FOUND"
+                           ng-model="model.triggerOptionsQuery.RECORDS_NOT_FOUND" ng-click="updateTrigger()">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label" translate>RECORDS_NOT_FOUND</span>
+                </label>
+            </div>
+            <div>
+                <label class="slds-checkbox">
+                    <input type="checkbox" name="options" id="SF_ERROR" ng-model="model.triggerOptionsQuery.SF_ERROR"
+                           ng-click="updateTrigger()">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label" translate>SF_ERROR</span>
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="slds-form-element">
+        <div class="slds-tabs--scoped">
+            <ul class="slds-tabs--scoped__nav" role="tablist">
+                <li class="slds-tabs--scoped__item slds-text-heading--label" title="builder" role="presentation"
+                    ng-class="item.data.config.mode == 'builder' ? 'slds-active' : ''">
+                    <a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="0" aria-selected="true"
+                       aria-controls="tab-scoped-builder" id="tab-scoped-builder__item"
+                       ng-click="item.data.config.mode = 'builder'">builder</a>
+                </li>
+                <li class="slds-tabs--scoped__item slds-text-heading--label" title="sogl" role="presentation"
+                    ng-class="item.data.config.mode == 'soql' ? 'slds-active' : ''">
+                    <a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="-1"
+                       aria-selected="false" aria-controls="tab-scoped-soql" id="tab-scoped-soql__item"
+                       ng-click="item.data.config.mode = 'soql'">soql</a>
+                </li>
+            </ul>
+            <div id="tab-scoped-builder" class="slds-tabs--scoped__content" role="tabpanel"
+                 aria-labelledby="tab-scoped-builder__item"
+                 ng-class="item.data.config.mode == 'builder' ? 'slds-show' : 'slds-hide'">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="selectedObject">Record Type</label>
+
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select ng-if="!item.data.config.showAPIName" id="selectedObject" name="selectedObject" class="slds-select slds-size--3-of-3"
+                                    ng-model="item.data.config.sObject"
+                                    ng-options="itm.name as itm.label for itm in model.sObjects  | filter: {queryable: true}"
+                                    ng-change="sObjectChange()">
+                            </select>
+                            <select ng-if="item.data.config.showAPIName" id="selectedObject" name="selectedObject" class="slds-select slds-size--3-of-3"
+                                    ng-model="item.data.config.sObject"
+                                    ng-options="itm.name as itm.name for itm in model.sObjects  | filter: {queryable: true}"
+                                    ng-change="sObjectChange()">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <div>
+                            <label class="slds-checkbox">
+                                <input type="checkbox" name="fieldName" id="fieldName"
+                                       ng-model="item.data.config.showAPIName">
+                                <span class="slds-checkbox--faux"></span>
+                                <span class="slds-form-element__label">Show Salesforce API Names</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Filter results</label>
+
+                    <div class="slds-box slds-theme--default slds-box--x-small with_border">
+                        <div class="slds-form--inline" ng-repeat="fieldAnd in item.data.config.filterFields">
+
+                            <div class="slds-box slds-theme--shade slds-box--x-small with_border slds-m-bottom--small">
+                                <div class="slds-form--inline" ng-repeat="field in fieldAnd">
+
+                                    <fieldset class="slds-form--compound">
+                                        <div class="form-element__group">
+
+                                            <div class="slds-form-element__row--labels-local" ng-if="$index==0">
+                                                <div class="slds-form-element__control slds-size--4-of-12">
+                                                    <label class="slds-form-element__label">Field</label>
+                                                </div>
+                                                <div class="slds-form-element__control slds-size--3-of-12">
+                                                    <label class="slds-form-element__label">Operator</label>
+                                                </div>
+                                                <div class="slds-form-element__control slds-size--4-of-12">
+                                                    <label class="slds-form-element__label">Value</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element__control slds-size--4-of-12">
+                                                    <div class="slds-select_container">
+                                                        <select ng-if="!item.data.config.showAPIName"
+                                                                id="field_name_{{$index}}_{{$parent.$index}}"
+                                                                name="field_name_{{$index}}_{{$parent.$index}}"
+                                                                class="slds-select"
+                                                                ng-model="field.name"
+                                                                ng-options="itm.name as itm.label for itm in model.sObjectFields | filter: {filterable: true}"
+                                                                ng-change="changeFieldType(field); updateSOQL();">
+                                                        </select>
+                                                        <select ng-if="item.data.config.showAPIName"
+                                                                id="field_name_{{$index}}_{{$parent.$index}}"
+                                                                name="field_name_{{$index}}_{{$parent.$index}}"
+                                                                class="slds-select"
+                                                                ng-model="field.name"
+                                                                ng-options="itm.name as itm.name for itm in model.sObjectFields | filter: {filterable: true}"
+                                                                ng-change="changeFieldType(field); updateSOQL();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="slds-form-element__control slds-size--3-of-12">
+                                                    <div class="slds-select_container">
+                                                        <select id="field_operator_{{$index}}_{{$parent.$index}}"
+                                                                name="field_operator_{{$index}}_{{$parent.$index}}"
+                                                                class="slds-select"
+                                                                ng-model="field.operator"
+                                                                ng-options="itm.value as itm.label for itm in model.operators | filter: {type: field.type}"
+                                                                ng-change="updateSOQL();">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="slds-form-element__control slds-size--4-of-12 slds-input-has-icon slds-input-has-icon--right"
+                                                     ng-class="{'slds-is-required slds-has-error': ItemForm.field_value_{{$index}}_{{$parent.$index}}.$error.required}">
+
+                                                    <input ng-show="field.macroMode || (field.type != 'boolean' && field.type!='picklist')"
+                                                           id="field_value_{{$index}}_{{$parent.$index}}"
+                                                           name="field_value_{{$index}}_{{$parent.$index}}"
+                                                           class="slds-input" type="text" placeholder=""
+                                                           ng-model="field.value" aria-describedby="errorName"
+                                                           required="true" ng-change="updateSOQL();"/>
+
+
+                                                    <div class="slds-select_container"
+                                                         ng-show="field.type == 'boolean' && !field.macroMode">
+                                                        <select id="field_value_boolean_{{$index}}_{{$parent.$index}}"
+                                                                name="field_value_boolean_{{$index}}" class="slds-select"
+                                                                ng-model="field.value"
+                                                                ng-options="itm as itm for itm in model.booleanOptions"
+                                                                ng-change="updateSOQL();">
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="slds-select_container"
+                                                         ng-show="field.type == 'picklist' && !field.macroMode">
+                                                        <select id="field_value_picklist_{{$index}}_{{$parent.$index}}"
+                                                                name="field_value_picklist_{{$index}}" class="slds-select"
+                                                                ng-model="field.value"
+                                                                ng-options="itm.value as itm.label for itm in field.picklistValues"
+                                                                ng-change="updateSOQL();">
+                                                        </select>
+                                                    </div>
+
+                                                    <svg aria-hidden="true"
+                                                         class="slds-input__icon slds-icon-text-default slds-icon-picklist-lock"
+                                                         ng-click="field.macroMode = !field.macroMode" ng-if="field.type == 'boolean' || field.type=='picklist'">
+                                                        <use xlink:href="" i="lock" svg-link ng-if="!field.macroMode"/>
+                                                        <use xlink:href="" i="unlock" svg-link ng-if="field.macroMode"/>
+                                                    </svg>
+
+                                                    <svg aria-hidden="true"
+                                                         class="slds-input__icon slds-icon-text-default"
+                                                         ng-click="showMacros('field_value_'+$index+'_'+$parent.$index);" ng-show="field.macroMode || (field.type != 'boolean' && field.type!='picklist')">
+                                                        <use xlink:href="" i="push" svg-link/>
+                                                    </svg>
+
+                                                </div>
+
+                                                <div class="slds-form-element__control" style="padding: 0">
+                                                    <div class="xslds-select_container">
+                                                        <button type="button" class="slds-button slds-button--icon"
+                                                                ng-click="fieldAnd.splice($index, 1); checkEmptyFieldAnd(fieldAnd, $parent.$index); updateSOQL();">
+                                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                                <use xlink:href="" i="close" svg-link/>
+                                                            </svg>
+                                                            <span class="slds-assistive-text">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <button type="button" class="slds-button slds-button--icon"
+                                        ng-click="addFieldOr(fieldAnd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="" i="add" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">add row</span>
+                                    Add Field (OR)
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="slds-button slds-button--icon" ng-click="addFieldAnd()">
+                            <svg aria-hidden="true" class="slds-button__icon">
+                                <use xlink:href="" i="add" svg-link/>
+                            </svg>
+                            <span class="slds-assistive-text">add row</span>
+                            Add Field (AND)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Return Fields</label>
+                    <div class="slds-picklist--draggable slds-grid">
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label" aria-label="select-1">Available Fields</span>
+                            <div class="slds-picklist slds-picklist--multi">
+                                <ul class="slds-picklist__options slds-picklist__options--multi shown slds-picklist__options--multi--width-fixed"
+                                    dnd-list="model.availableFields">
+                                    <div ng-repeat="itm in model.availableFields" ng-class="{li_active: isActive(itm)}">
+                                        <li draggable="true" class="slds-picklist__item" aria-selected="false"
+                                            tabindex="0" role="option"
+                                            dnd-draggable="itm"
+                                            dnd-moved="model.availableFields.splice($index, 1); updateSOQL()"
+                                            dnd-effect-allowed="move" ng-click="add($index);select(itm)"
+                                            ng-dblclick="add($index);addToDisplayArray();select(null)">
+	                                        <span class="slds-truncate">
+		                                        <span>{{item.data.config.fieldName ? itm.name : itm.label}}</span>
+	                                        </span>
+                                        </li>
+                                    </div>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid--vertical">
+                            <button type="button" class="slds-button slds-button--icon-container"
+                                    ng-click="deleteFromDisplayArray();select(null)">
+                                <svg aria-hidden="true" class="slds-button__icon">
+                                    <use xlink:href="" i="left" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">Arrow left</span>
+                            </button>
+                            <button type="button" class="slds-button slds-button--icon-container"
+                                    ng-click="addToDisplayArray();select(null)">
+                                <svg aria-hidden="true" class="slds-button__icon">
+                                    <use xlink:href="" i="right" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">Arrow right</span>
+                            </button>
+                        </div>
+                        <div class="slds-form-element">
+                            <span class="slds-form-element__label" aria-label="select-2">Selected Fields</span>
+                            <div class="slds-picklist slds-picklist--multi">
+                                <ul class="slds-picklist__options slds-picklist__options--multi shown slds-picklist__options--multi--width-fixed"
+                                    dnd-list="model.selectedFields">
+                                    <div ng-repeat="itm in model.selectedFields" ng-class="{li_active: isActive(itm)}">
+                                        <li draggable="true" class="slds-picklist__item" aria-selected="false"
+                                            tabindex="0" role="option"
+                                            dnd-draggable="itm"
+                                            dnd-moved="model.selectedFields.splice($index, 1); updateSOQL();"
+                                            dnd-effect-allowed="move" ng-click="delete($index);select(itm)"
+                                            ng-dblclick="delete($index);deleteFromDisplayArray();select(null)">
+	                                        <span class="slds-truncate">
+	                                          <span>{{item.data.config.fieldName ? itm.name : itm.label}}</span>
+	                                        </span>
+                                        </li>
+                                    </div>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="slds-grid slds-grid--vertical">
+                            <button type="button" class="slds-button slds-button--icon-container" ng-click="up();">
+                                <svg aria-hidden="true" class="slds-button__icon">
+                                    <use xlink:href="" i="up" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">Arrow up</span>
+                            </button>
+                            <button type="button" class="slds-button slds-button--icon-container" ng-click="down();">
+                                <svg aria-hidden="true" class="slds-button__icon">
+                                    <use xlink:href="" i="down" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">Arrow down</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="orderByField">Order by</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select ng-if="item.data.config.fieldName" id="orderByField" name="orderByField"
+                                    class="slds-select slds-size--7-of-12"
+                                    ng-model="item.data.config.orderBy.field"
+                                    ng-options="itm.name as itm.name for itm in model.sObjectFields  | filter: {sortable: true}"
+                                    ng-change="updateSOQL();">
+                            </select>
+                            <select ng-if="!item.data.config.fieldName" id="orderByField" name="orderByField"
+                                    class="slds-select slds-size--7-of-12"
+                                    ng-model="item.data.config.orderBy.field"
+                                    ng-options="itm.name as itm.label for itm in model.sObjectFields  | filter: {sortable: true}"
+                                    ng-change="updateSOQL();">
+                            </select>
+                            <select id="orderByDirection" name="orderByDirection"
+                                    class="slds-select slds-size--2-of-5 slds-float--right"
+                                    ng-model="item.data.config.orderBy.direction"
+                                    ng-options="itm as itm | translate for itm in model.orderDirectionOptions"
+                                    ng-change="updateSOQL();">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="resultSize">Maximum Results</label>
+
+                    <div class="slds-form-element__control">
+                        <input id="resultSize" name="resultSize" class="slds-input" type="number" placeholder=""
+                               ng-model="item.data.config.resultSize" aria-describedby="errorName" required="true"
+                               ng-change="updateSOQL();"/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-scoped-soql" class="slds-tabs--scoped__content" role="tabpanel"
+                 aria-labelledby="tab-scoped-soql__item"
+                 ng-class="item.data.config.mode == 'soql' ? 'slds-show' : 'slds-hide'">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                        <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default slds-icon-macro-1" ng-click="$parent.showMacros('soql')">
+                            <use xlink:href="" i="push" svg-link />
+                        </svg>
+                        <textarea id="soql" name="soql" class="slds-textarea slds-input--small"
+                                  ng-model="item.data.config.soql" rows="5" ng-trim="false"
+                                  spellcheck="false" ng-change="updateScript()"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-if="model.showQueryResults" class="dialog-modal">
+        <div class="slds-modal slds-fade-in-open slds-modal--large" aria-hidden="false" role="dialog">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+                            ng-click="model.showQueryResults=false">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            <use xlink:href="" i="close" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium">Query Result ({{model.queryRecords.length}}) </h2>
+                    <p class="slds-m-top--x-small">({{model.lastSOQL}})</p>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <table class="slds-table slds-table--bordered slds-table--fixed-layout">
+                        <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-cell-shrink" scope="col"></th>
+
+                            <th class="slds-is-resizable" scope="col"
+                                ng-repeat="field in model.selectedFields">
+                                <div class="slds-truncate">{{field.label}}
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                    <div class="slds-shrink-none slds-resizable resizable--vertical">
+                                        <label class="slds-assistive-text" for="cell-resize-handle-1">click and drag to
+                                            resize</label>
+                                        <input class="slds-assistive-text" type="range" min="20" max="1000"
+                                               id="cell-resize-handle-1">
+							            <span class="slds-resizable__handle">
+							                <span class="slds-resizable__divider"></span>
+							            </span>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="slds-hint-parent" ng-repeat="record in model.queryRecords">
+                            <td class="slds-truncate" data-label="index">{{$index + 1}}</td>
+                            <td class="slds-truncate" data-label="" ng-repeat="field in model.selectedFields">
+                                {{record[field.name]}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="slds-modal__footer">
+                    <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                            ng-click="model.showQueryResults=false">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+
+    <!-- tokens form Start -->
+    <div ng-if="model.showTokensForm">
+        <div class="slds-modal slds-fade-in-open" aria-hidden="false" role="dialog">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+                            ng-click="model.showTokensForm=false">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            <use xlink:href="" i="close" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium">Please set actual values for tokens</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-form--horizontal">
+                        <div class="slds-form-element"
+                             ng-class="{'slds-is-required slds-has-error': ItemForm.Token_{{$index}}.$error.required}"
+                             ng-repeat="token in model.tokens">
+                            <label class="slds-form-element__label"
+                                   for="Token_{{$index}}"><strong>{{token.token}}</strong></label>
+                            <div class="slds-form-element__control">
+                                <input id="Token_{{$index}}" name="Token_{{$index}}" class="slds-input" type="text"
+                                       ng-model="token.value" aria-describedby="errorName" required=""/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                            ng-click="model.showTokensForm=false">Close
+                    </button>
+
+                    <button type="button" class="slds-button slds-button--brand slds-float--right"
+                            ng-click="replaceTokens()">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+                            <use xlink:href="" s="utility" i="preview" svg-link/>
+                        </svg>
+                        Test Query
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+    <!-- tokens form END -->
+</div>
+
+
+
+
+
+
+
+
+
+

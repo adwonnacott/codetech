@@ -1,0 +1,30 @@
+<apex:page id="registerednumber" standardController="nbavs__RegisteredNumber__c" extensions="nbavs.RegisteredNumberController">
+    <apex:sectionHeader title="{!$ObjectType.nbavs__RegisteredNumber__c.label}" subtitle="{!nbavs__RegisteredNumber__c.Name}" />
+    <apex:form id="form">
+        <apex:pageMessages id="messages" />
+        <apex:pageBlock mode="maindetail" rendered="{!hasPrivateAccessToUser}">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveItem}"  />
+                <apex:commandButton value="Delete" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;" />
+                <apex:commandButton value="Cancel" action="{!cancel}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="{!$ObjectType.nbavs__RegisteredNumber__c.label} Information" columns="2">
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.Name}" rendered="{!!editMode}" required="true"/>
+                <apex:outputField value="{!nbavs__RegisteredNumber__c.Name}" rendered="{!editMode}"/>
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__Enabled__c}"/>
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__Type__c}" />
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__CallQueueMaster__c}"/>
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__DDIDial__c}"/>
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__UserDial__c}"/>
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__RouteGroup__c}"/>
+                <apex:selectList value="{!selectedOption}" size="1" label="User Dial (as call queue agent)">
+                    <apex:selectOption itemLabel="Enabled" itemValue="enabled"/>
+                    <apex:selectOption itemLabel="Enabled with Screening" itemValue="enabledscreen"/>
+                    <apex:selectOption itemLabel="Disabled" itemValue="disabled"/>
+                </apex:selectList>
+                <apex:inputField value="{!nbavs__RegisteredNumber__c.nbavs__NumberOwnership__c}"/>
+                <apex:outputField value="{!nbavs__RegisteredNumber__c.nbavs__User__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

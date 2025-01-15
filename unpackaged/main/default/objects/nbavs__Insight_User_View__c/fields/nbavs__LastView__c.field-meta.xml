@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__LastView__c</fullName>
+    <deprecated>false</deprecated>
+    <inlineHelpText>Date and time of the most recent view of this Insight record by this user.</inlineHelpText>
+    <label>Last View</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

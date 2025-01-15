@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Agreed_Price</fullName>
+    <active>true</active>
+    <description>Check agreed price is greater than / equal 0</description>
+    <errorConditionFormula>AgreedUnitPrice__c &lt; 0</errorConditionFormula>
+    <errorDisplayField>AgreedUnitPrice__c</errorDisplayField>
+    <errorMessage>AGREED UNIT PRICE MUST BE GREATER THAN/EQUAL TO 0</errorMessage>
+</ValidationRule>

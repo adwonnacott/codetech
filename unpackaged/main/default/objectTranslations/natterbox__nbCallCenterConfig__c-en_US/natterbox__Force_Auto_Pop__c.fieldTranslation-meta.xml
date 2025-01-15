@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Force auto-pop of Salesforce record even if CTI UI not the current focus --></help>
+        <label><!-- Force Auto Pop --></label>
+        <name>natterbox__Force_Auto_Pop__c</name>
+    </CustomFieldTranslation>

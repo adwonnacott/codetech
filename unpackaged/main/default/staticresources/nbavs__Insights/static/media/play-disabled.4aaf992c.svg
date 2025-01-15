@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Icon/Playback</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="32" cy="32" r="32"></circle>
+        <path d="M10.7805469,8.7236068 L23.544479,15.1055728 C24.0384574,15.3525621 24.2386818,15.9532351 23.9916925,16.4472136 C23.8949288,16.640741 23.7380064,16.7976635 23.544479,16.8944272 L10.7805469,23.2763932 C10.2865684,23.5233825 9.68589539,23.3231581 9.43890614,22.8291796 C9.36947843,22.6903242 9.33333333,22.5372111 9.33333333,22.381966 L9.33333333,9.61803399 C9.33333333,9.06574924 9.78104858,8.61803399 10.3333333,8.61803399 C10.4885784,8.61803399 10.6416915,8.65417908 10.7805469,8.7236068 Z" id="path-3"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Panel/Large/Player-Controls/Left" transform="translate(-60.000000, -8.000000)">
+            <g id="Button/Circular/Icon" transform="translate(60.000000, 8.000000)">
+                <g id="BG" stroke-width="1" fill-rule="evenodd">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use fill="#D8D8D8" xlink:href="#path-1"></use>
+                    <g id="z_colours/white" mask="url(#mask-2)" fill="#ADB3B7">
+                        <rect id="Rectangle" x="0" y="0" width="64" height="64"></rect>
+                    </g>
+                </g>
+                <g id="Icon/Playback" transform="translate(16.000000, 16.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <path stroke="#979797" stroke-width="1" d="M10.5569401,9.17082039 C10.4875124,9.13610653 10.4109559,9.11803399 10.3333333,9.11803399 C10.057191,9.11803399 9.83333333,9.34189161 9.83333333,9.61803399 L9.83333333,22.381966 C9.83333333,22.4595886 9.85140588,22.5361451 9.88611974,22.6055728 C10.0096144,22.8525621 10.3099509,22.9526742 10.5569401,22.8291796 L23.3208722,16.4472136 C23.4176359,16.3988317 23.4960971,16.3203705 23.544479,16.2236068 C23.6679736,15.9766175 23.5678614,15.676281 23.3208722,15.5527864 L10.5569401,9.17082039 Z"></path>
+                    <g id="z_colours/black" mask="url(#mask-4)" fill="#000000" fill-rule="evenodd">
+                        <rect id="Rectangle" x="0" y="0" width="32" height="32"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

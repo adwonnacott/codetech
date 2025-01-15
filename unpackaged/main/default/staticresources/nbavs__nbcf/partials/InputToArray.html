@@ -1,0 +1,14 @@
+
+<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (form.{{name}}__{{index}}.$error.required || invalid)}">
+	<label class="slds-form-element__label" for="{{name}}__{{index}}" >{{label}}</label>
+	<div class="slds-form-element__control" ng-class="{'slds-input-has-icon slds-input-has-icon--right': macro}">
+		<svg aria-hidden="true"
+			 class="slds-input__icon slds-icon-text-default"
+			 ng-click="$parent.showMacros(name+'__'+index)" ng-show="macro">
+			<use xlink:href="" i="push" svg-link/>
+		</svg>
+		<input id="{{name}}__{{index}}" name="{{name}}__{{index}}" class="slds-input" type="text" placeholder=""
+			   ng-model="model.value" aria-describedby="errorName" ng-required="required" ng-change="processChanges()" />
+	</div>
+	<div class="slds-form-element__help" ng-if="invalid">Invalid format: Require comma-separated Email Addresses or Macros.</div>
+</div>

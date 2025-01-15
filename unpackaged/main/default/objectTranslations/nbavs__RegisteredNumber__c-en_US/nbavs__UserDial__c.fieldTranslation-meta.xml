@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- User Dial --></label>
+        <name>nbavs__UserDial__c</name>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enabled</masterLabel>
+            <translation><!-- Enabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enabled with Screening</masterLabel>
+            <translation><!-- Enabled with Screening --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

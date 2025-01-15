@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Call_Queue_Agent_Serviced__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <label>To Call Queue Agent Serviced</label>
+    <referenceTo>nbavs__Call_Queue__c</referenceTo>
+    <relationshipLabel>Call Reporting</relationshipLabel>
+    <relationshipName>Call_Reporting</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

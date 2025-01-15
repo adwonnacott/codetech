@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Split out Person (Contacts &amp; Leads) and Related To (Accounts etc) query results into two separately selectable lists --></help>
+        <label><!-- Split Person &amp; Related To Query Results --></label>
+        <name>natterbox__Split_Person_and_RelatedTo_Query_Results__c</name>
+    </CustomFieldTranslation>

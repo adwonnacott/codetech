@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Number Ownership --></label>
+        <name>nbavs__NumberOwnership__c</name>
+        <picklistValues>
+            <masterLabel>Private</masterLabel>
+            <translation><!-- Private --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shared</masterLabel>
+            <translation><!-- Shared --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

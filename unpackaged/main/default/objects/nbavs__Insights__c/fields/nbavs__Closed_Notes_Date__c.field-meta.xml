@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Closed_Notes_Date__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Closed Notes Date</label>
+    <summarizedField>nbavs__Insight_Note__c.LastModifiedDate</summarizedField>
+    <summaryFilterItems>
+        <field>nbavs__Insight_Note__c.nbavs__Is_Closed__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryForeignKey>nbavs__Insight_Note__c.nbavs__Insights__c</summaryForeignKey>
+    <summaryOperation>max</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

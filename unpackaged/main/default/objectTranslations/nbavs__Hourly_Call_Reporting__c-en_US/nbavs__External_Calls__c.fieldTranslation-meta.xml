@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many external calls has my organisation relayed --></help>
+        <label><!-- External Calls --></label>
+        <name>nbavs__External_Calls__c</name>
+    </CustomFieldTranslation>

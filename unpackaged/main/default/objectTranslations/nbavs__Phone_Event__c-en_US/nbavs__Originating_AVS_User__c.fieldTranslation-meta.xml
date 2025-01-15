@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Natterbox User who originated the call --></label>
+        <name>nbavs__Originating_AVS_User__c</name>
+        <relationshipLabel><!-- Phone Events (Natterbox User who originated the call) --></relationshipLabel>
+    </CustomFieldTranslation>

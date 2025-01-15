@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContractLength__c</fullName>
+    <description>Length of the opportunity contract</description>
+    <label>Contract Length</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>30 Days Rolling</fullName>
+                <default>false</default>
+                <label>30 Days Rolling</label>
+            </value>
+            <value>
+                <fullName>60 Days Rolling</fullName>
+                <default>false</default>
+                <label>60 Days Rolling</label>
+            </value>
+            <value>
+                <fullName>90 Days Rolling</fullName>
+                <default>false</default>
+                <label>90 Days Rolling</label>
+            </value>
+            <value>
+                <fullName>1 Month</fullName>
+                <default>false</default>
+                <label>1 Month</label>
+            </value>
+            <value>
+                <fullName>2 Months</fullName>
+                <default>false</default>
+                <label>2 Months</label>
+            </value>
+            <value>
+                <fullName>3 Months</fullName>
+                <default>false</default>
+                <label>3 Months</label>
+            </value>
+            <value>
+                <fullName>4 Months</fullName>
+                <default>false</default>
+                <label>4 Months</label>
+            </value>
+            <value>
+                <fullName>5 Months</fullName>
+                <default>false</default>
+                <label>5 Months</label>
+            </value>
+            <value>
+                <fullName>6 Months</fullName>
+                <default>false</default>
+                <label>6 Months</label>
+            </value>
+            <value>
+                <fullName>7 Months</fullName>
+                <default>false</default>
+                <label>7 Months</label>
+            </value>
+            <value>
+                <fullName>8 Months</fullName>
+                <default>false</default>
+                <label>8 Months</label>
+            </value>
+            <value>
+                <fullName>9 Months</fullName>
+                <default>false</default>
+                <label>9 Months</label>
+            </value>
+            <value>
+                <fullName>10 Months</fullName>
+                <default>false</default>
+                <label>10 Months</label>
+            </value>
+            <value>
+                <fullName>11 Months</fullName>
+                <default>false</default>
+                <label>11 Months</label>
+            </value>
+            <value>
+                <fullName>12 Months</fullName>
+                <default>false</default>
+                <label>12 Months</label>
+            </value>
+            <value>
+                <fullName>13 Months</fullName>
+                <default>false</default>
+                <label>13 Months</label>
+            </value>
+            <value>
+                <fullName>14 Months</fullName>
+                <default>false</default>
+                <label>14 Months</label>
+            </value>
+            <value>
+                <fullName>15 Months</fullName>
+                <default>false</default>
+                <label>15 Months</label>
+            </value>
+            <value>
+                <fullName>16 Months</fullName>
+                <default>false</default>
+                <label>16 Months</label>
+            </value>
+            <value>
+                <fullName>17 Months</fullName>
+                <default>false</default>
+                <label>17 Months</label>
+            </value>
+            <value>
+                <fullName>18 Months</fullName>
+                <default>false</default>
+                <label>18 Months</label>
+            </value>
+            <value>
+                <fullName>19 Months</fullName>
+                <default>false</default>
+                <label>19 Months</label>
+            </value>
+            <value>
+                <fullName>20 Months</fullName>
+                <default>false</default>
+                <label>20 Months</label>
+            </value>
+            <value>
+                <fullName>21 Months</fullName>
+                <default>false</default>
+                <label>21 Months</label>
+            </value>
+            <value>
+                <fullName>22 Months</fullName>
+                <default>false</default>
+                <label>22 Months</label>
+            </value>
+            <value>
+                <fullName>23 Months</fullName>
+                <default>false</default>
+                <label>23 Months</label>
+            </value>
+            <value>
+                <fullName>24 Months</fullName>
+                <default>false</default>
+                <label>24 Months</label>
+            </value>
+            <value>
+                <fullName>25 Months</fullName>
+                <default>false</default>
+                <label>25 Months</label>
+            </value>
+            <value>
+                <fullName>26 Months</fullName>
+                <default>false</default>
+                <label>26 Months</label>
+            </value>
+            <value>
+                <fullName>27 Months</fullName>
+                <default>false</default>
+                <label>27 Months</label>
+            </value>
+            <value>
+                <fullName>28 Months</fullName>
+                <default>false</default>
+                <label>28 Months</label>
+            </value>
+            <value>
+                <fullName>29 Months</fullName>
+                <default>false</default>
+                <label>29 Months</label>
+            </value>
+            <value>
+                <fullName>30 Months</fullName>
+                <default>false</default>
+                <label>30 Months</label>
+            </value>
+            <value>
+                <fullName>31 Months</fullName>
+                <default>false</default>
+                <label>31 Months</label>
+            </value>
+            <value>
+                <fullName>32 Months</fullName>
+                <default>false</default>
+                <label>32 Months</label>
+            </value>
+            <value>
+                <fullName>33 Months</fullName>
+                <default>false</default>
+                <label>33 Months</label>
+            </value>
+            <value>
+                <fullName>34 Months</fullName>
+                <default>false</default>
+                <label>34 Months</label>
+            </value>
+            <value>
+                <fullName>35 Months</fullName>
+                <default>false</default>
+                <label>35 Months</label>
+            </value>
+            <value>
+                <fullName>36 Months</fullName>
+                <default>false</default>
+                <label>36 Months</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

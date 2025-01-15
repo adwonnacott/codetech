@@ -1,0 +1,134 @@
+<div ng-controller="ModActionRecord">
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+			<label class="slds-checkbox">
+				<input type="checkbox" name="retain" id="retain" ng-model="item.data.variables.retain">
+				<span class="slds-checkbox--faux"></span>
+				<span class="slds-form-element__label">Archive a copy of this recording</span>
+			</label>
+		</div>
+	</div>
+
+	<div class="slds-form-element" ng-if="item.data.variables.retain">
+		<label class="slds-form-element__label" for="archivePolicyId">Archiving Policy to be used</label>
+		<div class="slds-form-element__control">
+			<div class="slds-select_container">
+				<select id="archivePolicyId" name="archivePolicyId" class="slds-select"
+				        ng-model="item.data.variables.archivePolicyId"
+				        ng-options="item.id as item.name for item in model.archivingPolicies" ng-disabled="model.archivingPolicies.length == 0">
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" for="channel">Recording Leg</label>
+		<div class="slds-form-element__control">
+			<div class="slds-select_container">
+				<select id="channel" name="channel" class="slds-select"
+				        ng-model="item.data.variables.channel"
+				        ng-options="item.value as item.name for item in model.channelOptions">
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+				<label class="slds-checkbox">
+					<input type="checkbox" name="startOnBridge" id="startOnBridge" ng-model="item.data.variables.startOnBridge">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label">Start recording when call is connected</span>
+				</label>
+		</div>
+	</div>
+
+	<!--
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+				<label class="slds-checkbox">
+					<input type="checkbox" name="reset" id="reset" ng-model="item.data.variables.reset">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label">Retain existing recording settings</span>
+				</label>
+			</div>
+	</div>
+	-->
+
+
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+				<label class="slds-checkbox">
+					<input type="checkbox" name="allowPause" id="allowPause" ng-model="item.data.variables.allowPause">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label">Allow users to pause the recording with star code</span>
+				</label>
+		</div>
+	</div>
+
+
+
+
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" for="channel">Beep alert</label>
+		<div class="slds-form-element__control">
+			<div class="slds-select_container">
+				<select id="beep" name="beep" class="slds-select"
+				        ng-model="item.data.variables.beep"
+				        ng-options="item.value as item.name for item in model.beepOptions">
+				</select>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="slds-form-element" ng-if="item.data.variables.beep != 'OFF'">
+		<label class="slds-form-element__label" for="channel">Custom Beep TGML</label>
+		<div class="slds-form-element__control">
+			<input id="toneStream" name="toneStream" class="slds-input" type="text" placeholder=""
+			       ng-model="item.data.variables.toneStream" aria-describedby="errorName" required="false"/>
+		</div>
+	</div>
+
+
+
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+				<label class="slds-checkbox">
+					<input type="checkbox" name="emailSend" id="emailSend" ng-model="item.data.variables.emailSend">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label">Email the recording</span>
+				</label>
+			</div>
+	</div>
+
+
+	<div class="slds-form-element" ng-if="item.data.variables.emailSend">
+		<label class="slds-form-element__label" for="emailToAddresses">Email recipients (To)</label>
+		<div class="slds-form-element__control">
+			<input id="emailToAddresses" name="emailToAddresses" class="slds-input" type="text" placeholder=""
+			       ng-model="item.data.variables.emailToAddresses" aria-describedby="errorName" required="false"/>
+		</div>
+	</div>
+
+	<div class="slds-form-element" ng-if="item.data.variables.emailSend">
+		<label class="slds-form-element__label" for="emailCcAddresses">Email recipients (Cc)</label>
+		<div class="slds-form-element__control">
+			<input id="emailCcAddresses" name="emailCcAddresses" class="slds-input" type="text" placeholder=""
+			       ng-model="item.data.variables.emailCcAddresses" aria-describedby="errorName" required="false"/>
+		</div>
+	</div>
+
+	<div class="slds-form-element" ng-if="item.data.variables.emailSend">
+		<label class="slds-form-element__label" for="emailSubject">Email Subject</label>
+		<div class="slds-form-element__control">
+			<input id="emailSubject" name="emailSubject" class="slds-input" type="text" placeholder=""
+			       ng-model="item.data.variables.emailSubject" aria-describedby="errorName" required="false"/>
+		</div>
+	</div>
+
+
+
+</div>
+
+

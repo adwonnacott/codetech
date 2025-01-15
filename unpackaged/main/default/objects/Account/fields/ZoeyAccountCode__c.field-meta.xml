@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ZoeyAccountCode__c</fullName>
+    <description>Zoey Account Code - External ID for Zoey platform integration</description>
+    <externalId>true</externalId>
+    <inlineHelpText>Derived from Zoey</inlineHelpText>
+    <label>Zoey Account Code</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

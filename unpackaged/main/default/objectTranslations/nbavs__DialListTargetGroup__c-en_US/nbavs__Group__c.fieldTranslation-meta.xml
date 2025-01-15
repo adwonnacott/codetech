@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Group --></label>
+        <lookupFilter>
+            <errorMessage><!-- Dial List Target Group must have Contact Centre License --></errorMessage>
+            <informationalMessage><!-- Dial List Target Group must have Contact Centre License --></informationalMessage>
+        </lookupFilter>
+        <name>nbavs__Group__c</name>
+        <relationshipLabel><!-- Dial List Target Groups --></relationshipLabel>
+    </CustomFieldTranslation>

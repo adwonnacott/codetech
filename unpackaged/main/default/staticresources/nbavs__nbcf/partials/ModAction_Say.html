@@ -1,0 +1,19 @@
+<div class="slds-form-element">
+    <label class="slds-form-element__label" for="Voice">Which voice should be used?</label>
+    <div class="slds-form-element__control">
+        <div class="slds-select_container">
+            <select id="Voice" class="slds-select" ng-model="item.data.config.Voice"
+                    ng-options="item.value as item.name for item in model.voices">
+            </select>
+        </div>
+    </div>
+</div>
+<div class="slds-form-element">
+    <label class="slds-form-element__label" for="SayPhrase">What would you like to say?</label>
+    <div class="slds-form-element__control">
+        <textarea id="SayPhrase" class="slds-textarea" ng-model="node.data.config.SayPhrase" macro></textarea>
+        <button type="button" class="slds-button slds-button--brand slds-button--small slds-m-top--small">Insert Sound</button>
+    </div>
+</div>
+
+

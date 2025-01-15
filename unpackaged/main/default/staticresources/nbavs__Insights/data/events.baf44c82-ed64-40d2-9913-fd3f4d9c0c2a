@@ -1,0 +1,53 @@
+{
+  "events": {
+    "uuid": "baf44c82-ed64-40d2-9913-fd3f4d9c0c2a",
+    "callEvents": [
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1555072815330037",
+        "data": {
+          "uuid": "ca15b5f8-f0d8-4bcb-be4e-12c44417cb39"
+        }
+      },
+      {
+        "event": "CONFERENCE_IN",
+        "timeStamp": "1555072825870913",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6"
+        }
+      },
+      {
+        "event": "UNBRIDGE",
+        "timeStamp": "1555072833151543",
+        "data": {
+          "uuid": "ca15b5f8-f0d8-4bcb-be4e-12c44417cb39",
+          "link": "5cb087412afa9"
+        }
+      },
+      {
+        "event": "CONFERENCE_OUT",
+        "timeStamp": "1555072833151543",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6",
+          "link": "5cb087412afa9"
+        }
+      },
+      {
+        "event": "CHANNEL_START",
+        "timeStamp": "1555072807755481"
+      },
+      {
+        "event": "CHANNEL_RING",
+        "timeStamp": "0"
+      },
+      {
+        "event": "CHANNEL_ANSWER",
+        "timeStamp": "1555072815330037"
+      },
+      {
+        "event": "CHANNEL_END",
+        "timeStamp": "1555072833151543"
+      }
+    ]
+  }
+}

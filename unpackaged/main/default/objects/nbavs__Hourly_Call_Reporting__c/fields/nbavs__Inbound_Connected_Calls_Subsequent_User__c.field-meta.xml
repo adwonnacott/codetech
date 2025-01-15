@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Inbound_Connected_Calls_Subsequent_User__c</fullName>
+    <defaultValue>0</defaultValue>
+    <deprecated>false</deprecated>
+    <description>The number of calls that have been received by the organisation from the outside world, which have then been connected to a User via a transfer from another user. This statistic only records where the user has received the call via a transfer</description>
+    <externalId>false</externalId>
+    <inlineHelpText>How many inbound calls have I received where I picked up the call as the initial recipient</inlineHelpText>
+    <label>Inbound Calls as Transferree</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many calls did I take part in to other internal users in my organisation as a logical To party, but where the call had been transferred to me --></help>
+        <label><!-- Internal To Calls as Transferree --></label>
+        <name>nbavs__Internal_Call_To_Subsequent_User__c</name>
+    </CustomFieldTranslation>

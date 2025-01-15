@@ -1,0 +1,1233 @@
+<apex:page id="page" controller="nbavs.HomeController" docType="html-5.0" action="{!checkAPISetup}">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+    <apex:form id="mainForm">
+    <apex:pageMessages id="messages" />
+    <style type="text/css">
+        .slds-app-launcher__tile--local {
+            cursor: pointer !important
+        }
+
+        .slds-notify_container--fixed {
+            position: relative !important
+        }
+
+        .slds-notify--toast {
+            min-width: 15rem!important;
+        }
+
+        .relative-position {
+            position: relative
+        }
+
+        .disabled {
+            filter: gray; /* IE6-9 */
+            filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+            -webkit-filter: grayscale(1);
+        }
+
+        .pageTitleIcon {
+            background-image: URL("{!URLFOR($Resource.nbavs__img, 'settings.png')}");
+        }
+    </style>
+
+    <apex:sectionHeader title="Admin Home" subtitle="Natterbox App"/>
+
+    <div class="nbvc slds">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded-medium">
+
+            <div
+                    class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                <div class="slds-box slds-box--small slds-theme--shade relative-position">
+                    <div class="slds-page-header" role="banner">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-event"
+                                               path="/assets/icons/standard-sprite/svg/symbols.svg#event"/>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-title--caps slds-line-height--reset">Monitoring</p>
+                                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                            System and Security</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-page-header__detail-row">
+
+
+                            <apex:outputPanel layout="block" styleClass="slds-grid slds-m-left--xx-small slds-m-top--small slds-m-bottom--xx-small" rendered="{!showCLINotification}">
+                                <div>
+								    <span class="slds-icon_container slds-icon-action-priority  slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#priority"/>
+								    </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <ul class="slds-has-dividers_around-space">
+                                        <li class="slds-item">
+                                            <article class="slds-tile slds-tile_board">
+                                                <h3 title="Account CLI missing">You have no Caller Line Identity configured for your Account. Once you have acquired a number, you can go to the Account Settings page to configure your CLI. For more info see this <a href="{!LinksMap['accountsettings']}" target="_blank">article</a>.</h3>
+                                            </article>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </apex:outputPanel>
+
+
+                            <apex:outputPanel layout="block" styleClass="slds-grid slds-m-left--xx-small slds-m-top--small slds-m-bottom--xx-small" rendered="{!showCTINotification}">
+                                <div>
+								    <span class="slds-icon_container slds-icon-action-priority  slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#priority"/>
+								    </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <ul class="slds-has-dividers_around-space">
+                                        <li class="slds-item">
+                                            <article class="slds-tile slds-tile_board">
+                                                <h3 title="CTI package missing">You have CTI license enabled, but the CTI Package is not currently installed. Please install from <a href="https://appexchange.salesforce.com/listingDetail?listingId=a0N3000000DpUW1EAN" target="_blank">here</a>.</h3>
+                                            </article>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </apex:outputPanel>
+
+
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-top--small slds-m-bottom--xx-small">
+                                <div>
+								    <span
+                                            class="slds-icon_container slds-icon-action-approval slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                           path="/assets/icons/custom-sprite/svg/symbols.svg#custom35"/>
+								    </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__RecordingAccess__c.List,$ObjectType.nbavs__RecordingAccess__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__RecordingAccess__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">{!recordingAccessCount} profile{!IF((recordingAccessCount > 1),'s','')}</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['recordingaccess']}" target="_blank">
+                                                             <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xx-small">
+                                <div>
+								    <span
+                                            class="slds-icon_container slds-icon-action-log-event slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                           path="/assets/icons/action-sprite/svg/symbols.svg#log_event"/>
+								    </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__EventLog__c.Tab,$ObjectType.nbavs__EventLog__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__EventLog__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">{!eventLogCount} today</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['eventlogs']}" target="_blank">
+                                                             <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xx-small">
+                                <div>
+								    <span
+                                            class="slds-icon_container slds-icon-action-close slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                           path="/assets/icons/utility-sprite/svg/symbols.svg#error"/>
+								    </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__ErrorLog__c.Tab,$ObjectType.nbavs__ErrorLog__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__ErrorLog__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">{!errorLogCount} today</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['errorlogs']}" target="_blank">
+                                                            <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                            <apex:outputPanel id="schedulePanel">
+                                <apex:actionFunction name="startAvailabilityLog" action="{!startAvailabilityLogs}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopAvailabilityLog" action="{!stopAvailabilityLogs}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startHCRO" action="{!startHCRO}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopHCRO" action="{!stopHCRO}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startCRO" action="{!startCRO}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopCRO" action="{!stopCRO}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startCQ" action="{!startCQ}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopCQ" action="{!stopCQ}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startUserServicePresGroupSync" action="{!startUserServicePresGroupSync}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopUserServicePresGroupSync" action="{!stopUserServicePresGroupSync}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startCRFixer" action="{!startCRFixer}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopCRFixer" action="{!stopCRFixer}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startInsights" action="{!startInsights}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopInsights" action="{!stopInsights}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="startDDLProcessor" action="{!startDDLProcessor}" rerender="messages, schedulePanel" status="jobsStatus" />
+                                <apex:actionFunction name="stopDDLProcessor" action="{!stopDDLProcessor}" rerender="messages, schedulePanel" status="jobsStatus" />
+
+                                <apex:actionStatus id="jobsStatus" stopText="">
+                                    <apex:facet name="start">
+                                        <div class="slds-spinner_container">
+                                            <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+                                                <span class="slds-assistive-text">Loading</span>
+                                                <div class="slds-spinner__dot-a"></div>
+                                                <div class="slds-spinner__dot-b"></div>
+                                            </div>
+                                        </div>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                        <apex:outputPanel layout="block"
+                                                          styleClass="slds-notify_container slds-notify_container--fixed"
+                                                          rendered="{!IF((jobError!=null),true,false)}">
+                                            <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+                                                <span class="slds-assistive-text">Error</span>
+                                                <div class="slds-notify__content slds-grid">
+                                                    <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                           path="/assets/icons/utility-sprite/svg/symbols.svg#warning"/>
+                                                    <div class="slds-col slds-align-middle">
+                                                        <h2 class="slds-text-heading--small">{!jobError}</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:facet>
+                                </apex:actionStatus>
+
+
+                                <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xx-small">
+                                    <div>
+								    <span
+                                            class="slds-icon_container slds-icon-action-priority  slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                           path="/assets/icons/utility-sprite/svg/symbols.svg#sync"/>
+								    </span>
+                                    </div>
+                                    <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--small">
+                                        <dl class="slds-dl--horizontal slds-m-left--small">
+                                            <dt class="slds-dl--horizontal__label">
+                                                <apex:outputLink value="#" styleClass="actionLink">Scheduled Jobs</apex:outputLink>
+                                            </dt>
+                                            <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                                <div class="slds-grid">
+                                                    <div class="slds-col">
+                                                        <div class="slds-text-align--right">{!jobsRunning} job{!IF((jobsRunning > 1 || jobsRunning == 0),'s','')} running</div>
+                                                    </div>
+                                                    <div class="slds-col">
+                                                        <div class="slds-text-align--right">
+                                                            <a href="{!LinksMap['scheduledjobs']}" target="_blank">
+                                                            <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningCRO}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block" rendered="{!enableCallReporting}">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startCRO(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" rendered="{!!enableCallReporting}">
+                                                    <button class="slds-button slds-button--brand" disabled="true" title="Requires {!$ObjectType.nbavs__License_v1__c.fields.nbavs__CTI__c.label} or {!$ObjectType.nbavs__License_v1__c.fields.nbavs__Manager__c.label} license">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Disabled
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!croJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningCRO}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopCRO(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!croJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningHCRO}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block" rendered="{!enableCallReporting}">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startHCRO(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" rendered="{!!enableCallReporting}">
+                                                    <button class="slds-button slds-button--brand" disabled="true" title="Requires {!$ObjectType.nbavs__License_v1__c.fields.nbavs__CTI__c.label} or {!$ObjectType.nbavs__License_v1__c.fields.nbavs__Manager__c.label} license">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Disabled
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!hcroJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningHCRO}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopHCRO(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!hcroJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningAvailabilityLog}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block" rendered="{!license.nbavs__Manager__c}">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startAvailabilityLog(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" rendered="{!!license.nbavs__Manager__c}">
+                                                    <button class="slds-button slds-button--brand" disabled="true" title="Requires {!$ObjectType.nbavs__License_v1__c.fields.nbavs__Manager__c.label} license">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Disabled
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!availabilityJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningAvailabilityLog}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopAvailabilityLog(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!availabilityJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningCQ}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block" rendered="{!license.nbavs__Manager__c}">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startCQ(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" rendered="{!!license.nbavs__Manager__c}">
+                                                    <button class="slds-button slds-button--brand" disabled="true" title="Requires {!$ObjectType.nbavs__License_v1__c.fields.nbavs__Manager__c.label} license">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Disabled
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!cqJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningCQ}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopCQ(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!cqJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningUserServicePresGroupSync && showUserServicePresGroupSyncJob}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block" rendered="{!license.nbavs__Manager__c}">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startUserServicePresGroupSync(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" rendered="{!!license.nbavs__Manager__c}">
+                                                    <button class="slds-button slds-button--brand" disabled="true" title="Requires {!$ObjectType.nbavs__License_v1__c.fields.nbavs__Manager__c.label} license">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Disabled
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">Omni-Channel Status and Group Login Synchroniser Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningUserServicePresGroupSync && showUserServicePresGroupSyncJob}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopUserServicePresGroupSync(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">Omni-Channel Status and Group Login Synchroniser Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningCRFixer}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startCRFixer(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!crFixerJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningCRFixer}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopCRFixer(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!crFixerJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningDDLProcessor}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startDDLProcessor(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!ddlProcessorJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningDDLProcessor}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopDDLProcessor(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!ddlProcessorJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!!jobRunningIns && hasInsightAccess}">
+                                            <div class="slds-grid">
+                                                <apex:outputPanel layout="block">
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="startInsights(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#breadcrumbs"/>
+                                                        Start Job
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="slds-m-left--small slds-align-middle slds-text-color--error">{!insightsJobName} Scheduled Job is not running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="block" styleClass="slds-container--fluid slds-m-left--medium slds-m-bottom--medium" rendered="{!jobRunningIns && hasInsightAccess}">
+                                            <div class="slds-grid">
+                                                <div>
+                                                    <button class="slds-button slds-button--brand"
+                                                            onclick="stopInsights(); return false;">
+                                                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                               path="/assets/icons/utility-sprite/svg/symbols.svg#clear"/>
+                                                        Stop Job
+                                                    </button>
+                                                </div>
+                                                <div class="slds-m-left--small slds-align-middle">{!insightsJobName} Scheduled Job is running</div>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                    class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                <div class="slds-box slds-box--small slds-theme--shade relative-position">
+                    <apex:outputPanel id="licensePanel">
+                        <apex:actionFunction name="reloadLicense" action="{!reloadLicense}" rerender="licensePanel"
+                                            status="licenseStatus"/>
+                        <apex:actionStatus id="licenseStatus" stopText="">
+                            <apex:facet name="start">
+                                <div class="slds-spinner_container">
+                                    <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+                                        <span class="slds-assistive-text">Loading</span>
+                                        <div class="slds-spinner__dot-a"></div>
+                                        <div class="slds-spinner__dot-b"></div>
+                                    </div>
+                                </div>
+                            </apex:facet>
+                            <apex:facet name="stop">
+                                <apex:outputPanel layout="block"
+                                                styleClass="slds-notify_container slds-notify_container--fixed"
+                                                rendered="{!IF((licenseError!=null),true,false)}">
+                                    <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+                                        <span class="slds-assistive-text">Error</span>
+                                        <div class="slds-notify__content slds-grid">
+                                            <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                path="/assets/icons/utility-sprite/svg/symbols.svg#warning"/>
+                                            <div class="slds-col slds-align-middle">
+                                                <h2 class="slds-text-heading--small">{!licenseError}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-user"
+                                                path="/assets/icons/standard-sprite/svg/symbols.svg#canvas"/>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <p class="slds-text-title--caps slds-line-height--reset">Licensing</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                                Review your Subscriptions</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                                    <div>
+                                        <section class="slds-clearfix">
+                                            <button class="slds-button slds-button--brand slds-float--right"
+                                                    onclick="reloadLicense(); return false;">
+                                                <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                    path="/assets/icons/action-sprite/svg/symbols.svg#change_record_type"/>
+                                                Reload Subscriptions
+                                            </button>
+                                        </section>
+                                        <section class="slds-clearfix">
+                                            <div class="slds-float--right">Updated: <apex:outputField value="{!license.nbavs__Updated__c}"/></div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__detail-row">
+
+
+                                <apex:outputPanel layout="block"
+                                                styleClass="slds-notify_container slds-notify_container--fixed"
+                                                rendered="{!IF((licenseInfo!=null),true,false)}">
+                                    <div class="slds-notify slds-notify--toast slds-theme--warning" role="alert">
+                                        <span class="slds-assistive-text">Warning</span>
+                                        <div class="slds-notify__content slds-grid">
+                                            <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                path="/assets/icons/utility-sprite/svg/symbols.svg#warning"/>
+                                            <div class="slds-col slds-align-middle">
+                                                <h2 class="slds-text-heading--small">{!licenseInfo}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+
+
+                                <apex:outputPanel layout="block"
+                                                styleClass="slds-notify_container slds-notify_container--fixed"
+                                                rendered="{!IF((trialInfo!=null),true,false)}">
+                                    <div class="slds-notify slds-notify--toast slds-theme--warning" role="alert">
+                                        <span class="slds-assistive-text">Warning</span>
+                                        <div class="slds-notify__content slds-grid">
+                                            <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                path="/assets/icons/utility-sprite/svg/symbols.svg#warning"/>
+                                            <div class="slds-col slds-align-middle">
+                                                <h2 class="slds-text-heading--small">{!trialInfo}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+
+
+                                <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-action-dial-in slds-icon_container--circle {!IF(license.Numbers__c, '', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/action-sprite/svg/symbols.svg#dial_in"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.Numbers__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.Numbers__c.label}</span>
+                                                <p>{!IF(license.Numbers__c, 'Enabled ('+TEXT(license.Numbers_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-action-defer slds-icon_container--circle {!IF(license.PBX__c, '', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#hierarchy"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.PBX__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.PBX__c.label}</span>
+                                                <p>{!IF(license.PBX__c, 'Enabled: ('+TEXT(license.PBX_Count__c)+')',
+                                                        'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-action-priority slds-icon_container--circle {!IF(license.Manager__c, '', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/action-sprite/svg/symbols.svg#flow"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.Manager__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.Manager__c.label}</span>
+                                                <p>{!IF(license.Manager__c, 'Enabled ('+TEXT(license.Manager_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-action-close slds-icon_container--circle {!IF(license.Record__c, '', 'disabled')} ">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/action-sprite/svg/symbols.svg#announcement"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.Record__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.Record__c.label}</span>
+                                                <p>{!IF(license.Record__c, 'Enabled: ('+TEXT(license.Record_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-action-log-a-call slds-icon_container--circle {!IF(license.CTI__c, '', 'disabled')} ">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/action-sprite/svg/symbols.svg#log_a_call"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.CTI__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.CTI__c.label}</span>
+                                                <p>{!IF(license.CTI__c, 'Enabled: ('+TEXT(license.CTI_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                            <span
+                                                    class="slds-icon_container slds-icon-action-web-link slds-icon_container--circle {!IF(license.Global__c, '', 'disabled')} ">
+                                            <c:svg styleClass="slds-icon slds-icon--small"
+                                                path="/assets/icons/action-sprite/svg/symbols.svg#web_link"/>
+                                            </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.Global__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.Global__c.label}</span>
+                                                <p>{!IF(license.Global__c, 'Enabled: ('+TEXT(license.Global_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                            <span
+                                                    class="slds-icon_container slds-icon-action-approval slds-icon_container--circle {!IF(license.PCI__c, '', 'disabled')} ">
+                                            <c:svg styleClass="slds-icon slds-icon--small"
+                                                path="/assets/icons/utility-sprite/svg/symbols.svg#lock"/>
+                                            </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.PCI__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.PCI__c.label}</span>
+                                                <p>{!IF(license.PCI__c, 'Enabled: ('+TEXT(license.PCI_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2" style="{!IF(license.Insights__c, 'display:block', 'display:none')}">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-standard-insights slds-icon_container--circle {!IF(license.Insights__c, '', 'disabled')} ">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#insights"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.Insights__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.Insights__c.label}</span>
+                                                <p>{!IF(license.Insights__c, 'Enabled: ('+TEXT(license.Insights_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2" style="{!IF(license.Freedom__c, 'display:block', 'display:none')}">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-standard-relationship slds-icon_container--circle {!IF(license.Freedom__c, '', 'disabled')} ">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#relationship"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.Freedom__c, 'slds-text-link', 'disabled')}">{!$ObjectType.License_v1__c.fields.Freedom__c.label}</span>
+                                                <p>{!IF(license.Freedom__c, 'Enabled: ('+TEXT(license.Freedom_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-p-horizontal--small slds-size--1-of-2" style="{!IF(license.SCV__c, 'display:block', 'display:none')}">
+                                        <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                            <div class="slds-app-launcher__tile-figure">
+                                                <span
+                                                        class="slds-icon_container slds-icon-action-priority slds-icon_container--circle {!IF(license.SCV__c, '', 'disabled')} ">
+                                                <c:svg styleClass="slds-icon slds-icon--small"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#call"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-app-launcher__tile-body">
+                                                <span class="{!IF(license.nbavs__SCV__c, 'slds-text-link', 'disabled')}">{!$ObjectType.nbavs__License_v1__c.fields.nbavs__SCV__c.label}</span>
+                                                <p>{!IF(license.nbavs__SCV__c, 'Enabled: ('+TEXT(license.nbavs__SCV_Count__c)+')', 'Disabled')}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <footer class="slds-card__footer">
+                        <apex:outputPanel id="userLicensePanel">
+                            <apex:actionFunction name="userLicense" action="{!userLicense}" />
+                            <section class="slds-clearfix">
+                                <button class="slds-button slds-button--brand slds-float--right"
+                                        onclick="userLicense(); return false;">
+                                    <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                           path="/assets/icons/utility-sprite/svg/symbols.svg#groups"/>
+                                    Manage User Licenses
+                                </button>
+                            </section>
+                        </apex:outputPanel>
+                    </footer>
+
+
+                </div>
+            </div>
+
+            <div
+                    class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                <div class="slds-box slds-box--small slds-theme--shade">
+                    <div class="slds-page-header" role="banner">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-service-contract"
+                                               path="/assets/icons/standard-sprite/svg/symbols.svg#service_contract"/>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-title--caps slds-line-height--reset">Overview</p>
+                                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                            Summary of Assets</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-page-header__detail-row">
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-top--small slds-m-bottom--xx-small">
+                                <div>
+								    <span class="slds-icon_container slds-icon-action-user slds-icon_container--circle">
+								  	<c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                           path="/assets/icons/action-sprite/svg/symbols.svg#user"/>
+								    </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__User__c.List,$ObjectType.nbavs__User__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__User__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right" style="width:50px">{!pbxUserCount}</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <apex:outputLink value="{!URLFOR($Page.nbavs__sfusers)}"
+                                                                         styleClass="actionLink">
+                                                             <span class="slds-icon_container slds-icon-action-new slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#new"/>
+								                            </span>
+                                                        </apex:outputLink>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['avsusers']}" target="_blank">
+                                                             <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xx-small">
+                                <div>
+                                        <span
+                                                class="slds-icon_container slds-icon-action-dial-in slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                               path="/assets/icons/standard-sprite/svg/symbols.svg#apps"/>
+                                        </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__PhoneNumber__c.List,$ObjectType.nbavs__PhoneNumber__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__PhoneNumber__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right" style="width:50px">{!phoneNumberCount}</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <apex:outputLink value="{!URLFOR($Action.nbavs__PhoneNumber__c.New)}"
+                                                                         styleClass="actionLink">
+                                                             <span class="slds-icon_container slds-icon-action-new slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#new"/>
+								                            </span>
+                                                        </apex:outputLink>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['phonenumbers']}" target="_blank">
+                                                            <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xx-small">
+                                <div>
+                                        <span
+                                                class="slds-icon_container slds-icon-action-sort slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                               path="/assets/icons/action-sprite/svg/symbols.svg#log_a_call"/>
+                                        </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__Device__c.List,$ObjectType.nbavs__Device__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__Device__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right" style="width:50px">{!deviceCount}</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <apex:outputLink value="{!URLFOR($Action.nbavs__Device__c.New)}"
+                                                                         styleClass="actionLink">
+                                                             <span class="slds-icon_container slds-icon-action-new slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#new"/>
+								                            </span>
+                                                        </apex:outputLink>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['devices']}" target="_blank">
+                                                             <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xx-small">
+                                <div>
+                                        <span
+                                                class="slds-icon_container slds-icon-action-edit-groups slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                               path="/assets/icons/action-sprite/svg/symbols.svg#new_group"/>
+                                        </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--xx-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__Group__c.List,$ObjectType.nbavs__Group__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__Group__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right" style="width:50px">{!groupCount}</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <apex:outputLink value="{!URLFOR($Action.nbavs__Group__c.New)}"
+                                                                         styleClass="actionLink">
+                                                             <span class="slds-icon_container slds-icon-action-new slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#new"/>
+								                            </span>
+                                                        </apex:outputLink>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['groups']}" target="_blank">
+                                                            <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-grid slds-m-left--xx-small slds-m-bottom--xxx-small">
+                                <div>
+                                        <span
+                                                class="slds-icon_container slds-icon-action-share-thanks slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                               path="/assets/icons/standard-sprite/svg/symbols.svg#environment_hub"/>
+                                        </span>
+                                </div>
+                                <div class="slds-col slds-m-top--x-small slds-m-left--x-small">
+                                    <dl class="slds-dl--horizontal slds-m-left--small">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <apex:outputLink value="{!URLFOR($Action.nbavs__CallFlow__c.List,$ObjectType.nbavs__CallFlow__c)}"
+                                                             styleClass="actionLink">{!$ObjectType.nbavs__CallFlow__c.labelPlural}
+                                            </apex:outputLink>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <div class="slds-grid">
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right" style="width:50px">{!policyCount}</div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <apex:outputLink value="{!URLFOR($Action.nbavs__CallFlow__c.New)}"
+                                                                         styleClass="actionLink">
+                                                             <span class="slds-icon_container slds-icon-action-new slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#new"/>
+								                            </span>
+                                                        </apex:outputLink>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <div class="slds-text-align--right">
+                                                        <a href="{!LinksMap['routingpolicies']}" target="_blank">
+                                                            <span class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+								  	                            <c:svg styleClass="slds-icon slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+								                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                    class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                <div class="slds-box slds-box--small slds-theme--shade">
+                    <div class="slds-page-header" role="banner">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-call"
+                                               path="/assets/icons/standard-sprite/svg/symbols.svg#call"/>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-title--caps slds-line-height--reset">Support</p>
+                                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                            Help</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                                <apex:outputPanel id="grantLoginPanel">
+                                    <apex:actionFunction name="grantLoginAccess" action="{!grantLoginAccess}" />
+                                    <section class="slds-clearfix">
+                                        <button class="slds-button slds-button--brand slds-float--right"
+                                                onclick="grantLoginAccess(); return false;">
+                                            <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                   path="/assets/icons/utility-sprite/svg/symbols.svg#user_role"/>
+                                            Grant Login Access
+                                        </button>
+                                    </section>
+                                    <section class="slds-clearfix">
+                                        <div class="slds-float--right">Your organization Id is: &nbsp;<apex:outputText value="{!$Organization.Id}"/></div>
+                                    </section>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <div class="slds-page-header__detail-row">
+                            <div class="slds-grid slds-grid slds-wrap slds-grid--pull-padded">
+
+
+                                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                                    <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                        <div class="slds-app-launcher__tile-figure">
+                                        <span
+                                                class="slds-icon_container slds-icon-action-call slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon--small"
+                                               path="/assets/icons/utility-sprite/svg/symbols.svg#help"/>
+                                        </span>
+                                        </div>
+                                        <div class="slds-app-launcher__tile-body">
+                                            <p style="line-height:48px"><a href="{!LinksMap['gettingstarted']}" target="_blank">Getting Started</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                                    <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                        <div class="slds-app-launcher__tile-figure">
+                                        <span
+                                                class="slds-icon_container slds-icon-action-new-case slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon--small"
+                                               path="/assets/icons/action-sprite/svg/symbols.svg#record"/>
+                                        </span>
+                                        </div>
+                                        <div class="slds-app-launcher__tile-body">
+                                            <p style="line-height:48px"><a href="{!LinksMap['userguide']}" target="_blank">User Guide</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Insight Only - Start -->
+                                <div class="slds-p-horizontal--small slds-size--1-of-1" style="{!IF(license.Insights__c, 'display:block', 'display:none')}">
+                                    <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                        <div class="slds-app-launcher__tile-figure">
+                                        <span
+                                                class="slds-icon_container slds-icon-action-new  slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon--small"
+                                               path="/assets/icons/utility-sprite/svg/symbols.svg#settings"/>
+                                        </span>
+                                        </div>
+                                        <div class="slds-app-launcher__tile-body">
+                                            <p style="line-height:48px"><a href="{!LinksMap['insightCategories']}" target="_blank">Insight Categories</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-horizontal--small slds-size--1-of-1" style="{!IF(license.Insights__c, 'display:block', 'display:none')}">
+                                    <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                        <div class="slds-app-launcher__tile-figure">
+                                        <span
+                                                class="slds-icon_container slds-icon-action-share-file slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon--small"
+                                               path="/assets/icons/action-sprite/svg/symbols.svg#new_notebook"/>
+                                        </span>
+                                        </div>
+                                        <div class="slds-app-launcher__tile-body">
+                                            <p style="line-height:48px"><a href="{!LinksMap['insightDictionaries']}" target="_blank">Insight Dictionaries</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Insight Only - End -->
+
+                                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                                    <div class="slds-app-launcher__tile slds-app-launcher__tile--local">
+                                        <div class="slds-app-launcher__tile-figure">
+                                        <span
+                                                class="slds-icon_container slds-icon-action-email slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon--small"
+                                               path="/assets/icons/action-sprite/svg/symbols.svg#email"/>
+                                        </span>
+                                        </div>
+                                        <div class="slds-app-launcher__tile-body">
+                                            <p style="line-height:48px"><a href="{!LinksMap['contactsupport']}" target="_blank">Contact Support</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</apex:form>
+</apex:page>

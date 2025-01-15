@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>natterbox__Add_Click_To_Dial_Target_to_Lookup__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Add &#39;Click To Dial&#39; target object to lookup results if not already included</description>
+    <inlineHelpText>Add &#39;Click To Dial&#39; target object to lookup results if not already included</inlineHelpText>
+    <label>Add Click To Dial Target to Lookup</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

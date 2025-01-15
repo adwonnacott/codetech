@@ -1,0 +1,173 @@
+<apex:page id="apiSettings" controller="nbavs.APISettingsController" docType="html-5.0">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+    <apex:pageMessages id="messages"/>
+    <style type="text/css">
+        .slds-app-launcher__tile--local {
+            cursor: pointer !important
+        }
+
+        .slds-notify_container--fixed {
+            position: relative !important
+        }
+
+        .relative-position {
+            position: relative
+        }
+
+        .disabled {
+            filter: gray; /* IE6-9 */
+            filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+            -webkit-filter: grayscale(1);
+        }
+
+        .pageTitleIcon {
+            background-image: URL("{!URLFOR($Resource.img, 'settings.png')}");
+        }
+
+    </style>
+
+
+    <div class="nbvc slds">
+        <apex:outputPanel layout="block"
+                          styleClass="slds-box slds-box--small slds-theme--shade"
+                          rendered="{!api.nbavs__OrganizationId__c == 0}">
+            <div class="slds-page-header" role="banner" >
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-performance"
+                                       path="/assets/icons/standard-sprite/svg/symbols.svg#marketing_actions"/>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">Activation</p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                    Welcome to Natterbox</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__detail-row">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded-medium">
+                        <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+                            <h3 class="slds-text-heading--small slds-m-bottom--medium">Thank you  for installing the Natterbox App, the first global business phone system and contact centre 100% native in Salesforce.</h3>
+                            <h3 class="slds-text-heading--small slds-m-bottom--medium">To start your free trial, you will need an Activation Token from Natterbox so that you can start to make and receive calls from Salesforce. Your details have been passed to our customer service team who will be in contact to provide you with your Activation Token.</h3>
+                            <h3 class="slds-text-heading--small slds-m-bottom--medium">Alternatively, if you wish to contact us please call your local Natterbox office on one of the following numbers:</h3>
+
+                            <dl class="slds-dl--horizontal">
+                                <dt class="slds-dl--horizontal__label">
+                                    <span class="slds-truncate">EMEA</span>
+                                </dt>
+                                <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                    <span class="slds-truncate">+44 (0) 203 5100 800</span>
+                                </dd>
+                                <dt class="slds-dl--horizontal__label">
+                                    <span class="slds-truncate">US</span>
+                                </dt>
+                                <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                    <span class="slds-truncate">+1 (415) 636-7637</span>
+                                </dd>
+                                <dt class="slds-dl--horizontal__label">
+                                    <span class="slds-truncate">APAC</span>
+                                </dt>
+                                <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                    <span class="slds-truncate">+61 (0) 282 443 122</span>
+                                </dd>
+                            </dl>
+                            <h3 class="slds-text-heading--small slds-m-bottom--medium"></h3>
+                            <h3 class="slds-text-heading--small">Your Natterbox team!</h3>
+
+                        </div>
+
+                        <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                            <apex:form id="activationForm">
+                                <apex:actionFunction name="saveActivation" action="{!saveActivation}"
+                                                     rerender="activationForm"
+                                                     status="activationStatus"/>
+                                <apex:actionStatus id="activationStatus" stopText="">
+                                    <apex:facet name="start">
+                                        <div class="slds-spinner_container">
+                                            <div class="slds-spinner--brand slds-spinner slds-spinner--medium"
+                                                 role="alert">
+                                                <span class="slds-assistive-text">Working</span>
+                                                <div class="slds-spinner__dot-a"></div>
+                                                <div class="slds-spinner__dot-b"></div>
+                                            </div>
+                                        </div>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                        <apex:outputPanel layout="block"
+                                                          styleClass="slds-notify_container slds-notify_container--fixed "
+                                                          rendered="{!IF((error!=null),true,false)}">
+                                            <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+                                                <span class="slds-assistive-text">Error</span>
+                                                <div class="slds-notify__content slds-grid">
+                                                    <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                           path="/assets/icons/utility-sprite/svg/symbols.svg#warning"/>
+                                                    <div class="slds-col slds-align-middle">
+                                                        <h2 class="slds-text-heading--small">{!error}</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                                <div class="slds-box slds-box--small slds-theme--shade">
+
+                                    <div class="slds-form--stacked">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label slds-text-heading--small"
+                                                   for="activationToken">Insert Activation Token here</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputText id="activationToken" label="Insert Activation Token"
+                                                                value="{!activationToken}" styleClass="slds-input"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <button class="slds-button slds-button--brand"
+                                                        onclick="saveActivation(); return false;">
+                                                    <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                                                           path="/assets/icons/action-sprite/svg/symbols.svg#change_record_type"/>
+                                                    Activate Integration
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </apex:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block"
+                          styleClass="slds-box slds-box--small slds-theme--shade"
+                          rendered="{!api.nbavs__OrganizationId__c != 0}">
+            <div class="slds-page-header" role="banner" >
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-task-2"
+                                       path="/assets/icons/standard-sprite/svg/symbols.svg#task2"/>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">Activation</p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                    Natterbox App is activated</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+    </div>
+
+</apex:page>

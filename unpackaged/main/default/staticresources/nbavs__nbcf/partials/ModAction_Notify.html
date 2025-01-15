@@ -1,0 +1,443 @@
+<div ng-controller="ModActionNotify">
+
+	<div class="slds-grid slds-wrap">
+		<div class="slds-col slds-size--1-of-2 slds-m-bottom--x-small" ng-repeat="(key, value) in item.data.subItems" ng-class="$even?'slds-p-right--xx-small':'slds-p-left--xx-small'">
+			<button ng-disabled="key=='chatter' && model.chatterDisabled" type="button"  ng-click="model.selectedTab = key" class="slds-button slds-size--1-of-1 slds-text-align--left" ng-class="{'slds-button--brand':(model.selectedTab == key),'slds-button--neutral':(model.selectedTab != key),'slds-size--1-of-2':($last&&$even), 'slds-size--1-of-1':(!$last)}" >
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+					<use xlink:href="" s="utility" i="email" svg-link ng-if="key=='email'"/>
+					<use xlink:href="" s="utility" i="sms" svg-link ng-if="key=='sms'"/>
+                    <use xlink:href="" s="utility" i="notification" svg-link ng-if="key=='chatter'"/>
+                    <use xlink:href="" s="utility" i="warning" svg-link ng-if="key=='notification'"/>
+				</svg>
+				<span class="capitalize">{{key | translate}} ({{value.length}})</span>
+			</button>
+		</div>
+	</div>
+
+
+	<div class="slds-tabs--scoped slds-p-top--small">
+
+		<div ng-if="model.selectedTab == 'email'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--horizontal" ng-repeat="itm in item.data.subItems.email">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+						     style="border: 1px solid #006eb3">
+							<div class="slds-form-element">
+								<button type="button"  class="slds-button slds-button--icon slds-float--left"
+										ng-click="item.data.subItems.email.splice($index, 1)">
+									<svg aria-hidden="true" class="slds-button__icon">
+										<use xlink:href="" i="close" svg-link/>
+									</svg>
+									<span class="slds-assistive-text">delete</span>
+								</button>
+								<div ng-if="itm.variables.hasOwnProperty('sendNow')">
+									<label class="slds-form-element__label"
+										   for="sendNow__{{$index}}">Send email</label>
+									<div class="slds-form-element__control">
+										<div class="slds-select_container">
+											<select id="sendNow__{{$index}}" name="sendNow__{{$index}}"
+													class="slds-select"
+													ng-model="itm.variables.sendNow"
+													ng-options="opt.value as opt.label for opt in model.sendNowOptions">
+											</select>
+										</div>
+									</div>
+								</div>
+								<div ng-if="itm.variables.hasOwnProperty('whichPolicyAttempt')">
+									<label class="slds-form-element__label"
+										   for="whichPolicyAttempt__{{$index}}">Send email on</label>
+									<div class="slds-form-element__control">
+										<div class="slds-select_container">
+											<select id="whichPolicyAttempt__{{$index}}" name="whichPolicyAttempt__{{$index}}"
+													class="slds-select"
+													ng-model="itm.variables.whichPolicyAttempt"
+													ng-options="opt.value as opt.label for opt in model.whichPolicyAttemptOptions">
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<input-to-array value="itm.variables.toAddresses" separator="," label="To Email Addresses" name="toAddresses" required="true" macro="true" index="$index" > </input-to-array>
+							<input-to-array value="itm.variables.ccAddresses" separator="," label="CC Email Addresses" name="ccAddresses" required="false" macro="true" null="true" index="$index"> </input-to-array>
+
+							<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.subject__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="subject__{{$index}}">Subject</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('subject__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<input id="subject__{{$index}}" name="subject__{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="itm.variables.subject" aria-describedby="errorName" required=""/>
+								</div>
+							</div>
+							<div class="slds-form-element" >
+								<label class="slds-form-element__label" for="textEmail__{{$index}}">Email body</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+										 ng-click="showMacros('textEmail__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<textarea id="textEmail__{{$index}}" name="textEmail__{{$index}}" class="slds-textarea" placeholder="" ng-model="itm.variables.text"></textarea>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addNotifyItem('email')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Email Notifier
+					</button>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div ng-if="model.selectedTab == 'sms'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--horizontal" ng-repeat="itm in item.data.subItems.sms">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+							 style="border: 1px solid #006eb3">
+							<div class="slds-form-element">
+								<button type="button"  class="slds-button slds-button--icon slds-float--left"
+										ng-click="item.data.subItems.sms.splice($index, 1)">
+									<svg aria-hidden="true" class="slds-button__icon">
+										<use xlink:href="" i="close" svg-link/>
+									</svg>
+									<span class="slds-assistive-text">delete</span>
+								</button>
+								<div ng-if="itm.variables.hasOwnProperty('sendNow')">
+									<label class="slds-form-element__label"
+										   for="sendNow__{{$index}}">Send message</label>
+									<div class="slds-form-element__control">
+										<div class="slds-select_container">
+											<select id="sendNow__{{$index}}" name="sendNow__{{$index}}"
+													class="slds-select"
+													ng-model="itm.variables.sendNow"
+													ng-options="opt.value as opt.label for opt in model.sendNowOptions">
+											</select>
+										</div>
+									</div>
+								</div>
+								<div ng-if="itm.variables.hasOwnProperty('whichPolicyAttempt')">
+									<label class="slds-form-element__label"
+										   for="whichPolicyAttempt__{{$index}}">Send message on</label>
+									<div class="slds-form-element__control">
+										<div class="slds-select_container">
+											<select id="whichPolicyAttempt__{{$index}}" name="whichPolicyAttempt__{{$index}}"
+													class="slds-select"
+													ng-model="itm.variables.whichPolicyAttempt"
+													ng-options="opt.value as opt.label for opt in model.whichPolicyAttemptOptions">
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.toNumber__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="toNumber__{{$index}}">Send SMS to</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('toNumber__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<input id="toNumber__{{$index}}" name="toNumber__{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="itm.variables.toNumber" aria-describedby="errorName" required=""/>
+								</div>
+							</div>
+							<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.fromNumber__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="fromNumber__{{$index}}">Sender number</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('fromNumber__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<input id="fromNumber__{{$index}}" name="fromNumber__{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="itm.variables.fromNumber" aria-describedby="errorName" required=""/>
+								</div>
+							</div>
+							<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.textSMS__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="textSMS__{{$index}}">SMS Message</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+										 ng-click="showMacros('textSMS__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<textarea id="textSMS__{{$index}}" name="textSMS__{{$index}}" class="slds-textarea" placeholder="" ng-model="itm.variables.text" required=""></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addNotifyItem('sms')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add SMS Notifier
+					</button>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div ng-if="model.selectedTab == 'chatter'">
+			<div class="slds-form-element">
+				<div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+					<div class="slds-form--horizontal" ng-repeat="itm in item.data.subItems.chatter">
+						<div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+							 style="border: 1px solid #006eb3">
+							<!--
+							<div class="slds-form-element">
+								<button type="button"  class="slds-button slds-button--icon slds-float--left"
+										ng-click="item.data.subItems.chatter.splice($index, 1)">
+									<svg aria-hidden="true" class="slds-button__icon">
+										<use xlink:href="" i="close" svg-link/>
+									</svg>
+									<span class="slds-assistive-text">delete</span>
+								</button>
+								<label class="slds-form-element__label"
+									   for="sendNow__{{$index}}">Send Chatter</label>
+								<div class="slds-form-element__control">
+									<div class="slds-select_container">
+										<select id="sendNow__{{$index}}" name="sendNow__{{$index}}"
+												class="slds-select"
+												ng-model="itm.sendNow"
+												ng-options="opt.value as opt.label for opt in model.sendNowOptions">
+										</select>
+									</div>
+								</div>
+							</div>
+							-->
+
+							<div class="slds-form-element">
+								<button type="button"  class="slds-button slds-button--icon slds-float--left"
+										ng-click="item.data.subItems.chatter.splice($index, 1)">
+									<svg aria-hidden="true" class="slds-button__icon">
+										<use xlink:href="" i="close" svg-link/>
+									</svg>
+									<span class="slds-assistive-text">delete</span>
+								</button>
+								<div>
+								<label class="slds-form-element__label" for="visibility__{{$index}}">Visibility</label>
+									<div class="slds-form-element__control">
+										<div class="slds-select_container">
+											<select id="visibility__{{$index}}" class="slds-select" ng-model="itm.visibility"
+													ng-options="item.value as item.label for item in model.visibilityOptions">
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="target__{{$index}}">Target</label>
+								<div class="slds-form-element__control">
+									<div class="slds-select_container">
+										<select id="target__{{$index}}" class="slds-select" ng-model="itm.targetType"
+												ng-options="item.value as item.label for item in model.targetOptions">
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="slds-form-element" ng-show="itm.targetType=='user'">
+								<label class="slds-form-element__label" for="user__{{$index}}">User</label>
+								<div class="slds-form-element__control">
+									<div class="slds-select_container">
+										<select id="user__{{$index}}" class="slds-select" ng-model="itm.target"
+												ng-options="item.Id as item.Name for item in model.users">
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="slds-form-element" ng-show="itm.targetType=='userId'" ng-class="{'slds-is-required slds-has-error': ItemForm.userId__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="userId__{{$index}}">User Id</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('userId__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<input id="userId__{{$index}}" name="userId__{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="itm.target" aria-describedby="errorName" required=""/>
+								</div>
+							</div>
+
+
+							<div class="slds-form-element" ng-show="itm.targetType=='group'">
+								<label class="slds-form-element__label" for="group__{{$index}}">Group</label>
+								<div class="slds-form-element__control">
+									<div class="slds-select_container">
+										<select id="group__{{$index}}" class="slds-select" ng-model="itm.target"
+												ng-options="item.Id as item.Name for item in model.chatterGroups">
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="slds-form-element" ng-show="itm.targetType=='groupId'" ng-class="{'slds-is-required slds-has-error': ItemForm.groupId__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="groupId__{{$index}}">Group Id</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('groupId__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<input id="groupId__{{$index}}" name="groupId__{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="itm.target" aria-describedby="errorName" required=""/>
+								</div>
+							</div>
+
+
+
+							<div class="slds-form-element" ng-show="itm.targetType=='record'" ng-class="{'slds-is-required slds-has-error': ItemForm.recordId__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="recordId__{{$index}}">Record Id</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('recordId__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<input id="recordId__{{$index}}" name="recordId__{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="itm.target" aria-describedby="errorName" required=""/>
+								</div>
+							</div>
+
+							<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.postText__{{$index}}.$error.required}">
+								<label class="slds-form-element__label" for="postText__{{$index}}">Post text</label>
+								<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+										 ng-click="showMacros('postText__'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+									<textarea id="postText__{{$index}}" name="postText__{{$index}}" class="slds-textarea" placeholder="" ng-model="itm.postText" required=""></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button type="button"  class="slds-button slds-button--icon" ng-click="addNotifyItem('chatter')">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="" i="add" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">add rule</span>
+						Add Chatter Notifier
+					</button>
+				</div>
+
+			</div>
+
+		</div>
+
+        <div ng-if="model.selectedTab == 'notification'">
+            <div class="slds-form-element">
+                <div class="slds-box slds-theme--default slds-box--x-small" style="border: 1px solid #006eb3">
+                    <div class="slds-form--horizontal" ng-repeat="itm in item.data.subItems.notification">
+                        <div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+                             style="border: 1px solid #006eb3">
+
+                            <div class="slds-form-element">
+                                <button type="button"  class="slds-button slds-button--icon slds-float--left"
+                                        ng-click="item.data.subItems.notification.splice($index, 1)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="" i="close" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">delete</span>
+                                </button>
+                                <div>
+                                    <label class="slds-form-element__label" for="target__{{$index}}">Target</label>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                            <select id="target__{{$index}}" class="slds-select" ng-model="itm.targetType"
+                                                    ng-options="item.value as item.label for item in model.notificationTypeOptions">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element" ng-show="itm.targetType=='CHANNEL'">
+                                <label class="slds-form-element__label" for="call__{{$index}}">Call Type</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select id="call__{{$index}}" class="slds-select" ng-model="itm.targetUUID"
+                                                ng-options="item.value as item.label for item in model.notificationCallTypeOptions">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element" ng-show="itm.targetType=='USER'" ng-class="{'slds-is-required slds-has-error': ItemForm.userId__{{$index}}.$error.required}">
+                                <label class="slds-form-element__label" for="userId__{{$index}}">Target User</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                    <svg aria-hidden="true"
+                                         class="slds-input__icon slds-icon-text-default"
+                                         ng-click="showMacros('userId__'+$index)">
+                                        <use xlink:href="" i="push" svg-link/>
+                                    </svg>
+                                    <input id="userId__{{$index}}" name="userId__{{$index}}" class="slds-input" type="text" placeholder=""
+                                           ng-model="itm.targetUserID" aria-describedby="errorName" required=""/>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.from__{{$index}}.$error.required}">
+                                <label class="slds-form-element__label" for="from__{{$index}}">Display Name</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                    <svg aria-hidden="true"
+                                         class="slds-input__icon slds-icon-text-default"
+                                         ng-click="showMacros('from__'+$index)">
+                                        <use xlink:href="" i="push" svg-link/>
+                                    </svg>
+                                    <input id="from__{{$index}}" name="from__{{$index}}" class="slds-input" type="text" placeholder=""
+                                           ng-model="itm.senderDisplayName" aria-describedby="errorName" required=""/>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.postText__{{$index}}.$error.required}">
+                                <label class="slds-form-element__label" for="postText__{{$index}}">Notification</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                    <svg aria-hidden="true"
+                                         class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                                         ng-click="showMacros('postText__'+$index)">
+                                        <use xlink:href="" i="push" svg-link/>
+                                    </svg>
+                                    <textarea id="postText__{{$index}}" name="postText__{{$index}}" class="slds-textarea" placeholder="" ng-model="itm.notificationText" required=""></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button"  class="slds-button slds-button--icon" ng-click="addNotifyItem('notification')">
+                        <svg aria-hidden="true" class="slds-button__icon">
+                            <use xlink:href="" i="add" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">add rule</span>
+                        Add CTI Notification
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+	</div>
+
+
+</div>
+
+

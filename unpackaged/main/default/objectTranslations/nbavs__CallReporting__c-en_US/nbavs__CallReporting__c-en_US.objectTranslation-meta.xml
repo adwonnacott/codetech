@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <layouts>
+        <layout>Call Reporting Layout</layout>
+        <sections>
+            <label><!-- Call Disposition Information --></label>
+            <section>Call Disposition Information</section>
+        </sections>
+        <sections>
+            <label><!-- Conversation Summary --></label>
+            <section>Conversation Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- From (Caller) Related Information --></label>
+            <section>From (Caller) Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Miscellaneous --></label>
+            <section>Miscellaneous</section>
+        </sections>
+        <sections>
+            <label><!-- Related Information --></label>
+            <section>Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Routing Policy Information --></label>
+            <section>Routing Policy Information</section>
+        </sections>
+        <sections>
+            <label><!-- Segmentation --></label>
+            <section>Segmentation</section>
+        </sections>
+        <sections>
+            <label><!-- Skills Information --></label>
+            <section>Skills Information</section>
+        </sections>
+        <sections>
+            <label><!-- To (Called) Related Information --></label>
+            <section>To (Called) Related Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Call Reporting Layout 2</layout>
+        <sections>
+            <label><!-- Call Disposition Information --></label>
+            <section>Call Disposition Information</section>
+        </sections>
+        <sections>
+            <label><!-- Conversation Summary --></label>
+            <section>Conversation Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- From (Caller) Related Information --></label>
+            <section>From (Caller) Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Miscellaneous --></label>
+            <section>Miscellaneous</section>
+        </sections>
+        <sections>
+            <label><!-- Related Information --></label>
+            <section>Related Information</section>
+        </sections>
+        <sections>
+            <label><!-- Routing Policy Information --></label>
+            <section>Routing Policy Information</section>
+        </sections>
+        <sections>
+            <label><!-- Segmentation --></label>
+            <section>Segmentation</section>
+        </sections>
+        <sections>
+            <label><!-- Skills Information --></label>
+            <section>Skills Information</section>
+        </sections>
+        <sections>
+            <label><!-- To (Called) Related Information --></label>
+            <section>To (Called) Related Information</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Disable the running of Salesforce Case auto-assignment rules on Quick Case creation --></help>
+        <label><!-- Disable Quick Case Assignment Rules --></label>
+        <name>natterbox__Disable_Quick_Case_Assignment_Rules__c</name>
+    </CustomFieldTranslation>

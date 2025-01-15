@@ -1,0 +1,1322 @@
+<style type="text/css" media="screen">
+    #ace_editor_inline { height: 260px; }
+    #ace_editor_modal { height: 70vh }
+    .readonly-highlight {
+        background-color: #2b2b2b;
+        opacity: 0.2;
+        position: absolute;
+    }
+    .slds-tabs--scoped__link__small {
+        padding: 0 0.6rem!important;
+    }
+
+    .selector-container.multiple .selector-input {
+        padding: .2em .55em .0em!important;
+    }
+</style>
+
+<div ng-controller="ModConnectQueue">
+    <div class="slds-tabs--scoped">
+        <ul class="slds-tabs--scoped__nav" role="tablist">
+            <li class="slds-tabs--scoped__item slds-text-heading--label" title="Call Groups" role="presentation"
+                ng-class="model.selectedTab == 'groups' ? 'slds-active' : ''">
+                <a class="slds-tabs--scoped__link slds-tabs--scoped__link__small" href="javascript:;" role="tab" tabindex="-1" aria-selected="false"
+                   aria-controls="tab-scoped-groups" id="tab-scoped-groups__item" ng-click="model.selectedTab='groups'">Groups</a>
+            </li>
+            <li class="slds-tabs--scoped__item slds-text-heading--label" title="Call Properties" role="presentation"
+                ng-class="model.selectedTab == 'basic' ? 'slds-active' : ''">
+                <a class="slds-tabs--scoped__link slds-tabs--scoped__link__small" href="javascript:;" role="tab" tabindex="0" aria-selected="true"
+                   aria-controls="tab-scoped-basic" id="tab-scoped-basic__item" ng-click="model.selectedTab='basic'">Properties</a>
+            </li>
+            <li class="slds-tabs--scoped__item slds-text-heading--label" title="Announcements" role="presentation"
+                ng-class="model.selectedTab == 'announcements' ? 'slds-active' : ''">
+                <a class="slds-tabs--scoped__link slds-tabs--scoped__link__small" href="javascript:;" role="tab" tabindex="-1" aria-selected="false"
+                   aria-controls="tab-scoped-announcements" id="tab-scoped-announcements__item"
+                   ng-click="model.selectedTab='announcements'">Announcements</a>
+            </li>
+            <li class="slds-tabs--scoped__item slds-text-heading--label" title="Screen" role="presentation"
+                ng-class="model.selectedTab == 'screen' ? 'slds-active' : ''">
+                <a class="slds-tabs--scoped__link slds-tabs--scoped__link__small" href="javascript:;" role="tab" tabindex="-1" aria-selected="false"
+                   aria-controls="tab-scoped-screen" id="tab-scoped-screen__item"
+                   ng-click="model.selectedTab='screen'">Screen</a>
+            </li>
+            <li class="slds-tabs--scoped__item slds-text-heading--label" title="Callback" role="presentation"
+                ng-class="model.selectedTab == 'callBack' ? 'slds-active' : ''">
+                <a class="slds-tabs--scoped__link slds-tabs--scoped__link__small" href="javascript:;" role="tab" tabindex="-1" aria-selected="false"
+                   aria-controls="tab-scoped-callBack" id="tab-scoped-callBack__item" ng-click="model.selectedTab='callBack'">
+                    <div class="slds-icon_container" title="{{model.hasSkillsBasedGroupNotification}}" ng-if="!model.hasSkillsBasedGroup">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small" style="fill: #EC6281">
+                            <use xlink:href="" i="error" svg-link/>
+                        </svg>
+                    </div>
+                    Callback
+                </a>
+            </li>
+        </ul>
+
+        <div id="tab-scoped-groups" class="slds-tabs--scoped__content" role="tabpanel"
+             aria-labelledby="tab-scoped-groups__item"
+             ng-class="model.selectedTab == 'groups' ? 'slds-show' : 'slds-hide'">
+            <div class="slds-scrollable--y" style="max-height:380px;">
+                <table class="slds-table slds-table--bordered slds-text-body--small">
+                    <thead>
+                    <tr class="slds-text-heading--label">
+                        <th class="slds-is-sortable--not" scope="col">
+                            <span class="slds-truncate">Actions</span>
+                        </th>
+                        <th class="slds-is-sortable--not" scope="col">
+                            <span class="slds-truncate">&#8645;</span>
+                        </th>
+                        <th class="slds-is-sortable--not" scope="col">
+                            <span class="slds-truncate">Call Group</span>
+                        </th>
+                        <th class="slds-is-sortable--not" scope="col">
+                            <span class="slds-truncate">Distribution</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="slds-hint-parent" ng-repeat="itm in item.data.variables.ringTargets">
+                        <td data-label="actions">
+                            <button type="button" class="slds-button slds-button--icon-bare"
+                                    ng-click="editRingTarget(itm)">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                    <use xlink:href="" i="edit" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">edit</span>
+                            </button>
+                            <button type="button" class="slds-button slds-button--icon-bare"
+                                    ng-click="swapPriority(item.data.variables.ringTargets, $index,$index-1)"
+                                    ng-disabled="$first || (itm.distribution.algorithm=='ALL_AGENTS' && $last)">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                    <use xlink:href="" i="up" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">up</span>
+                            </button>
+                            <button type="button" class="slds-button slds-button--icon-bare"
+                                    ng-click="swapPriority(item.data.variables.ringTargets, $index,$index+1)"
+                                    ng-disabled="$last || ($index == (item.data.variables.ringTargets.length-2) && item.data.variables.ringTargets[$index+1].distribution.algorithm=='ALL_AGENTS')">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                    <use xlink:href="" i="down" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">down</span>
+                            </button>
+                            <button type="button" class="slds-button slds-button--icon-bare"
+                                    ng-click="item.data.variables.ringTargets.splice($index, 1); handleSkillBasedGroup()">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                    <use xlink:href="" i="delete" svg-link/>
+                                </svg>
+                                <span class="slds-assistive-text">delete</span>
+                            </button>
+                        </td>
+                        <td data-label="priority">{{$index + 1}}</td>
+                        <td data-label="name"><div class="slds-truncate" ng-class="{'slds-box slds-theme--error': (model.groupsMap[itm.groupId]=='__ invalid group __')}">{{model.groupsMap[itm.groupId]}}</div></td>
+                        <td data-label="distribution"><span class="slds-truncate">{{itm.distribution.algorithm | translate}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slds-grid">
+                <div>
+                    <button type="button"
+                            class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-m-around--x-small"
+                            ng-click="initNewRingTarget()">
+                        <svg aria-hidden="true"
+                             class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                            <use xlink:href="" i="add" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">add</span>
+                    </button>
+                </div>
+                <div ng-if="item.data.variables.ringTargets.length==0 && !model.showRingTargetDialog">
+                    <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                        <div class="slds-popover__body">Please add at least one Call Group (except for Omni-Channel configuration)</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="slds-form--horizontal" ng-if="model.showRingTargetDialog">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="holdMusicType">Call Group</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="group" class="slds-select" ng-model="model.selectedRingTarget.groupId"
+                                    ng-options="itm.Id__c as itm.Name for itm in model.groups">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="distribution">Distribution Rule</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="distribution" class="slds-select"
+                                    ng-model="model.selectedRingTarget.distribution.algorithm"
+                                    ng-options="itm.value as itm.label for itm in model.distributionOptions"
+                                    ng-change="handleDistributionRuleChange()">
+                            </select>
+                        </div>
+                        <div class="slds-has-error" ng-if="model.distributionAlgorithmError"`>
+                            <div class="slds-form-element__help" >{{model.distributionAlgorithmError}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="wrapUpTime">Wrap Up Time</label>
+                    <div class="slds-form-element__control"
+                         ng-class="{'slds-is-required slds-has-error': (ItemForm.wrapUpTime.$error.required || ItemForm.wrapUpTime.$error.min || ItemForm.wrapUpTime.$error.max)}">
+                        <input ng-model="model.selectedRingTarget.wrapUpTime" id="wrapUpTime" name="wrapUpTime"
+                               class="slds-input" type="number" required="" ng-min="0" max="3600"/>
+                        <div class="slds-form-element__help" ng-if="ItemForm.wrapUpTime.$error.min || ItemForm.wrapUpTime.$error.max">The value must be in range [0-3600]</div>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="wrapUpFailedTime">Wrap Up Failed Time</label>
+                    <div class="slds-form-element__control"
+                         ng-class="{'slds-is-required slds-has-error': (ItemForm.wrapUpFailedTime.$error.required || ItemForm.wrapUpFailedTime.$error.min || ItemForm.wrapUpFailedTime.$error.max)}">
+                        <input ng-model="model.selectedRingTarget.wrapUpFailedTime" id="wrapUpFailedTime"
+                               name="wrapUpFailedTime" class="slds-input" type="number" required="" ng-min="model.selectedRingTarget.distribution.algorithm == 'ALL_AGENTS' ? 0 : 10" max="3600"/>
+                        <div class="slds-form-element__help" ng-if="ItemForm.wrapUpFailedTime.$error.min || ItemForm.wrapUpFailedTime.$error.max">The value must be in range [{{model.selectedRingTarget.distribution.algorithm == 'ALL_AGENTS' ? 0 : 10}}-3600]</div>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="wrapUpFailedTime">Ring Time</label>
+                    <div class="slds-form-element__control"
+                         ng-class="{'slds-is-required slds-has-error': (ItemForm.ringTime.$error.required || ItemForm.ringTime.$error.min || ItemForm.ringTime.$error.max)}">
+                        <input ng-model="model.selectedRingTarget.ringTime" id="ringTime" name="ringTime"
+                               class="slds-input" type="number" required="" min="5" max="180"/>
+                        <div class="slds-form-element__help" ng-if="ItemForm.ringTime.$error.min || ItemForm.ringTime.$error.max">The value must be in range [5-180]</div>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox" for="screenCaller">
+                            <input name="screenCaller" type="checkbox" id="screenCaller"
+                                   ng-model="model.selectedRingTarget.screenCaller"/>
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Call screening is enabled</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox" for="callWaiting">
+                            <input name="callWaiting" type="checkbox" id="callWaiting"
+                                   ng-model="model.selectedRingTarget.callWaiting"/>
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Call waiting is enabled</span>
+                        </label>
+                    </div>
+                </div>
+                <div ng-if="model.selectedRingTarget.distribution.algorithm=='LEAST_TALK' || model.selectedRingTarget.distribution.algorithm=='LEAST_CALLS'">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__label">Reset Statistics</div>
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__label slds-m-top--x-small">Days</div>
+                            <reset-days days="model.selectedRingTarget.distribution.resetDays"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__label">Hours</div>
+                            <hours-array hours="model.selectedRingTarget.distribution.resetHours"/>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox" for="skillsEnabled">
+                            <input name="skillsEnabled" type="checkbox" id="skillsEnabled"
+                                   ng-model="model.selectedRingTarget.skills.enabled" ng-disabled="model.selectedRingTarget.distribution.algorithm=='ALL_AGENTS'" ng-change="handleSkillBasedGroup()"/>
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Skill routing is enabled</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div ng-if="model.selectedRingTarget.skills.enabled">
+
+                    <div class="slds-form-element slds-m-top--x-small">
+                        <label class="slds-form-element__label" for="holdMusicType">Skill Engine</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="skillMode" class="slds-select"
+                                        ng-model="model.selectedRingTarget.skills.mode"
+                                        ng-options="itm.value as itm.label for itm in model.skillModeOption" ng-change="handleSkillEngineMode()">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="model.selectedRingTarget.skills.mode=='BUILT_IN'">
+
+                        <div class="slds-form-element slds-m-top--x-small">
+                            <label class="slds-form-element__label" for="skillAlgorithm">Order Algorithm</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                    <select id="skillAlgorithm" class="slds-select"
+                                            ng-model="model.selectedRingTarget.skills.parameters.algorithm"
+                                            ng-options="itm.value as itm.label for itm in model.skillAlgorithmOptions">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <label class="slds-checkbox" for="agentsRequireAllSkills">
+                                    <input name="agentsRequireAllSkills" type="checkbox" id="agentsRequireAllSkills"
+                                           ng-model="model.selectedRingTarget.skills.parameters.agentsRequireAllSkills"/>
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span class="slds-form-element__label">Agents require all skills</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element" ng-if="model.selectedRingTarget.skills.parameters.agentsRequireAllSkills">
+                            <div class="slds-form-element__control">
+                                <label class="slds-checkbox" for="ignoreUnskilledAgents">
+                                    <input name="ignoreUnskilledAgents" type="checkbox" id="ignoreUnskilledAgents"
+                                           ng-model="model.selectedRingTarget.skills.parameters.ignoreUnskilledAgents"/>
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span class="slds-form-element__label">Ignore unskilled agents</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element" ng-if="model.selectedRingTarget.skills.parameters.agentsRequireAllSkills && !model.selectedRingTarget.skills.parameters.ignoreUnskilledAgents">
+                            <label class="slds-form-element__label" for="unskilledAgentsDeferTime">Unskilled agents defer time</label>
+                            <div class="slds-form-element__control"
+                                 ng-class="{'slds-is-required slds-has-error': (ItemForm.unskilledAgentsDeferTime.$error.required || ItemForm.unskilledAgentsDeferTime.$error.min || ItemForm.unskilledAgentsDeferTime.$error.max)}">
+                                <input ng-model="model.selectedRingTarget.skills.parameters.unskilledAgentsDeferTime" id="unskilledAgentsDeferTime" name="unskilledAgentsDeferTime"
+                                       class="slds-input" type="number" required="" min="0" max="86400"/>
+                                <div class="slds-form-element__help" ng-if="ItemForm.unskilledAgentsDeferTime.$error.min || ItemForm.unskilledAgentsDeferTime.$error.max">The value must be in range [0-86400]</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="slds-form-element" ng-if="model.selectedRingTarget.skills.mode=='HOOK'">
+                        <button type="button" class="slds-button slds-button--icon"
+                                ng-click="model.showModalScriptEditor=true" style="position: absolute; left: 0; padding:4px; z-index: 99;">
+                            <svg aria-hidden="true" class="slds-button__icon slds-icon--x-small slds-icon-text-default">
+                                <use xlink:href="" s="utility" i="expand" svg-link />
+                            </svg>
+                            <span class="slds-assistive-text">expand</span>
+                        </button>
+                        <div id="script" style="border: inset 1px">
+                            <div id="ace_editor_inline" ui-ace="{onLoad:aceLoaded}" ng-model="model.selectedRingTarget.skills.script"></div>
+                        </div>
+                    </div>
+
+               </div>
+
+
+
+                <div class="slds-form-element slds-m-top--small">
+                    <button class="slds-button slds-button--neutral" type="button"
+                            ng-click="model.showRingTargetDialog=false">Cancel
+                    </button>
+                    <button class="slds-button slds-button--brand" type="button" ng-click="addRingTarget()"
+                            ng-if="model.mode=='add'" ng-disabled="ItemForm.$invalid || model.distributionAlgorithmError">Add
+                    </button>
+                    <button class="slds-button slds-button--brand" type="button"
+                            ng-click="model.showRingTargetDialog=false" ng-if="model.mode=='edit'" ng-disabled="ItemForm.$invalid || model.distributionAlgorithmError">Done
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="tab-scoped-basic" class="slds-tabs--scoped__content" role="tabpanel"
+             aria-labelledby="tab-scoped-basic__item"
+             ng-class="model.selectedTab == 'basic' ? 'slds-show' : 'slds-hide'">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="queueAlgorithmType">Queue Algorithm</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="queueAlgorithmType" class="slds-select" ng-model="item.data.config.callQueue.algorithm"
+                                ng-options="item.value as item.label for item in model.queueAlgorithmTypes"
+                                ng-change="handleQueueAlgorithmChange()">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="transferAfterConnect">Transfer After Connect</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right"
+                     ng-class="{'slds-is-required slds-has-error': (ItemForm.transferAfterConnect.$error.required || ItemForm.transferAfterConnect.$error.pattern)}">
+                    <svg aria-hidden="true"
+                         class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                         ng-click="showMacros('transferAfterConnect')">
+                        <use xlink:href="" i="push" svg-link/>
+                    </svg>
+                    <input ng-model="item.data.config.callQueue.transferAfterConnect" id="transferAfterConnect" name="transferAfterConnect"
+                           class="slds-input" type="text" ng-change="handleTransferAfterConnectChange()" ng-pattern="model.transferAfterConnectRegex"/>
+                    <div class="slds-form-element__help" ng-if="ItemForm.transferAfterConnect.$error.pattern">Allowed values: a phone number, URI or macro expression</div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="holdMusicType">Hold Music</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="holdMusicType" class="slds-select" ng-model="item.data.config.holdMusicType"
+                                ng-options="item.value as item.label for item in model.holdMusicTypes"
+                                ng-change="handleHoldMusicChange()">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="item.data.config.holdMusicType=='PRESET'">
+                <label class="slds-form-element__label" for="holdMusicPreset">The name of the preset hold music</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="holdMusicPreset" class="slds-select" ng-model="item.data.config.holdMusicPreset"
+                                ng-options="item.Value__c as item.Name for item in model.holdMusicOptions"
+                                ng-change="handleHoldMusicChange()">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="item.data.config.holdMusicType=='CUSTOM'">
+                <label class="slds-form-element__label" for="holdMusicUrl">URL of the custom hold music</label>
+                <div class="slds-form-element__control"
+                     ng-class="{'slds-is-required slds-has-error': ItemForm.holdMusicUrl.$error.required}">
+                    <input ng-model="item.data.config.holdMusicUrl" id="holdMusicUrl" name="holdMusicUrl"
+                           class="slds-input" type="text" required="" ng-change="handleHoldMusicChange()"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="announcePeriod">How often (in seconds) to announce to the caller</label>
+                <div class="slds-form-element__control"
+                     ng-class="{'slds-is-required slds-has-error': (ItemForm.announcePeriod.$error.required || ItemForm.announcePeriod.$error.min || ItemForm.announcePeriod.$error.max)}">
+                    <input ng-model="item.data.variables.announcePeriod" id="announcePeriod" name="announcePeriod"
+                           class="slds-input" type="number" min="1" max="9999"/>
+                    <div class="slds-form-element__help" ng-if="ItemForm.announcePeriod.$error.min || ItemForm.announcePeriod.$error.max">The value must be in range [1-9999]</div>
+                </div>
+
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="maxCalls">Maximum calls this call queue should
+                    support</label>
+                <div class="slds-form-element__control"
+                     ng-class="{'slds-is-required slds-has-error': (ItemForm.maxCalls.$error.required || ItemForm.maxCalls.$error.min || ItemForm.maxCalls.$error.max)}">
+                    <input ng-model="item.data.variables.maxCalls" id="maxCalls" name="maxCalls" class="slds-input"
+                           type="number" min="1" max="9999"/>
+                    <div class="slds-form-element__help" ng-if="ItemForm.maxCalls.$error.min || ItemForm.maxCalls.$error.max">The value must be in range [1-9999]</div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="maxTime">Maximum time (in minutes) a caller can sit in a
+                    call queue</label>
+                <div class="slds-form-element__control"
+                     ng-class="{'slds-is-required slds-has-error': (ItemForm.maxTime.$error.required || ItemForm.maxTime.$error.min || ItemForm.maxTime.$error.max)}">
+                    <input ng-model="item.data.variables.maxTime" id="maxTime" name="maxTime" class="slds-input"
+                           type="number" min="1" max="600"/>
+                    <div class="slds-form-element__help" ng-if="ItemForm.maxTime.$error.min || ItemForm.maxTime.$error.max">The value must be in range [1-600]</div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="solidCallThreshold">How long (in seconds) until an answered
+                    call is considered 'solid'</label>
+                <div class="slds-form-element__control"
+                     ng-class="{'slds-is-required slds-has-error': (ItemForm.solidCallThreshold.$error.required || ItemForm.solidCallThreshold.$error.min || ItemForm.solidCallThreshold.$error.max)}">
+                    <input ng-model="item.data.variables.solidCallThreshold" id="solidCallThreshold"
+                           name="solidCallThreshold" class="slds-input" type="number" min="1" max="9999"/>
+                    <div class="slds-form-element__help" ng-if="ItemForm.solidCallThreshold.$error.min || ItemForm.solidCallThreshold.$error.max">The value must be in range [1-9999]</div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="exitKey">Key to exit the queue. Any digit from 0 to 9, * or
+                    #, or null to disable</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="exitKey" class="slds-select" ng-model="item.data.variables.exitKey"
+                                ng-options="item as item for item in dialplanTemplate.jsonSchema.properties.exitKey.enum">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="callerIdName">Override the Caller ID name</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right"
+                     ng-class="{'slds-is-required slds-has-error': ItemForm.callerIdName.$error.required}">
+                    <svg aria-hidden="true"
+                         class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                         ng-click="showMacros('callerIdName')">
+                        <use xlink:href="" i="push" svg-link/>
+                    </svg>
+                    <input ng-model="item.data.variables.callerIdName" id="callerIdName" name="callerIdName"
+                           class="slds-input" type="text"/>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <label class="slds-checkbox--toggle slds-grid">
+                        <label class="slds-form-element__label" >Enable Auto Answer</label>
+                        <input ng-model="model.autoAnswerEnabled" ng-change="model.handleAutoAnswer()" id="autoAnswer" name="autoAnswer" type="checkbox" />
+                            <span id="toggle-autoAnswer" class="slds-checkbox--faux_container" ng-class="{'slds-cursor-disabled': item.data.config.callQueue.disableCtiReject}">
+                                <span class="slds-checkbox--faux"></span>
+                                <span class="slds-checkbox--on" ng-if="item.data.config.callQueue.autoAnswer === 'ENABLED'">Enabled</span>
+                                <span class="slds-checkbox--off" ng-if="item.data.config.callQueue.autoAnswer !== 'ENABLED'">Disabled</span>
+                            </span>
+                    </label>
+                </div>
+
+                <div ng-if="item.data.config.callQueue.autoAnswer === 'ENABLED'">
+                    <div>
+                        <label class="slds-form-element__label" for="autoAnswerDelay">How long (in seconds) before the call is auto answered</label>
+                        <div class="slds-form-element__control"
+                            ng-class="{'slds-is-required slds-has-error': ItemForm.autoAnswerDelay.$error.min || ItemForm.autoAnswerDelay.$error.max}">
+                            <div class="slds-input_container">
+                                <input 
+                                    name="autoAnswerDelay" 
+                                    ng-model="item.data.config.callQueue.autoAnswerDelay" 
+                                    min="0" 
+                                    max="300" 
+                                    type="number"
+                                    ng-change="model.getLowestRingTime(); model.updateConfigForLuaScript();" 
+                                    class="slds-input"/>
+                            </div>
+                            <div 
+                                class="slds-form-element__help" 
+                                ng-if="(ItemForm.autoAnswerDelay.$error.min || ItemForm.autoAnswerDelay.$error.max) && (item.data.variables.ringTargets && item.data.variables.ringTargets.length === 0) || item.data.config.callQueue.autoAnswerDelay === undefined">
+                                    The value must be in range [0-300]
+                            </div>
+                            <div 
+                                class="slds-form-element__help slds-form-element__info" 
+                                ng-if="(item.data.variables.ringTargets && item.data.variables.ringTargets.length > 0) && (model.lowestRingtime < item.data.config.callQueue.autoAnswerDelay)">
+                                    The value must be in range [0-{{model.lowestRingtime}}] so as not to be higher than the shortest group ring time
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="slds-form-element__label" for="ringerAlert">Sound the agent hears to announce auto answer call</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select name="ringerAlert" id="ringerAlert" class="slds-select" ng-model="item.data.config.callQueue.ringerAlert" ng-change="model.updateConfigForLuaScript()">
+                                    <option ng-repeat="option in model.sounds" value="{{option.value}}">{{option.label}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <label class="slds-checkbox--toggle slds-grid">
+                        <label class="slds-form-element__label" >Allow Agent to reject incoming call</label>
+                        <input 
+                            ng-model="model.disableCtiReject" 
+                            ng-change="model.handleDisableCtiReject()" 
+                            id="disableCtiReject" 
+                            name="disableCtiReject" 
+                            type="checkbox"
+                            />
+                            <span id="toggle-disableCtiReject" class="slds-checkbox--faux_container" ng-class="{'slds-cursor-disabled': item.data.config.callQueue.autoAnswer === 'ENABLED'}">
+                                <span class="slds-checkbox--faux"></span>
+                                <span class="slds-checkbox--on" ng-if="model.disableCtiReject">Enabled</span>
+                                <span class="slds-checkbox--off" ng-if="!model.disableCtiReject">Disabled</span>
+                            </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-scoped-announcements" class="slds-tabs--scoped__content" role="tabpanel"
+             aria-labelledby="tab-scoped-announcements__item"
+             ng-class="model.selectedTab == 'announcements' ? 'slds-show' : 'slds-hide'">
+
+            <div class="slds-m-bottom--small" style="cursor: pointer" ng-if="item.data.configForLuaScript.chime.length==0" ng-click="switchToRulesBasedAnnouncements()">
+                <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                    <div class="slds-popover__body">Click to switch to Rules Based Announcements</div>
+                </div>
+            </div>
+
+            <div ng-if="item.data.configForLuaScript.chime.length > 0">
+
+                <div class="slds-scrollable--y" style="max-height:380px;">
+                    <table class="slds-table slds-table--bordered slds-text-body--small">
+                        <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-is-sortable--not" scope="col">
+                                <span class="slds-truncate">Actions</span>
+                            </th>
+                            <th class="slds-is-sortable--not" scope="col">
+                                <span class="slds-truncate">Type</span>
+                            </th>
+                            <th class="slds-is-sortable--not" scope="col">
+                                <span class="slds-truncate">Info</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="slds-hint-parent" ng-repeat="itm in item.data.configForLuaScript.chime">
+                            <td data-label="actions">
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="editChime(itm)">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="edit" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">edit</span>
+                                </button>
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="swapPriority(item.data.configForLuaScript.chime, $index,$index-1)"
+                                        ng-disabled="$first">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="up" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">up</span>
+                                </button>
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="swapPriority(item.data.configForLuaScript.chime, $index,$index+1)"
+                                        ng-disabled="$last">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="down" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">down</span>
+                                </button>
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="item.data.configForLuaScript.chime.splice($index, 1)">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="delete" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">delete</span>
+                                </button>
+                            </td>
+                            <td data-label="distribution"><span class="slds-truncate">{{itm.format | translate}}</span></td>
+                            <td data-label="name"><span class="slds-truncate">{{itm.chime}}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-m-around--x-small"
+                        ng-click="initNewChime()">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                        <use xlink:href="" i="add" svg-link/>
+                    </svg>
+                    <span class="slds-assistive-text">add</span>
+                </button>
+                <div class="slds-form--horizontal" ng-if="model.showChimeDialog">
+
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="type">Play sound</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="chimeOnce" class="slds-select" ng-model="model.selectedChime.chimeOnce"
+                                        ng-options="itm.value as itm.label for itm in model.chimeOnceOptions">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="chimeDelay">Seconds to wait before playing sound</label>
+                        <div class="slds-form-element__control"
+                             ng-class="{'slds-is-required slds-has-error': (ItemForm.chimeDelay.$error.required || ItemForm.chimeDelay.$error.min || ItemForm.chimeDelay.$error.max)}">
+                            <input ng-model="model.selectedChime.delay" id="chimeDelay" name="chimeDelay"
+                                   class="slds-input" type="number" min="1" max="9999"/>
+                            <div class="slds-form-element__help" ng-if="ItemForm.chimeDelay.$error.min || ItemForm.chimeDelay.$error.max">The value must be in range [1-9999]</div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="chimeFormat">Format</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="chimeFormat" class="slds-select" ng-model="model.selectedChime.format"
+                                        ng-options="itm.value as itm.label for itm in model.chimeFormatOptions">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element" ng-if="model.selectedChime.format=='TAG'"
+                         ng-class="{'slds-is-required slds-has-error': ItemForm.ChimeTag.$error.required}">
+                        <label class="slds-form-element__label" for="sound">Sound</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="ChimeTag" name="ChimeTag" class="slds-select"
+                                        ng-model="model.selectedChime.chime"
+                                        ng-options="itm.tag as itm.tag for itm in data.sounds"
+                                        required="">
+                                </select>
+                            </div>
+                            <span class="slds-form-element__help"
+                                  ng-show="ItemForm.ChimeTag.$error.required">This field is required</span>
+                        </div>
+                    </div>
+                    <div class="slds-form-element" ng-if="model.selectedChime.format=='TTS'" ng-class="{'slds-is-required slds-has-error': (!ItemForm.chimeChime.$valid)}">
+                        <label class="slds-form-element__label" for="tts">Text</label>
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right"
+                             ng-class="{'slds-is-required slds-has-error': ItemForm.chimeChime.$error.required}">
+                            <svg aria-hidden="true"
+                                 class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                                 ng-click="showMacros('chimeChime')">
+                                <use xlink:href="" i="push" svg-link/>
+                            </svg>
+                            <input ng-model="model.selectedChime.chime" id="chimeChime" name="chimeChime" class="slds-input"
+                                   type="text" required=""/>
+                            <span class="slds-form-element__help"
+                                  ng-show="ItemForm.chimeChime.$error.required">This field is required</span>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element" ng-if="model.selectedChime.format=='SOUND_TONE'" ng-class="{'slds-is-required slds-has-error': (!ItemForm.chimeChime.$valid)}">
+                        <label class="slds-form-element__label" for="tts">Tone data</label>
+                        <div class="slds-form-element__control"
+                             ng-class="{'slds-is-required slds-has-error': ItemForm.chimeChime.$error.required}">
+                            <input ng-model="model.selectedChime.chime" id="chimeChime" name="chimeChime" class="slds-input"
+                                   type="text" required=""/>
+                             <span class="slds-form-element__help"
+                                   ng-show="ItemForm.chimeChime.$error.required">This field is required</span>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-form-element" ng-if="model.selectedChime.format=='SOUND_MP3'" ng-class="{'slds-is-required slds-has-error': (!ItemForm.chimeChime.$valid)}">
+                        <label class="slds-form-element__label" for="tts">URL to MP3 file</label>
+                        <div class="slds-form-element__control"
+                             ng-class="{'slds-is-required slds-has-error': ItemForm.chimeChime.$error.required}">
+                            <input ng-model="model.selectedChime.chime" id="chimeChime" name="chimeChime" class="slds-input"
+                                   type="text" required="" ng-pattern="model.httpRegex"/>
+                            <span class="slds-form-element__help"
+                                  ng-show="ItemForm.chimeChime.$error.required">This field is required</span>
+                            <span class="slds-form-element__help"
+                              ng-show="!ItemForm.chimeChime.$error.required && !ItemForm.chimeChime.$valid">The value must be a valid URL</span>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element" ng-if="model.selectedChime.format=='SOUND_SHOUTCAST'" ng-class="{'slds-is-required slds-has-error': (!ItemForm.chimeChime.$valid)}">
+                        <label class="slds-form-element__label" for="tts">URL to SHOUTcast file</label>
+                        <div class="slds-form-element__control"
+                             ng-class="{'slds-is-required slds-has-error': ItemForm.chimeChime.$error.required}">
+                            <input ng-model="model.selectedChime.chime" id="chimeChime" name="chimeChime" class="slds-input"
+                                   type="text" required="" ng-pattern="model.httpRegex"/>
+                            <span class="slds-form-element__help"
+                                  ng-show="ItemForm.chimeChime.$error.required">This field is required</span>
+                            <span class="slds-form-element__help"
+                                  ng-show="!ItemForm.chimeChime.$error.required && !ItemForm.chimeChime.$valid">The value must be a valid URL</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small slds-m-top--small"
+                         style="border: 1px solid #006eb3">
+                        <div class="slds-form--inline" ng-repeat="chimeRule in model.selectedChime.rules">
+                            <fieldset class="slds-form--compound">
+                                <div class="form-element__group">
+
+                                    <div class="slds-form-element__row" ng-if="$index==0">
+                                        <div class="slds-form-element__control slds-size--3-of-12">
+                                            <label class="slds-form-element__label">Left hand term</label>
+                                        </div>
+                                        <div class="slds-form-element__control slds-size--3-of-12">
+                                             <label class="slds-form-element__label">Operator</label>
+                                        </div>
+                                        <div class="slds-form-element__control slds-size--3-of-12">
+                                            <label class="slds-form-element__label" style="margin-right: 0.5rem!important">Right hand term</label>
+                                        </div>
+                                        <div class="slds-form-element__control slds-size--3-of-12">
+                                            <label class="slds-form-element__label">Next</label>
+                                        </div>
+                                        <div class="">
+                                            <label class="slds-form-element__label">&nbsp;</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="slds-form-element__row">
+
+                                        <div class="slds-form-element__control slds-size--3-of-12 slds-input-has-icon slds-input-has-icon--right">
+                                            <svg aria-hidden="true"
+                                                 class="slds-input__icon slds-icon-text-default"
+                                                 ng-click="showMacros('chimeRuleLhTerm__'+$index)">
+                                                <use xlink:href="" i="push" svg-link/>
+                                            </svg>
+                                            <input id="chimeRuleLhTerm__{{$index}}"
+                                                   name="chimeRuleLhTerm__{{$index}}" class="slds-input"
+                                                   type="text"
+                                                   placeholder=""
+                                                   ng-model="chimeRule.lhTerm"
+                                                   required="true"/>
+                                        </div>
+
+                                        <div class="slds-form-element__control slds-size--3-of-12">
+                                            <div class="slds-select_container">
+                                                <select id="chimeRuleOperator__{{$index}}"
+                                                        class="slds-select" ng-model="chimeRule.operator"
+                                                        ng-options="it.value as it.label for it in model.chimeRuleOperatorOptions">
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="slds-form-element__control slds-size--3-of-12 slds-input-has-icon slds-input-has-icon--right">
+                                            <svg aria-hidden="true"
+                                                 class="slds-input__icon slds-icon-text-default"
+                                                 ng-click="showMacros('chimeRuleRhTerm__'+$index)">
+                                                <use xlink:href="" i="push" svg-link/>
+                                            </svg>
+                                            <input id="chimeRuleRhTerm__{{$index}}"
+                                                   name="chimeRuleRhTerm__{{$index}}" class="slds-input"
+                                                   type="text"
+                                                   placeholder=""
+                                                   ng-model="chimeRule.rhTerm"
+                                                   required="true"/>
+                                        </div>
+
+
+                                        <div class="slds-form-element__control slds-size--3-of-12">
+                                            <div class="slds-select_container">
+                                                <select id="chimeRuleBoolean__{{$index}}"
+                                                        class="slds-select" ng-model="chimeRule.boolean"
+                                                        ng-options="it.value as it.label for it in model.chimeRuleBooleanOptions">
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="" style="padding: 0">
+                                            <div class="">
+                                                <button type="button"  class="slds-button slds-button--icon"
+                                                        ng-click="model.selectedChime.rules.splice($index, 1)">
+                                                    <svg aria-hidden="true" class="slds-button__icon">
+                                                        <use xlink:href="" i="close" svg-link/>
+                                                    </svg>
+                                                    <span class="slds-assistive-text">delete</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="button"  class="slds-button slds-button--icon" ng-click="addChimeRule()">
+                            <svg aria-hidden="true" class="slds-button__icon">
+                                <use xlink:href="" i="add" svg-link/>
+                            </svg>
+                            <span class="slds-assistive-text">add Rule</span>
+                            Add Rule
+                        </button>
+                    </div>
+
+
+                    <div class="slds-form-element slds-m-top--small">
+                        <button class="slds-button slds-button--neutral" type="button"
+                                ng-click="model.showChimeDialog=false" ng-if="model.mode=='add'">Cancel
+                        </button>
+                        <button class="slds-button slds-button--brand" type="button" ng-click="validationAddChime()"
+                                ng-if="model.mode=='add'">Add
+                        </button>
+                        <button class="slds-button slds-button--brand" type="button"
+                                ng-click="validationAddChime()" ng-if="model.mode=='edit'">Done
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div ng-if="item.data.configForLuaScript.chime.length==0">
+                <div class="slds-scrollable--y" style="max-height:380px;">
+                    <table class="slds-table slds-table--bordered slds-text-body--small">
+                        <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-is-sortable--not" scope="col">
+                                <span class="slds-truncate">Actions</span>
+                            </th>
+                            <th class="slds-is-sortable--not" scope="col">
+                                <span class="slds-truncate">Type</span>
+                            </th>
+                            <th class="slds-is-sortable--not" scope="col">
+                                <span class="slds-truncate">Info</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="slds-hint-parent" ng-repeat="itm in item.data.variables.announcements">
+                            <td data-label="actions">
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="editAnnouncement(itm)">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="edit" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">edit</span>
+                                </button>
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="swapPriority(item.data.variables.announcements, $index,$index-1)"
+                                        ng-disabled="$first">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="up" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">up</span>
+                                </button>
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="swapPriority(item.data.variables.announcements, $index,$index+1)"
+                                        ng-disabled="$last">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="down" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">down</span>
+                                </button>
+                                <button type="button" class="slds-button slds-button--icon-bare"
+                                        ng-click="item.data.variables.announcements.splice($index, 1)">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                        <use xlink:href="" i="delete" svg-link/>
+                                    </svg>
+                                    <span class="slds-assistive-text">delete</span>
+                                </button>
+                            </td>
+                            <td data-label="distribution"><span class="slds-truncate">{{itm.type}}</span></td>
+                            <td data-label="name"><span class="slds-truncate">{{itm.type=='SOUND' ? data.soundsMap[itm.soundId] : itm.text}}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-m-around--x-small"
+                        ng-click="initNewAnnouncement()">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                        <use xlink:href="" i="add" svg-link/>
+                    </svg>
+                    <span class="slds-assistive-text">add</span>
+                </button>
+                <div class="slds-form--horizontal" ng-if="model.showAnnouncementDialog">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="type">Type</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="type" class="slds-select" ng-model="model.selectedAnnouncement.type"
+                                        ng-options="itm.value as itm.label for itm in model.announcementTypeOptions"
+                                        ng-change="validateAnnouncement()">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element" ng-if="model.selectedAnnouncement.type=='SOUND'">
+                        <label class="slds-form-element__label" for="sound">Sound</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="sound" class="slds-select" ng-model="model.selectedAnnouncement.soundId"
+                                        ng-options="itm.soundId as itm.tag for itm in data.sounds">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element" ng-if="model.selectedAnnouncement.type=='TTS'">
+                        <label class="slds-form-element__label" for="tts">TTS</label>
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right"
+                             ng-class="{'slds-is-required slds-has-error': ItemForm.tts.$error.required}">
+                            <svg aria-hidden="true"
+                                 class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                                 ng-click="showMacros('tts')">
+                                <use xlink:href="" i="push" svg-link/>
+                            </svg>
+                            <input ng-model="model.selectedAnnouncement.text" id="tts" name="tts" class="slds-input"
+                                   type="text" required=""/>
+                            <span class="slds-form-element__help"
+                                   ng-show="ItemForm.tts.$error.required">This field is required</span>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-top--small">
+                        <button class="slds-button slds-button--neutral" type="button"
+                                ng-click="model.showAnnouncementDialog=false" ng-if="model.mode=='add'">Cancel
+                        </button>
+                        <button class="slds-button slds-button--brand" type="button" ng-click="addAnnouncement()"
+                                ng-if="model.mode=='add'">Add
+                        </button>
+                        <button class="slds-button slds-button--brand" type="button"
+                                ng-click="addAnnouncement()" ng-if="model.mode=='edit'">Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="tab-scoped-screen" class="slds-tabs--scoped__content" role="tabpanel" aria-labelledby="tab-scoped-screen__item" ng-class="model.selectedTab == 'screen' ? 'slds-show' : 'slds-hide'">
+
+            <div class="slds-form--stacked" ng-if="!(model.license.PBX__c == true || model.license.Manager__c == true)">
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element">
+                        <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                            <div class="slds-popover__body">This feature requires AVS Cloud PBX or AVS Contact Centre License.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="slds-form--horizontal slds-m-horizontal--small" ng-if="(model.license.PBX__c == true || model.license.Manager__c == true)">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                            <input type="checkbox" id="screen" name=screen" ng-model="item.data.config.screen"/>
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Enable Call Screening</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element" ng-show="item.data.config.screen">
+                    <label class="slds-form-element__label" for="announcement">Announcement</label>
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                        <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default slds-icon-macro-2" ng-click="$parent.$parent.showSounds('announcement', item.data)">
+                            <use xlink:href="" i="volume_high" svg-link />
+                        </svg>
+                        <div class="slds-spinner_container" ng-show="$parent.$parent.model.showSounds.announcement && $parent.$parent.data.sounds==null">
+                            <div class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown--right" ng-show="$parent.$parent.model.showSounds.announcement" ng-mouseleave="$parent.$parent.model.showSounds.announcement = false">
+                            <ul class="dropdown__list" role="menu">
+                                <li class="slds-dropdown__item" ng-repeat="itm in $parent.$parent.data.sounds">
+                                    <a href="javascript:void(0)" role="menuitem" ng-click="insertSound('announcement', itm)">
+                                        <p class="slds-truncate">{{itm.Tag__c}}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <svg aria-hidden="true"
+                             class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                             ng-click="showMacros('announcement')">
+                            <use xlink:href="" i="push" svg-link/>
+                        </svg>
+
+                        <textarea id="announcement" name="announcement" class="slds-textarea slds-input--small" ng-model="item.data.configScreen.announcement" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="slds-form-element" ng-if="item.data.config.screen">
+                    <label class="slds-form-element__label" for="acceptKey">Accept key</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="acceptKey" name="acceptKey" class="slds-select" ng-model="item.data.configScreen.acceptKey"
+                                    ng-options="item.value as item.label for item in model.keyOptions"></select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="slds-form-element" ng-if="item.data.config.screen" ng-class="{'slds-is-required slds-has-error': (!ItemForm.waitForResponse.$valid)}">
+                    <label class="slds-form-element__label" for="waitForResponse">Maximum response time (seconds)</label>
+                    <div class="slds-form-element__control">
+                        <input id="waitForResponse" name="waitForResponse" class="slds-input" type="number" ng-model="item.data.configScreen.waitForResponse" min="1" max="60" required/>
+                     <span id="errorRequired" class="slds-form-element__help"
+                           ng-show="ItemForm.waitForResponse.$error.required">This field is required</span>
+                    <span id="errorRange" class="slds-form-element__help"
+                          ng-show="!ItemForm.waitForResponse.$error.required && !ItemForm.waitForResponse.$valid">Invalid value: must be between 1 and 60</span>
+                    </div>
+                </div>
+
+
+                <div class="slds-form-element" ng-if="item.data.config.screen">
+                    <label class="slds-form-element__label" for="repeat">Announcement repeat</label>
+                    <div class="slds-form-element__control">
+                        <input id="repeat" name="repeat" class="slds-input" type="number" ng-model="item.data.configScreen.repeat" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="tab-scoped-callBack" class="slds-tabs--scoped__content" role="tabpanel" aria-labelledby="tab-scoped-cli__item" ng-class="model.selectedTab == 'callBack' ? 'slds-show' : 'slds-hide'">
+
+            <div class="slds-m-bottom--small" ng-if="!model.hasSkillsBasedGroup">
+                <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                    <div class="slds-popover__body">{{model.hasSkillsBasedGroupNotification}}</div>
+                </div>
+            </div>
+
+            <div class="slds-form--horizontal slds-m-horizontal--small">
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="acceptKey">Enable Callback</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox--toggle slds-grid">
+                            <input ng-model="item.data.configForLuaScript.callBack.enabled" id="callBackEnabled" name="callBackEnabled" type="checkbox" aria-describedby="toggle-callBackEnabled" ng-disabled="false" ng-change="setDefaultValues(item.data.configForLuaScript.callBack.enabled)"/>
+                                            <span id="toggle-callBackEnabled" class="slds-checkbox--faux_container" aria-live="assertive">
+                                              <span class="slds-checkbox--faux"></span>
+                                              <span class="slds-checkbox--on" ng-if="item.data.configForLuaScript.callBack.enabled">Enabled</span>
+                                              <span class="slds-checkbox--off" ng-if="!item.data.configForLuaScript.callBack.enabled">Disabled</span>
+                                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div ng-if="item.data.configForLuaScript.callBack.enabled">
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="acceptKey">Activation Key</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="callBackActivationKey" name="callBackActivationKey" class="slds-select" ng-model="item.data.configForLuaScript.callBack.activationKey"
+                                    ng-options="it.value as it.label for it in model.keyOptionsNotEmpty"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (!ItemForm.callBackActivationPosition.$valid)}">
+                    <label class="slds-form-element__label" for="callBackActivationPosition">Activation Position</label>
+                    <div class="slds-form-element__control">
+                        <input id="callBackActivationPosition" name="callBackActivationPosition" class="slds-input" type="number" ng-model="item.data.configForLuaScript.callBack.activationPosition" ng-required="true" min="1" max="1000"/>
+                        <span class="slds-form-element__help"
+                              ng-show="ItemForm.callBackActivationPosition.$error.required">This field is required</span>
+                        <span class="slds-form-element__help"
+                              ng-show="!ItemForm.callBackActivationPosition.$error.required && !ItemForm.callBackActivationPosition.$valid">The value must be in range [1-1000]</span>
+                    </div>
+                </div>
+
+                <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (!ItemForm.callBackActivationElapsedTime.$valid)}">
+                    <label class="slds-form-element__label" for="callBackActivationElapsedTime">Activation Queueing Time (Secs)</label>
+                    <div class="slds-form-element__control">
+                        <input id="callBackActivationElapsedTime" name="callBackActivationElapsedTime" class="slds-input" type="number" ng-model="item.data.configForLuaScript.callBack.activationElapsedTime" ng-required="true" min="0" max="86400"/>
+                    <span class="slds-form-element__help"
+                          ng-show="ItemForm.callBackActivationElapsedTime.$error.required">This field is required</span>
+                    <span class="slds-form-element__help"
+                          ng-show="!ItemForm.callBackActivationElapsedTime.$error.required && !ItemForm.callBackActivationElapsedTime.$valid">The value must be in range [0-86400]</span>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="acceptKey">Caller can leave message</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox--toggle slds-grid">
+                            <input ng-model="item.data.configForLuaScript.callBack.leaveVoiceMail" id="callBackLeaveVoiceMail" name="callBackLeaveVoiceMail" type="checkbox" aria-describedby="toggle-callBackLeaveVoiceMail" />
+                                            <span id="toggle-callBackLeaveVoiceMail" class="slds-checkbox--faux_container" aria-live="assertive">
+                                              <span class="slds-checkbox--faux"></span>
+                                              <span class="slds-checkbox--on" ng-if="item.data.configForLuaScript.callBack.leaveVoiceMail">Enabled</span>
+                                              <span class="slds-checkbox--off" ng-if="!item.data.configForLuaScript.callBack.leaveVoiceMail">Disabled</span>
+                                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="callBackAcl">Access Control List</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="callBackAcl" name="callBackAcl" class="slds-select" ng-model="item.data.configForLuaScript.callBack.acl"
+                                    ng-options="it.value as it.label for it in model.aclOptions"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="maximumAttempts">Number of callback attempts</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="maximumAttempts"
+                                name="maximumAttempts" 
+                                class="slds-select"
+                                ng-model="item.data.configForLuaScript.callBack.maximumAttempts"
+                                ng-options="it as it for it in model.maximumAttemptsArr"
+                                ng-change="addDuration(item.data.configForLuaScript.callBack.maximumAttempts)">
+                            </select>
+                        </div>
+                    </div>
+                    <span class="slds-form-element-error" ng-if="item.data.hoursErr">Number of hours must be between 0 and 23</span>
+                    <span class="slds-form-element-error" ng-if="item.data.minutesErr">Number of minutes must be between 0 and 59</span>
+                    <span class="slds-form-element-error" ng-if="item.data.secondsErr">Number of seconds must be between 0 and 59</span>
+                    <div class="slds-form-element-containers">
+                        <div class="slds-form-element__control slds-form-element-duration" ng-repeat="(k,v) in containers">
+                            <label ng-if="$index > 0" class="slds-form-element__label slds-form-element__label-secondary" for="maximumAttempts">Wait until attempt {{$index+1}}</label>
+
+                            <div ng-if="$index > 0">
+                                <label class="slds-label-duration" for="attemptDelaysHours__{{$index}}">Hours</label>
+                                <input value="00" id="attemptDelaysHours__{{$index}}" class="slds-input-duration"
+                                    type="number" min="0" max="23" ng-model="containers[$index].h" ng-change="calculateDelay(event)"
+                                    />
+                            </div>
+                            <div ng-if="$index > 0">
+                                <label class="slds-label-duration" for="attemptDelaysMinutes__{{$index}}">Minutes</label>
+                                <input value="15" id="attemptDelaysMinutes__{{$index}}" class="slds-input-duration"
+                                    type="number" min="0" max="59" ng-model="containers[$index].m" ng-change="calculateDelay(event)"
+                                    />
+                            </div>
+                            <div ng-if="$index > 0">
+                                <label class="slds-label-duration" for="attemptDelaysSeconds__{{$index}}">Seconds</label>
+                                <input value="00" id="attemptDelaysSeconds__{{$index}}" class="slds-input-duration"
+                                    type="number" min="0" max="59" ng-model="containers[$index].s" ng-change="calculateDelay(event)"
+                                    />
+                            </div>
+                        </div>
+                </div>
+                </div>
+
+                <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (!ItemForm.callBackAclRegex.$valid)}" ng-if="item.data.configForLuaScript.callBack.acl!='ANY'">
+                    <label class="slds-form-element__label" for="callBackAclRegex">ACL regex</label>
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                        <svg aria-hidden="true"
+                             class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                             style="fill: #EC6281" ng-if="model.callBackAclRegexInvalidRegex || ItemForm.callBackAclRegex.$error.required">
+                            <use xlink:href="" i="dislike" svg-link/>
+                        </svg>
+                        <svg aria-hidden="true"
+                             class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                             style="fill: #47d147" ng-if="!(model.callBackAclRegexInvalidRegex || ItemForm.callBackAclRegex.$error.required)">
+                            <use xlink:href="" i="like" svg-link/>
+                        </svg>
+                        <input id="callBackAclRegex" name="callBackAclRegex" class="slds-input" type="text" ng-model="item.data.configForLuaScript.callBack.aclRegex" ng-required="true" ng-change="validateRegex(item.data.configForLuaScript.callBack.aclRegex, 'callBackAclRegexInvalidRegex')"/>
+                        <span class="slds-form-element__help"
+                              ng-show="ItemForm.callBackAclRegex.$error.required">This field is required</span>
+                    </div>
+                </div>
+
+
+
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="cliPresentation">CLI Presentation</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="cliPresentation" name="cliPresentation" class="slds-select" ng-model="item.data.configForLuaScript.callBack.cliPresentation"
+                                    ng-options="it.value as it.label for it in model.cliPresentationMainOptions"></select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (!ItemForm.cli.$valid)}" ng-if="item.data.configForLuaScript.callBack.cliPresentation=='SPECIFIED'">
+                    <label class="slds-form-element__label" for="cli">CLI</label>
+                    <div class="slds-form-element__control">
+                        <input id="cli" name="cli" class="slds-input" type="text" ng-model="item.data.configForLuaScript.callBack.cli" ng-required="item.data.configForLuaScript.callBack.cliPresentation=='SPECIFIED'" ng-pattern="model.e164Regex"/>
+                        <span class="slds-form-element__help"
+                               ng-show="ItemForm.cli.$error.required">This field is required</span>
+                        <span class="slds-form-element__help"
+                              ng-show="!ItemForm.cli.$error.required && !ItemForm.cli.$valid">The value must be an E164 number without leading plus</span>
+                    </div>
+                </div>
+
+
+                <div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small slds-m-top--small"
+                     style="border: 1px solid #006eb3">
+                    <div class="slds-form--inline" ng-repeat="customCLI in item.data.configForLuaScript.callBack.customCli">
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element__control slds-size--4-of-12">
+                                        <label class="slds-form-element__label"
+                                               for="cliPresentation__{{$index}}"
+                                               ng-if="$index==0">CLI Presentation</label>
+                                        <div class="slds-select_container">
+                                            <select id="cliPresentation__{{$index}}"
+                                                    class="slds-select" ng-model="customCLI.cliPresentation"
+                                                    ng-options="it.value as it.label for it in model.cliPresentationCustomOptions">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-form-element__control slds-size--3-of-12">
+                                        <label class="slds-form-element__label"
+                                               for="cliRegex__{{$index}}" ng-if="$index==0">Countries</label>
+                                          <div class="slds-select" style="height: auto!important">
+                                            <select selector id="cliRegex__{{$index}}" name="cliRegex__{{$index}}"
+                                                    multi="true"
+                                                    model="customCLI.cliRegex"
+                                                    options="model.countries"
+                                                    label-attr="name"
+                                                    value-attr="callingCode"
+                                                    placeholder="select country"
+                                            >
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__control slds-size--4-of-12" ng-class="{'slds-is-required slds-has-error': (!ItemForm['cli__' + $index].$valid)}">
+                                        <label class="slds-form-element__label"
+                                               for="cli__{{$index}}"
+                                               ng-if="$index==0">CLI</label>
+                                        <input id="cli__{{$index}}"
+                                               name="cli__{{$index}}" class="slds-input"
+                                               type="text"
+                                               placeholder=""
+                                               ng-model="customCLI.cli"
+                                               ng-required="customCLI.cliPresentation=='SPECIFIED'" ng-pattern="model.e164Regex" ng-disabled="customCLI.cliPresentation!='SPECIFIED'"/>
+                                        <span class="slds-form-element__help"
+                                              ng-show="ItemForm['cli__'+$index].$error.required">This field is required</span>
+                                        <span class="slds-form-element__help"
+                                              ng-show="!ItemForm['cli__'+$index].$error.required && !ItemForm['cli__'+$index].$valid">The value must be an E164 number without leading plus</span>
+                                    </div>
+
+
+                                    <div class="" style="padding: 0">
+                                        <label class="slds-form-element__label" ng-if="$index==0">&nbsp;</label>
+                                        <div class="xslds-select_container">
+                                            <button type="button"  class="slds-button slds-button--icon"
+                                                    ng-click="item.data.configForLuaScript.callBack.customCli.splice($index, 1)">
+                                                <svg aria-hidden="true" class="slds-button__icon">
+                                                    <use xlink:href="" i="close" svg-link/>
+                                                </svg>
+                                                <span class="slds-assistive-text">delete</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <button type="button"  class="slds-button slds-button--icon" ng-click="addCustomCLI()">
+                        <svg aria-hidden="true" class="slds-button__icon">
+                            <use xlink:href="" i="add" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">add custom CLI</span>
+                        Add Custom CLI
+                    </button>
+                </div>
+
+            </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <!-- modal editor Start -->
+    <div ng-if="model.showModalScriptEditor">
+        <div class="slds-modal slds-fade-in-open slds-modal--large" aria-hidden="false" role="dialog">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+                            ng-click="model.showModalScriptEditor=false">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            <use xlink:href="" i="close" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium">Edit Lua script</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-form--horizontal" style="border: inset 1px">
+                        <div id="ace_editor_modal" ui-ace="{onLoad:aceLoaded}" ng-model="model.selectedRingTarget.skills.script"></div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                            ng-click="model.showModalScriptEditor   =false">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+    <!-- modal editor END -->
+
+</div>
+
+

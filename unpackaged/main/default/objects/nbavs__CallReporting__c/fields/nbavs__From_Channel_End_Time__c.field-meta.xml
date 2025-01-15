@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Channel_End_Time__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The actual hangup time of the physical call regardless of how many times the From leg has been transferred</description>
+    <label>From Channel End Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__UserPolicy__c</fullName>
+    <deprecated>false</deprecated>
+    <label>User Policy</label>
+    <referenceTo>nbavs__UserPolicy__c</referenceTo>
+    <relationshipLabel>User Ring Targets</relationshipLabel>
+    <relationshipName>UserRingTargets</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

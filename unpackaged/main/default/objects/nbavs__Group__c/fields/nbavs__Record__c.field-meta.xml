@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Record__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Record: grants group access to listening to call recordings</description>
+    <inlineHelpText>Record: grants group access to listening to call recordings</inlineHelpText>
+    <label>Record</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

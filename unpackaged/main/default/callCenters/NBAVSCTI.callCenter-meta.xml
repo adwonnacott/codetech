@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CallCenter xmlns="http://soap.sforce.com/2006/04/metadata">
+    <adapterUrl>/apex/nbavs__webphoneholder</adapterUrl>
+    <customSettings>{&quot;reqSoftphoneHeight&quot;:&quot;480&quot;,&quot;reqUseApi&quot;:&quot;true&quot;,&quot;reqSoftphoneWidth&quot;:&quot;200&quot;,&quot;reqSalesforceCompatibilityMode&quot;:&quot;Classic_and_Lightning&quot;}</customSettings>
+    <displayName>Natterbox CTI</displayName>
+    <displayNameLabel>Display Name</displayNameLabel>
+    <internalNameLabel>InternalName</internalNameLabel>
+    <sections>
+        <items>
+            <label>CTI Adapter URL</label>
+            <name>reqAdapterUrl</name>
+            <value>/apex/nbavs__webphoneholder</value>
+        </items>
+        <items>
+            <label>Use CTI API</label>
+            <name>reqUseApi</name>
+            <value>true</value>
+        </items>
+        <items>
+            <label>Softphone Height</label>
+            <name>reqSoftphoneHeight</name>
+            <value>480</value>
+        </items>
+        <items>
+            <label>Softphone Width</label>
+            <name>reqSoftphoneWidth</name>
+            <value>200</value>
+        </items>
+        <items>
+            <label>Salesforce Compatibility Mode</label>
+            <name>reqSalesforceCompatibilityMode</name>
+            <value>Classic_and_Lightning</value>
+        </items>
+        <label>General Information</label>
+        <name>reqGeneralInfo</name>
+    </sections>
+</CallCenter>

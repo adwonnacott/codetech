@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Very Positive</fullName>
+        <default>false</default>
+        <label>Very Positive</label>
+    </customValue>
+    <customValue>
+        <fullName>Positive</fullName>
+        <default>false</default>
+        <label>Positive</label>
+    </customValue>
+    <customValue>
+        <fullName>Neutral</fullName>
+        <default>false</default>
+        <label>Neutral</label>
+    </customValue>
+    <customValue>
+        <fullName>Negative</fullName>
+        <default>false</default>
+        <label>Negative</label>
+    </customValue>
+    <customValue>
+        <fullName>Very Negative</fullName>
+        <default>false</default>
+        <label>Very Negative</label>
+    </customValue>
+    <masterLabel>Metric Sentiments</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

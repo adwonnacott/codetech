@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Insight_Search_Category_fired__c</fullName>
+    <deprecated>false</deprecated>
+    <description>This field used to order Insights Search results for a supervisor.
+Calls with at least one category has fired - newest to oldest Time*</description>
+    <formula>IF( NOT(ISBLANK(nbavs__Category_Fired_By_Date__c)),nbavs__Start_Time__c,null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Insight Search Category fired</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

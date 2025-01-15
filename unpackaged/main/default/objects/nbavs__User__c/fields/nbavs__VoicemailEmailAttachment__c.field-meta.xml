@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__VoicemailEmailAttachment__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <inlineHelpText>This diverts the message to be exclusively available as an email attachment. Check &#39;Copy to Voicemail Inbox&#39; to also save a copy in voicemail inbox.</inlineHelpText>
+    <label>Messages available only via Email</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

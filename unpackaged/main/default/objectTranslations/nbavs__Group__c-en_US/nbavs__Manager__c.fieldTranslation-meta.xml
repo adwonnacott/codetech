@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Contact Centre: grants group access to Listen In, Call Queues, Group Dial --></help>
+        <label><!-- Contact Centre --></label>
+        <name>nbavs__Manager__c</name>
+    </CustomFieldTranslation>

@@ -1,0 +1,157 @@
+<apex:page standardController="nbavs__DialList__c" extensions="nbavs.DialListController" tabstyle="nbavs__DialList__c" id="thePage" readOnly="true">
+
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'moment/moment-with-locales.min.js')}" />    
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-core.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-api-metadata.min.js')}" />
+
+    <style type="text/css">
+        .editPage .bPageBlock {
+            border-top-width: 3px;
+        }
+    </style>
+
+    <apex:sectionHeader title="{!$ObjectType.nbavs__DialList__c.label}" subtitle="{!nbavs__DialList__c.Name}"/>
+    
+    <apex:pageMessages id="messages"/>
+    <apex:outputPanel rendered="{!hasAccessToPage}">
+    <apex:form id="form">
+        <apex:actionFunction name="metadataAccessGranted" action="{!updateMetadataAccess}" rerender="enableMetadata"/>
+        <apex:outputPanel id="enableMetadata">
+            <c:EnableMetadata metadataHost="{!metadataHostname}" featureName="Dynamic Dial List" onCompleteHandler="metadataAccessGranted" rendered="{!dialListType=='Dynamic' && !metadataAccessible}"/>
+        </apex:outputPanel>
+        <apex:pageBlock title="{!$ObjectType.nbavs__DialList__c.label} Detail" mode="maindetail">
+            <apex:pageBlockButtons id="pageBlockButtons">
+                <apex:commandButton action="{!edit}" value="Edit"/>
+                <apex:commandButton action="{!delete}" value="Delete" onclick="if(!confirm('Are you sure?')) return false;"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2" id="mainDetail">
+                <apex:outputText value="{!dialList.Name}"/>
+                <apex:outputText value="{!dialList.nbavs__TotalItems__c}" rendered="{!dialList.nbavs__Type__c == 'Static'}"/>
+                <apex:pageblocksectionitem rendered="{!dialList.nbavs__Type__c == 'Dynamic'}">
+                    <apex:outputLabel value="In Queue"/>
+                    <apex:outputField value="{!latestReport.nbavs__Scope__c}"/>
+                </apex:pageblocksectionitem>
+                <apex:outputText value="{!dialList.nbavs__Description__c}"/>
+                <apex:outputText value="{!dialList.nbavs__CompletedItems__c}" rendered="{!dialList.nbavs__Type__c == 'Static'}"/>
+                <apex:outputText value="{!latestReport.nbavs__Processed__c}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+                <apex:outputText value="{!dialList.nbavs__Object__c}"/>
+              <!--SF-296 remove the progress bar due to soql limit-->
+             <!--   <apex:pageblocksectionitem rendered="{!dialList.nbavs__Type__c == 'Static'}">
+                    <apex:outputLabel value="{!$ObjectType.DialList__c.fields.Progress__c.label}"/>
+                    <c:PercentageComplete width="200px" height="17px" complete="{!dialList.Progress__c}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem rendered="{!dialList.nbavs__Type__c == 'Dynamic'}">
+                    <apex:outputLabel value="{!$ObjectType.DialListReport__c.fields.Progress__c.label}"/>
+                    <c:PercentageComplete width="200px" height="17px" complete="{!latestReport.Progress__c}"/>
+                </apex:pageblocksectionitem>
+            -->
+                <apex:outputText value="{!dialList.nbavs__PhoneField__c}"/>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c == 'Dynamic'}" value="{!latestReport.nbavs__Completed__c}"/>
+                <apex:outputField rendered="{!dialList.nbavs__Audience__c == 'Personal'}" value="{!dialList.nbavs__User__c}"/>
+                <apex:pageblocksectionitem rendered="{!dialList.nbavs__Audience__c != 'Personal'}">
+                    <apex:outputLabel value="{!$ObjectType.nbavs__DialList__c.fields.nbavs__User__c.label}"/>
+                    <apex:outputText value="Shared"/>
+                </apex:pageblocksectionitem>
+                
+                <apex:outputText value="{!latestReport.nbavs__Unreachable__c}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+                <apex:outputText value="{!dialList.nbavs__SecondaryPhoneField__c}"/>
+                
+                <apex:outputText value="{!latestReport.nbavs__Retry__c}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+                <apex:outputText value="{!dialList.nbavs__OrderBy__c}"/>
+                
+                <apex:outputText value="{!latestReport.nbavs__Pending__c}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+                <apex:pageblocksectionitem id="pageBlockSectionItemOrderDirection">
+                    <apex:outputLabel value="{!$ObjectType.nbavs__DialList__c.fields.nbavs__OrderDirection__c.label}"/>
+                    <apex:outputText value="{!IF(dialList.nbavs__OrderDirection__c == 'ASC','Ascending', 'Descending')}"/>
+                </apex:pageblocksectionitem>
+                <apex:outputPanel rendered="{!dialList.nbavs__Type__c == 'Static'}"/>
+                <apex:outputText value="{!latestReport.nbavs__InProgress__c}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+                <apex:outputText value="{!dialList.nbavs__Audience__c}"/>
+                <apex:outputPanel rendered="{!dialList.nbavs__Type__c == 'Static'}"/>
+                <apex:outputText value="{!latestReport.nbavs__Invalid__c}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+                <apex:outputField value="{!dialList.nbavs__Active__c}"/>
+                <apex:outputPanel rendered="{!dialList.nbavs__Type__c == 'Static'}"/>
+                <apex:pageBlockSectionItem rendered="{!dialList.nbavs__Type__c == 'Dynamic'}">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{!getLatestReport}" value="Refresh" reRender="mainDetail"/>
+                </apex:pageBlockSectionItem>
+                <apex:outputField value="{!dialList.nbavs__AllowPreview__c}"/>
+                
+                <apex:outputField value="{!dialList.nbavs__AllowDiscardPreview__c}"/>
+                
+                <!-- static -->
+                <apex:outputText rendered="{!dialList.nbavs__Type__c == 'Static'}" value="{!dialList.nbavs__Type__c}"/>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c == 'Static'}" value="{!dialList.nbavs__MaximumDialAttempts__c}"/>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c == 'Static'}" value="{!dialList.nbavs__Timeout__c}"/>
+                
+                <!-- dynamic -->
+                <apex:outputText rendered="{!dialList.nbavs__Type__c =='Dynamic'}" value="{!dialList.nbavs__Type__c}"/>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c =='Dynamic'}" value="{!dialList.nbavs__QueryLimit__c}"/>
+                
+                <apex:pageBlockSectionItem rendered="{!dialList.nbavs__Type__c =='Dynamic'}">
+                    <apex:outputLabel value="{!dialList.nbavs__Object__c} List View"/>
+                    <apex:outputText value="{!IF(listViewName == '',IF(dialList.nbavs__ListViewId__c == '' || dialList.nbavs__ListViewId__c == null,'⚠️ No ListView selected','⚠️ You do not have permission to access the list view'),listViewName)}" style="{!IF(listViewName == '','color:red','')}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c =='Dynamic'}" value="{!nbavs__DialList__c.nbavs__DialListSortStrategy__c}"/>
+                
+                <apex:pageBlockSectionItem rendered="{!dialList.nbavs__Type__c =='Dynamic'}">
+                    <apex:outputLabel value="{!$ObjectType.nbavs__DialList__c.fields.nbavs__ListViewSOQLEnableSync__c.label}"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!nbavs__DialList__c.nbavs__ListViewSOQLEnableSync__c}"/>&nbsp;
+                        <apex:commandButton value="Resync Latest" rendered="{!showSyncButton}" action="{!updateSOQL}" reRender="messages"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c =='Dynamic'}" value="{!nbavs__DialList__c.nbavs__RetryStrategy__c}"/>
+                
+                <apex:outputText rendered="{!dialList.nbavs__Type__c =='Dynamic' && dialListRetryStrategy == 'Simple'}" value="{!nbavs__DialList__c.nbavs__MaximumDialAttempts__c}"/>
+               
+                <apex:outputField rendered="{!dialList.nbavs__Type__c =='Dynamic' && dialListRetryStrategy == 'Scripted'}" value="{!nbavs__DialList__c.nbavs__CallStartTime__c}"/>
+                
+                <apex:outputField rendered="{!dialList.nbavs__Type__c =='Dynamic' && dialListRetryStrategy == 'Scripted'}" value="{!nbavs__DialList__c.nbavs__CallEndTime__c}"/>
+                
+                <apex:pageBlockSectionItem rendered="{!dialList.nbavs__Type__c =='Dynamic' && dialListRetryStrategy == 'Scripted'}">
+                    <apex:outputLabel value="Retry Script"/>
+                    <apex:repeat value="{!retryItems}" var="item">
+                        <apex:outputText value="Attempt {!item.nbavs__Order__c}:"/>&nbsp;
+                        <apex:outputField value="{!item.nbavs__Retry_Action__c}"/>
+                        <apex:outputPanel rendered="{!item.nbavs__Retry_Action__c == 'RetryAfter'}">
+                            &nbsp;<apex:outputField value="{!item.nbavs__Wait_Period__c}" style="width:3em"/>
+                            &nbsp;<apex:outputField value="{!item.nbavs__Period_Name__c}"/>
+                        </apex:outputPanel><br/>
+                    </apex:repeat>
+                    </apex:pageBlockSectionItem>
+                    
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+    <apex:relatedList list="DialListAdministrators__r" rendered="{!dialList.nbavs__Audience__c == 'Shared'}">
+    </apex:relatedList>
+
+    <apex:relatedList list="DialListTargetUsers__r" rendered="{!dialList.nbavs__Audience__c == 'Shared'}">
+    </apex:relatedList>
+
+    <apex:relatedList list="DialListTargetGroups__r" rendered="{!dialList.nbavs__Audience__c == 'Shared'}">
+    </apex:relatedList>
+
+    <c:DialListReportList dialList="{!dialList}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+
+    <apex:form >
+        <c:DialItemList type="Current" dialList="{!dialList}" static="true" rendered="{!dialList.nbavs__Type__c == 'Static'}"/>
+        <c:DialItemList type="Current" dialList="{!dialList}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+        <c:DialItemList type="Completed" dialList="{!dialList}" rendered="{!dialList.nbavs__Type__c == 'Dynamic'}"/>
+    </apex:form>
+    </apex:outputPanel>
+
+</apex:page>

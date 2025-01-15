@@ -1,0 +1,125 @@
+<apex:page docType="html-5.0" id="skill" standardController="nbavs__Skill__c" extensions="nbavs.SkillController" tabstyle="Settings__tab">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+    <style type="text/css">
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}
+	</style>
+    <apex:sectionHeader title="{!$ObjectType.nbavs__Skill__c.label} Edit" subtitle="{!IF(nbavs__Skill__c.Id!=null, nbavs__Skill__c.Name, 'New ' + $ObjectType.nbavs__Skill__c.label)}" />
+    <apex:form id="pageform">
+        <apex:pageMessages id="messages" />
+        <apex:pageBlock title="{!$ObjectType.nbavs__Skill__c.label} Edit" mode="edit">
+            <apex:pageBlockButtons >
+                <apex:actionFunction action="{!addItem}" name="handleAdd" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                <apex:actionFunction action="{!updateItem}" name="handleUpdate" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                
+                <apex:commandButton onclick="handleNew(true);return false;" value="Save" rendered="{!nbavs__Skill__c.Id == null}" />
+                <apex:commandButton onclick="handleNew(false);return false;" value="Save" rendered="{!nbavs__Skill__c.Id != null}" disabled="{!recordAccess.HasEditAccess == false}"/>
+                <apex:commandButton action="{!deleteItem}" value="Delete" rendered="{!nbavs__Skill__c.Id != null}" onclick="return confirm('Are you sure?');" disabled="{!recordAccess.HasDeleteAccess == false}"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" immediate="true" html-formnovalidate="formnovalidate"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Skill Information" columns="2" id="editForm">
+                <apex:outputField value="{!nbavs__Skill__c.nbavs__Id__c}" rendered="false" />
+                <apex:outputField value="{!nbavs__Skill__c.nbavs__Weight__c}" rendered="false" />
+                <apex:inputField value="{!nbavs__Skill__c.Name}"  required="true"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.nbavs__Skill__c.fields.nbavs__Weight_Preset__c.Label}"/>
+                    <apex:outputPanel >
+                        <apex:outputPanel style="float:left">
+                            <apex:inputField value="{!nbavs__Skill__c.nbavs__Weight_Preset__c}" >
+                                <apex:actionSupport event="onchange" rerender="editForm, userSkillList" status="proStatus"/>
+                            </apex:inputField>
+                            <apex:actionStatus startText="processing..." id="proStatus"/>
+                        </apex:outputPanel>
+                        <apex:inputField type="number" html-min="0" html-max="100" value="{!nbavs__Skill__c.nbavs__Weight_Custom__c}" rendered="{!nbavs__Skill__c.nbavs__Weight_Preset__c=='Custom'}" style="width:40px"/>
+                        <apex:outputText value="► {!skillLabel}" rendered="{!nbavs__Skill__c.nbavs__Weight_Preset__c!='Custom'}" escape="false"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!nbavs__Skill__c.nbavs__Description__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="{!$ObjectType.nbavs__User_Skill__c.labelPlural}" rendered="{!nbavs__Skill__c.Id != null}">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveUserSkill}" value="Save" reRender="userSkillList" status="saveStatus" disabled="{!recordAccess.HasEditAccess == false}"/>
+                <apex:actionStatus id="saveStatus" >
+                    <apex:facet name="start" >
+                        <img src="/img/loading.gif" />
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockButtons>
+                             
+            <apex:outputPanel layout="block" id="userSkillList">
+                <table class="list display compact" id="dataTable">
+                    <thead>
+                    <tr class="headerRow">
+                        <th>{!$ObjectType['User_Skill__c'].Fields.User__c.Label}</th>
+                        <th>{!$ObjectType['User_Skill__c'].Fields.Weight_Preset__c.Label}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <apex:repeat value="{!thousandUSkillBlocks}" var="items">
+                      <apex:repeat value="{!items.userskills}" var="item">
+                        <tr class="dataRow">
+                            <td><apex:outputField value="{!item.skill.nbavs__User__c}" /></td>
+                            <td data-search="{!item.skill.nbavs__Weight_Preset__c}" data-order="{!item.skillLabel}">
+                                <apex:outputPanel style="float:left" id="userSkillSelect">
+                                    <apex:inputField value="{!item.skill.nbavs__Weight_Preset__c}">
+                                        <apex:actionSupport event="onchange"  rerender="userSkillList" status="idStatus"/>
+                                    </apex:inputField>
+                                    <apex:actionStatus startText="processing..." id="idStatus"/>
+                                </apex:outputPanel>
+                                <apex:inputField type="number" html-min="0" html-max="100" value="{!item.skill.nbavs__Weight_Custom__c}" rendered="{!item.skill.nbavs__Weight_Preset__c=='Custom'}" style="width:40px; margin-left:6px">
+                                        <apex:actionSupport event="onchange" rerender="userSkillSelect"/>
+                                </apex:inputField>
+                                <apex:outputPanel style="none" id="userSkillWeight">
+                                        <apex:outputText value="► {!JSENCODE(item.skillLabel)}" rendered="{!JSENCODE(item.skill.nbavs__Weight_Preset__c)!='Custom'}" style="margin-left:6px" escape="false"/>
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                    </apex:repeat>
+                    </tbody>
+                </table>
+                <script type="text/javascript">
+
+                    j$ = jQuery.noConflict();
+                    j$('#dataTable').DataTable({
+                        "paging": true,
+                        "stateSave": true,
+                        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                        "order": [[ 0, "desc" ]],
+                    });
+
+                </script>
+            </apex:outputPanel>
+        </apex:pageBlock>
+
+
+    </apex:form>
+    <script type="text/javascript">
+		j$ = jQuery.noConflict();
+        function handleNew(isAdd){
+            if(isAdd === false){
+                handleUpdate();
+            }
+            if(isAdd === true){
+                handleAdd();
+            }
+            buttonsEnabled(false);
+        }
+        function buttonsEnabled(enabled) {
+            var $buttons = jQuery('.btn');
+            if (enabled === false) {
+                $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+            } else {
+                $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+            } 
+        }					
+	</script>
+    <head>
+    </head>
+</apex:page>

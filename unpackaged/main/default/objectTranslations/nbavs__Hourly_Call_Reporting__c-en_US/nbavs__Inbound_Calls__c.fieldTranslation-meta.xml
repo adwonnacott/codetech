@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many inbound calls has my organisation received --></help>
+        <label><!-- Inbound Calls --></label>
+        <name>nbavs__Inbound_Calls__c</name>
+    </CustomFieldTranslation>

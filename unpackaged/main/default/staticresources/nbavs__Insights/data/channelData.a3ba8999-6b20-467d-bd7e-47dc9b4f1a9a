@@ -1,0 +1,19 @@
+{
+  "channelData": {
+    "uuid": "a3ba8999-6b20-467d-bd7e-47dc9b4f1a9a",
+    "userId": "58",
+    "devId": "156",
+    "fullNumber": "12021",
+    "localNumber": "12021",
+    "callCategory": "SOC",
+    "hangupCause": "NORMAL_CLEARING",
+    "start": "1556124260993341",
+    "ring": "1556124261543654",
+    "answer": "1556124262767699",
+    "end": "1556124393931209",
+    "name": "Agent Three",
+    "orgName": "",
+    "externalNameId": "",
+    "externalOrgId": ""
+  }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AddressLine2__c</fullName>
+    <description>Address Line 2 - maps to billing address line 2 at conversion</description>
+    <externalId>false</externalId>
+    <formula>City</formula>
+    <label>Address Line 2</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

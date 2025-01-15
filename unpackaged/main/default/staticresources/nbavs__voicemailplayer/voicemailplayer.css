@@ -1,0 +1,116 @@
+.bPageBlock {
+	border: 1px;
+}
+.bPageBlock .pbBody {
+	background-color:#8095E0;
+}
+
+body {
+  background: white;
+  color: #404040;
+  font-family: "Salesforce Sans",Arial,sans-serif;
+  font-size: 2vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; }
+
+#phoneContainer {
+  position: absolute;
+  background: white;
+  width: 100%;
+  height: 100%;
+  margin: auto; 
+  padding: 1%;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none; }
+
+#phoneInner {
+  position: absolute;
+  background: #54698D;
+  width: 400px;
+  height: 150px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -khtml-border-radius: 16px;
+  border-radius: 16px;
+  border: 1px solid #d8dde6; }
+
+#phoneHeader {
+  position: absolute;
+  background: #54698D;
+  left: 6%;
+  right: 3%;
+  top: 3%;
+  height: 7%; }
+
+#phoneHeaderTopLine {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%; }
+
+#phoneHeaderLogo {
+  position: absolute;
+  background: url(images/logo.gif) no-repeat;
+  background-size: contain;
+  width: 20%;
+  height: 331%;
+  right: 4px;
+  top: 66%;
+  opacity: 0.8; }
+  
+  #phoneHeaderLogo:hover {
+  opacity: 1.0; }
+
+#phoneHeaderBottomLine {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  font-size: 12px;
+  line-height: 240%;
+  color: white; }
+ 
+ #phoneDisplay {
+  position: absolute;
+  left: 6%;
+  right: 10%;
+  top: 45%;
+  height: 37%;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  }
+
+#phoneDisplayStatus {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 29%;
+  color: #0070d2; }
+  
+  #ALegPlay {
+  }
+  
+   #VoiceMail {
+  }
+  
+   #noVoiceMail {
+  position: absolute;  
+  width: 330px;
+  height: 5px;
+  top: 85px;
+  left:43px;
+  font-size:15px;
+  }
+  
+  #authenticationFailed {
+  position: absolute;  
+  width: 330px;
+  height: 5px;
+  top: 85px;
+  left:43px;
+  font-size:15px; 
+  }

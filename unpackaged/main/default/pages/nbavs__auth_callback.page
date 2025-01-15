@@ -1,0 +1,27 @@
+<apex:page showHeader="false">
+<div style="padding: 5px">
+
+<p>Natterbox authentication.</p>
+
+<script>
+
+function htmlEncode(s)
+{
+    var el = document.createElement("div");
+    el.innerText = el.textContent = s;
+    return el.innerHTML;
+}
+
+sessionStorage.setItem("natterbox_auth_complete", "yes");
+
+if (window.location.href.indexOf("error") !== -1) {
+    document.write(htmlEncode(window.location.href));
+    sessionStorage.setItem("natterbox_auth_result_error", "yes");
+} else {
+    document.write("You are successfully authenticated");
+    sessionStorage.setItem("natterbox_auth_result_error", "no");
+}
+
+</script>
+</div>
+</apex:page>

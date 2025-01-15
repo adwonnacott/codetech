@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Type --></label>
+        <name>nbavs__Type__c</name>
+        <picklistValues>
+            <masterLabel>CountryCode</masterLabel>
+            <translation><!-- CountryCode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HoldMusic</masterLabel>
+            <translation><!-- HoldMusic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TimeZone</masterLabel>
+            <translation><!-- TimeZone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voice</masterLabel>
+            <translation><!-- Voice --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

@@ -1,0 +1,3 @@
+<apex:page standardController="nbavs__GroupAdministrator__c" tabStyle="nbavs__User__c">
+	<c:AddUsersToGroup />
+</apex:page>

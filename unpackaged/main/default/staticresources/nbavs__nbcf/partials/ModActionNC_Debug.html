@@ -1,0 +1,71 @@
+<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.emailAddress.$error.email || ItemForm.emailAddress.$error.required}">
+    <label class="slds-form-element__label" for="emailAddress">Email address to notify</label>
+    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+        <!--
+        <svg aria-hidden="true"
+             class="slds-input__icon slds-icon-text-default"
+             ng-click="showMacros('emailAddress')">
+            <use xlink:href="" i="push" svg-link/>
+        </svg>
+        -->
+        <input id="emailAddress" name="emailAddress" class="slds-input" type="email" placeholder=""
+               ng-model="item.data.variables.emailAddress" aria-describedby="errorName" required="true"/>
+    </div>
+</div>
+<div class="slds-form-element">
+    <label class="slds-form-element__label" for="notifyLevel">Notify level</label>
+    <div class="slds-form-element__control">
+        <div class="slds-select_container">
+            <select id="notifyLevel" name="notifyLevel" class="slds-select" ng-model="item.data.variables.notifyLevel"
+                    ng-options="itm as itm for itm in dialplanTemplate.jsonSchema.properties.notifyLevel.enum">
+            </select>
+        </div>
+    </div>
+</div>
+<div class="slds-form-element">
+    <div class="slds-form-element__control">
+        <label class="slds-checkbox" for="forceDebugLevel">
+            <input type="checkbox" id="forceDebugLevel" name="forceDebugLevel"
+                   ng-model="item.data.variables.forceDebugLevel"/>
+            <span class="slds-checkbox--faux"></span>
+            <span class="slds-form-element__label">Force this debug level, otherwise use highest current level setting</span>
+        </label>
+    </div>
+</div>
+<div class="slds-form-element">
+    <div class="slds-form-element__control">
+        <label class="slds-checkbox" for="alertOnEveryRetry">
+            <input type="checkbox" id="alertOnEveryRetry" name="alertOnEveryRetry"
+                   ng-model="item.data.variables.alertOnEveryRetry"/>
+            <span class="slds-checkbox--faux"></span>
+            <span class="slds-form-element__label">Alert on every retry, or alert only once on the first failure</span>
+        </label>
+    </div>
+</div>
+<div class="slds-form-element">
+    <label class="slds-form-element__label" for="emailAddress">Macros that you wish to report on</label>
+    <div class="slds-box slds-theme--shade" style="border: 1px solid #006eb3; padding-right:0px" >
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+            <svg aria-hidden="true"
+                 class="slds-input__icon slds-icon-text-default"
+                 ng-click="showMacros({'macroTargetObject': item.data.variables, 'macroTargetArray': 'macros'})">
+                <use xlink:href="" i="push" svg-link/>
+            </svg>
+        </div>
+        <label class="slds-form-element__label" ng-if="!item.data.variables.macros || item.data.variables.macros.length == 0">none</label>
+        <div class="slds-form--inline" ng-repeat="macro in item.data.variables.macros track by $index">
+            <div class="slds-form-element">
+                <button type="button"  class="slds-button slds-button--icon slds-float--left"
+                        ng-click="item.data.variables.macros.splice($index, 1)">
+                    <svg aria-hidden="true" class="slds-button__icon">
+                        <use xlink:href="" i="close" svg-link/>
+                    </svg>
+                    <span class="slds-assistive-text">delete</span>
+                </button>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >{{macro}}</label>
+            </div>
+        </div>
+    </div>
+</div>

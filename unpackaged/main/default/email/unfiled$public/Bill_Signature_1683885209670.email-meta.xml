@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Bill Signature</name>
+    <pageDevName>Bill_Signature</pageDevName>
+    <style>none</style>
+    <textOnly>Dear {{{Recipient.FirstName}}}
+
+Bill Grewal
+
+07881 588933 •0207 101 0207 
+
+codeinternational.com &lt; https://gbr01.safelinks.protection.outlook.com/?url=https%253A%252F%252Fwww.codeinternational.com%252F&amp;data=05%257C01%257Cpuja.tailor%2540codeinternational.com%257Ca32322f3b9ca470c762a08db52c40c3d%257Caf7145f44dd34187a6035ef7579ec2dd%257C0%257C0%257C638194774492028276%257CUnknown%257CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%253D%257C3000%257C%257C%257C&amp;sdata=ae9WfjXxZ4fIAA6iEADnwqDKokTTVrJBApIKI8Wu%252B3Y%253D&amp;reserved=0 &gt; 
+
+Code Technology Ltd, Building 3, 566 Chiswick High Road, London, W4 5YACode Technology Limited is registered in England and Wales (registered number 12365215) with its registered office at 2nd Floor, 168 Shoreditch High Street, London, United Kingdom, E1 6RA. The contents of this email are confidential and may be protected by legal privilege. If you are not the intended recipient, please notify us as soon as possible and do not copy, forward, disclose or use the contents. Code Technology Limited may monitor mail for business purposes.</textOnly>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Category Type --></label>
+        <name>nbavs__Category_Type__c</name>
+        <picklistValues>
+            <masterLabel>Alert</masterLabel>
+            <translation><!-- Alert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Checkpoint</masterLabel>
+            <translation><!-- Checkpoint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Concept</masterLabel>
+            <translation><!-- Concept --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Info</masterLabel>
+            <translation><!-- Info --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

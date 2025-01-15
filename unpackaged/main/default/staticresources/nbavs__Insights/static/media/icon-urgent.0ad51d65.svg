@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="12px" viewBox="0 0 13 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.2 (81672) - https://sketch.com -->
+    <title>Icon/Urgent</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11.2694284,12 L2.26942843,15 L5.26942843,9 L5.26942843,4 C5.26942843,3.44771525 5.71714368,3 6.26942843,3 L13.2694284,3 C13.8217132,3 14.2694284,3.44771525 14.2694284,4 L14.2694284,11 C14.2694284,11.5522847 13.8217132,12 13.2694284,12 L11.2694284,12 Z" id="path-1"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Marker/Timeline/Recording-Paused" transform="translate(-5.000000, -10.000000)">
+            <g id="Icon/Comment" transform="translate(3.000000, 7.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <path stroke="#979797" stroke-width="1" d="M3.25647658,14.1439377 L11.1113145,11.5256584 L11.2694284,11.5 L13.2694284,11.5 C13.5455708,11.5 13.7694284,11.2761424 13.7694284,11 L13.7694284,4 C13.7694284,3.72385763 13.5455708,3.5 13.2694284,3.5 L6.26942843,3.5 C5.99328605,3.5 5.76942843,3.72385763 5.76942843,4 L5.76942843,9.11803399 L3.25647658,14.1439377 Z"></path>
+                <g id="z_colours/black" mask="url(#mask-2)" fill="#000000" fill-rule="evenodd">
+                    <rect id="Rectangle" x="0" y="0" width="18" height="18"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

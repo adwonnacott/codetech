@@ -1,0 +1,9 @@
+<div class="">
+	<div class="slds-float--left" style="width:60px" ng-repeat="itm in model.days">
+		<label class="slds-checkbox slds-checkbox--local-tight">
+			<input type="checkbox" ng-model="itm.checked" ng-click="processDays()"/>
+			<span class="slds-checkbox--faux slds-checkbox--faux--local-tight"></span>
+			<span class="slds-form-element__label slds-form-element__label--local-tight">{{itm.label}}</span>
+		</label>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+{
+  "channelData": {
+    "uuid": "baf44c82-ed64-40d2-9913-fd3f4d9c0c2a",
+    "userId": "0",
+    "devId": "0",
+    "fullNumber": "447740980327",
+    "localNumber": "447740980327",
+    "callCategory": "CTC",
+    "hangupCause": "NORMAL_CLEARING",
+    "start": "1555072807755481",
+    "ring": "0",
+    "answer": "1555072815330037",
+    "end": "1555072833151543",
+    "name": "",
+    "orgName": "",
+    "externalNameId": "",
+    "externalOrgId": ""
+  }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Number_of_categories__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Roll up summary field calculate number of categories fired in related to a call.</description>
+    <label>Number of categories</label>
+    <summaryForeignKey>nbavs__Insight_Category__c.nbavs__Insights__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Inbound_Calls__c</fullName>
+    <defaultValue>0</defaultValue>
+    <deprecated>false</deprecated>
+    <description>The number of calls that have been received by the organisation from the outside world, regardless of whether they have been connected or not to a user. No User ID will ever be associated with this call statistic, as it purely measures inbound call flow.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>How many inbound calls has my organisation received</inlineHelpText>
+    <label>Inbound Calls</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

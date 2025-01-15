@@ -1,0 +1,144 @@
+<!-- header START -->
+<div class="slds-page-header slds-page-header--local" role="banner">
+    <div class="slds-grid">
+        <div class="slds-col slds-has-flexi-truncate">
+            <div class="slds-media">
+                <div class="slds-media__figure">
+                    <svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-standard-custom slds-icon-standard-white">
+                        <use xlink:href="" s="standard" i="call" svg-link />
+                    </svg>
+                </div>
+                <div class="slds-media__body">
+                    <p class="slds-text-heading--label slds-text-heading--label--local">Policy Builder</p>
+                    <div class="slds-grid">
+                        <h1 class="slds-text-heading--large slds-m-right--small slds-truncate slds-align-middle"
+                            title="Record Title">{{location.path()=='/detail/' ? chartViewModel.data.name : ('All Policies (' + model.callFlows.length + ')' )}}</h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-col slds-no-flex slds-align-middle slds-col--padded--subheader-local" ng-if="location.path()=='/list/'">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                    <use xlink:href="" s="utility" i="search" svg-link />
+                </svg>
+                <input type="text" id="search" class="slds-input" placeholder="search" ng-model="model.searchPolicyName" />
+            </div>
+        </div>
+
+        <div class="slds-col slds-no-flex slds-align-middle slds-m-horizontal--large" ng-if="chartViewModel.data.lastModifiedDate">
+            Last saved {{chartViewModel.data.lastModifiedDate | amDateFormat: 'DD/MM/YYYY  |  HH:mm'}}
+        </div>
+        <div class="slds-col slds-no-flex slds-align-middle slds-col--padded--subheader-local" ng-if="model.showReturnButton">
+            <button type="button"  class="slds-button slds-button--inverse" ng-click="backTo()">BACK TO APP</button>
+        </div>
+	    <div ng-if="model.createPolicyAccess == true" class="slds-col slds-no-flex slds-align-middle slds-col--padded--subheader-local" ng-if="location.path()=='/list/'">
+	    	<button type="button"  class="slds-button slds-button--inverse" ng-click="newCallFlow()">NEW</button>
+	    </div>
+	    <div ng-if="model.createPolicyAccess == false" class="slds-col slds-no-flex slds-align-middle slds-col--padded--subheader-local" ng-if="location.path()=='/list/'">
+	    	<button type="button" disabled="true" class="slds-button slds-button--inverse" ng-click="newCallFlow()">NEW</button>
+	    </div>
+        <div class="slds-col slds-no-flex slds-align-middle slds-col--padded--subheader-local" ng-if="location.path()=='/detail/'">
+            <button type="button"  class="slds-button slds-button--inverse" ng-click="loadList()">LIST</button>
+        </div>
+        <div class="slds-col slds-no-flex slds-align-middle slds-col--padded--subheader-local">
+            <button type="button" class="slds-button slds-button--inverse" onclick="window.open('https://success.natterbox.com/s/article/AVS-Routing-Policies-Tab', '_blank')">HELP</button>
+        </div>
+
+    </div>
+
+</div>
+<div class="slds-container--fluid slds-subheader--local slds-clearfix" ng-if="location.path()=='/detail/'">
+
+    <div class="slds-grid slds-float--left slds-m-left--large slds-m-top--xx-small">
+
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+            <button type="button"  class="slds-button slds-button--icon" ng-click="zoomIn()">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon--small">
+                    <use xlink:href="" s="utility" i="zoomin" svg-link/>
+                </svg>
+                <span class="slds-assistive-text">zoom in</span>
+            </button>
+        </div>
+
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+            <button type="button"  class="slds-button slds-button--icon" ng-click="zoomOut()">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon--small">
+                    <use xlink:href="" s="utility" i="zoomout" svg-link/>
+                </svg>
+                <span class="slds-assistive-text">zoom out</span>
+            </button>
+        </div>
+
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+            <button type="button"  class="slds-button slds-button--icon" ng-click="zoom()">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon--small">
+                    <use xlink:href="" s="utility" i="search" svg-link/>
+                </svg>
+                <span class="slds-assistive-text">zoom 100</span>
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="slds-grid slds-float--right slds-m-right--large">
+
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+            <button type="button"  class="slds-button slds-button--neutral" ng-click="chartViewModel.data.grid = !chartViewModel.data.grid">
+                Grid {{chartViewModel.data.grid ? 'on' : 'off'}}
+            </button>
+        </div>
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+            <button type="button"  class="slds-button slds-button--neutral" ng-click="chartViewModel.data.color = !chartViewModel.data.color">
+                Color code {{chartViewModel.data.color ? 'on' : 'off'}}
+            </button>
+        </div>
+
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+        	 <div ng-if="model.recordAccess == null">
+	        	<button type="button"  class="slds-button slds-button--destructive" ng-if="model.confirmDelete[chartViewModel.data.id]" ng-click="deleteCallFlow(chartViewModel.data.id)" click-outside="model.confirmDelete[chartViewModel.data.id] = false">Confirm Delete</button>
+	            <button type="button"  class="slds-button" ng-click="checkCanDeleteCallFlow(chartViewModel.data)" ng-if="chartViewModel.data.id != null" ng-class="model.deleting[chartViewModel.data.id] ? 'slds-button--brand' : 'slds-button--neutral'">
+	                {{model.deleting[chartViewModel.data.id] ? 'Deleting...' : 'Delete Policy'}}
+	            </button>
+        	</div>
+        	<div ng-if="model.recordAccess.HasDeleteAccess == true">
+	        	<button type="button"  class="slds-button slds-button--destructive" ng-if="model.confirmDelete[chartViewModel.data.id]" ng-click="deleteCallFlow(chartViewModel.data.id)" click-outside="model.confirmDelete[chartViewModel.data.id] = false">Confirm Delete</button>
+	            <button type="button"  class="slds-button" ng-click="checkCanDeleteCallFlow(chartViewModel.data)" ng-if="chartViewModel.data.id != null" ng-class="model.deleting[chartViewModel.data.id] ? 'slds-button--brand' : 'slds-button--neutral'">
+	                {{model.deleting[chartViewModel.data.id] ? 'Deleting...' : 'Delete Policy'}}
+	            </button>
+        	</div>
+        	<div ng-if="model.recordAccess.HasDeleteAccess == false">
+	        	<button type="button"  disabled="true" class="slds-button slds-button--destructive" ng-if="model.confirmDelete[chartViewModel.data.id]" ng-click="deleteCallFlow(chartViewModel.data.id)" click-outside="model.confirmDelete[chartViewModel.data.id] = false">Confirm Delete</button>
+	            <button type="button"  disabled="true" class="slds-button" ng-click="checkCanDeleteCallFlow(chartViewModel.data)" ng-if="chartViewModel.data.id != null" ng-class="model.deleting[chartViewModel.data.id] ? 'slds-button--brand' : 'slds-button--neutral'">
+	                {{model.deleting[chartViewModel.data.id] ? 'Deleting...' : 'Delete Policy'}}
+	            </button>
+        	</div>
+        </div>
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+            <button type="button"  class="slds-button slds-button--neutral" ng-click="showChartOptionsDialog()">
+                Options
+            </button>
+        </div>
+        <div class="slds-col--padded slds-col--padded--subheader-local">
+        	<div ng-if="model.recordAccess.HasEditAccess == false">
+	            <button type="button"  class="slds-button" ng-click="saveCallFlow()" disabled="true" ng-class="model.saving ? 'slds-button--brand' : 'slds-button--neutral'">
+	                {{model.saving ? 'Saving ...' : 'Save'}}
+	            </button>
+            </div>
+            <div ng-if="model.recordAccess.HasEditAccess == true">
+	            <button type="button"  class="slds-button" ng-click="saveCallFlow()" ng-disabled="model.saving" ng-class="model.saving ? 'slds-button--brand' : 'slds-button--neutral'">
+	                {{model.saving ? 'Saving ...' : 'Save'}}
+	            </button>
+            </div>
+            <div ng-if="model.recordAccess == null">  
+	            <button type="button"  class="slds-button" ng-click="saveCallFlow()" ng-disabled="model.saving" ng-class="model.saving ? 'slds-button--brand' : 'slds-button--neutral'">
+	                {{model.saving ? 'Saving ...' : 'Save'}}
+	            </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header END -->

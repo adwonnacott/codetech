@@ -1,0 +1,44 @@
+<apex:page showHeader="false" controller="natterbox.VoiceIntegrationController">
+
+<apex:slds rendered="{!CTITheme=='slds'||CTITheme=='freedom'}"/>
+
+<script type="text/javascript" src="/support/api/51.0/interaction.js"></script>
+<script type="text/javascript" src="/support/api/51.0/lightning/opencti_min.js"></script>
+<script type="text/javascript" src="/support/console/51.0/integration.js"></script>
+<script type="text/javascript" src="{!BLANKVALUE(BLANKVALUE(CTIFileHost,CTIServiceHost),'https://cti.redmatter.com')}/dojo.js"></script>
+<link rel="stylesheet" type="text/css" href="{!BLANKVALUE(BLANKVALUE(CTIFileHost,CTIServiceHost),'https://cti.redmatter.com')}/cti.css"/>
+<script type="text/javascript">
+if (typeof cticonfig != 'undefined')
+{
+    cticonfig.cometdURL="{!BLANKVALUE(CTIServiceHost,'https://cti.redmatter.com')}/cometd";
+    cticonfig.salesforce_sid="{!JSENCODE(ApexSessionId)}";
+    cticonfig.salesforce_profileid="{!JSENCODE(ProfileId)}";
+    cticonfig.dontSendSFSessionIDToCTIHost={!CTIDontSendSFSessionIDToCTIHost};
+    cticonfig.ctiFileHost="{!BLANKVALUE(BLANKVALUE(CTIFileHost,CTIServiceHost),'https://cti.redmatter.com')}";
+    cticonfig.uiTheme="{!JSENCODE(CTITheme)}";
+    cticonfig.namespacePrefix="{!JSENCODE(NamespacePrefix)}";
+    cticonfig.nbccNamespace="{!JSENCODE(NbccNamespace)}";
+    cticonfig.nbccVersion="{!JSENCODE(NbccVersion)}";
+    if ({!CTIDontSendSFSessionIDToCTIHost}) {
+        cticonfig.salesforce_orgid="{!JSENCODE(OrgId)}";
+        cticonfig.salesforce_userid="{!JSENCODE(UserId)}";
+        cticonfig.salesforce_language="{!JSENCODE(Language)}";
+        cticonfig.salesforce_locale="{!JSENCODE(Locale)}";
+    }
+}
+</script>
+
+<div id="cti-container">
+    <div id="cti-auth-approval"></div>
+    <div id="cti-header"></div>
+    <div id="cti-main">
+        <div id="cti-login"></div>
+        <div id="cti-render"></div>
+        <div id="cti-info"></div>
+    </div>
+    <div id="cti-footer"></div>
+</div>
+
+<script type="text/javascript" src="{!BLANKVALUE(BLANKVALUE(CTIFileHost,CTIServiceHost),'https://cti.redmatter.com')}/{!IF(CTITheme=='slds'||CTITheme=='freedom','bundle.js','empty.js')}"></script>
+
+</apex:page>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Availability_State_ID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>Ref to availability state object. Will be a null value if no State Id is available</description>
+    <label>Availability State</label>
+    <referenceTo>nbavs__AvailabilityProfileState__c</referenceTo>
+    <relationshipLabel>Phone Events</relationshipLabel>
+    <relationshipName>Phone_Events</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

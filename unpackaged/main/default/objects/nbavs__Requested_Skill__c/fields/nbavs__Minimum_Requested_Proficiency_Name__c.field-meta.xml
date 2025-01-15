@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Minimum_Requested_Proficiency_Name__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>CASE(nbavs__Minimum_Requested_Proficiency__c, 0, &#39;No knowledge&#39;, 1, &#39;Minimal&#39;, 10, &#39;Basic&#39;, 20, &#39;Novice&#39;, 40, &#39;Intermediate&#39;, 60, &#39;Advanced&#39;, 80, &#39;Expert&#39;, 100, &#39;Guru&#39;, &#39;Custom&#39;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Minimum Requested Proficiency Label</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

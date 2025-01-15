@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Name__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>CASE( nbavs__DialList__r.nbavs__Object__c , &quot;Account&quot;,  nbavs__Account__r.Name , &quot;Contact&quot;, nbavs__Contact__r.FirstName + &#39; &#39; + nbavs__Contact__r.LastName, &quot;Lead&quot;,  nbavs__Lead__r.FirstName + &#39; &#39; + nbavs__Lead__r.LastName, null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

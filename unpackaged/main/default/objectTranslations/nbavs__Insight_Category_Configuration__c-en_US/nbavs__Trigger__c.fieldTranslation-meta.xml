@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Trigger --></label>
+        <name>nbavs__Trigger__c</name>
+        <picklistValues>
+            <masterLabel>Expected</masterLabel>
+            <translation><!-- Expected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Info</masterLabel>
+            <translation><!-- Info --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unexpected</masterLabel>
+            <translation><!-- Unexpected --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- If checked, dial list item status will be updated with the mapped status. --></help>
+        <label><!-- Enable Dial List Status Update --></label>
+        <name>natterbox__EnableWriteDialItemStatus__c</name>
+    </CustomFieldTranslation>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__FromNumber__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The from number. Note that we will need to some manipulation get all the numbers out, i.e. we can use E164CallerNumber for the moment, but will need to provide a new macro or a script to provide better support)</description>
+    <label>FromNumber</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Phone</type>
+</CustomField>

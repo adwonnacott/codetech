@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_UUID__c</fullName>
+    <deprecated>false</deprecated>
+    <description>An Id that is identifies the From leg of the call. The Id may appear in multiple records if the call has been transferred</description>
+    <externalId>true</externalId>
+    <label>From UUID</label>
+    <length>64</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

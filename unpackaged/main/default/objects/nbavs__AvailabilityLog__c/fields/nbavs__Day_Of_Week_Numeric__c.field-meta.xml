@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Day_Of_Week_Numeric__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Numeric day of week when the availability state changed. 1 starts on Monday</description>
+    <externalId>false</externalId>
+    <formula>MOD(DATEVALUE(nbavs__Time__c) - DATE(1900, 1, 7), 7)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Numeric day of week when the availability state changed</inlineHelpText>
+    <label>Day Of Week Numeric</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

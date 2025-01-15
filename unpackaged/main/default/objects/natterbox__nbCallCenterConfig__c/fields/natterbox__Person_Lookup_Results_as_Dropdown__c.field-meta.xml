@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>natterbox__Person_Lookup_Results_as_Dropdown__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Display Contact/Lead query lookup results as a drop down list (only applicable if &#39;Split Person &amp; Related To Query Result&#39; is checked)</description>
+    <inlineHelpText>Display Contact/Lead query lookup results as a drop down list (only applicable if &#39;Split Person &amp; Related To Query Result&#39; is checked)</inlineHelpText>
+    <label>Person Lookup Results as Dropdown</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

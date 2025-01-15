@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__AutoLogoutNBGroupsOnSFLogout__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Automatically log user out of all Natterbox Groups when Salesforce detects user has logged out (only applicable tor user&#39;s NOT using Natterbox Availability)</description>
+    <inlineHelpText>Automatically log user out of all Natterbox Groups when Salesforce detects user has logged out (only applicable tor user&#39;s NOT using Natterbox Availability)</inlineHelpText>
+    <label>Auto Logout NB Groups on SF Logout</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

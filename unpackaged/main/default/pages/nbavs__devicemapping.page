@@ -1,0 +1,38 @@
+<apex:page standardController="nbavs__DeviceMapping__c" extensions="nbavs.DeviceMappingController" tabstyle="nbavs__Device__c">
+<apex:sectionHeader title="{!$ObjectType.nbavs__Device__c.labelPlural}"
+		subtitle="Assign Devices to {!user.Name}" />
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:form id="deviceMapForm">
+    <apex:pageMessages id="messages" />	
+    <apex:pageBlock title="Assign {!$ObjectType.nbavs__Device__c.labelPlural}" >	       
+        <apex:pageBlockButtons >		
+                <apex:commandButton value="Save" action="{!save}" rerender="messages" />
+                 <apex:commandButton action="{!cancel}" tabindex="8" value="Cancel" />        
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection >
+            <apex:outputPanel styleClass="buttonsBox">
+                <apex:inputText value="{!searchTerm}" />
+                &nbsp; &nbsp;
+                <apex:commandButton value="Search" action="{!searchDevices}" rerender="messages,selectionBlock" />
+                <apex:commandButton value="Clear" action="{!clearSearch}" rerender="deviceMapForm" />
+            </apex:outputPanel>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection >
+            <apex:outputPanel layout="block" styleClass="buttonsBox" id="selectionBlock" >
+                    
+                <c:MultiselectPicklist leftLabel="Available Devices"
+                        leftOption="{!allDevices}"
+                        rightLabel="Selected Devices"
+                        rightOption="{!selectedDevices}"
+                        size="14"
+                        width="350px"/>
+
+                <apex:outputPanel rendered="{!isShrinkedList}">
+                    <br/> * There are too many devices to display. Use the search box to reduce the size of the list.
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:pageBlockSection>
+       </apex:pageBlock> 
+    </apex:form>   
+</apex:page>

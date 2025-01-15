@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__User__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Natterbox User</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Dial List Administrator must have Natterbox CTI License</errorMessage>
+        <filterItems>
+            <field>nbavs__User__c.nbavs__CTI__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <infoMessage>Dial List Administrator must have Natterbox CTI License</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>nbavs__User__c</referenceTo>
+    <relationshipLabel>Dial List Administrators</relationshipLabel>
+    <relationshipName>DialListAdministrators</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

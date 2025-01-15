@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Call_Queue_Last_Queue__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The Queue Id of the last call queue that was used on this channel</description>
+    <externalId>false</externalId>
+    <label>From Call Queue Last Queue Ref</label>
+    <length>32</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>natterbox__DateTime_Format__c</fullName>
+    <defaultValue>&quot;auto&quot;</defaultValue>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <inlineHelpText>Selects the Date/Time formatting of the {CallDateTimeLocal} macro according to the locale &amp; language of the organization.
+Also sets the time formatting in the CTI UI according to the locale of the user</inlineHelpText>
+    <label>DateTime Format</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

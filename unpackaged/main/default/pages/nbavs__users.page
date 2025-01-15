@@ -1,0 +1,291 @@
+<apex:page standardController="nbavs__User__c"
+    extensions="nbavs.UserListController" tabstyle="nbavs__User__c"
+    recordSetVar="userList" action="{!checkAPISetup}"> 
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'moment/moment-with-locales.min.js')}" />    
+<head>
+<style type="text/css">
+
+label.labelCls {
+    width: 120px;
+    float: right;
+    display: inline;
+    margin-top: 2.4px;
+}
+    
+table.filters {
+    float: left;
+}
+
+table.options {
+    float: right;
+}
+
+#filtersDialog {
+    position: absolute;
+    right: 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 999;
+}
+</style>
+</head>
+<script type="text/javascript">
+    j$ = jQuery.noConflict();
+    j$(document).ready(function() {
+       buildDataTable();
+    });
+
+
+
+    function buildDataTable() {
+
+        var table =  j$('#dataTable').DataTable({
+            "ajax": function(data, callback, settings) {
+                var ret = [];
+                var ajaxcall = function(url) {
+                    j$.ajaxSetup({
+                        headers:{
+                            'Authorization': "Bearer {!$Api.Session_ID}"
+                        }
+                    });
+                    (async function(){
+                        let json = await j$.get(url);
+                        console.debug('here : '+json);
+                        if (json != null) {
+                            var sofar = ret.length;
+                            var deviceMapVar = {!deviceJsonMap};
+
+                            for (var i = 0, ien = json.records.length; i < ien; i++) {
+                                var item = json.records[i];
+                                
+                                var ns = item.attributes.type.startsWith('nbavs__') ? 'nbavs__' : '';
+								var deviceDetail=deviceMapVar[item['Id']];
+								
+								var deviceValue='';
+								if(deviceDetail != null){
+								
+									for(j=0;j<deviceDetail.length;j++){
+										var d = deviceDetail[j];
+										var s='<a href="/'+getIdFromURL(deviceDetail[j].attributes.url)+'" target="_blank">'+d[ns+'Extension__c']+'-'+d[ns+'Description__c']+'</a>';
+										
+										deviceValue=deviceValue == null ? s: deviceValue+'  '+s;
+									}
+								
+								}
+                                
+                                r = [];
+                                r[0] = actionLink('apex/'+ns+'userEdit?id='+item['Id']) + '|' + actionDelLink(item['Id']) ;
+                                r[1] = linkCurrentObject(item['Id'],encodeStr(item['Name']));
+                                r[2] = linkObject(item[ns+'User__r']);
+                                r[3] = item[ns+'SipExtension__c'];
+                                r[4] = (item[ns+'Enabled__c']) ? '✓' : '';
+                                r[5] = linkObject(item[ns+'AvailabilityProfile__r']);
+                                r[6] = linkObject(item[ns+'AvailabilityProfileState__r']);
+                                r[7] = (item[ns+'TrackOutboundCTIDevice__c']) ? '✓' : '';
+                                r[8] = deviceValue;
+                                r[9] = item[ns+'User__c']== null? item[ns+'Username__c'] :linkObjectEmail(item[ns+'User__r']);
+                                r[10] = encodeStr(item[ns+'MobilePhone__c']);
+                                r[11] = formatDate(item['LastModifiedDate']);
+                                
+                                ret[i+sofar] = r;
+                            }
+                            if (json.hasOwnProperty('nextRecordsUrl')) {
+                                ajaxcall(json.nextRecordsUrl);
+                                return;
+                            }
+                        }
+                        callback({data: ret});
+                    })();
+                };
+                ajaxcall('/services/data/v45.0/query/?q='+encodeURI("{!JSENCODE(tableSoql)}"));
+            },
+            "paging": true,
+            "stateSave": true,
+            "lengthMenu": [[10, 25, 50, 100, -1],
+                            [10, 25, 50, 100, "All"]],
+            "order": [[ 1, "desc" ]],
+            columnDefs: [
+                {
+                'sortable': false,
+                'targets': [ 0 ]
+                },
+                {
+                   "targets": [7, 8, 9, 10],
+                    "visible": false,
+                    "searchable": true
+                }
+            ]
+            });
+
+            j$("#filtersDialog").hide();
+
+            table.columns().every( function (index) {
+                if (this.visible()) {
+                    j$("[data-column="+(index)+"]").prop('checked', true);
+                }
+            } );
+
+            j$('input[type="checkbox"].toggle-vis').on('click', function (e) {
+                //e.preventDefault();
+                // Get the column API object
+                var column = table.column( j$(this).attr('data-column'));
+                // Toggle the visibility
+                column.visible( j$(this).is(':checked') );
+            } );
+
+            function encodeStr(eValue){
+                if(eValue!==null && eValue!=='' && eValue!=='undefined' )
+                {
+                    return eValue.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+                    return '&#'+i.charCodeAt(0)+';';
+                    });
+                }
+                return eValue;
+            }
+
+            function getIdFromURL(url) {
+                if (url == null) {
+                    return '';
+                }
+                return url.substring(url.lastIndexOf('/') + 1);
+            }
+            function formatDate(datestr) {
+                if (datestr == null || datestr === '') {
+                    return '';
+                }
+                return moment(datestr).format('llll');
+            }
+            function linkObject(ob) {
+                if (ob == null) {
+                    return '';
+                }
+                return '<a href="/'+getIdFromURL(ob.attributes.url)+'">'+encodeStr(ob.Name)+'</a>';
+            }
+
+            function linkObjectEmail(ob) {
+                if (ob == null) {
+                    return '';
+                }
+                return encodeStr(ob.Email);
+            }
+            
+            function linkCurrentObject(idVar,nameVar) {
+                
+                return '<a href="/'+idVar+'">'+nameVar+'</a>';
+            }
+            function actionLink(url) {
+                
+                return '<a href="/'+url+'" style="text-decoration:none;color:#005FB2;"> Edit </a>';
+            }
+            function actionDelLink(userId) {
+                return '<a href="#" style="text-decoration:none;color:#005FB2;" onclick="if(!confirm(\'Are you sure?\'))return false; deleteUserFn(\''+userId+'\'); return false;"> Del </a>';
+            }
+            
+    }
+
+    
+    function showDiv() {                   
+         j$("#filtersDialog").toggle();
+    }
+    
+    j$("body").click
+    (
+      function(e)
+      {
+          if (j$(e.target).attr('id') != "showFilterDialog" && j$(e.target).attr('id') != "filtersDialog" && j$(e.target).parent().attr('id') != "filtersDialog") {
+            j$("#filtersDialog").hide();
+          } 
+      }
+    ); 
+    
+    //Reload Filters
+    function reLoadFilters() {            
+        buildDataTable();
+    }       
+</script>   
+    <apex:sectionHeader title="{!$ObjectType.nbavs__User__c.labelPlural}"
+        subtitle="Home" />
+    <apex:form id="userForm">
+        <apex:pageMessages id="messages" />     
+        <apex:pageBlock id="body">          
+            <!-- <apex:pageBlockButtons location="top"> -->
+            <table class="filters">
+            <apex:outputPanel layout="block" styleClass="buttonsBox">
+                <apex:outputPanel layout="block" id="buttons" styleClass="buttonsLeft">
+                    <apex:commandButton value="New {!$ObjectType.nbavs__User__c.label} (external to Salesforce)"
+                        action="{!URLFOR($Action.User__c.New)}" />
+                    <apex:commandButton value="New {!$ObjectType.nbavs__User__c.label} (from Salesforce)"
+                            action="{!URLFOR($Page.sfusers)}" />
+
+                <apex:commandButton value="Manage Licenses"
+                                        action="{!URLFOR($Page.userlicense)}" />
+                </apex:outputPanel>
+
+            <!-- </apex:pageBlockButtons> -->
+            </apex:outputPanel>
+            </table>
+            <table class="options">
+                <tr>
+                    <td>
+                    <input type="button" class="btn" value="Manage Columns" id="showFilterDialog" onclick="showDiv();" />
+                    </td>
+                </tr>
+            </table>    
+            <div style="display: none;" id="filtersDialog">
+                <input type="checkbox" name="Name" id="Name" Value="Name" class="toggle-vis" data-column="1" />
+                <label class="labelCls" for="Name">{!$ObjectType['User__c'].Fields.Name.Label}</label> <br/> 
+                <input type="checkbox" name="SFUser" id="SFUser" Value="Salesforce User" class="toggle-vis" data-column="2" />
+                <label class="labelCls" for="SFUser">{!$ObjectType['User__c'].Fields.User__c.Label}</label><br/> 
+                <input type="checkbox" name="SipExtension" id="SipExtension" Value="SipExtension" class="toggle-vis" data-column="3"  />
+                <label class="labelCls" for="SipExtension">{!$ObjectType['User__c'].Fields.SipExtension__c.Label}</label><br/>              
+                <input type="checkbox" name="Active" id="Active" Value="Active" class="toggle-vis" data-column="4"  />
+                <label class="labelCls" for="Active">{!$ObjectType['User__c'].Fields.Enabled__c.Label}</label> <br/> 
+                <input type="checkbox" name="AvailabilityProfile" id="AvailabilityProfile" Value="Availability Profile" class="toggle-vis" data-column="5"  />
+                <label class="labelCls" for="AvailabilityProfile">{!$ObjectType['User__c'].Fields.AvailabilityProfile__c.Label}</label><br/> 
+                <input type="checkbox" name="AvailabilityState" id="AvailabilityState" Value="Availability State" class="toggle-vis" data-column="6" />
+                <label class="labelCls" for="AvailabilityState">{!$ObjectType['User__c'].Fields.AvailabilityProfileState__c.Label}</label><br/>
+                <input type="checkbox" name="TrackOutboundCTIDevice" id="TrackOutboundCTIDevice" Value="Track Outbound CTI Device" class="toggle-vis" data-column="7" />
+                <label class="labelCls" for="TrackOutboundCTIDevice">Track O/B CTI Device<!--{!$ObjectType['User__c'].Fields.TrackOutboundCTIDevice__c.Label}--></label><br/>
+                <input type="checkbox" name="AssignedDevices" id="AssignedDevices" Value="Assigned Devices" class="toggle-vis" data-column="8" />
+                <label class="labelCls" for="AssignedDevices">Assigned Devices</label> <br/>
+                <input type="checkbox" name="Email" id="Email" Value="Email Address" class="toggle-vis" data-column="9" />
+                <label class="labelCls" for="Email">{!$ObjectType['User__c'].Fields.Username__c.Label}</label><br/>  
+                <input type="checkbox" name="MobilePhone" id="MobilePhone" Value="Mobile" class="toggle-vis" data-column="10" />
+                <label class="labelCls" for="FromDevice">{!$ObjectType['User__c'].Fields.MobilePhone__c.Label}</label><br/> 
+                <input type="checkbox" name="LastModified" id="LastModified" Value="LastModified" class="toggle-vis" data-column="11" />
+                <label class="labelCls" for="LastModified">{!$ObjectType['User__c'].Fields.LastModifiedDate.Label}</label><br/> 
+            </div>
+            
+            <apex:outputPanel layout="block" id="list">    
+                <apex:actionFunction name="deleteUserFn" action="{!deleteItem}" reRender="paging,list,messages" oncomplete="reLoadFilters();">     
+                    <apex:param id="uId" name="id" value="" assignTo="{!selectedUserId}"/>
+                </apex:actionFunction>         
+                <table class="list display compact" id="dataTable" style="width: 100%;">
+                    <thead>
+                        <tr class="headerRow">
+                            <th>Action</th>
+                            <th>{!$ObjectType['User__c'].Fields.Name.Label}</th>                            
+                            <th>{!$ObjectType['User__c'].Fields.User__c.Label}</th>
+                            <th>{!$ObjectType['User__c'].Fields.SipExtension__c.Label}</th>                         
+                            <th>{!$ObjectType['User__c'].Fields.Enabled__c.Label}</th>
+                            <th>{!$ObjectType['User__c'].Fields.AvailabilityProfile__c.Label}</th>
+                            <th>{!$ObjectType['User__c'].Fields.AvailabilityProfileState__c.Label}</th>
+                            <th>{!$ObjectType['User__c'].Fields.TrackOutboundCTIDevice__c.Label}</th>
+                            <th>Assigned Devices</th>
+                            <th>{!$ObjectType['User__c'].Fields.Username__c.Label}</th>
+                            <th>{!$ObjectType['User__c'].Fields.MobilePhone__c.Label}</th>                          
+                            <th>{!$ObjectType['User__c'].Fields.LastModifiedDate.Label}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__All</fullName>
+    <columns>NAME</columns>
+    <columns>nbavs__User__c</columns>
+    <columns>nbavs__Number__c</columns>
+    <columns>nbavs__AreaCode__c</columns>
+    <columns>nbavs__CountryCode__c</columns>
+    <columns>nbavs__Geographic__c</columns>
+    <columns>nbavs__LocalNumber__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

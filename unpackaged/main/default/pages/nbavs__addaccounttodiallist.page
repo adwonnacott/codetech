@@ -1,0 +1,30 @@
+<apex:page standardController="Account"
+           recordSetVar="items"
+           extensions="nbavs.DialItemListController">
+    <apex:form id="formId">
+        <apex:pageMessages id="messages" />
+        <apex:pageBlock title="Add Accounts to Dial List" rendered="{!selectedDialList!=null && selectedObjects!=null}">
+            <apex:pageBlockSection title="Select Dial List">
+                <apex:pageblocksectionitem >
+                    <apex:outputLabel value="Dial List" />
+                    <apex:outputPanel >
+                        <apex:selectList value="{!selectedDialListId}" size="1">
+                            <apex:actionSupport event="onchange" action="{!selectDialList}" rerender="formId"/>
+                            <apex:selectOptions value="{!dialListStaticOptions}" />
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageblocksectionitem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="selectedObjects" title="Selected Records">
+                <apex:pageBlockTable value="{!selectedObjects}" var="item">
+                    <apex:column value="{!item['Name']}"/>
+                    <apex:column value="{!item[PhoneField]}"/>
+                    <apex:column value="{!item[SecondaryPhoneField]}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Add to List" action="{!addToList}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Check_if_note_is_closed_by_the_owner</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISCHANGED(nbavs__Is_Closed__c),
+ nbavs__Is_Closed__c = true, $User.Id &lt;&gt; CreatedById)</errorConditionFormula>
+    <errorMessage>Only creator of the note is allowed to close the note</errorMessage>
+</ValidationRule>

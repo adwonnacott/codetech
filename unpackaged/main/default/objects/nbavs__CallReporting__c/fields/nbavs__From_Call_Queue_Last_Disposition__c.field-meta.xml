@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Call_Queue_Last_Disposition__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The disposition of the last call queue that the From leg of this call was routed to: TIMEOUT (call queue timed out and call was passed to next item in policy), ANSWERED (call was connected to an agent), ABANDONED (caller pressed a key to exit from the call queue), HANGUP (caller hung up the call whilst still in the call queue)</description>
+    <externalId>false</externalId>
+    <label>From Call Queue Last Disposition</label>
+    <length>32</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

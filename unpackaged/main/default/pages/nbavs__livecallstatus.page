@@ -1,0 +1,126 @@
+<apex:page sidebar="false" id="apexpage" standardStylesheets="false" controller="nbavs.LiveCallStatusController" action="{!checkAPISetup}">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+<title>Call Flow</title>
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+<style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup
+            displays in the center of the screen. First set the width. Then set
+            margin-left to negative half of what the width is. You can add
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+            border-color: cornsilk;
+        }
+        .popupBackground{
+            background-color:blue;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+</style>
+</head>
+<body id="body">
+<apex:form id="form">
+<section class="v-center"> 
+<apex:pageMessages id="messages" />
+<div class="slds" id="groupDiv" style="margin-bottom:15px;">     
+	 <apex:selectList size="1" value="{!selectedGroup}" rendered="{!showGroupFilter}" id="selectList">
+		<apex:actionsupport event="onchange" rerender="dataTable,body,popUp, main_list" />
+		<apex:selectOptions value="{!Groups}" id="groups" />
+	 </apex:selectList> 
+</div>
+<div class="nbvc slds" id="slds">      
+    <apex:actionPoller action="{!getLiveCalls}" reRender="dataTable, popUp, groups, groupDiv, main_list, selectList" interval="5"/>
+     <apex:dataTable value="{!items}" var="item" id="dataTable"  styleClass="slds-table slds-table--bordered slds-table--striped">
+     	<apex:column headerValue="Created Time" value="{!item.nbavs__CreatedTime__c}"/> 
+        <apex:column headerValue="Answered Time" value="{!item.nbavs__AnswerTime__c}"/>
+        <apex:column headerValue="From Number">
+        	<apex:outputText value="{!item.nbavs__From__c}" />&nbsp; 
+        	<apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'listen.png')}" style="width:16px;height:16px;cursor:pointer;" rendered="{!listenIn}"  >
+	        	<apex:actionSupport event="onclick" action="{!saveListenTarget}" rerender="popUp,messages" >
+					<apex:param name="xlistenTargetChannelUUID" value="{!item.nbavs__FromUUID__c}" assignTo="{!listenTargetChannelUUID}" />
+                    <apex:param name="xlistenTargetNBUserId" value="{!item.nbavs__UserFrom__c}" assignTo="{!listenTargetNBUserId}" />
+                    <apex:param name="xlistenTargetNumber" value="{!item.nbavs__From__c}" assignTo="{!listenTargetNumber}" />
+                    <apex:param name="xlistenOtherPartyNBUserId" value="{!item.nbavs__UserTo__c}" assignTo="{!listenOtherPartyNBUserId}" />
+                    <apex:param name="xlistenOtherPartyNumber" value="{!item.nbavs__To__c}" assignTo="{!listenOtherPartyNumber}" />
+                    <apex:param name="xlistenCallDirection" value="{!item.nbavs__Direction__c}" assignTo="{!listenCallDirection}" />
+				</apex:actionSupport>
+			</apex:image>			
+        </apex:column>  
+        <apex:column headerValue="From User" value="{!item.nbavs__FromUser__c}" />                
+        <apex:column headerValue="To Number">
+        	<apex:outputText value="{!item.nbavs__To__c}" />&nbsp;
+        	<apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'listen.png')}" style="width:16px;height:16px;cursor:pointer;" rendered="{!listenIn}" >
+        		<apex:actionSupport event="onclick" action="{!saveListenTarget}" rerender="popUp,messages" >
+					<apex:param name="xlistenTargetChannelUUID" value="{!item.nbavs__ToUUID__c}" assignTo="{!listenTargetChannelUUID}" />
+                    <apex:param name="xlistenTargetNBUserId" value="{!item.nbavs__UserTo__c}" assignTo="{!listenTargetNBUserId}" />                    
+                    <apex:param name="xlistenTargetNumber" value="{!item.nbavs__To__c}" assignTo="{!listenTargetNumber}" />
+                    <apex:param name="xlistenOtherPartyNBUserId" value="{!item.nbavs__UserFrom__c}" assignTo="{!listenOtherPartyNBUserId}" />
+                    <apex:param name="xlistenOtherPartyNumber" value="{!item.nbavs__From__c}" assignTo="{!listenOtherPartyNumber}" />
+                    <apex:param name="xlistenCallDirection" value="{!item.nbavs__Direction__c}" assignTo="{!listenCallDirection}" />
+				</apex:actionSupport>
+        	</apex:image>        	 
+        </apex:column>
+        <apex:column headerValue="To User" value="{!item.nbavs__ToUser__c}" />
+         <apex:column headerValue="Direction" value="{!item.nbavs__Direction__c}" />
+        <apex:column headerValue="Feature" value="{!item.nbavs__Feature__c}"/>
+    </apex:dataTable>
+  </div>   
+</section> 
+ <div id="ph">		
+        <apex:outputPanel id="popUp">                
+        	<apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>         		
+            	<apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">            
+            	<div style="width:100%;">
+            	<div style="width:58%;font-weight:bold;font-size:14px;float:left;">
+            	   <apex:outputLabel Value="Listen In Device" />            	            		
+            	</div>
+            	<div style="width:9%;margin:-4px 0 6px;float:right;">
+            		<apex:commandButton value="Close" action="{!closePopup}" reRender="slds,popUp" />            	 
+            	</div>
+            	</div>            	                   	          	
+            	<apex:pageBlock id="main_lists">            	
+	                <apex:pageBlockTable value="{!deviceSelected}" var="device" styleClass="slds-table slds-table--bordered slds-table--striped">
+	                     <apex:column headerValue="Device">
+			        		<apex:outputText value="{!device.nbavs__Extension__c}" />&nbsp;        	
+			        		<apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'listen.png')}" style="width:16px;height:16px;cursor:pointer;">
+			        	 	<apex:actionSupport event="onclick" action="{!sendToListen}" reRender="main_list, dataTable, messages,popUp">
+								<apex:param name="xlistenNumber" value="{!device.nbavs__Extension__c}" assignTo="{!listenNumber}" />
+							</apex:actionSupport>
+							</apex:image>      	 
+			        	</apex:column>
+        				<apex:column headerValue="Type" value="{!device.nbavs__Type__c}"/>
+        				<apex:column headerValue="Description" value="{!device.nbavs__Description__c}"/> 
+	                </apex:pageBlockTable>
+                </apex:pageBlock>                
+            </apex:outputPanel>
+       </apex:outputPanel>
+  </div>  
+  <apex:outputPanel id="main_list">
+	    <apex:outputPanel rendered="{!layout}">
+	        <script>
+	              document.getElementById("ph").style.display="none";
+	        </script>
+	    </apex:outputPanel>
+</apex:outputPanel>  
+</apex:form>
+</body>
+</html>
+</apex:page>

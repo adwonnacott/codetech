@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__NewUsersTrackCTIDevice__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Newly created users will have Track CTI Device set to this value</description>
+    <label>Track CTI Device For New Users</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

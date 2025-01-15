@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Flag_Agent_Hangup__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>A boolean value indicating whether the Agent hung up the call. This is only relevant when the From Leg has a non 0 fromUserId value associated with it</description>
+    <label>From Flag Agent Hangup</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

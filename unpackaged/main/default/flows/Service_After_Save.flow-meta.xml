@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Check if the account lookup needs to be set</description>
+        <name>Decision010_Account_Lookup_NULL</name>
+        <label>Decision010 Account Lookup NULL?</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Decision020_Cost_Centre_Lookup_NULL</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account Lookup IS NOT NULL</defaultConnectorLabel>
+        <rules>
+            <name>Account_Lookup_IS_NULL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get010_Account_ID</targetReference>
+            </connector>
+            <label>Account Lookup IS NULL</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if cost centre lookup needs to be set</description>
+        <name>Decision020_Cost_Centre_Lookup_NULL</name>
+        <label>Decision020 Cost Centre Lookup NULL?</label>
+        <locationX>182</locationX>
+        <locationY>791</locationY>
+        <defaultConnectorLabel>Cost Centre Lookup IS NOT NULL</defaultConnectorLabel>
+        <rules>
+            <name>Cost_Centre_Lookup_IS_NULL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CostCentre__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get020_Cost_Centre_ID</targetReference>
+            </connector>
+            <label>Cost Centre Lookup IS NULL</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Service After Save {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Service After Save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get010_Account_ID</name>
+        <label>Get010 Account ID</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update010_Account_Lookup</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ZoeyAccountCode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.AccountCode__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get020_Cost_Centre_ID</name>
+        <label>Get020 Cost Centre ID</label>
+        <locationX>50</locationX>
+        <locationY>911</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update020_Cost_Centre_Lookup</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CostCentreCode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CostCentreCode__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CostCentre__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update010_Account_Lookup</name>
+        <label>Update010 Account Lookup</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <connector>
+            <targetReference>Decision020_Cost_Centre_Lookup_NULL</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>Get010_Account_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update020_Cost_Centre_Lookup</name>
+        <label>Update020 Cost Centre Lookup</label>
+        <locationX>50</locationX>
+        <locationY>1031</locationY>
+        <inputAssignments>
+            <field>CostCentre__c</field>
+            <value>
+                <elementReference>Get020_Cost_Centre_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Decision010_Account_Lookup_NULL</targetReference>
+        </connector>
+        <object>Service__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

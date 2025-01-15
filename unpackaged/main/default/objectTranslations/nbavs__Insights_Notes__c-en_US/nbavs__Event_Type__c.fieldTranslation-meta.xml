@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Event Type --></label>
+        <name>nbavs__Event_Type__c</name>
+        <picklistValues>
+            <masterLabel>Excellent Behaviour</masterLabel>
+            <translation><!-- Excellent Behaviour --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Note</masterLabel>
+            <translation><!-- General Note --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Neutral</masterLabel>
+            <translation><!-- Neutral --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Offensive Behaviour</masterLabel>
+            <translation><!-- Offensive Behaviour --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

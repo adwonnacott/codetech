@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Hour__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Hour when the availability state changed</description>
+    <externalId>false</externalId>
+    <formula>HOUR( TIMEVALUE(nbavs__Time__c ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Hour when the availability state changed</inlineHelpText>
+    <label>Hour</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

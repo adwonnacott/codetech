@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Enable_End_User_Access_All_Insights__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <inlineHelpText>End Users Can Access All Their Insight Record</inlineHelpText>
+    <label>Enable End User Access All Insights</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Call</fullName>
+        <default>false</default>
+        <label>Call</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send Letter</fullName>
+        <default>false</default>
+        <label>Send Letter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send Quote</fullName>
+        <default>false</default>
+        <label>Send Quote</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>File countersigned contract</fullName>
+        <default>false</default>
+        <label>File countersigned contract</label>
+    </standardValue>
+    <standardValue>
+        <fullName>File tariff guide(s)</fullName>
+        <default>false</default>
+        <label>File tariff guide(s)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send welcome email</fullName>
+        <default>false</default>
+        <label>Send welcome email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send customer onboarding spreadsheet</fullName>
+        <default>false</default>
+        <label>Send customer onboarding spreadsheet</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Complete onboarding spreadsheet</fullName>
+        <default>false</default>
+        <label>Complete onboarding spreadsheet</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Capture accounts &amp; invoicing details</fullName>
+        <default>false</default>
+        <label>Capture accounts &amp; invoicing details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Complete payment process set up (DD mandate, BACS, Credit Card)</fullName>
+        <default>false</default>
+        <label>Complete payment process set up (DD mandate, BACS, Credit Card)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send customer port/migration instructions</fullName>
+        <default>false</default>
+        <label>Send customer port/migration instructions</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Send customer required &amp; spare SIM cards</fullName>
+        <default>false</default>
+        <label>Send customer required &amp; spare SIM cards</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Onboard services to Code</fullName>
+        <default>false</default>
+        <label>Onboard services to Code</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Customer portal demonstration</fullName>
+        <default>false</default>
+        <label>Customer portal demonstration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Confirm review of first invoice</fullName>
+        <default>false</default>
+        <label>Confirm review of first invoice</label>
+    </standardValue>
+</StandardValueSet>

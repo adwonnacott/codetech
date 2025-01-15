@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Inbound_Talk_Seconds__c</fullName>
+    <defaultValue>0</defaultValue>
+    <deprecated>false</deprecated>
+    <description>The number of seconds of talk time incurred on calls received by the organisation from the outside world, regardless of whether they have been connected or not to a User. No Natterbox User will ever be associated with this call statistic, as purely measures inbound traffic.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>&quot;How many seconds have callers calling into my organisation been spending talking to a real person&quot;</inlineHelpText>
+    <label>Inbound Talk Seconds</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

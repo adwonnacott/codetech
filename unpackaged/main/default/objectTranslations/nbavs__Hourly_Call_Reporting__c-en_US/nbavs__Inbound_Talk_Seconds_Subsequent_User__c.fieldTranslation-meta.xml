@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many seconds have I been talking to callers calling into my organisation where I picked up the call as the initial recipient --></help>
+        <label><!-- Inbound Talk Seconds as Transferree --></label>
+        <name>nbavs__Inbound_Talk_Seconds_Subsequent_User__c</name>
+    </CustomFieldTranslation>

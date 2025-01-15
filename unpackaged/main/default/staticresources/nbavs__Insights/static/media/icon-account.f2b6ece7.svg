@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <filter id="a" width="166.7%" height="166.7%" x="-33.3%" y="-33.3%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path id="b" d="M17.4 8.33c.03-.63-.42-.81-.6-.81h-6.54c-.57 0-.66.6-.66.66v7.02h7.8V8.33zm-4.5 5.04c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm0-3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm3 3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm0-3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm-4.5-5.22V1.61c.03-.63-.42-.81-.6-.81H.66C.09.8 0 1.4 0 1.46V15.2h7.8V6.41s0-.72.66-.72h2.37s.57-.36.57-.6zm-8.1 7.98c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm0-3.09c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm0-3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm0-3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6zm3.3 9.21c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6H6c.33 0 .6.27.6.6v.6zm0-3.09c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6H6c.33 0 .6.27.6.6v.6zm0-3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6H6c.33 0 .6.27.6.6v.6zm0-3.06c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6H6c.33 0 .6.27.6.6v.6zm3.3 0c0 .33-.27.6-.6.6h-.6c-.33 0-.6-.27-.6-.6v-.6c0-.33.27-.6.6-.6h.6c.33 0 .6.27.6.6v.6z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" filter="url(#a)" transform="translate(3 4)">
+        <mask id="c" fill="#fff">
+            <use xlink:href="#b"/>
+        </mask>
+        <g fill="#5C6770" stroke="#5C6770" mask="url(#c)">
+            <path d="M-2.5-3.5h23v23h-23z"/>
+        </g>
+    </g>
+</svg>

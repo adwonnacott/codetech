@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Average Answered Wait Time --></label>
+        <name>nbavs__Average_Answered_Wait_Time__c</name>
+    </CustomFieldTranslation>

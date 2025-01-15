@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Group__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <label>Record Purpose Group</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Selected Group does not have Record purpose</errorMessage>
+        <filterItems>
+            <field>nbavs__Group__c.nbavs__Record__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <infoMessage>Select Record Purpose Group</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>nbavs__Group__c</referenceTo>
+    <relationshipLabel>Recording Access</relationshipLabel>
+    <relationshipName>Recording_Access</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

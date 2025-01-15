@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Don&apos;t Send SF Session ID to CTI Host --></label>
+        <name>natterbox__Dont_Send_SF_Session_ID_To_CTI_Host__c</name>
+    </CustomFieldTranslation>

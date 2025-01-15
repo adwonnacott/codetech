@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Flag_Eavesdrop_Attached__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Leg was attached to, by another eavesdrop channel</description>
+    <label>From Flag Eavesdrop Attached</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

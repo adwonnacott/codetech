@@ -1,0 +1,66 @@
+{
+  "events": {
+    "uuid": "7e0cf09a-f32f-4290-9e17-ee080e7ca79b",
+    "callEvents": [
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1554975282755229",
+        "data": {
+          "uuid": "e6458bc8-84f8-499a-b0cb-2bdcb63110f7"
+        }
+      },
+      {
+        "event": "RECORD_START",
+        "timeStamp": "1554975283189457"
+      },
+      {
+        "event": "CS_UNBRIDGE",
+        "timeStamp": "1554975300848826",
+        "data": {
+          "uuid": "e6458bc8-84f8-499a-b0cb-2bdcb63110f7"
+        }
+      },
+      {
+        "event": "PARK_OTHER_FOR_TRANSFER",
+        "timeStamp": "1554975301333422",
+        "data": {
+          "uuid": "e6458bc8-84f8-499a-b0cb-2bdcb63110f7"
+        }
+      },
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1554975313190662",
+        "data": {
+          "uuid": "4ed2b381-bf69-4d5d-8f5f-8f1320725abc"
+        }
+      },
+      {
+        "event": "CS_UNBRIDGE",
+        "timeStamp": "1554975346848932",
+        "data": {
+          "uuid": "4ed2b381-bf69-4d5d-8f5f-8f1320725abc"
+        }
+      },
+      {
+        "event": "RECORD_STOP",
+        "timeStamp": "1554975347229526"
+      },
+      {
+        "event": "CHANNEL_START",
+        "timeStamp": "1554975281607542"
+      },
+      {
+        "event": "CHANNEL_RING",
+        "timeStamp": "1554975281607542"
+      },
+      {
+        "event": "CHANNEL_ANSWER",
+        "timeStamp": "1554975282687202"
+      },
+      {
+        "event": "CHANNEL_END",
+        "timeStamp": "1554975347229526"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fixed_Commission_Check</fullName>
+    <active>true</active>
+    <description>Check fixed commission amount is set when commission structure = Fixed Fee</description>
+    <errorConditionFormula>ISPICKVAL(CommissionStructure__c,&#39;Fixed Fee&#39;)
+&amp;&amp; ISNULL(FixedCommissionAmount__c)</errorConditionFormula>
+    <errorDisplayField>FixedCommissionAmount__c</errorDisplayField>
+    <errorMessage>FIXED COMMISSION AMOUNT MUST BE SET WHEN COMMISSION STRUCTURE IS FIXED FEE</errorMessage>
+</ValidationRule>

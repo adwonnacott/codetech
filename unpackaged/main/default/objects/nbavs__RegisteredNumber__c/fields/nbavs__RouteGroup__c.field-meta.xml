@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__RouteGroup__c</fullName>
+    <deprecated>false</deprecated>
+    <label>User Dial (as group member)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Enabled</fullName>
+                <default>false</default>
+                <label>Enabled</label>
+            </value>
+            <value>
+                <fullName>Enabled with Screening</fullName>
+                <default>false</default>
+                <label>Enabled with Screening</label>
+            </value>
+            <value>
+                <fullName>Disabled</fullName>
+                <default>true</default>
+                <label>Disabled</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Regular expressions used to extract the object ID from URL of custom Visualforce pages when clicking on the &apos;Link to current item&apos; button --></help>
+        <label><!-- Link To Current Item URL Regexes --></label>
+        <name>natterbox__Link_To_Current_Item_URL_Regexes__c</name>
+    </CustomFieldTranslation>

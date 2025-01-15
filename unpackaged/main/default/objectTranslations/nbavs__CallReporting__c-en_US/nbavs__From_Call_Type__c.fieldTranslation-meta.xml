@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- From Call Type --></label>
+        <name>nbavs__From_Call_Type__c</name>
+        <picklistValues>
+            <masterLabel>Call Park</masterLabel>
+            <translation><!-- Call Park --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Call Return</masterLabel>
+            <translation><!-- Call Return --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conference</masterLabel>
+            <translation><!-- Conference --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Connected</masterLabel>
+            <translation><!-- Connected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Echo</masterLabel>
+            <translation><!-- Echo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Echo Delay</masterLabel>
+            <translation><!-- Echo Delay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fax to Email</masterLabel>
+            <translation><!-- Fax to Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Group Login</masterLabel>
+            <translation><!-- Group Login --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Group Logout</masterLabel>
+            <translation><!-- Group Logout --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ListenIn</masterLabel>
+            <translation><!-- ListenIn --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LoginOut Svce</masterLabel>
+            <translation><!-- LoginOut Svce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not connected</masterLabel>
+            <translation><!-- Not connected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sound Manager</masterLabel>
+            <translation><!-- Sound Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voicemail Login</masterLabel>
+            <translation><!-- Voicemail Login --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voicemail Record</masterLabel>
+            <translation><!-- Voicemail Record --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Who am I</masterLabel>
+            <translation><!-- Who am I --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

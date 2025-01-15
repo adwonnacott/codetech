@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Owner__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>Lookup Natterbox User Owner</description>
+    <label>Owner</label>
+    <referenceTo>nbavs__User__c</referenceTo>
+    <relationshipLabel>User Voicemails (Natterbox User)</relationshipLabel>
+    <relationshipName>Owner</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

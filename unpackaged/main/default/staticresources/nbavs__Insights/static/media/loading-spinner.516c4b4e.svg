@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <style>
+        .bar {
+        animation: pulsate 2s infinite;
+        opacity: 0.25;
+        }
+
+        .bar02 {animation-delay: 0.125s;}
+        .bar03 {animation-delay: 0.25s;}
+        .bar04 {animation-delay: 0.375s;}
+        .bar05 {animation-delay: 0.5s;}
+        .bar06 {animation-delay: 0.625s;}
+        .bar07 {animation-delay: 0.75s;}
+        .bar08 {animation-delay: 0.875s;}
+        .bar09 {animation-delay: 1s;}
+        .bar10 {animation-delay: 1.125s;}
+        .bar11 {animation-delay: 1.25s;}
+        .bar12 {animation-delay: 1.375s;}
+        .bar13 {animation-delay: 1.5s;}
+        .bar14 {animation-delay: 1.625s;}
+        .bar15 {animation-delay: 1.75s;}
+        .bar16 {animation-delay: 1.875s;}
+        .bar17 {animation-delay: 2s;}
+
+        @keyframes pulsate {
+        0% {
+        opacity: 1;
+        }
+        6.25% {
+        opacity: 1;
+        }
+        50% {
+        opacity: 0.25;
+        }
+        100% {
+        opacity: 0.25;
+        }
+        }
+    </style>
+    <defs>
+        <rect id="bar" x="14" y="1" height="7" width="2" opacity="0.25"/>
+    </defs>
+    <g class="spinner">
+        <use class="bar bar01" xlink:href="#bar"/>
+        <use class="bar bar02" xlink:href="#bar" transform="rotate(22.5, 15, 15)"/>
+        <use class="bar bar03" xlink:href="#bar" transform="rotate(45, 15, 15)"/>
+        <use class="bar bar04" xlink:href="#bar" transform="rotate(67.5, 15, 15)"/>
+        <use class="bar bar05" xlink:href="#bar" transform="rotate(90, 15, 15)"/>
+        <use class="bar bar06" xlink:href="#bar" transform="rotate(112.5, 15, 15)"/>
+        <use class="bar bar07" xlink:href="#bar" transform="rotate(135, 15, 15)"/>
+        <use class="bar bar08" xlink:href="#bar" transform="rotate(157.5, 15, 15)"/>
+        <use class="bar bar09" xlink:href="#bar" transform="rotate(180, 15, 15)"/>
+        <use class="bar bar10" xlink:href="#bar" transform="rotate(202.5, 15, 15)"/>
+        <use class="bar bar11" xlink:href="#bar" transform="rotate(225, 15, 15)"/>
+        <use class="bar bar12" xlink:href="#bar" transform="rotate(247.5, 15, 15)"/>
+        <use class="bar bar13" xlink:href="#bar" transform="rotate(270, 15, 15)"/>
+        <use class="bar bar14" xlink:href="#bar" transform="rotate(292.5, 15, 15)"/>
+        <use class="bar bar15" xlink:href="#bar" transform="rotate(315, 15, 15)"/>
+        <use class="bar bar16" xlink:href="#bar" transform="rotate(337.5, 15, 15)"/>
+    </g>
+</svg>

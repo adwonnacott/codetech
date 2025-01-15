@@ -1,0 +1,553 @@
+<apex:page id="userlicense" standardController="nbavs__User__c"
+           extensions="nbavs.UserLicenseController" tabstyle="nbavs__User__c"
+           recordSetVar="itemsWithLicense" action="{!checkAPISetup}">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'moment/moment-with-locales.min.js')}" />    
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-core.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-api-metadata.min.js')}" />
+
+    <apex:sectionHeader title="{!$ObjectType.nbavs__User__c.labelPlural}" subtitle="Licenses" />
+    <apex:form id="userLicenseForm">
+        <apex:pageMessages id="messages" />
+        <apex:actionFunction name="handleSubmit" action="{!updateUserLicenses}" reRender="userLicenseList,messages" status="submitStatus">
+            <apex:param name="licenceInfo" assignTo="{!updUserWrapper}" value="" />
+        </apex:actionFunction>
+        
+        <apex:pageBlock id="userLicensePageBlock">
+            <apex:pageBlockButtons >
+                <apex:actionStatus id="submitStatus">
+                    <apex:facet name="stop">
+                        <button type="button" value="Save" onclick="prepareDataTable(); return false;">Save</button>
+                        <button type="button" value="Cancel" onClick="cancel()">Cancel</button>
+                        
+                    </apex:facet>
+                    <apex:facet name="start">
+                        <apex:outputPanel id="loadingAccountSettings">
+                            <img src="/img/loading32.gif" width="15" height="14" />
+                        </apex:outputPanel>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockButtons>
+            <apex:outputPanel layout="block" id="userLicenseList">
+                <table class="list display compact" id="userLicenseDataTable">
+                    <thead>
+                    <tr class="headerRow">
+                        <th>{!$ObjectType['User__c'].Fields.Name.Label}</th>
+                        <th>{!$ObjectType['User__c'].Fields.User__c.Label}</th>
+                        <th>{!$ObjectType['User__c'].Fields.Enabled__c.Label}</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_CTI" disabled="{!!licenseManager.cti_licenseEnabled}" onclick="onChangeSelectAll('CTI__c');"/> {!$ObjectType['User__c'].Fields.CTI__c.Label} ({!IF(licenseManager.subscriberCTI && licenseManager.cti_licenseEnabled,TEXT(licenseManager.cti_userCount) + " of " + TEXT(licenseManager.cti_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_PBX" disabled="{!!licenseManager.pbx_licenseEnabled}" onclick="onChangeSelectAll('PBX__c');"/> {!$ObjectType['User__c'].Fields.PBX__c.Label} ({!IF(licenseManager.pbx_licenseEnabled,TEXT(licenseManager.pbx_userCount) + " of " + TEXT(licenseManager.pbx_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_Manager" disabled="{!!licenseManager.manager_licenseEnabled}" onclick="onChangeSelectAll('Manager__c');"/> {!$ObjectType['User__c'].Fields.Manager__c.Label} ({!IF(licenseManager.manager_licenseEnabled,TEXT(licenseManager.manager_userCount) + " of " + TEXT(licenseManager.manager_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_Record" disabled="{!!licenseManager.record_licenseEnabled}" onclick="onChangeSelectAll('Record__c');"/> {!$ObjectType['User__c'].Fields.Record__c.Label} ({!IF(licenseManager.record_licenseEnabled,TEXT(licenseManager.record_userCount) + " of " + TEXT(licenseManager.record_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_PCI" disabled="{!!licenseManager.pci_licenseEnabled}" onclick="onChangeSelectAll('PCI__c');"/> {!$ObjectType['User__c'].Fields.PCI__c.Label} ({!IF(licenseManager.pci_licenseEnabled,TEXT(licenseManager.pci_userCount) + " of " + TEXT(licenseManager.pci_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_Insights" disabled="{!!licenseManager.insights_licenseEnabled}" onclick="onChangeSelectAll('Insights__c');"/>  {!$ObjectType['User__c'].Fields.Insights__c.Label} ({!IF(licenseManager.insights_licenseEnabled,TEXT(licenseManager.insights_userCount) + " of " + TEXT(licenseManager.insights_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_Freedom" disabled="{!!licenseManager.freedom_licenseEnabled}" onclick="onChangeSelectAll('Freedom__c');"/> {!$ObjectType['User__c'].Fields.Freedom__c.Label} ({!IF(licenseManager.freedom_licenseEnabled,TEXT(licenseManager.freedom_userCount) + " of " + TEXT(licenseManager.freedom_licenseCount), "disabled")})</th>
+                        <th>
+                            <apex:inputCheckbox id="selectAll_SCV" disabled="{!!licenseManager.scv_licenseEnabled}" onclick="onChangeSelectAll('SCV__c');"/> {!$ObjectType['User__c'].Fields.SCV__c.Label} ({!IF(licenseManager.scv_licenseEnabled,TEXT(licenseManager.scv_userCount) + " of " + TEXT(licenseManager.scv_licenseCount), "disabled")})</th>
+                        <th>{!$ObjectType['User__c'].Fields.LastModifiedDate.Label}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+              
+                <script type="text/javascript">
+
+                    j$ = jQuery.noConflict();
+                    var recordsUpdated = new Array();
+            
+                    j$.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col )
+                    {
+                        return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+                            return j$('input', td).prop('checked') ? '1' : '0';
+                        } );
+                    }
+                    var allChecked = [];
+                    var allUnChecked = [];
+                    var records = '';
+                    
+                    var ns = "{!$ObjectType['User__c'].name}".startsWith('nbavs__') ? 'nbavs__' : '';
+                    var countSelectedLicense ={};
+                    countSelectedLicense[ns+'CTI__c'] = 0;
+                    countSelectedLicense[ns+'PBX__c'] = 0;
+                    countSelectedLicense[ns+'Manager__c'] = 0;
+                    countSelectedLicense[ns+'Record__c'] = 0;
+                    countSelectedLicense[ns+'PCI__c'] = 0;
+                    countSelectedLicense[ns+'Insights__c'] = 0;
+                    countSelectedLicense[ns+'Freedom__c'] = 0;
+                    countSelectedLicense[ns+'SCV__c'] = 0;
+
+                    var userLicenseDataTable = j$('#userLicenseDataTable').DataTable({
+                        "ajax": function(data, callback, settings) {
+                            console.log('started ajax function');
+                            var ret = [];
+                            var ajaxcall = function(url) {
+                                j$.ajaxSetup({
+                                    headers:{
+                                        'Authorization': "Bearer {!$Api.Session_ID}"
+                                    }
+                                });
+                                (async function(){
+                                    let json = await j$.get(url);
+                                    console.debug('here : '+json);
+                                    if (json != null) {
+                                        var sofar = ret.length;
+                                        for (var i = 0, ien = json.records.length; i < ien; i++) {
+                                            var item = json.records[i];
+                                            r = createRow(item);
+                                            
+                                            ret[i+sofar] = r;
+                                        }
+                                        if (records == '') records = json.records;
+                                        if (json.hasOwnProperty('nextRecordsUrl')) {
+                                            ajaxcall(json.nextRecordsUrl);
+                                            return;
+                                        }
+                                    }
+                                    callback({data: ret});
+                                })();
+                            };
+                            ajaxcall('/services/data/v45.0/query/?q='+encodeURI("{!JSENCODE(tableSoql)}"));
+                            
+                        },
+                        "paging": true,
+                        "lengthMenu": [[10, 25, 50], [10, 25, 50]],
+                        "pageLength": 10,
+                        "order": [[ 0, "asc" ]],
+                        "stateSave": true,
+                        "columnDefs": [
+                            {"orderDataType": "dom-checkbox", "targets": [3,4,5,6,7,8,9,10]}
+                        ],
+                        //once data is fetched, refresh table header with licence count
+                        "initComplete": function(settings, json) {
+                    
+                            var ctiDisabled="{!!licenseManager.cti_licenseEnabled}";
+                            var pbxDisabled="{!!licenseManager.pbx_licenseEnabled}";
+                            var mgrDisabled="{!!licenseManager.manager_licenseEnabled}";
+                            var recordDisabled="{!!licenseManager.record_licenseEnabled}";
+                            var pciDisabled="{!!licenseManager.pci_licenseEnabled}";
+                            var insightsDisabled="{!!licenseManager.insights_licenseEnabled}";
+                            var freedomDisabled="{!!licenseManager.freedom_licenseEnabled}";
+                            var scvDisabled="{!!licenseManager.scv_licenseEnabled}";
+
+                            j$("#userLicenseDataTable thead tr th input:checkbox").each(function() {
+                                var index = j$(this).parent().index() + 1;
+                                
+                                j$("#userLicenseDataTable tbody tr td:nth-child("+index+") input:checkbox").each(function() {
+                                    
+                                    if((this.name).includes('CTI') && ctiDisabled=="true"){
+                                        this.checked = false;
+                                        this.disabled=ctiDisabled;
+                                    }
+                                    else if((this.name).includes('PBX') && pbxDisabled=="true"){
+                                        this.disabled=pbxDisabled;
+                                    }
+                                    else if((this.name).includes('Manager') && mgrDisabled=="true"){
+                                        this.disabled=mgrDisabled;
+                                    }
+                                    else if((this.name).includes('Record') && recordDisabled=="true"){
+                                        this.disabled=recordDisabled;
+                                    }
+                                    else if((this.name).includes('PCI') && pciDisabled=="true"){
+                                        this.disabled=pciDisabled;
+                                    }
+                                    else if((this.name).includes('Insight') && insightsDisabled=="true"){
+                                        this.disabled=insightsDisabled;
+                                    }
+                                    else if((this.name).includes('Freedom') && freedomDisabled=="true"){
+                                        this.disabled=freedomDisabled;
+                                    }
+                                    else if((this.name).includes('SCV') && scvDisabled=="true"){
+                                        this.disabled=scvDisabled;
+                                    }
+                                });
+                            });
+                        }
+                    });
+
+                    userLicenseDataTable.on('draw',function(event){
+                        event.stopPropagation();
+                        j$("#userLicenseDataTable thead tr th input:checkbox").each(function() {
+                            var index = j$(this).parent().index() + 1;
+                            allChecked[index] = true;
+                            allUnChecked[index] = true;
+                                
+                            j$("#userLicenseDataTable tbody tr td:nth-child("+index+") input:checkbox").each(function() {
+                                if (this.checked) {
+                                    allUnChecked[index] = false;
+                                } else {
+                                    allChecked[index] = false;
+                                }
+                            });
+                            if (allChecked[index]) {
+                                j$(this).prop("checked", true );
+                                j$(this).prop("indeterminate", false);
+                            } else if (allUnChecked[index]) {
+                                j$(this).prop("checked", false );
+                                j$(this).prop("indeterminate", false);
+                            } else {
+                                j$(this).prop("indeterminate", true);
+                            }
+                        });
+
+                    });
+                    function CTIDisableCondition(item) {
+                        if ("{!licenseManager.cti_licenseEnabled}" == 'false')
+                            return true;
+                        else if (item[ns+'SCV__c']) 
+                            return true;
+                        else if (item[ns+'PBX__c'] == false || item[ns+'Freedom__c']) 
+                            return true;
+                        else if (item[ns+'User__c'] == null)
+                            return true;
+                        else 
+                            return false;
+                    }
+                    function createRow(item) {
+                        var ns = item.attributes.type.startsWith('nbavs__') ? 'nbavs__' : '';
+                        var disablePBX = item[ns+'User__c'] == null && item[ns+'PBX__c'] ? true : false;
+                        var disableCTI = CTIDisableCondition(item);
+                        var disableInsight = "{!licenseManager.insights_licenseEnabled}" == 'false';
+                        var disableFreedom = "{!licenseManager.freedom_licenseEnabled}" == 'false' || item[ns+'SCV__c'];
+                        var disableSCV = "{!licenseManager.scv_licenseEnabled}" == 'false' || item[ns+'PBX__c'] == false || item[ns+'Freedom__c'] || item[ns+'User__c'] == null || item[ns+'CTI__c'];
+                        
+                        r = [];
+                        r[0] = linkCurrentObject(item['Id'],item['Name']);
+                        r[1] = linkObject(item[ns+'User__r']);
+                        r[2] = (item[ns+'Enabled__c']) ? '✓' : '';
+                        r[3] = createCheckBox((item[ns+'CTI__c'] || item[ns+'Freedom__c']) && !item[ns+'SCV__c'],ns+'CTI__c',item['Id'],disableCTI);
+                        r[4] = createCheckBox(item[ns+'PBX__c'],ns+'PBX__c',item['Id'],disablePBX);
+                        r[5] = createCheckBox(item[ns+'Manager__c'],ns+'Manager__c',item['Id']);
+                        r[6] = createCheckBox(item[ns+'Record__c'],ns+'Record__c',item['Id']);
+                        r[7] = createCheckBox(item[ns+'PCI__c'],ns+'PCI__c',item['Id']);
+                        r[8] = createCheckBox(item[ns+'Insights__c'],ns+'Insights__c',item['Id'],disableInsight);
+                        r[9] = createCheckBox(item[ns+'Freedom__c'],ns+'Freedom__c',item['Id'],disableFreedom);
+                        r[10] = createCheckBox(item[ns+'SCV__c'] && !item[ns+'CTI__c'],ns+'SCV__c',item['Id'],disableSCV);
+                        r[11] = formatDate(item['LastModifiedDate']);
+                        
+                        return r;
+                    }
+                    
+                    
+                    function encodeStr(eValue){
+                        if(eValue!==null && eValue!=='' && eValue!=='undefined' )
+                        {
+                                return eValue.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+                                    return '&#'+i.charCodeAt(0)+';';
+                                });
+                        }
+                        return eValue;
+                    }
+            
+                    function formatDate(datestr) {
+                        if (datestr == null || datestr === '') {
+                            return '';
+                        }
+                        return moment(datestr).format('llll');
+                    }
+            
+                    function getIdFromURL(url) {
+                        if (url == null) {
+                            return '';
+                        }
+                        return url.substring(url.lastIndexOf('/') + 1);
+                    }
+                    
+                    function linkObject(ob) {
+                        if (ob == null) {
+                            return '';
+                        }
+                        return '<a href="/'+getIdFromURL(ob.attributes.url)+'">'+encodeStr(ob.Name)+'</a>';
+                    }
+            
+                    function createCheckBox(checkVar,fieldName,userId,disabled){
+                        var checkedParamVar=checkVar? 'checked = "checked"' : '';
+                        var disabledParamVar = disabled ? 'disabled = "true"' : '';
+                        return '<input id="'+userId+fieldName+'" type="checkbox" name="'+fieldName+'" onchange="keepTrack(\''+userId+fieldName+'\',\''+userId+'\',\''+fieldName+'\');" class="checkbox" '+checkedParamVar + ' ' + disabledParamVar + ' />';
+                    }
+
+                    function keepTrack(checkboxId,userIdVar,licenceVar){
+                        var checkVar=document.getElementById(checkboxId).checked;
+                        var modifiedRec={userId: userIdVar, licenceField: licenceVar,isActive: checkVar};
+                        //populate selected checkboxes by licenses array with changes to track liceses added in the current submit
+                        if(checkVar == true){
+                            countSelectedLicense[licenceVar] += 1;
+                        }
+                        else{
+                            countSelectedLicense[licenceVar] -= 1; 
+                        }
+                        if(recordsUpdated.length == 0){  recordsUpdated.push(modifiedRec); }
+                        else{
+                            var matchFound = false;
+                            for(var i=0; i< recordsUpdated.length; i++){
+                                           
+                                if(!matchFound && recordsUpdated[i].userId == userIdVar && recordsUpdated[i].licenceField == licenceVar)
+                                {
+                                    //update the selection
+                                    recordsUpdated[i].isActive=checkVar;
+                                    matchFound=true;
+                                    break;
+                                }
+            
+                            }
+                            if(!matchFound) { recordsUpdated.push(modifiedRec); }
+                        }
+
+                        var index = userLicenseDataTable.row(document.getElementById(checkboxId).parentNode.parentNode).index();
+
+                        var item = records.find(row => row.Id == userIdVar);
+                        var ns = item.attributes.type.startsWith('nbavs__') ? 'nbavs__' : '';
+                        item[licenceVar] = checkVar;
+                        if (licenceVar.includes('Freedom') && !checkVar) {
+                            item[ns+'CTI__c'] = checkVar;
+                        }
+                        
+                        r = createRow(item);
+
+                        userLicenseDataTable.row(index).data(r).draw('page');
+                    }
+            
+                    function linkCurrentObject(idVar,nameVar) {
+                        return '<a href="/'+idVar+'">'+encodeStr(nameVar)+'</a>';
+                    }
+            
+                    function actionLink(url) {
+                        return '<a href="/'+url+'" style="text-decoration:none;color:#005FB2;"> Edit </a>';
+                    }
+            
+                    function onChangeSelectAll(licenceVar){
+                        licenceVar="{!JSENCODE(namespacePrefix)}"+licenceVar;
+                        j$("#userLicenseDataTable thead tr th input:checkbox").click(function(event) {
+                            var index = j$(this).parent().index() + 1;
+                            var checkedStatus = true;
+                            j$("#userLicenseDataTable tbody tr td:nth-child("+index+") input:checkbox").each(function() {
+                                if (!this.disabled) {
+                                    checkedStatus = this.checked;
+                                    var fieldPos=(this.id).indexOf(licenceVar);
+                                    var userIdVar= fieldPos > 0 ? (this.id).substring(0,fieldPos) : null;
+                                    if(userIdVar != null){
+                                        var modifiedRec={userId: userIdVar, licenceField: licenceVar,isActive: this.checked};
+                       
+                                        if(recordsUpdated.length == 0){  recordsUpdated.push(modifiedRec); }
+                                        else{
+                                            var matchFound = false;
+                                            for(var i=0; i< recordsUpdated.length; i++){
+                                                var ns = recordsUpdated[i].licenceField.startsWith('nbavs__') ? 'nbavs__' : '';
+                                
+                                                if(!matchFound && recordsUpdated[i].userId == userIdVar && recordsUpdated[i].licenceField == ns+licenceVar)
+                                                {
+                                                    //update the selection
+                                                    recordsUpdated[i].isActive=this.checked;
+                                                    matchFound=true;
+                                                    break;
+                                                }
+                            
+                                            }
+                                            if(!matchFound) { recordsUpdated.push(modifiedRec); }
+                                        }
+                                    }
+                                    
+                                }
+                            });
+                            if (licenceVar.includes('Freedom')) {
+                                licenceVar = 'CTI__c';
+                                j$("#userLicenseDataTable tbody tr td:nth-child(4) input:checkbox").each(function() {
+                                    this.checked = checkedStatus;
+                                });
+                                onChangeSelectAll(licenceVar);
+                            }
+                            if (licenceVar.includes('CTI')) {
+                                licenceVar = 'SVC__c';
+                                j$("#userLicenseDataTable tbody tr td:nth-child(11) input:checkbox").each(function() {
+                                    this.checked = false;
+                                    
+                                });
+                                j$("#userLicenseDataTable thead tr th:nth-child(11) input:checkbox").each(function() {
+                                    this.checked = false;
+                                    
+                                });
+                                onChangeSelectAll(licenceVar);
+                            }
+                            if (licenceVar.includes('SCV')) {
+                                licenceVar = 'CTI__c';
+                                j$("#userLicenseDataTable tbody tr td:nth-child(4) input:checkbox").each(function() {
+                                    this.checked = false;
+                                    
+                                });
+                                j$("#userLicenseDataTable thead tr th:nth-child(4) input:checkbox").each(function() {
+                                    this.checked = false;
+                                    
+                                });
+                                onChangeSelectAll(licenceVar);
+                            }
+                        });
+                    }
+
+                    var savedPage, savedLen, savedSearch;
+            
+                    if (savedLen != null || savedPage != null || savedSearch != null) {
+                        //restore saved paging and search
+                        if (savedLen) userLicenseDataTable.page.len(savedLen);
+                        if (savedPage) userLicenseDataTable.page(savedPage);
+                        if (savedSearch) userLicenseDataTable.search(savedSearch);
+                        userLicenseDataTable.draw('page');
+                        savedLen = null;
+                        savedPage = null;
+                        savedSearch = null;
+                    }
+            
+                    function prepareDataTable()
+                    {
+                        try
+                        {
+                            if (checkLicenseCount()) {
+                                //redraw the table to show all rows on one page
+                                //get previous settings
+                                savedLen = userLicenseDataTable.page.len();
+                                savedPage = userLicenseDataTable.page();
+                                savedSearch = userLicenseDataTable.settings().search();
+                                //reset paging and search
+                                userLicenseDataTable.page.len(10);
+                                userLicenseDataTable.search('');
+                                userLicenseDataTable.draw('page');
+                                
+                                // call actionFunction
+                                handleSubmit(JSON.stringify(recordsUpdated));
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                        catch (err)
+                        {
+                            return false;
+                        }
+                    }
+                    function cancel(){
+                        
+                        location.reload();
+
+                    }
+            
+                    var checkLicenseCount = function() {
+            
+                        var cti_licenseCount = {!licenseManager.cti_licenseCount};
+                        var pbx_licenseCount = {!licenseManager.pbx_licenseCount};
+                        var manager_licenseCount = {!licenseManager.manager_licenseCount};
+                        var record_licenseCount = {!licenseManager.record_licenseCount};
+                        var pci_licenseCount = {!licenseManager.pci_licenseCount};
+                        var insight_licenseCount = {!licenseManager.insights_licenseCount};
+                        var freedom_licenseCount = {!licenseManager.freedom_licenseCount};
+                        var scv_licenseCount = {!licenseManager.scv_licenseCount};
+                        
+                        var cti_userCount = {!licenseManager.cti_userCount};
+                        var pbx_userCount = {!licenseManager.pbx_userCount};
+                        var manager_userCount = {!licenseManager.manager_userCount};
+                        var record_userCount = {!licenseManager.record_userCount};
+                        var pci_userCount = {!licenseManager.pci_userCount};
+                        var insight_userCount = {!licenseManager.insights_userCount};
+                        var freedom_userCount = {!licenseManager.freedom_userCount};
+                        var scv_userCount = {!licenseManager.scv_userCount};
+                        
+                        var count = 
+                        {4 : cti_userCount+countSelectedLicense[ns+'CTI__c'], 
+                         5 : pbx_userCount+countSelectedLicense[ns+'PBX__c'], 
+                         6 : manager_userCount+countSelectedLicense[ns+'Manager__c'],
+                         7 : record_userCount+countSelectedLicense[ns+'Record__c'], 
+                         8 : pci_userCount+countSelectedLicense[ns+'PCI__c'], 
+                         9 : insight_userCount+countSelectedLicense[ns+'Insights__c'], 
+                         10 :freedom_userCount+countSelectedLicense[ns+'Freedom__c'],
+                         11 :scv_userCount+countSelectedLicense[ns+'SCV__c']
+                        };
+                        
+                        if (count[4] > cti_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.CTI__c.Label} licenses ('+count[4]+') exceed the maximum allowed ('+cti_licenseCount+')');
+                            return false;
+                        }
+                        if (count[5] > pbx_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.PBX__c.Label} licenses ('+count[5]+') exceed the maximum allowed ('+pbx_licenseCount+')');
+                            return false;
+                        }
+                        if (count[6] > manager_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.Manager__c.Label} licenses ('+count[6]+') exceed the maximum allowed ('+manager_licenseCount+')');
+                            return false;
+                        }
+                        if (count[7] > record_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.Record__c.Label} licenses ('+count[7]+') exceed the maximum allowed ('+record_licenseCount+')');
+                            return false;
+                        }
+                        if (count[8] > pci_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.PCI__c.Label} licenses ('+count[8]+') exceed the maximum allowed ('+pci_licenseCount+')');
+                            return false;
+                        }
+                        if (count[9] > insight_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.Insights__c.Label} licenses ('+count[9]+') exceed the maximum allowed ('+insight_licenseCount+')');
+                            return false;
+                        }
+                        if (count[10] > freedom_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.Freedom__c.Label} licenses ('+count[10]+') exceed the maximum allowed ('+freedom_licenseCount+')');
+                            return false;
+                        }
+                        if (count[11] > scv_licenseCount) {
+                            alert('Selected {!$ObjectType['User__c'].Fields.SCV__c.Label} licenses ('+count[10]+') exceed the maximum allowed ('+scv_licenseCount+')');
+                            return false;
+                        }
+            
+                        //check CTI - PCI dependency
+                        var licenseDependency = false;
+                        try {
+                            j$("#userLicenseDataTable tbody tr td.pciSelector input:checkbox").each(function() {
+                                var pciCheckbox = j$(this);
+                                var ctiCheckbox = pciCheckbox.closest('tr').find("td.ctiSelector input:checkbox");
+                                if (pciCheckbox.prop('checked') && !ctiCheckbox.prop('checked')) {
+                                    var userName = pciCheckbox.closest('tr').find("td.avsUser").text();
+                                    alert('User ' + userName + ' - Only {!$ObjectType['User__c'].Fields.CTI__c.Label} licensed users can have {!$ObjectType['User__c'].Fields.PCI__c.Label} license enabled');
+                                    licenseDependency = true;
+                                    return false;
+                                }
+                            });
+                         } catch (err) {
+                            //do nothing;
+                         }
+                         if (licenseDependency == true) {
+                             return false;
+                         }
+                        return true;
+                     }
+            
+                    j$("#userLicenseDataTable thead tr th input:checkbox").click(function(event) { //////
+                        event.stopPropagation();
+                        var checkedStatus = this.checked;
+                        var index = j$(this).parent().index() + 1;
+                        j$("#userLicenseDataTable tbody tr td:nth-child("+index+") input:checkbox").each(function() {
+                            var licenceVar = this.name;
+                            //when select all licence checkbox ticked only include the newly selected checkboxes in selected object array
+                            if(!this.checked && checkedStatus == true){
+                                countSelectedLicense[licenceVar] += 1;
+                            }
+                            //when deselect all licence checkbox remove from selected object array
+                            if(checkedStatus == false){
+                                countSelectedLicense[licenceVar] -= 1;
+                            }
+                            if (!this.disabled) {
+                                this.checked = checkedStatus;
+                            }
+                        });
+                    });
+            
+                </script>
+           </apex:outputPanel>
+        </apex:pageBlock>
+      </apex:form>
+      
+</apex:page>

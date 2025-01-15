@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Available__c</fullName>
+    <deprecated>false</deprecated>
+    <formula>IF( OR( AND( ISPICKVAL(nbavs__State__c, &#39;Pending&#39;)), AND(ISPICKVAL(nbavs__DialList__r.nbavs__Type__c, &#39;Static&#39;), ISPICKVAL(nbavs__State__c, &#39;Retry&#39;), nbavs__Attempts__c &lt;  nbavs__DialList__r.nbavs__MaximumDialAttempts__c, nbavs__InTimeout__c = false ), AND(ISPICKVAL(nbavs__State__c, &#39;Preview&#39;),  nbavs__User__r.nbavs__User__c = $User.Id ), AND(ISPICKVAL(nbavs__State__c, &#39;Selected&#39;),  nbavs__User__r.nbavs__User__c = $User.Id )) , true, false)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Available</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

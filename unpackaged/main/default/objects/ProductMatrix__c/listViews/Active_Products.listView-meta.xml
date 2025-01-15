@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Products</fullName>
+    <columns>NAME</columns>
+    <columns>ProductType__c</columns>
+    <columns>Category1__c</columns>
+    <columns>Category2__c</columns>
+    <columns>Category3__c</columns>
+    <columns>Product__c</columns>
+    <columns>Tariff__c</columns>
+    <columns>ZoeyTariffID__c</columns>
+    <columns>RRP__c</columns>
+    <columns>Manufacturer__c</columns>
+    <columns>Model__c</columns>
+    <columns>Memory__c</columns>
+    <columns>Colour__c</columns>
+    <columns>Active__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Active__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Active Products</label>
+</ListView>

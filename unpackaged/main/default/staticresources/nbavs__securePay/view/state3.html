@@ -1,0 +1,59 @@
+<div class="slds-card">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-custom slds-icon--large">
+                    <use xlink:href="" s="utility" i="edit_form" svg-link/>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading--small slds-truncate">Payment Result</h2>
+            </div>
+        </div>
+    </div>
+    <div class="slds-card__body slds-scrollable--y">
+        <form id="thisForm" name="thisForm" class="slds-form--horizontal slds-m-horizontal--small">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Outcome</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-media__figure" ng-if="model.securePaySession.VariableData.decision.Value == 'ACCEPT'">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-action-approval">
+                            <use xlink:href="" s="action" i="approval" svg-link/>
+                        </svg>
+                    </div>
+                    <div class="slds-media__figure" ng-if="model.securePaySession.VariableData.Value != 'ACCEPT'">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-action-close">
+                            <use xlink:href="" s="action" i="close" svg-link/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Auth Code</label>
+                <div class="slds-form-element__control">
+                    <input id="requestId" name="requestId" class="slds-input" type="text" placeholder="" readonly ng-model="model.securePaySession.VariableData.requestID.Value"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Reason Code</label>
+                <div class="slds-form-element__control">
+                    <input id="reasonCode" name="reasonCode" class="slds-input" type="text" placeholder="" readonly ng-model="model.securePaySession.VariableData.reasonCode.Value"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Result</label>
+                <div class="slds-form-element__control">
+                    <input id="result" name="result" class="slds-input" type="text" placeholder="" readonly ng-model="model.securePaySession.VariableData.decision.Value"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Secure Payment Record</label>
+                <div class="slds-form-element__control">
+                    <button class="slds-button slds-button--neutral slds-button--brand" ng-click="goToRecord()">Go To Record</button>
+                </div>
+            </div>
+        </form>
+        <div class="slds-card__footer">
+        </div>
+    </div>
+</div>

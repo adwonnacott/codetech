@@ -1,0 +1,90 @@
+<apex:page showheader="false" sidebar="false" controller="nbavs.RecordingRemoting" title="Play Recording" action="{!recordAccessEventLog}" docType="html-5.0">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__voicemailplayer, 'voicemailplayer.css')}" />
+    <script>
+		window.onload=function()
+		{
+			doInit();
+		}; 
+	</script>
+    <apex:form id="form" style="padding:10px;padding-top:20px;">
+		<apex:actionFunction name="doInit" action="{!addEventLog}" rerender="pgMsg"/>
+        <apex:outputPanel style="font-size:12px;" id="pgMsg">
+            <apex:pageMessages id="messages" />
+        </apex:outputPanel>
+        <div id="autoplayerror" style="display:none;font-size:12px;">	
+            <p> Autoplay prevented by the browser. Please play audio using play button.</p>
+        </div>
+        <!-- phoneContainer -->
+        <apex:outputPanel rendered="{!hasAccess}">
+            <div id="phoneContainer" >
+                <!-- phoneInner -->
+                <div id="phoneInner">
+                    <!-- phoneHeader -->
+                    <div id="phoneHeader">
+                        <div id="phoneHeaderTopLine">
+                            <a id="phoneHeaderLogo" href="http://natterbox.com/" target="_blank"></a>
+                        </div>
+                        <div id="phoneHeaderBottomLine"><apex:outputText Value="Secure Call Recording Player" style="font-weight:bold;padding-top:30px;" /></div>
+                    </div>
+                    <!-- phoneDisplay -->
+                    <div id="phoneDisplay">				
+                        <audio id="ALegPlay" preload="none" controls="controls" style=""></audio>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <script type="text/javascript">
+            
+            //var uuid = getUrlVars()['uuid'];
+            
+            var audio = document.getElementById('ALegPlay') || new Audio();
+            
+            //xhr directly browser to play start
+            var url = '{!JSENCODE(api.Host__c)}organisation/{!orgId}/archive/recording/{!JSENCODE(uuid)}';
+            var authToken = '{!JSENCODE(session.AccessToken__c)}';
+            
+            xhr = new XMLHttpRequest();
+            xhr.open('GET', encodeURI(url), true);
+            xhr.setRequestHeader('Accept', 'audio/wav');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Authorization', 'Bearer ' + authToken); 
+            xhr.responseType = 'blob';
+            xhr.onload = function(evt) {
+                var blob = new Blob([xhr.response], {type: 'audio/wav'});
+                var objectUrl = window.URL.createObjectURL(blob);
+                audio.src = objectUrl;
+                audio.title = "{!JSENCODE(uuid)}"; //set file name to uuid
+                // Release resource when it's loaded
+                audio.onload = function(evt) {
+                    URL.revokeObjectUrl(objectUrl);
+                };
+                var promise = audio.play();
+                if (promise  !== undefined) {
+                    promise.then(_ => {
+                    }).catch(error => {
+                    var autoplayerror = document.getElementById('autoplayerror');
+                    autoplayerror.style.display = 'block';
+                });
+                }
+                
+            };
+            //var data = JSON.stringify({text: yourTextToSynthesize});
+            xhr.send();
+            
+            function getUrlVars() {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+                                                         function(m,key,value) {
+                                                             vars[key] = value;
+                                                         });
+                return vars;
+            }
+			if (window.history.replaceState) {
+				  window.history.replaceState(null,null,window.location.href);
+			}
+            </script>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

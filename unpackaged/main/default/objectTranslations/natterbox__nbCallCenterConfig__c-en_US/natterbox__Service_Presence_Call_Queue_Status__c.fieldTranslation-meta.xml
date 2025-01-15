@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Set current Omni-Channel Presence Status to this status during a Natterbox &apos;Call Queue&apos; Call --></help>
+        <label><!-- Service Presence Call Queue Status --></label>
+        <name>natterbox__Service_Presence_Call_Queue_Status__c</name>
+    </CustomFieldTranslation>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Unqualified_Reason</fullName>
+    <active>true</active>
+    <description>Check unqualified reason is populated when lead status = Unqualified</description>
+    <errorConditionFormula>ISPICKVAL(Status,&#39;Unqualified&#39;)
+&amp;&amp; ISBLANK(UnqualifiedReason__c)</errorConditionFormula>
+    <errorDisplayField>UnqualifiedReason__c</errorDisplayField>
+    <errorMessage>UNQUALIFIED REASON MUST BE POPULATED WHEN LEAD STATUS = UNQUALIFIED</errorMessage>
+</ValidationRule>

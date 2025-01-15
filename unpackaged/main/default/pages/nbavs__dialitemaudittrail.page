@@ -1,0 +1,26 @@
+<apex:page id="DialListAuditTrial" controller="nbavs.DialItemAudit" readOnly="true" tabStyle="Case">
+    <apex:sectionHeader subtitle="Audit Log" title="Dial List: {!dialListName}" description="Dial list audit logs for: {!itemName}. Logs are ordered newest to oldest."/>
+    <apex:pageMessages id="messages"/>
+    <apex:form >
+        <apex:pageBlock id="myPb">
+            <apex:pageBlockButtons id="myButtons" location="top">
+                <apex:commandButton value="Close" onClick="window.close();"/>
+                <apex:commandButton action="{!Beginning}" title="Beginning" style="width:3em" value="<<" disabled="{!disablePrevious}" reRender="myPb"/>
+                <apex:commandButton action="{!Previous}" title="Previous" style="width:3em" value="<" disabled="{!disablePrevious}" reRender="myPb"/>
+                <apex:commandButton action="{!Next}" title="Next" style="width:3em" value=">" disabled="{!disableNext}" reRender="myPb"/>
+                <apex:commandButton action="{!End}" title="End" style="width:3em" value=">>" disabled="{!disableNext}" reRender="myPb"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!items}" var="i" id="myPanel" columnsWidth="15%,15%,15%,50%">
+                <apex:column value="{!i.CreatedDate}"/>
+                <apex:column headerValue="Agent" value="{!usernames[i.nbavs__User__c]}"/>
+                <apex:column value="{!i.nbavs__DialItemId__c}"/>
+                <apex:column value="{!i.nbavs__LogMessage__c}"/>
+            </apex:pageBlockTable>
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel >Page {!pageNumber} of {!totalPages}</apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- SOQL Caching --></label>
+        <name>nbavs__ListViewSOQLCacheStatus__c</name>
+        <picklistValues>
+            <masterLabel>Cache Missing</masterLabel>
+            <translation><!-- Cache Missing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cached</masterLabel>
+            <translation><!-- Cached --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Synced</masterLabel>
+            <translation><!-- Synced --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting ...</masterLabel>
+            <translation><!-- Waiting ... --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

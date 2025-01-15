@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<callCenter>
+  <section sortOrder="0" name="reqGeneralInfo" label="General Information">
+    <item sortOrder="0" name="reqInternalName" label="InternalName">NatterboxCallCenterClassicAndLightning</item>
+    <item sortOrder="1" name="reqDisplayName" label="Display Name">Natterbox Voice Integration Call Center: Classic and Lightning</item>
+    <item sortOrder="2" name="reqAdapterUrl" label="CTI Adapter URL">/apex/natterbox__VoiceIntegration</item>
+    <item sortOrder="3" name="reqUseApi" label="Use CTI API">true</item>
+    <item sortOrder="4" name="reqSoftphoneHeight" label="Softphone Height">500</item>
+    <item sortOrder="5" name="reqSoftphoneWidth" label="Softphone Width">218</item>
+    <item sortOrder="6" name="reqSalesforceCompatibilityMode" label="Salesforce Compatibility Mode">Classic_and_Lightning</item>
+  </section>
+</callCenter>

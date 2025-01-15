@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Answer_Time__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The answer time for this interaction. For instance 0, this will be the time the call really gets answered by either an IVR or a Device. For instances &gt; 0, will normally be the same as the From_Bridge</description>
+    <label>Conversation Answer Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

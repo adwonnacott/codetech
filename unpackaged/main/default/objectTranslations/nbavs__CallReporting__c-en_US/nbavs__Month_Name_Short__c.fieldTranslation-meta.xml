@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Short text representation of month name when call started --></help>
+        <label><!-- Month Name Short --></label>
+        <name>nbavs__Month_Name_Short__c</name>
+    </CustomFieldTranslation>

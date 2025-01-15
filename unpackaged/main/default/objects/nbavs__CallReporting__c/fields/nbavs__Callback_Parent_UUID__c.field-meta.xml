@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Callback_Parent_UUID__c</fullName>
+    <deprecated>false</deprecated>
+    <description>If present and set to a non empty value, then will indicate the call that was queued and for which a callback was requested. The UUID may relate to either the A or B Leg UUID, but will normally be the A Leg. If value is empty, then the record is not a call back attempt.</description>
+    <externalId>false</externalId>
+    <label>Callback Parent UUID</label>
+    <length>64</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

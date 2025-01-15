@@ -1,0 +1,77 @@
+<apex:page standardController="nbavs__RecordingAccess__c" extensions="nbavs.RecordingAccessController" >
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<style type="text/css">
+	.bPageBlock {
+		border-top: 4px solid #00a0c4;
+	}
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}
+	.pageTitleIcon {
+		background-image : URL("{!URLFOR($Resource.img, 'settings.png')}");
+	}
+	</style>
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="{!$ObjectType.nbavs__RecordingAccess__c.label} Edit" mode="edit">
+			<apex:pageBlockButtons id="pageBlockButtons">
+                <apex:actionFunction action="{!addRecordingAccess}" name="handleAdd" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                    <apex:actionFunction action="{!updateRecordingAccess}" name="handleUpdate" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+				<apex:commandButton onclick="handleNew(true);return false;"  value="Save" rendered="{!nbavs__RecordingAccess__c.Id == null}" />
+				<apex:commandButton onclick="handleNew(false);return false;" value="Save" rendered="{!nbavs__RecordingAccess__c.Id != null}" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Recording Access Information" columns="1" id="pageBS">
+				<apex:outputField value="{!nbavs__RecordingAccess__c.Id}" rendered="false" />
+				<apex:inputField value="{!nbavs__RecordingAccess__c.nbavs__Type__c}"  required="true">
+				<apex:actionSupport event="onchange"
+						rerender="pageBS" />
+				</apex:inputField>
+				<apex:pageBlockSectionItem rendered="{!nbavs__RecordingAccess__c.nbavs__Type__c != 'User'}">
+						<apex:outputLabel value="{!$ObjectType.nbavs__RecordingAccess__c.fields.nbavs__Group__c.label}"
+							for="Profile" />
+						<apex:SelectList value="{!nbavs__RecordingAccess__c.nbavs__Group__c}" size="1"
+							multiselect="false">
+							<apex:SelectOptions value="{!Groups}" />
+						</apex:SelectList>
+				</apex:pageBlockSectionItem>
+				<apex:inputField value="{!nbavs__RecordingAccess__c.nbavs__User__c}" rendered="{!nbavs__RecordingAccess__c.nbavs__Type__c == 'User'}" required="false" />
+				<apex:inputField value="{!nbavs__RecordingAccess__c.nbavs__Access__c}" >
+				<apex:actionSupport event="onchange"
+						rerender="pageBS" />
+				</apex:inputField>
+				<apex:inputField value="{!nbavs__RecordingAccess__c.nbavs__Groups__c}" rendered="false" />
+
+				<apex:pageBlockSectionItem rendered="{!nbavs__RecordingAccess__c.nbavs__Access__c == 'Groups'}" >
+						<apex:outputLabel value="{!$ObjectType.nbavs__RecordingAccess__c.fields.nbavs__Groups__c.label}"
+							for="GroupSelector" />
+						<apex:SelectList value="{!selectedGroups}" size="6"
+							multiselect="true" id="GroupSelector">
+							<apex:SelectOptions value="{!Groups}" />
+						</apex:SelectList>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+	<script type="text/javascript">
+	 j$ = jQuery.noConflict();
+	function handleNew(isAdd){
+		if(isAdd === false){
+			handleUpdate();
+	    }
+		if(isAdd === true){
+            handleAdd();
+		}
+	    buttonsEnabled(false);
+	}
+	function buttonsEnabled(enabled) {
+		var $buttons = jQuery('.btn');
+		if (enabled === false) {
+			$buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+		} else {
+			$buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+		} 
+	}				
+	</script>
+</apex:page>

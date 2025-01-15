@@ -1,0 +1,69 @@
+<div class="slds-card">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-custom slds-icon--large">
+                    <use xlink:href="" s="utility" i="edit_form" svg-link/>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading--small slds-truncate">Secure Payment</h2>
+            </div>
+        </div>
+        <div class="pci-icon" ng-click="showSessionDetails()"></div>
+    </div>
+    <div class="slds-card__body slds-scrollable--y" ng-if="model.channelMode != true">
+        <form id="thisForm" name="thisForm" class="slds-form--horizontal slds-m-horizontal--small" >
+            <div ng-repeat="field in model.requestFields" class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (thisForm[field.name].$invalid)}">
+                <label class="slds-form-element__label" for="{{field.name}}">{{field.label}}</label>
+                <div class="slds-form-element__control">
+                    <input id="{{field.name}}" name="{{field.name}}" class="slds-input" type="text" placeholder="{{field.placeholder}}" ng-model="field.value" ng-required="field.required" minlength="{{field.minlength}}" maxlength="{{field.maxlength}}"/>
+                    <span class="slds-form-element__help" ng-if="thisForm[field.name].$error.required">This field is required</span>
+                    <span class="slds-form-element__help" ng-show="!thisForm[field.name].$error.required && thisForm[field.name].$error.minlength">Minimum {{field.minlength}} characters</span>
+                    <span class="slds-form-element__help" ng-show="!thisForm[field.name].$error.required && thisForm[field.name].$error.maxlength">Maximum {{field.maxlength}} characters</span>
+                </div>
+            </div>
+        </form>
+        <div class="slds-card__footer">
+            <button class="slds-button slds-button--neutral slds-button--brand" ng-disabled="thisForm.$invalid" ng-click="getActiveCall()">Start Secure Payment</button>
+        </div>
+    </div>
+    <div class="slds-card__body slds-scrollable--y" ng-if="model.channelMode">
+        <table class="slds-table slds-table--bordered slds-table--fixed-layout slds-text-body--small" role="grid">
+            <thead>
+                <tr class="slds-text-heading--label">
+                    <th class="slds-is-sortable--not slds-is-resizable slds-text-title--caps" aria-label="From Number" scope="col" >
+                        <span class="slds-truncate">From Number</span>
+                    </th>
+                    <th class="slds-is-sortable--not slds-is-resizable slds-text-title--caps" aria-label="Direction" scope="col" >
+                        <span class="slds-truncate"></span>
+                    </th>
+                    <th class="slds-is-sortable--not slds-is-resizable slds-text-title--caps" aria-label="To Number" scope="col" >
+                        <span class="slds-truncate">To Number</span>
+                    </th>
+                    <th class="slds-is-sortable--not slds-is-resizable slds-text-title--caps" aria-label="Action" scope="col" >
+                        <span class="slds-truncate">Action</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="slds-hint-parent" ng-repeat="item in model.activeChannels" ng-class="{'slds-is-selected': item.uuid == model.uuid}">
+                    <td data-label="fromNumber" class="slds-truncate">{{item.fromNumber.length ? item.fromNumber : 'unknown'}}</td>
+                    <td data-label="direction" class="slds-truncate">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-custom slds-icon--small">
+                            <use xlink:href="" s="utility" i="forward" svg-link/>
+                        </svg>
+                    </td>
+                    <td data-label="toNumber" class="slds-truncate">{{item.toNumber.length ? item.toNumber : 'unknown'}}</td>
+                    <td data-label="direction" class="slds-truncate">
+                        <button class="slds-button slds-button--neutral slds-button--brand" ng-click="selectChannel(item)" >Select Call</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="slds-card__footer">
+        </div>
+    </div>
+	<div id="sessionDetailsModal">
+	</div>
+</div>

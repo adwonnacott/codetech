@@ -1,0 +1,19 @@
+{
+  "channelData": {
+    "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6",
+    "userId": "59",
+    "devId": "13",
+    "fullNumber": "12016",
+    "localNumber": "12016",
+    "callCategory": "SOC",
+    "hangupCause": "NORMAL_CLEARING",
+    "start": "1555072776511056",
+    "ring": "1555072776979283",
+    "answer": "1555072778229425",
+    "end": "1555072840720217",
+    "name": "Doru QA",
+    "orgName": "",
+    "externalNameId": "",
+    "externalOrgId": ""
+  }
+}

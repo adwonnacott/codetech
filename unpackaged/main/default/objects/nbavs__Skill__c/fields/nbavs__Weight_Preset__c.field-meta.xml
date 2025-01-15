@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Weight_Preset__c</fullName>
+    <defaultValue>&quot;No knowledge&quot;</defaultValue>
+    <deprecated>false</deprecated>
+    <label>Proficiency</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No knowledge</fullName>
+                <default>true</default>
+                <label>No knowledge</label>
+            </value>
+            <value>
+                <fullName>Minimal</fullName>
+                <default>false</default>
+                <label>Minimal</label>
+            </value>
+            <value>
+                <fullName>Basic</fullName>
+                <default>false</default>
+                <label>Basic</label>
+            </value>
+            <value>
+                <fullName>Novice</fullName>
+                <default>false</default>
+                <label>Novice</label>
+            </value>
+            <value>
+                <fullName>Intermediate</fullName>
+                <default>false</default>
+                <label>Intermediate</label>
+            </value>
+            <value>
+                <fullName>Advanced</fullName>
+                <default>false</default>
+                <label>Advanced</label>
+            </value>
+            <value>
+                <fullName>Expert</fullName>
+                <default>false</default>
+                <label>Expert</label>
+            </value>
+            <value>
+                <fullName>Guru</fullName>
+                <default>false</default>
+                <label>Guru</label>
+            </value>
+            <value>
+                <fullName>Custom</fullName>
+                <default>false</default>
+                <label>Custom</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,84 @@
+<apex:page standardController="nbavs__RecordingAccess__c" extensions="nbavs.RecordingAccessListController" action="{!checkAPISetup}" recordSetVar="items">
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<apex:sectionHeader title="Record Access" subtitle="Home" />
+	<style type="text/css">
+	.detailPage .bPageBlock {
+    	border-top: 4px solid #00a0c4;
+	}	
+	.bPageBlock {
+		border-top: 4px solid #00a0c4;
+	}
+	.pageTitleIcon {
+		background-image : URL("{!URLFOR($Resource.img, 'settings.png')}");
+	}
+	</style>
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock id="pageBlock">
+			<apex:outputPanel layout="block" styleClass="buttonsBox">
+				<apex:outputPanel layout="block" id="buttons" styleClass="buttonsLeft">
+					<apex:commandButton value="New {!$ObjectType.nbavs__RecordingAccess__c.label}" action="{!URLFOR($Action.RecordingAccess__c.New)}" />
+				</apex:outputPanel>
+				<apex:outputPanel layout="block" id="paging" styleClass="buttonsRight" rendered="{!setCon.resultSize > setCon.pageSize}">
+					<apex:commandButton rendered="{!setCon.hasPrevious}" value="First" action="{!setCon.first}" />
+					<apex:commandButton rendered="{!setCon.hasPrevious}" value="Previous" action="{!setCon.previous}" />
+					<apex:outputText rendered="{!(setCon.pageNumber * setCon.pageSize) < setCon.ResultSize}" value="{!setCon.pageNumber * setCon.pageSize} of {!setCon.ResultSize} records" styleClass="filterLabel"></apex:outputText>
+					<apex:outputText rendered="{!(setCon.pageNumber * setCon.pageSize) >= setCon.ResultSize}" value="{!setCon.ResultSize} of {!setCon.ResultSize} records" styleClass="filterLabel"></apex:outputText>
+					<apex:commandButton rendered="{!setCon.hasNext}" value="Next" action="{!setCon.next}" />
+					<apex:commandButton rendered="{!setCon.hasNext}" value="Last" action="{!setCon.last}" />
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<apex:outputPanel layout="block" id="list">
+				<table class="list display compact" id="dataTable">
+					<thead>
+						<tr class="headerRow">
+							<th>Action</th>
+							<th>{!$ObjectType['RecordingAccess__c'].Fields.Name.Label}</th>
+							<th>{!$ObjectType['RecordingAccess__c'].Fields.Type__c.Label}</th>							
+							<th>{!$ObjectType['RecordingAccess__c'].Fields.Group__c.Label}</th>
+							<th>{!$ObjectType['RecordingAccess__c'].Fields.User__c.Label}</th>
+							<th>{!$ObjectType['RecordingAccess__c'].Fields.Access__c.Label}</th>							
+							<th>{!$ObjectType['RecordingAccess__c'].Fields.LastModifiedDate.Label}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!items}" var="item">
+							<tr class="dataRow">
+								<td class="actionColumn"><apex:outputLink value="{!URLFOR($Action.nbavs__RecordingAccess__c.Edit, item.Id)}" styleClass="actionLink">Edit</apex:outputLink><apex:outputLabel value=" | " /> <apex:commandLink action="{!deleteItem}" styleClass="actionLink" reRender="paging,list,messages" onclick="if(!confirm('Are you sure?')) return false;">Del
+	    								<apex:param value="{!item.Id}" name="id" assignTo="{!id}" />
+									</apex:commandLink></td>
+								<td><apex:outputLink value="{!URLFOR($Action.nbavs__RecordingAccess__c.View, item.Id)}">{!IF(item.nbavs__Type__c =='Group',IF(item.Group__r.nbavs__Record__c, item.Group__r.Name, '__ invalid group __'), IF(item.User__r.nbavs__Record__c, item.User__r.Name, '__ invalid user __'))}</apex:outputLink></td>
+								<td><apex:outputField value="{!item.nbavs__Type__c}" /></td>								
+								<td>
+									<apex:outputField value="{!item.nbavs__Group__c}" rendered="{!item.nbavs__Type__c == 'Group' && item.Group__r.nbavs__Record__c}" />
+                                	<apex:outputText value="__ invalid group __" rendered="{!item.nbavs__Type__c == 'Group' && !item.Group__r.nbavs__Record__c}" styleClass="error"/>
+								</td>
+								<td>
+									<apex:outputField value="{!item.nbavs__User__c}" rendered="{!item.nbavs__Type__c == 'User' && item.User__r.nbavs__Record__c}"/>
+                                    <apex:outputText value="__ invalid user __" rendered="{!item.nbavs__Type__c == 'User' && !item.User__r.nbavs__Record__c}" styleClass="error" />
+								</td>
+								<td><apex:outputField value="{!item.nbavs__Access__c}" /></td>
+								<td data-order="{!item.LastModifiedDate}"><apex:outputField value="{!item.LastModifiedDate}" /></td>
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table>
+				<script type="text/javascript">
+	j$ = jQuery.noConflict();
+	j$('#dataTable').DataTable({
+		"paging": true,
+		"stateSave": true,
+		"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+		"order": [[ 6, "desc" ]],
+		columnDefs: [
+			{ 'sortable': false, 'targets': [ 0 ] }
+		]               
+	});
+</script>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

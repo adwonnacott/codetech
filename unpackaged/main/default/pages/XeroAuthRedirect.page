@@ -1,0 +1,24 @@
+<apex:page >
+    <script> 
+        let code = '{!$CurrentPage.parameters.code}';
+        var previousOnload = window.onload; 
+        window.onload = function() { 
+            if (previousOnload) { 
+                previousOnload(); 
+            } 
+            // alert('loading...'); 
+            let redirectUrl = window.location.origin+'/lightning/n/Xero_API_Setup?';
+
+            if(code){
+                redirectUrl += 'c__code='+code;
+            } else{
+                redirectUrl += 'c__nocode=1';
+            }
+
+            window.parent.location.href = redirectUrl;
+        } 
+    </script>
+    <div id="container">
+        <p style="text-align: center; font-size: 16px; font-weight: 500;">Redrecting to Xero API Setup...</p>
+    </div>
+</apex:page>

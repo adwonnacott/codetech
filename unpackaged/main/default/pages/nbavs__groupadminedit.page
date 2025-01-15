@@ -1,0 +1,37 @@
+<apex:page standardController="nbavs__GroupAdministrator__c" extensions="nbavs.GroupAdminEditController" >
+	<style type="text/css">
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}	
+	</style>
+	<apex:sectionHeader title="{!$ObjectType.nbavs__GroupAdministrator__c.label} Edit" subtitle="{!IF(nbavs__GroupAdministrator__c.Id!=null, nbavs__GroupAdministrator__c.nbavs__Name__c, 'New ' + $ObjectType.nbavs__GroupAdministrator__c.label)}" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="{!$ObjectType.nbavs__GroupAdministrator__c.label} Edit" mode="edit">
+			<apex:pageBlockButtons id="pageBlockButtons">
+				<apex:commandButton action="{!saveItem}" value="Save" rendered="{!nbavs__GroupAdministrator__c.Id != null}" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Group Administrator" columns="1">
+				<apex:outputField value="{!nbavs__GroupAdministrator__c.Id}" rendered="false" />
+				<apex:outputText value="{!nbavs__GroupAdministrator__c.nbavs__Name__c}" label="User Name" />
+			</apex:pageBlockSection>
+			<apex:pageBlockSection title="Listen In" columns="1">
+				<apex:inputField value="{!nbavs__GroupAdministrator__c.nbavs__ListenIn__c}" label="User Can Listen In to Group Members calls" />
+				<apex:inputField value="{!nbavs__GroupAdministrator__c.nbavs__RequireUserPin__c}" label="Require PIN (if using Listen In dial up service)" />
+			</apex:pageBlockSection>
+			<!-- <apex:pageBlockSection title="Recording Access" columns="1">
+				<apex:inputField value="{!GroupAdministrator__c.RecordingAccess__c}" label="User can access recordings for Group" />
+			</apex:pageBlockSection> -->
+			<apex:pageBlockSection title="Live Call Status" columns="1">
+				<apex:inputField value="{!nbavs__GroupAdministrator__c.nbavs__LiveCallStatus__c}" label="User can see Live Call Status" />
+			</apex:pageBlockSection>
+			<apex:pageBlockSection title="Insight" columns="1">
+				<apex:inputCheckbox value="{!nbavs__GroupAdministrator__c.nbavs__InsightAccess__c}" label="Allow Insight Access" disabled="{!nbavs__GroupAdministrator__c.nbavs__User__c==currentnatUser}" />
+			</apex:pageBlockSection>
+			<apex:pageBlockSection title="Skill Edit" columns="1" rendered="{!nbavs__GroupAdministrator__c.nbavs__Name__c!='All Members'}">
+				<apex:inputCheckbox value="{!nbavs__GroupAdministrator__c.nbavs__SkillEditAccess__c}" label="Allow Skill Editing" disabled="{!nbavs__GroupAdministrator__c.nbavs__Name__c=='All Members'||user.nbavs__PermissionLevel__c!='Admin'}" />
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

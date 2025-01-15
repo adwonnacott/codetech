@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__CompletedItemsDynamic__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Completed dial items related to a dynamic dial list.</description>
+    <externalId>false</externalId>
+    <formula>if( Text(nbavs__Type__c)=&#39;Dynamic&#39;, nbavs__CompletedDialItems__c + nbavs__CompletedItems__c ,0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Completed Items Dynamic</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,168 @@
+<div ng-controller="ModFinishVoiceMail">
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="mailbox">Leave voicemail for</label>
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select id="mailbox" name="mailbox" class="slds-select"
+                        ng-model="item.data.variables.mailbox.type"
+                        ng-options="item.value as item.label for item in model.mailboxTypeOptions" ng-change="handleMailboxTypeChange()">
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form-element" ng-if="item.data.variables.mailbox.type=='USER'">
+        <label class="slds-form-element__label" for="user">User</label>
+        <div class="slds-form-element__control" ng-class="{'slds-is-required slds-has-error': (!ItemForm.user.$valid)}">
+            <div class="slds-select" style="height: auto!important">
+                <select selector id="user" name="user"
+                        model="item.data.variables.mailbox.userId"
+                        remote="getUsersPromise()"
+                        label-attr="Name"
+                        value-attr="Id__c"
+                        require="true"
+                        placeholder="select user"
+                >
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form-element" ng-if="item.data.variables.mailbox.type=='GROUP'">
+        <label class="slds-form-element__label" for="group">Group</label>
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select id="group" name="group" class="slds-select" ng-model="item.data.variables.mailbox.groupId"
+                        ng-options="itm.Id__c as itm.Name for itm in model.groups">
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <label class="slds-checkbox">
+                <input type="checkbox" name="disableInstructions" id="disableInstructions" ng-model="item.data.variables.disableInstructions">
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label">Disable recording instructions</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <label class="slds-checkbox">
+                <input type="checkbox" name="greetingEnabled" id="greetingEnabled" ng-model="item.data.variables.greeting.enabled">
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label">Enable recorded greeting associated with this mailbox</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="slds-form-element" ng-if="item.data.variables.greeting.enabled">
+        <label class="slds-form-element__label" for="greetingPhrase">Additional greeting</label>
+        <div class="slds-form-element__control">
+            <input id="greetingPhrase" name="greetingPhrase" class="slds-input" type="text" placeholder=""
+                   ng-model="item.data.variables.greeting.phrase" aria-describedby="errorName" required="false"/>
+        </div>
+    </div>
+
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" for="customSettings">Email & Mailbox Copy</label>
+        <div class="slds-form-element__control">
+            <label class="slds-checkbox">
+                <input type="checkbox" name="customSettings" id="customSettings" ng-model="item.data.config.customSettings">
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label">Use custom settings (otherwise default mailbox settings will be used)</span>
+            </label>
+        </div>
+    </div>
+    <div ng-if="item.data.config.customSettings" class="slds-form-element">
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+                <label class="slds-checkbox">
+                    <input type="checkbox" name="emailSettings" id="emailSettings" ng-model="item.data.config.emailSettings">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label">Email messages</span>
+                </label>
+            </div>
+        </div>
+        <div ng-if="item.data.config.emailSettings" class="slds-form-element">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="emailSettingsSendToBehaviour">Notify by email behaviour</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="emailSettingsSendToBehaviour" name="emailSettingsSendToBehaviour" class="slds-select" ng-model="item.data.variables.emailSettings.sendTo.behaviour"
+                                ng-options="itm.value as itm.label for itm in model.emailSettingsSendToBehaviourOptions" ng-change="handleEmailSettingsSendToBehaviourChange()">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <input-to-array ng-if="item.data.variables.emailSettings.sendTo.behaviour!='DEFAULT'" value="item.data.variables.emailSettings.sendTo.toAddresses" separator="," label="Recipient Email Addresses" name="toAddresses" required="true" macro="true" index="1" ></input-to-array>
+
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <label class="slds-checkbox">
+                        <input type="checkbox" name="attachRecording" id="attachRecording" ng-model="item.data.variables.emailSettings.attachRecording">
+                        <span class="slds-checkbox--faux"></span>
+                        <span class="slds-form-element__label">Attach a recording of the voicemail to the email</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <label class="slds-checkbox">
+                        <input type="checkbox" name="keepCopy" id="keepCopy" ng-model="item.data.variables.emailSettings.keepCopy">
+                        <span class="slds-checkbox--faux"></span>
+                        <span class="slds-form-element__label">Keep a copy of the voicemail in the mailbox</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+                <label class="slds-checkbox">
+                    <input type="checkbox" name="ccSettings" id="ccSettings" ng-model="item.data.config.ccSettings">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label">Cc  voicemails</span>
+                </label>
+            </div>
+        </div>
+        <div ng-if="item.data.config.ccSettings" class="slds-form-element">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="ccSettingsBehaviour">Cc mailbox behaviour</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="ccSettingsBehaviour" name="ccSettingsBehaviour" class="slds-select" ng-model="item.data.variables.ccSettings.behaviour"
+                                ng-options="itm.value as itm.label for itm in model.ccSettingsBehaviourOptions" ng-change="handleCcSettingsBehaviourChange()">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form-element" ng-if="item.data.variables.ccSettings.behaviour!='DEFAULT'">
+                <label class="slds-form-element__label" for="greetingPhrase">Cc mailboxes</label>
+                <div class="slds-form-element__control" ng-class="{'slds-is-required slds-has-error': (!ItemForm.ccSettingsUserIds.$valid)}">
+                    <div class="slds-select" style="height: auto!important">
+                        <select selector id="ccSettingsUserIds" name="ccSettingsUserIds"
+                                multi="true"
+                                model="item.data.variables.ccSettings.userIds"
+                                remote="getUsersPromise()"
+                                label-attr="Name"
+                                value-attr="Id__c"
+                                require="true"
+                                placeholder="select user"
+                        >
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

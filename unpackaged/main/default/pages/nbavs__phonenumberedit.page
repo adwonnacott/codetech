@@ -1,0 +1,31 @@
+<apex:page standardController="nbavs__PhoneNumber__c"
+    extensions="nbavs.PhoneNumberController" tabstyle="nbavs__PhoneNumber__c">
+    <style type="text/css">
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}	
+	</style>
+    <apex:sectionHeader title="{!$ObjectType.nbavs__PhoneNumber__c.label} Edit"
+        subtitle="{!nbavs__PhoneNumber__c.nbavs__Number__c}" />        
+    <apex:form id="pageForm">
+    <apex:pageMessages id="messages" />
+        <apex:pageBlock mode="edit">
+            <apex:pageBlockButtons >
+            	<apex:commandButton action="{!save}" value="Save" />
+                <apex:commandButton action="{!delete}" value="Delete" disabled="true" />
+                <apex:commandButton action="{!cancel}" value="Cancel" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2" >
+                <apex:inputField value="{!nbavs__PhoneNumber__c.Name}" required="true"/>
+                <apex:inputField value="{!nbavs__PhoneNumber__c.nbavs__User__c}" />
+                <apex:outputField value="{!nbavs__PhoneNumber__c.nbavs__Number__c}" />
+                <apex:outputField value="{!nbavs__PhoneNumber__c.nbavs__CountryCode__c}" />
+                <apex:outputField value="{!nbavs__PhoneNumber__c.nbavs__AreaCode__c}" />
+                <apex:outputField value="{!nbavs__PhoneNumber__c.nbavs__LocalNumber__c}" />
+                <apex:outputField value="{!nbavs__PhoneNumber__c.nbavs__Geographic__c}" />
+                <apex:inputField value="{!nbavs__PhoneNumber__c.nbavs__Local_Presence_Enabled__c}" rendered="{!!nbavs__PhoneNumber__c.nbavs__DDI_Number__c}"/>
+                <apex:outputField value="{!nbavs__PhoneNumber__c.nbavs__UserId__c}" rendered="false"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

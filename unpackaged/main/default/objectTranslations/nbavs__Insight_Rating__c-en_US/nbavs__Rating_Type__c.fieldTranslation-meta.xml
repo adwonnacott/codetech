@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Rating Type --></label>
+        <name>nbavs__Rating_Type__c</name>
+        <picklistValues>
+            <masterLabel>Agent Knowledge</masterLabel>
+            <translation><!-- Agent Knowledge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Call Quality</masterLabel>
+            <translation><!-- Call Quality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Experience</masterLabel>
+            <translation><!-- Customer Experience --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Politeness</masterLabel>
+            <translation><!-- Politeness --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

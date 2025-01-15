@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Natterbox Record License User --></label>
+        <lookupFilter>
+            <errorMessage><!-- Selected User does not have Natterbox Record License --></errorMessage>
+            <informationalMessage><!-- Select Natterbox Record License User --></informationalMessage>
+        </lookupFilter>
+        <name>nbavs__User__c</name>
+        <relationshipLabel><!-- Recording Access --></relationshipLabel>
+    </CustomFieldTranslation>

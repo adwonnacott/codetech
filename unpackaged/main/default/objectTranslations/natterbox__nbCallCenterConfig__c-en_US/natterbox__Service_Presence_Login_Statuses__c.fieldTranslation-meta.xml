@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- When any of the selected statuses are set in Omni-Channel as the current status, then login to all Natterbox groups --></help>
+        <label><!-- Service Presence Login Statuses --></label>
+        <name>natterbox__Service_Presence_Login_Statuses__c</name>
+    </CustomFieldTranslation>

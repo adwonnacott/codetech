@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Access Granted To --></label>
+        <name>nbavs__Access_Granted_To__c</name>
+        <picklistValues>
+            <masterLabel>Insights Only</masterLabel>
+            <translation><!-- Insights Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recording (including Insight data)</masterLabel>
+            <translation><!-- Recording (including Insight data) --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

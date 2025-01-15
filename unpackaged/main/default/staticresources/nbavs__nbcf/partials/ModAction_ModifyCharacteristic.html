@@ -1,0 +1,270 @@
+<div ng-controller="ModActionModifyCharacteristic">
+	<div class="slds-tabs--scoped slds-p-top--small">
+
+		<ul class="slds-tabs--scoped__nav" role="tablist">
+			<li class="slds-tabs--scoped__item slds-text-heading--label" title="Built In Properties" role="presentation" ng-class="model.selectedTab == 'preset' ? 'slds-active' : ''" ng-if="item.data.templateId == 118">
+				<a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-preset" id="tab-scoped-preset__item" ng-click="model.selectedTab='preset'">Built In Properties</a>
+			</li>
+			<li class="slds-tabs--scoped__item slds-text-heading--label" title="Custom Properties" role="presentation" ng-class="model.selectedTab == 'custom' ? 'slds-active' : ''">
+				<a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-custom" id="tab-scoped-custom__item" ng-click="model.selectedTab='custom'">Custom Properties</a>
+			</li>
+		</ul>
+
+		<div id="tab-scoped-preset" class="slds-tabs--scoped__content" role="tabpanel" aria-labelledby="tab-scoped-preset__item" ng-class="model.selectedTab == 'preset' ? 'slds-show' : 'slds-hide'">
+			<div class="slds-box slds-theme--shade slds-box--x-small" style="border: 1px solid #006eb3" >
+				<div class="slds-form--inline" ng-repeat="field in item.data.config.builtInProperties">
+					<fieldset class="slds-form--compound">
+						<div class="form-element__group">
+							<div class="slds-form-element__row--labels-local" ng-if="$index==0">
+								<div class="slds-form-element__control slds-size--5-of-12">
+									<label class="slds-form-element__label">Property</label>
+								</div>
+								<div class="slds-form-element__control slds-size--6-of-12">
+									<label class="slds-form-element__label">Value</label>
+								</div>
+							</div>
+							<div class="slds-form-element__row">
+								<div class="slds-form-element__control slds-size--5-of-12" >
+									<div class="slds-select_container">
+										<select id="field_name_{{$index}}" name="field_name_{{$index}}" class="slds-select"
+												ng-model="field.name" ng-change="changeFieldType(field)"
+												ng-options="itm.name as itm.label disable when (field.name != itm.name && (item.data.config.builtInProperties | filter: {name: itm.name}).length > 0) for itm in model.presetOptions" >
+										</select>
+									</div>
+								</div>
+								<div class="slds-form-element__control slds-size--6-of-12 slds-input-has-icon slds-input-has-icon--right" ng-class="{'slds-is-required slds-has-error': ItemForm.field_value_{{$index}}.$error.required || ItemForm.field_value_{{$index}}.$error.min || ItemForm.field_value_{{$index}}.$error.max}">
+
+									<div class="slds-form--horizontal" ng-if="field.type == 'earlyMedia'">
+										<div class="slds-form-element">
+											<label class="slds-form-element__label" style="width: 20%">Type</label>
+											<div class="slds-form-element__control" style="width: 80%">
+												<div class="slds-select_container">
+													<select id="earlyMediaFormat_{{$index}}"
+															name="earlyMediaformat_{{$index}}" class="slds-select"
+															ng-model="field.value.format"
+															ng-options="itm.value as itm.label for itm in field.formatOptions">
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="slds-form-element" style="padding-left: 0">
+											<label class="slds-form-element__label" style="width: 20%">Value</label>
+											<div class="slds-form-element__control" style="width: 80%">
+
+												<input id="field_value_{{$index}}" name="field_value_{{$index}}"
+													   class="slds-input" type="text" placeholder=""
+													   ng-model="field.value.data"
+													   aria-describedby="field_value_{{$index}}" required="true"/>
+												<svg aria-hidden="true"
+													 class="slds-input__icon slds-icon-text-default"
+													 ng-click="showMacros('field_value_'+$index)">
+													<use xlink:href="" i="push" svg-link/>
+												</svg>
+
+											</div>
+										</div>
+									</div>
+
+
+									<div class="slds-form--horizontal" ng-if="field.type == 'holdMusic'">
+										<div class="slds-form-element">
+											<label class="slds-form-element__label" style="width: 20%">Type</label>
+											<div class="slds-form-element__control" style="width: 80%">
+												<div class="slds-select_container">
+													<select id="holdMusicFormat_{{$index}}"
+															name="holdMusicformat_{{$index}}" class="slds-select"
+															ng-model="field.value.format"
+															ng-options="itm.value as itm.label for itm in field.formatOptions">
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="slds-form-element" style="padding-left: 0">
+											<label class="slds-form-element__label" style="width: 20%">Value</label>
+											<div class="slds-form-element__control" style="width: 80%">
+
+												<div class="slds-select_container" ng-if="field.value.format=='moh' && !field.macroModeMoh">
+													<select id="field_value_{{$index}}macroModeMoh"
+															name="field_value_{{$index}}" class="slds-select"
+													ng-model="field.value.data"
+													ng-options="itm.value as itm.label for itm in field.mohOptions">
+													</select>
+												</div>
+												<input id="field_value_{{$index}}" name="field_value_{{$index}}"
+													   class="slds-input" type="text" placeholder=""
+													   ng-model="field.value.data"
+													   aria-describedby="field_value_{{$index}}" required="true" ng-if="field.value.format!='moh' || field.macroModeMoh"/>
+												<svg aria-hidden="true"
+													 class="slds-input__icon slds-icon-text-default slds-icon-picklist-lock"
+													 ng-click="toggleMacroModeMoh(field)"
+													 ng-if="field.value.format=='moh'">
+													<use xlink:href="" i="lock" svg-link ng-if="!field.macroModeMoh"/>
+													<use xlink:href="" i="unlock" svg-link ng-if="field.macroModeMoh"/>
+												</svg>
+												<svg aria-hidden="true"
+													 class="slds-input__icon slds-icon-text-default"
+													 ng-click="showMacros('field_value_'+$index)"
+													 ng-if="field.macroModeMoh || field.value.format!='moh'">
+													<use xlink:href="" i="push" svg-link/>
+												</svg>
+
+											</div>
+										</div>
+									</div>
+
+									<div ng-if="field.type == 'number'">
+										<input id="field_value_{{$index}}" name="field_value_{{$index}}" class="slds-input" type="number" placeholder=""
+											   ng-model="field.value" aria-describedby="field_value_{{$index}}" required="true" ng-if="!field.macroModeNumber"  min="{{field.min}}" max="{{field.max}}"/>
+										<input id="field_value_{{$index}}" name="field_value_{{$index}}" class="slds-input" type="text" placeholder=""
+											   ng-model="field.value" aria-describedby="field_value_{{$index}}" required="true" ng-if="field.macroModeNumber"/>
+
+										<svg aria-hidden="true"
+											 class="slds-input__icon slds-icon-text-default slds-icon-picklist-lock"
+											 ng-click="toggleMacroModeNumber(field)">
+											<use xlink:href="" i="lock" svg-link ng-if="!field.macroModeNumber"/>
+											<use xlink:href="" i="unlock" svg-link ng-if="field.macroModeNumber"/>
+										</svg>
+										<svg aria-hidden="true"
+											 class="slds-input__icon slds-icon-text-default"
+											 ng-click="showMacros('field_value_'+$index)" ng-if="field.macroModeNumber">
+											<use xlink:href="" i="push" svg-link/>
+										</svg>
+
+									</div>
+									<input id="field_value_{{$index}}" name="field_value_{{$index}}" class="slds-input" type="text" placeholder=""
+										   ng-model="field.value" aria-describedby="field_value_{{$index}}" required="true" ng-if="field.macroMode || (field.type == 'text')"/>
+
+									<div class="slds-select_container"
+										 ng-if="field.type == 'boolean' && !field.macroMode">
+										<select id="field_value_{{$index}}" name="field_value_{{$index}}" class="slds-select"
+												ng-model="field.value"
+												ng-options="itm.value as itm.label for itm in model.booleanOptions">
+										</select>
+									</div>
+									<div class="slds-select_container"
+										 ng-if="field.type == 'picklist' && !field.macroMode">
+										<select id="field_value_{{$index}}"
+												name="field_value_{{$index}}" class="slds-select"
+												ng-model="field.value"
+												ng-options="itm as itm | translate for itm in field.picklistValues"
+										>
+										</select>
+									</div>
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default slds-icon-picklist-lock"
+										 ng-click="field.macroMode = !field.macroMode" ng-if="field.type == 'boolean' || field.type=='picklist'">
+										<use xlink:href="" i="lock" svg-link ng-if="!field.macroMode"/>
+										<use xlink:href="" i="unlock" svg-link ng-if="field.macroMode"/>
+									</svg>
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default"
+										 ng-click="showMacros('field_value_'+$index)" ng-if="field.macroMode || (field.type == 'text')">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+								</div>
+								<div class="slds-form-element__control slds-size--1-of-10" ng-show="$index!=0 || item.data.config.builtInProperties.length > 0">
+									<button type="button" class="slds-button slds-button--icon" ng-click="item.data.config.builtInProperties.splice($index, 1)">
+										<svg aria-hidden="true" class="slds-button__icon">
+											<use xlink:href="" s="utility" i="close" svg-link />
+										</svg>
+										<span class="slds-assistive-text">delete</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<button type="button" class="slds-button slds-button--icon" ng-click="addBuiltInProperty()" ng-if="item.data.config.builtInProperties.length < model.presetOptions.length">
+					<svg aria-hidden="true" class="slds-button__icon">
+						<use xlink:href="" i="add" svg-link />
+					</svg>
+					<span class="slds-assistive-text">add property</span>
+					Add Property
+				</button>
+			</div>
+		</div>
+
+		<div id="tab-scoped-custom" class="slds-tabs--scoped__content" role="tabpanel" aria-labelledby="tab-scoped-custom__item" ng-class="model.selectedTab == 'custom' ? 'slds-show' : 'slds-hide'">
+			<div class="slds-box slds-theme--shade slds-box--x-small" style="border: 1px solid #006eb3" >
+				<div class="slds-form--inline" ng-repeat="field in item.data.config.customProperties">
+					<fieldset class="slds-form--compound">
+						<div class="form-element__group">
+							<div class="slds-form-element__row slds-form-element__row--labels-local" ng-if="$index==0">
+								<div class="slds-form-element__control slds-size--5-of-12">
+									<label class="slds-form-element__label">Property</label>
+								</div>
+								<div class="slds-size--5-of-12">
+									<label class="slds-form-element__label">Value</label>
+								</div>
+								<div class="slds-size--1-of-12" ng-if="item.data.templateId == 118">
+									<label class="slds-form-element__label">Export</label>
+								</div>
+								<div class=" slds-size--1-of-12">
+								</div>
+							</div>
+							<div class="slds-form-element__row">
+
+								<div class="slds-form-element__control slds-size--5-of-12" ng-class="{'slds-is-required slds-has-error': ItemForm['custom_field_name_'+$index].$error.required || ItemForm['custom_field_name_'+$index].$error.pattern}" >
+									<input id="custom_field_name_{{$index}}" name="custom_field_name_{{$index}}"
+										   class="slds-input" type="text" placeholder=""
+										   ng-model="field.name"
+										   aria-describedby="custom_field_name_{{$index}}" required="true" result-set-namex ng-pattern="model.rePropertyName" ng-trim="false" />
+									<span id="errorName" class="slds-form-element__help" ng-show="ItemForm['custom_field_name_'+$index].$error.pattern">{{model.notifyPropertyNamesInvalidMessage}}</span>
+								</div>
+
+
+								<div class="slds-form-element__control slds-size--5-of-12 slds-input-has-icon slds-input-has-icon--right" ng-class="{'slds-is-required slds-has-error': ItemForm['custom_field_value_'+$index].$error.required}" >
+									<input id="custom_field_value_{{$index}}" name="custom_field_value_{{$index}}"
+										   class="slds-input" type="text" placeholder=""
+										   ng-model="field.value"
+										   aria-describedby="custom_field_value_{{$index}}" required="true"/>
+									<svg aria-hidden="true"
+										 class="slds-input__icon slds-icon-text-default" style="top: 16px"
+										 ng-click="showMacros('custom_field_value_'+$index)">
+										<use xlink:href="" i="push" svg-link/>
+									</svg>
+								</div>
+
+
+								<div class="slds-form-element__control slds-size--1-of-10" ng-if="item.data.templateId == 118">
+
+
+									<label class="slds-checkbox--toggle slds-grid">
+										<input ng-model="field.export" id="field_export_{{$index}}" name="field_export_{{$index}}" type="checkbox" aria-describedby="toggle-desc_{{$index}}" />
+										<span id="toggle-desc_{{$index}}" class="slds-checkbox--faux_container" aria-live="assertive">
+										  <span class="slds-checkbox--faux"></span>
+										  <span class="slds-checkbox--on" ng-if="field.export">Enabled</span>
+										  <span class="slds-checkbox--off" ng-if="!field.export">Disabled</span>
+										</span>
+									</label>
+
+								</div>
+
+
+
+								<div class="slds-form-element__control slds-size--1-of-10" ng-show="$index!=0 || item.data.config.customProperties.length > 0">
+									<button type="button" class="slds-button slds-button--icon" ng-click="item.data.config.customProperties.splice($index, 1)">
+										<svg aria-hidden="true" class="slds-button__icon">
+											<use xlink:href="" s="utility" i="close" svg-link />
+										</svg>
+										<span class="slds-assistive-text">delete</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<button type="button" class="slds-button slds-button--icon" ng-click="addCustomProperty()">
+					<svg aria-hidden="true" class="slds-button__icon">
+						<use xlink:href="" i="add" svg-link />
+					</svg>
+					<span class="slds-assistive-text">add property</span>
+					Add Property
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+

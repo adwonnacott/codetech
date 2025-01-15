@@ -1,0 +1,103 @@
+<apex:page standardController="nbavs__AvailabilityProfile__c" extensions="nbavs.AvailabilityProfileController"  tabstyle="Settings__tab">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<style type="text/css">
+	.bPageBlock {
+		border-top: 4px solid #00a0c4;
+	}
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}
+	.pageTitleIcon {
+		background-image : URL("{!URLFOR($Resource.img, 'settings.png')}");
+	}
+	</style>
+	<apex:sectionHeader title="{!$ObjectType.nbavs__AvailabilityProfile__c.label}" subtitle="{!nbavs__AvailabilityProfile__c.Name}" />
+	<apex:form id="form">
+		
+		<apex:actionFunction name="doInit" action="{!syncAvailabilityProfileState}" />
+		<apex:outputPanel rendered="{!NOT(initialised)}">
+			<script>
+				window.onload=function()
+				{
+					doInit();
+				};
+			</script>
+		</apex:outputPanel>
+		<apex:pageMessages id="messages" />
+		<apex:outputPanel id="body">
+			<apex:pageBlock mode="maindetail" rendered="{!initialised}">
+				<apex:pageBlockButtons location="top">
+					<apex:commandButton value="Edit" action="{!URLFOR($Action.AvailabilityProfile__c.Edit, AvailabilityProfile__c.Id)}"  rendered="{!license.nbavs__Manager__c == true}"/>
+					<apex:commandButton value="Delete" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;" rendered="{!license.nbavs__Manager__c == true}" />
+					<apex:outputLabel value="Feature not licensed" style="font-weight: bold;font-size:15px;"	rendered="{!license.nbavs__Manager__c == false}"/> 	
+				</apex:pageBlockButtons>
+				<apex:pageBlockSection title="Availability Profile Information" columns="2">
+					<apex:outputField value="{!nbavs__AvailabilityProfile__c.nbavs__Id__c}" rendered="false" />				
+					<apex:outputField value="{!nbavs__AvailabilityProfile__c.Name}" />								
+				</apex:pageBlockSection>
+				
+				<apex:pageBlockSection showHeader="false" columns="1">
+					<apex:outputPanel layout="block" styleClass="bRelatedList">
+						<apex:outputPanel layout="block" styleClass="noStandardTap">
+							<c:AvailabilityProfileStates />
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:pageBlockSection>   
+				<apex:pageBlockSection showHeader="false" columns="1">
+				<apex:outputPanel layout="block" styleClass="bRelatedList" >
+				<apex:outputPanel layout="block" styleClass="noStandardTap">
+					<apex:pageBlock mode="detail" id="thisProfile" title="Users">
+						<table class="list display compact" id="dataTableAvailabilityProfileList">
+							<thead>
+							<tr class="headerRow">
+								<th>{!$ObjectType['User__c'].Fields.Name.Label}</th>
+								<th>{!$ObjectType['User__c'].Fields.User__c.Label}</th>
+								<th>{!$ObjectType['User__c'].Fields.SipExtension__c.Label}</th>
+								<th>Availability State</th>
+							</tr>
+							</thead>
+							<tbody>
+							<apex:repeat value="{!Users}" var="item">
+								<tr class="dataRow">
+									<td>
+										<apex:outputLink value="{!URLFOR($Action.nbavs__User__c.View, item.Id)}">{!item.Name}</apex:outputLink>
+									</td>
+									<td>
+										<apex:outputField value="{!item.nbavs__User__c}" />
+									</td>
+									<td>
+										<apex:outputField value="{!item.nbavs__SipExtension__c}" />
+									</td>
+									<td>
+										<apex:outputField value="{!item.AvailabilityProfileState__r.Name}" />
+									</td>
+								</tr>
+							</apex:repeat>
+							</tbody>
+						</table>
+						<script type="text/javascript">
+								j$ = jQuery.noConflict();
+								j$('#dataTableAvailabilityProfileList').DataTable({
+									"paging": true,
+									"stateSave": true,
+									"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+									"order": [[ 1, "desc" ]],
+								});
+						</script>	
+					</apex:pageBlock>
+				</apex:outputPanel>
+				</apex:outputPanel>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+			<script>
+			if (window.history.replaceState) {
+				window.history.replaceState(null,null,window.location.href);
+			}
+			</script>
+		</apex:outputPanel>
+				
+	</apex:form>	
+</apex:page>

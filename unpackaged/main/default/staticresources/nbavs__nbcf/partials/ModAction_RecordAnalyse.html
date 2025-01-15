@@ -1,0 +1,210 @@
+<div ng-controller="ModActionRecordAnalyse">
+
+    <div class="slds-tabs--scoped slds-p-top--small">
+
+		<ul class="slds-tabs--scoped__nav" role="tablist">
+			<li class="slds-tabs--scoped__item slds-text-heading--label" title="Record" role="presentation" ng-class="model.selectedTab == 'preset' ? 'slds-active' : ''" ng-if="item.data.templateId == 118">
+				<a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-preset" id="tab-scoped-preset__item" ng-click="model.selectedTab='preset'">Record</a>
+            </li>
+           
+			<li class="slds-tabs--scoped__item slds-text-heading--label" title="Insight" role="presentation"  ng-class="model.selectedTab == 'custom' ? 'slds-active' : ''">
+				<a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-custom" id="tab-scoped-custom__item" ng-click="model.selectedTab='custom'">Insight</a>
+			</li>
+		</ul>
+
+		<div id="tab-scoped-preset" class="slds-tabs--scoped__content" role="tabpanel" aria-labelledby="tab-scoped-preset__item" ng-class="model.selectedTab == 'preset' ? 'slds-show' : 'slds-hide'">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <label class="slds-checkbox">
+                        <input type="checkbox" name="retain" id="retain" ng-model="item.data.config.retain" ng-init="item.data.config.retain=true">
+                        <span class="slds-checkbox--faux"></span>
+                        <span class="slds-form-element__label">Archive a copy of this recording</span>
+                    </label>
+                </div>
+            </div>
+        
+            <div class="slds-form-element" ng-if="item.data.config.retain">
+                <label class="slds-form-element__label" for="archivePolicyId">Archiving Policy to be used</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="archivePolicyId" name="archivePolicyId" class="slds-select"
+                                ng-model="item.data.config.record.archivePolicyId"
+                                ng-options="item.id as item.name for item in model.archivingPolicies" >
+                        </select>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="channel">Recording Leg</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="channel" name="channel" class="slds-select"
+                                ng-model="item.data.config.record.channel"
+                                ng-options="item.value as item.name for item in model.channelOptions">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="start">Start Recording</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="start" name="start" class="slds-select"
+                                ng-model="item.data.config.record.start"
+                                ng-options="item.value as item.name for item in model.startOptions | filter:filterStart">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="item.data.config.record.start == 'ON_DEMAND'">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                            <input type="checkbox" name="pauseAllowed" id="pauseAllowed" ng-model="item.data.config.pauseAllowed" ng-init="item.data.config.pauseAllowed">
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Recording pause allowed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                            <input type="checkbox" name="stopAllowed" id="stopAllowed" ng-model="item.data.config.stopAllowed" ng-init="item.data.config.stopAllowed">
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Recording stop allowed</span>
+                        </label>
+                    </div>
+                </div>
+           </div>
+          
+        
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="channel">Beep alert</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="beepAlert" name="beepAlert" class="slds-select"
+                                ng-model="item.data.config.beepAlert.channel"
+                                ng-options="item.value as item.name for item in model.beepOptions">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        
+        
+            <div class="slds-form-element" ng-if="item.data.config.beepAlert.channel != 'OFF'">
+                <label class="slds-form-element__label" for="channel">Custom Beep TGML</label>
+                <div class="slds-form-element__control">
+                    <input id="toneStream" name="toneStream" class="slds-input" type="text" placeholder=""
+                           ng-model="item.data.config.beepAlert.tgml" aria-describedby="errorName" required="false"/>
+                </div>
+            </div>
+        
+        
+        
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                            <input type="checkbox" name="emailSend" id="emailSend" ng-model="item.data.config.emailSend">
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label">Email the recording</span>
+                        </label>
+                    </div>
+            </div>
+        
+        
+            <div class="slds-form-element" ng-if="item.data.config.emailSend">
+                <label class="slds-form-element__label" for="toRecipients">Email recipients (To)</label>
+                <div class="slds-form-element__control">
+                    <input id="toRecipients" name="toRecipients" class="slds-input" type="text" placeholder=""
+                           ng-model="item.data.config.email.toRecipients" aria-describedby="errorName" required="false"/>
+                </div>
+            </div>
+       
+            <div class="slds-form-element" ng-if="item.data.config.emailSend">
+                <label class="slds-form-element__label" for="ccRecipients">Email recipients (Cc)</label>
+                <div class="slds-form-element__control">
+                    <input id="ccRecipients" name="ccRecipients" class="slds-input" type="text" placeholder=""
+                           ng-model="item.data.config.email.ccRecipients" aria-describedby="errorName" required="false"/>
+                </div>
+            </div>
+        
+            <div class="slds-form-element" ng-if="item.data.config.emailSend">
+                <label class="slds-form-element__label" for="subject">Email Subject</label>
+                <div class="slds-form-element__control">
+                    <input id="subject" name="subject" class="slds-input" type="text" placeholder=""
+                           ng-model="item.data.config.email.subject" aria-describedby="errorName" required="false"/>
+                </div>
+            </div>
+		</div>
+        <!--Insight tab start -->
+		<div id="tab-scoped-custom" class="slds-tabs--scoped__content" role="tabpanel" aria-labelledby="tab-scoped-custom__item" ng-class="model.selectedTab == 'custom' ? 'slds-show' : 'slds-hide'">
+            <div class="slds-form-element" ng-if="model.license.Insights__c == false">
+                <span>Insight is not licensed. Please contact your account manager for further details</span> 
+            </div>
+            
+            <div  ng-if="model.license.Insights__c == true">
+                
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="start">Insight Configuration</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="insightConfig" name="insightConfig" class="slds-select"
+                                    ng-model="item.data.config.insightConfig"
+                                    ng-options="item.value as item.name for item in model.insightOptions">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div  ng-if="item.data.config.insightConfig == 'Main'">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="start">Analysis Language</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="language" name="language" class="slds-select"
+                                        ng-model="item.data.config.insight.language"
+                                        ng-options="item.value as item.name for item in model.languageOptions">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="start">Analysis Region</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="region" name="region" class="slds-select"
+                                ng-model="item.data.config.insight.region"
+                                ng-options="item.value as item.name for item in model.regionOptions">
+                        </select>
+                    </div>
+                </div>
+            </div>
+ 
+ 
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="inchannel">Leg to be Analysed</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="inchannel" name="inchannel" class="slds-select"
+                                ng-model="item.data.config.insight.channel"
+                                ng-options="item.value as item.name for item in model.channelOptions | filter:filterInchannel">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+		</div>
+
+	</div>
+
+
+
+</div>
+
+

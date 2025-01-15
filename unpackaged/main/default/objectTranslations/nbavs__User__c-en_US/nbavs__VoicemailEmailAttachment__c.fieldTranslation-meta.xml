@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- This diverts the message to be exclusively available as an email attachment. Check &apos;Copy to Voicemail Inbox&apos; to also save a copy in voicemail inbox. --></help>
+        <label><!-- Messages available only via Email --></label>
+        <name>nbavs__VoicemailEmailAttachment__c</name>
+    </CustomFieldTranslation>

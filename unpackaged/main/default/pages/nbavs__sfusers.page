@@ -1,0 +1,217 @@
+<apex:page controller="nbavs.SFUserController" tabStyle="nbavs__User__c">	
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />	
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'Scroller-1.3.0/js/dataTables.scroller.min.js')}" />
+	<style type="text/css">
+	.dataTables_wrapper .dataTables_length {
+    	float: left;
+    	display: none;
+	}
+			
+	.dataTables_wrapper.no-footer .dataTables_scrollBody {
+    	border-bottom: 1px solid #ededed;
+	}
+	
+	.dataTables_wrapper .dataTables_paginate {
+		display: none;
+	}
+
+	.custPopup{
+		background-color: white;
+		border-width: 2px;
+		border-style: solid;
+		z-index: 9999;
+		left: 50%;
+		padding:10px;
+		position: absolute;
+		/* These are the 3 css properties you will need to change so the popup
+		displays in the center of the screen. First set the width. Then set
+		margin-left to negative half of what the width is. You can add
+		the height property for a fixed size pop up if you want.*/
+		width: 500px;
+		margin-left: -250px;
+		top: 100px;
+		border-color: #c0c0c0;
+	}
+
+	.popupBackground{
+		background-color:gray;
+		opacity: 0.40;
+		filter: alpha(opacity = 40);
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		z-index: 9998;
+	}
+
+	</style>	
+	<apex:sectionHeader title="Salesforce Users" subtitle="Home" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" rendered="{!setCon==null}"/>
+		<apex:outputPanel id="refreshPopup">
+			<apex:actionFunction name="handleRefreshWithCheckedItems" action="{!showPopup}" reRender="refreshPopup"/>
+			<apex:actionFunction name="handleRefreshNoCheckedItems" reRender="listBlock"/>
+			<apex:outputPanel >
+				<apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopup}"/>
+				<apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopup}">
+					There are some checked users in the list. Do you want to add them before refreshing?<br/><br/><br/>
+					<apex:commandButton value=" Add Selected " action="{!saveSelectedAndHidePopup}" rerender="listBlock, refreshPopup, messages"/>
+					<apex:commandButton value=" Refresh without adding " action="{!hidePopup}" rerender="listBlock, refreshPopup, messages"/>
+					<apex:commandButton value=" Cancel refresh " action="{!hidePopup}" rerender="refreshPopup, messages"/>
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</apex:outputPanel>
+		<apex:pageBlock title="Filter list of Salesforce users" >
+			<apex:pageBlockSection columns="1">
+				<apex:pageblocksectionitem id="FirstName">
+					<apex:outputLabel value="Filter on First Name:"/>
+					<apex:inputText value="{!filterFirstName}"/>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem id="LastName">
+					<apex:outputLabel value="Filter on Last Name:"/>
+					<apex:inputText value="{!filterLastName}"/>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem id="Usernames">
+					<apex:outputLabel value="Filter on Username:"/>
+					<apex:inputText value="{!filterUsername}"/>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem id="Profiles">
+					<apex:outputLabel value="Filter on one or more profiles:" />
+					<apex:selectList value="{!filterProfileSelection}" title="Filter on these profiles" multiSelect="true" size="8">
+						<apex:selectOptions value="{!filterProfileOptions}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				<apex:pageblocksectionitem >
+					<apex:outputLabel value=" " />
+					<apex:commandButton value="Refresh" onclick="handleRefresh(); return false;"/>
+				</apex:pageblocksectionitem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		<apex:pageBlock title="Select Salesforce users to add to Natterbox" rendered="{!setCon != null}" id="listBlock">
+			<apex:outputPanel layout="block" styleClass="buttonsBox">
+				<apex:outputPanel layout="block" id="buttons" styleClass="buttonsLeft">
+					<apex:commandButton value="Add Selected" onclick="validateSelected();return false;" disabled="{!IF(items.size > 0, False, True)}" rerender="messages, buttons" />
+						<apex:actionFunction name="processSelected" action="{!processSelected}"  rerender="messages, buttons"/>
+
+					<apex:commandButton value="Cancel" action="{!URLFOR($Page.users)}" />
+				</apex:outputPanel>
+				<apex:outputPanel layout="block" id="paging"
+					styleClass="buttonsRight" rendered="{!setCon.resultSize > setCon.pageSize}">
+					<apex:commandButton rendered="{!setCon.hasPrevious}" value="First"
+						action="{!setCon.first}" />
+					<apex:commandButton rendered="{!setCon.hasPrevious}"
+						value="Previous" action="{!setCon.previous}" />
+					<apex:outputText rendered="{!(setCon.pageNumber * setCon.pageSize) < setCon.ResultSize}"
+						value="{!setCon.pageNumber * setCon.pageSize} of {!setCon.ResultSize} records"
+						styleClass="filterLabel"/>
+					<apex:outputText rendered="{!(setCon.pageNumber * setCon.pageSize) >= setCon.ResultSize}"
+						value="{!setCon.ResultSize} of {!setCon.ResultSize} records"
+						styleClass="filterLabel"/>
+					<apex:commandButton rendered="{!setCon.hasNext}" value="Next"
+						action="{!setCon.next}" />
+					<apex:commandButton rendered="{!setCon.hasNext}" value="Last"
+						action="{!setCon.last}" />
+				</apex:outputPanel>
+			</apex:outputPanel>
+
+         	<apex:outputPanel layout="block" id="pageBlocklist">
+				<table class="list display compact" id="dataTable">
+					<thead>
+						<tr class="headerRow">
+							<th><input type="checkbox" name="select_all" value="1" id="select-all" /></th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Username</th>
+                            <th>{!$ObjectType['User__c'].Fields.SipExtension__c.Label}</th>
+							<th>Mobile Phone</th>
+							<th>Active</th>							
+						</tr>
+					</thead>
+					<tbody>
+						<apex:repeat value="{!items}" var="item">
+							<tr class="dataRow">
+								<td class="actionColumn">
+	       							<apex:inputCheckbox value="{!item.selected}" />
+								</td>
+								<td><apex:outputField value="{!item.con.FirstName}" /></td>
+								<td><apex:outputField value="{!item.con.LastName}" /></td>
+								<td><apex:outputField value="{!item.con.Username}" /></td>
+                                <td><apex:inputField value="{!item.con.nbavs__SIP_Extension__c}" /></td>
+								<td><apex:outputField value="{!item.con.MobilePhone}" /></td>
+								<td data-order="{!item.con.IsActive}"><apex:outputField value="{!item.con.IsActive}" /></td>								
+							</tr>
+						</apex:repeat>
+					</tbody>
+				</table> 
+				
+				
+				<script type="text/javascript">
+					j$ = jQuery.noConflict();					
+					var table = j$('#dataTable').DataTable({
+                        searching: false, // NBSFPBX-962
+						scrollY: 250,
+   						deferRender: true,
+   						scroller: true,
+   						"stateSave": true,
+						"lengthMenu": [[-1], ["All"]],
+						"order": [[ 5, "desc" ]],
+						columnDefs: [
+							{ 'sortable': false, 'targets': [ 0 ] }
+						]               
+					});
+
+					function validateSelected() {
+						var tble  = table.table().node();
+						var chkbox_checked = j$('tbody input[type="checkbox"]:checked', tble );
+							if (chkbox_checked.length>20){
+								alert("Please select a maximum of 20 user records.");
+								return false;
+							}
+							processSelected();
+                    }
+
+					function handleRefresh() {
+                        var rows = table.rows({ 'search': 'applied' }).nodes();
+                        var someChecked = j$('input[type="checkbox"]', rows).is(':checked');
+                        if (someChecked)
+					        handleRefreshWithCheckedItems();
+						else
+                            handleRefreshNoCheckedItems();
+					}
+
+					j$(document).ready( function() {
+			    	 // j$('#dataTable_filter').hide();
+			    	 // j$('#dataTable_length').css('padding-bottom','8px');
+			    	 
+			    	 // Handle click on "Select all" control
+					   j$('#select-all').on('click', function(){
+					      // Get all rows with search applied
+					      var rows = table.rows({ 'search': 'applied' }).nodes();
+					      // Check/uncheck checkboxes for all rows in the table
+					      j$('input[type="checkbox"]', rows).prop('checked', this.checked);
+					   });
+					
+					   // Handle click on checkbox to set state of "Select all" control
+					   j$('#dataTable tbody').on('change', 'input[type="checkbox"]', function(){
+					      // If checkbox is not checked
+					      if(!this.checked){
+					         var el = j$('#select-all').get(0);
+					         // If "Select all" control is checked and has 'indeterminate' property
+					         if(el && el.checked && ('indeterminate' in el)){
+					            // Set visual state of "Select all" control 
+					            // as 'indeterminate'
+					            el.indeterminate = true;
+					     }
+					  }
+				  });	  
+				    	 			    	 
+			 });    
+			 </script>
+			</apex:outputPanel>
+		</apex:pageBlock>
+</apex:form>
+</apex:page>

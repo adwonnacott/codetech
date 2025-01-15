@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Natterbox_User__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>The user who creates the notes</description>
+    <label>Natterbox Owner</label>
+    <referenceTo>nbavs__User__c</referenceTo>
+    <relationshipLabel>Insights Notes Natterbox Owner</relationshipLabel>
+    <relationshipName>Insights_Notes2</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

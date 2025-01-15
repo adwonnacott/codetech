@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Data Source --></label>
+        <name>nbavs__Source__c</name>
+        <picklistValues>
+            <masterLabel>List View</masterLabel>
+            <translation><!-- List View --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SOQL Query</masterLabel>
+            <translation><!-- SOQL Query --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

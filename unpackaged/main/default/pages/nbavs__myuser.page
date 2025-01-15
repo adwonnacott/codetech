@@ -1,0 +1,445 @@
+<apex:page id="page" controller="nbavs.MyUserController" action="{!getCallLogs}" docType="html-5.0">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__comet4, '/cometd.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__comet4, '/AckExtension.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__PlatformEvents)}"/>
+    <apex:pageMessages id="messages" />
+    <style type="text/css">
+        .slds-app-launcher__tile--local {
+            cursor: pointer !important
+        }
+
+        .slds-notify_container--fixed {
+            position: relative !important
+        }
+
+        .relative-position {
+            position: relative
+        }
+
+        .disabled {
+            filter: gray; /* IE6-9 */
+            filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+            -webkit-filter: grayscale(1);
+        }
+
+        .pageTitleIcon {
+            background-image: URL("{!URLFOR($Resource.img, 'users.png')}");
+        }
+    </style>
+    
+    <script>
+    function popupRecord(uuid, userid, vmid) 
+    {
+         var width  = 411;
+         var height = 160;
+         var left   = (screen.width  - width)/2;
+         var top    = (screen.height - height)/2;
+         var params = 'width='+width+', height='+height;
+         params += ', top='+top+', left='+left;
+         params += ', directories=no';
+         params += ', location=no';
+         params += ', menubar=no';
+         params += ', resizable=no';
+         params += ', scrollbars=no';
+         params += ', status=no';
+         params += ', toolbar=no';
+        var newwin=window.open('','_blank', params);        
+        newwin.location.href = '/apex/playvoicemail?uuid='+uuid+'&userid='+userid+'&vmid='+vmid;
+        //if (window.focus) {newwin.focus()}
+         return false;
+    }
+
+    j$ = jQuery.noConflict();
+
+    j$(document).ready( function() {
+
+        // *********** COMETD
+
+        var chat = new PlatformEvents('{!$Api.Session_ID}');
+
+        var handleCTIDeviceUpdateEvent = function (message) {
+            //console.log ("CTIDeviceUpdateEvent event received: " + JSON.stringify(message));
+            rerenderDevices();
+        }
+
+        chat.subscribe([{ channel: '/event/CTIDeviceUpdateEvent__e', callback: handleCTIDeviceUpdateEvent }]);
+
+        // *********** COMETD
+    });
+
+	</script>
+
+    <apex:form id="mainform">
+        <apex:actionFunction name="showMessage" action="{!showMessage}" rerender="messages">
+            <apex:param name="pageMessagesMessage" assignTo="{!pageMessagesMessage}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="updateTrackOutboundCTIDevice" action="{!updateTrackOutboundCTIDevice}" rerender="device-panel">
+            <apex:param name="updateTrackOutboundCTIDeviceState" assignTo="{!updateTrackOutboundCTIDeviceState}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="updateDeviceState" action="{!updateDeviceState}" rerender="messages">
+            <apex:param name="updateDeviceStateState" assignTo="{!updateDeviceStateState}" value="" />
+            <apex:param name="updateDeviceStateNumber" assignTo="{!updateDeviceStateNumber}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="rerenderDevices" action="{!rerenderDevices}" rerender="device-panel" />
+    
+
+        <apex:sectionHeader title="User Home" subtitle="Natterbox App"/>
+
+        <div class="nbvc slds">
+            <input type="hidden" value="{!user.Id}" id="current-user-id"/>
+            <apex:outputPanel layout="block" styleClass="slds-notify_container slds-notify_container--fixed"
+                            rendered="{!IF((error!=null),true,false)}">
+                <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <div class="slds-notify__content slds-grid">
+                        <c:svg styleClass="slds-button__icon--stateful slds-button__icon--left"
+                            path="/assets/icons/utility-sprite/svg/symbols.svg#warning"/>
+                        <div class="slds-col slds-align-middle">
+                            <h2 class="slds-text-heading--small">{!error}</h2>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" rendered="{!IF((user!=null),true,false)}">
+                <div class="slds-grid slds-wrap slds-grid--pull-padded-medium">
+                    <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="min-width:720px">
+                        <div class="slds-box slds-box--small slds-theme--shade">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-user"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#user"/>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p class="slds-text-title--caps slds-line-height--reset">My Details</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                                    <apex:outputLink value="{!URLFOR($Action.nbavs__User__c.View, user.Id)}"
+                                                                    styleClass="actionLink">{!user.Name}
+                                                    </apex:outputLink>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                                        <div>
+                                            <span class="slds-icon_container slds-icon-action-log-a-call slds-icon_container--circle {!IF(user.CTI__c, '', 'disabled')}" title="{!$ObjectType['User__c'].Fields.CTI__c.Label} - {!IF(user.CTI__c, 'enabled', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#log_a_call"/>
+                                            </span>
+                                            <span class="slds-icon_container slds-icon-action-defer slds-icon_container--circle {!IF(user.PBX__c, '', 'disabled')}" title="{!$ObjectType['User__c'].Fields.PBX__c.Label} - {!IF(user.PBX__c, 'enabled', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small" path="/assets/icons/standard-sprite/svg/symbols.svg#hierarchy"/>
+                                            </span>
+                                            <span class="slds-icon_container slds-icon-action-priority slds-icon_container--circle {!IF(user.Manager__c, '', 'disabled')}" title="{!$ObjectType['User__c'].Fields.Manager__c.Label} - {!IF(user.Manager__c, 'enabled', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#flow"/>
+                                            </span>
+                                            <span class="slds-icon_container slds-icon-action-close slds-icon_container--circle {!IF(user.Record__c, '', 'disabled')}" title="{!$ObjectType['User__c'].Fields.Record__c.Label} - {!IF(user.Record__c, 'enabled', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small" path="/assets/icons/action-sprite/svg/symbols.svg#announcement"/>
+                                            </span>
+                                            <span class="slds-icon_container slds-icon-action-approval slds-icon_container--circle {!IF(user.PCI__c, '', 'disabled')}" title="{!$ObjectType['User__c'].Fields.PCI__c.Label} - {!IF(user.PCI__c, 'enabled', 'disabled')}">
+                                                <c:svg styleClass="slds-icon slds-icon--small" path="/assets/icons/utility-sprite/svg/symbols.svg#lock"/>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="slds-page-header__detail-row">
+                                    <dl class="slds-dl--horizontal">
+                                        <dt class="slds-dl--horizontal__label">
+                                            <span class="slds-truncate">Mobile Number</span>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <span class="slds-truncate">{!user.MobilePhone__c}</span>
+                                        </dd>
+                                        <dt class="slds-dl--horizontal__label">
+                                            <span class="slds-truncate">Extension Number</span>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <span class="slds-truncate">{!user.SipExtension__c}</span>
+                                        </dd>
+                                        <dt class="slds-dl--horizontal__label">
+                                            <span class="slds-truncate">Home Country</span>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <span class="slds-truncate">{!settings.userSettings.CountryCodeLabel__c} (+{!settings.userSettings.CountryCode__c})</span>
+                                        </dd>
+                                        <dt class="slds-dl--horizontal__label">
+                                            <span class="slds-truncate">Default Voice</span>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <span class="slds-truncate">{!settings.userSettings.VoiceLabel__c}</span>
+                                        </dd>
+                                        <dt class="slds-dl--horizontal__label">
+                                            <span class="slds-truncate">My DDI(s)</span>
+                                        </dt>
+                                        <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                            <span>{!ddis}</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="min-width:720px">
+                        <div class="slds-box slds-box--small slds-theme--shade">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-groups"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#groups"/>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p class="slds-text-title--caps slds-line-height--reset">My Groups</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                                    <apex:outputText rendered="{!primaryGroup!=null}"
+                                                                    value="Your Primary Group is {!primaryGroup.Name}"/>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-page-header__detail-row">
+                                    <apex:repeat value="{!groupMemberList}" var="gm">
+                                        <div class="slds-grid slds-m-left--xx-small">
+                                            <div>
+                                        <span class="slds-icon_container slds-icon-action-new-group slds-icon_container--circle">
+                                        <c:svg styleClass="slds-icon slds-icon slds-icon--small"
+                                            path="/assets/icons/custom-sprite/svg/symbols.svg#custom26"/>
+                                        </span>
+                                            </div>
+                                            <div class="slds-col slds-m-top--x-small slds-m-left--x-small slds-m-bottom--small">
+                                                <dl class="slds-dl--horizontal slds-m-left--small">
+                                                    <dt class="slds-dl--horizontal__label">
+                                                        <span class="slds-truncate">{!gm.Group__r.Name}</span>
+                                                    </dt>
+                                                    <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                                        <span class="slds-truncate"></span>
+                                                    </dd>
+                                                    <dt class="slds-dl--horizontal__label slds-text-body--small">
+                                                        <span class="slds-truncate">{!$ObjectType['Group__c'].Fields.Extension__c.Label}</span>
+                                                    </dt>
+                                                    <dd class="slds-dl--horizontal__detail slds-tile__meta slds-text-body--small">
+                                                        <span class="slds-truncate">
+                                                            <apex:outputText value="{!gm.Group__r.nbavs__Extension__c}" rendered="{!gm.Group__r.nbavs__PBX__c || gm.Group__r.nbavs__Manager__c}" />
+                                                            <apex:outputText value="⛔" escape="false" title="{!$ObjectType['Group__c'].Fields.Extension__c.Label} require {!$ObjectType['Group__c'].Fields.PBX__c.Label} or {!$ObjectType['Group__c'].Fields.Manager__c.Label} Purpose" rendered="{!!gm.Group__r.nbavs__PBX__c && !gm.Group__r.nbavs__Manager__c}" />
+                                                        </span>
+                                                    </dd>
+                                                    <dt class="slds-dl--horizontal__label slds-text-body--small">
+                                                        <span class="slds-truncate">{!$ObjectType['Group__c'].Fields.GroupPickup__c.Label}</span>
+                                                    </dt>
+                                                    <dd class="slds-dl--horizontal__detail slds-tile__meta slds-text-body--small">
+                                                        <span class="slds-truncate">
+                                                            <apex:outputText value="{!gm.Group__r.nbavs__GroupPickup__c}" rendered="{!gm.Group__r.nbavs__PBX__c || gm.Group__r.nbavs__Manager__c}" />
+                                                            <apex:outputText value="⛔" escape="false" title="{!$ObjectType['Group__c'].Fields.GroupPickup__c.Label} require {!$ObjectType['Group__c'].Fields.PBX__c.Label} or {!$ObjectType['Group__c'].Fields.Manager__c.Label} Purpose" rendered="{!!gm.Group__r.nbavs__PBX__c && !gm.Group__r.nbavs__Manager__c}" />
+                                                        </span>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </apex:repeat>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="min-width:720px">
+                        <div class="slds-box slds-box--small slds-theme--shade">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-custom-28"
+                                                    path="/assets/icons/custom-sprite/svg/symbols.svg#custom28"/>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p class="slds-text-title--caps slds-line-height--reset">My Devices</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <apex:outputpanel id="device-panel">
+                                    <div class="slds-page-header__detail-row" style="display:{!IF(user.CTI__c == false, "none", "block")}">
+                                        <label class="slds-checkbox">
+                                            <apex:inputField value="{!user.nbavs__TrackOutboundCTIDevice__c}" onChange="updateTrackOutboundCTIDevice(this.checked); return false;"/>
+                                            <span class="slds-checkbox--faux"></span>
+                                            <span class="slds-form-element__label">{!$ObjectType['User__c'].Fields.TrackOutboundCTIDevice__c.Label}</span>
+                                        </label>
+                                    </div>
+                                    <div class="slds-page-header__detail-row" style="display:{!IF(displayTrackCTIDeviceWarning == false, "none", "block")}">
+                                        <legend class="slds-form-element__legend slds-form-element__label">
+                                            Please note: calls into your ring order SIP devices via DDI numbers or call queues will still ring the devices as usual - this feature only tracks calls to your SIP device's extension number.
+                                        </legend>
+                                    </div>
+                                    <div class="slds-page-header__detail-row" id="device-list">
+                                        <fieldset class="slds-form-element">
+                                            <legend class="slds-form-element__legend slds-form-element__label">My active inbound numbers</legend>
+                                            <div class="slds-form-element__control">
+                                                <apex:repeat value="{!userDeviceList}" var="device">
+                                                    <label class="slds-checkbox">
+                                                        <apex:inputField value="{!device.nbavs__Enabled__c}" onChange="updateDeviceState(this.checked, '{!JSENCODE(device.nbavs__Number__c)}'); return false;"/>
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">{!device.Number__c}</span>
+                                                    </label>
+                                                </apex:repeat>
+                                                <apex:repeat value="{!userNumberList}" var="number">
+                                                    <label class="slds-checkbox">
+                                                        <apex:inputField value="{!number.nbavs__CallQueueEnabled__c}" onChange="updateDeviceState(this.checked, '{!JSENCODE(number.Name)}'); return false;"/>
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">{!number.Name}</span>
+                                                    </label>
+                                                </apex:repeat>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </apex:outputpanel>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="min-width:720px">
+                        <div class="slds-box slds-box--small slds-theme--shade">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-announcement"
+                                                        path="/assets/icons/standard-sprite/svg/symbols.svg#announcement"/>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p class="slds-text-title--caps slds-line-height--reset">My Voice Mails</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                                    <apex:outputText rendered="{!lastVoicemailTime!=null}"
+                                                                    value="Last Voice Mail was {!lastVoicemailTime} ago"/>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-page-header__detail-row">
+                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                        <thead>
+                                        <tr class="slds-text-title--caps">
+                                            <th scope="col">
+                                                <div class="slds-truncate">Action(Play)</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Date / Time</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Dialled Number</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Duration</div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <apex:repeat value="{!voicemailList}" var="vm">
+                                            <tr>
+                                                <td>
+                                                    <div class="slds-truncate">                                                     
+                                                            <apex:image url="{!URLFOR($Resource.nbavs__playbuttons,'PlayOn.png')}" style="float:left;padding-top:1px;" rendered="{!IF(vm.nbavs__VMStatus__c==true, true, false)}"  onclick="popupRecord('{!JSENCODE(vm.nbavs__UUID__c)}','{!JSENCODE(TEXT(vm.nbavs__VMUserID__c))}', '{!JSENCODE(vm.Id)}'); return false;" />               
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">
+                                                        <apex:outputText value="{0,date,dd/MM/yyyy HH:mm:ss}">
+                                                            <apex:param value="{!vm.nbavs__CallStart__c}"/>
+                                                        </apex:outputText>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!vm.DialledNumber__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!durationMap[vm.TotalDuration__c]}</div>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around--small slds-size--1-of-2 slds-small-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="min-width:720px">
+                        <div class="slds-box slds-box--small slds-theme--shade">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <c:svg styleClass="slds-icon slds-icon--large slds-icon-standard-call"
+                                                    path="/assets/icons/standard-sprite/svg/symbols.svg#call"/>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p class="slds-text-title--caps slds-line-height--reset">My Recent Calls</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                                    <apex:outputText rendered="{!lastCallTime!=null}"
+                                                                    value="Last Call was {!lastCallTime} ago"/>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-page-header__detail-row">
+                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                        <thead>
+                                        <tr class="slds-text-title--caps">
+                                            <th scope="col">
+                                                <div class="slds-truncate">Date / Time</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">From (Number)</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">to (Number)</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Duration</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Direction</div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <apex:repeat value="{!callLogList}" var="cl">
+                                            <tr>
+                                                <td>
+                                                    <div class="slds-truncate">
+                                                        <apex:outputText value="{0,date,dd/MM/yyyy HH:mm:ss}">
+                                                            <apex:param value="{!cl.nbavs__DateTime__c}"/>
+                                                        </apex:outputText>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!cl.FromNumber__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!cl.ToNumber__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!durationMap[cl.TimeTalking__c]}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{!cl.Direction__c}</div>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </div>
+    </apex:form>
+</apex:page>

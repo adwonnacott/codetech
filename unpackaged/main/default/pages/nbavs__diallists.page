@@ -1,0 +1,112 @@
+<apex:page standardController="nbavs__DialList__c"
+           extensions="nbavs.DialListListController" tabstyle="nbavs__DialList__c"
+           recordSetVar="items" action="{!checkAPISetup}">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+    <apex:sectionHeader title="{!$ObjectType.nbavs__DialList__c.labelPlural}" subtitle="Home" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-core.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-api-metadata.min.js')}" />
+
+    <apex:form id="form">
+        <apex:pageMessages id="messages" />
+        <apex:actionFunction name="metadataAccessGranted" rerender="enableMetadata"/>
+        <apex:outputPanel id="enableMetadata">
+            <c:EnableMetadata metadataHost="{!metadataHostname}" featureName="Dynamic Dial List" onCompleteHandler="metadataAccessGranted" rendered="{!!metadataAccessible}"/>
+        </apex:outputPanel>
+        <apex:pageBlock id="body">
+            <apex:outputPanel layout="block" styleClass="buttonsBox">
+                <apex:outputPanel layout="block" id="buttons" styleClass="buttonsLeft">
+                    <apex:commandButton value="New {!$ObjectType.nbavs__DialList__c.label}" action="{!URLFOR($Action.DialList__c.New)}" />
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" id="paging" styleClass="buttonsRight" rendered="{!setCon.resultSize > setCon.pageSize}">
+                    <apex:commandButton rendered="{!setCon.hasPrevious}" value="First" action="{!setCon.first}" />
+                    <apex:commandButton rendered="{!setCon.hasPrevious}" value="Previous" action="{!setCon.previous}" />
+                    <apex:outputText rendered="{!(setCon.pageNumber * setCon.pageSize) < setCon.ResultSize}" value="{!setCon.pageNumber * setCon.pageSize} of {!setCon.ResultSize} records" styleClass="filterLabel"/>
+                    <apex:outputText rendered="{!(setCon.pageNumber * setCon.pageSize) >= setCon.ResultSize}" value="{!setCon.ResultSize} of {!setCon.ResultSize} records" styleClass="filterLabel"/>
+                    <apex:commandButton rendered="{!setCon.hasNext}" value="Next" action="{!setCon.next}" />
+                    <apex:commandButton rendered="{!setCon.hasNext}" value="Last" action="{!setCon.last}" />
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" id="list">
+                <table class="list display compact" id="dataTable">
+                    <thead>
+                    <tr class="headerRow">
+                        <th>Action</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.Name.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.Description__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.Object__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.Active__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.ListViewSOQLCacheStatus__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.ListViewSOQLEnableSync__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.Type__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.Audience__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.User__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.TotalItems__c.Label}</th>
+                        <th>{!$ObjectType['DialList__c'].Fields.CompletedItems__c.Label}</th>
+                        <!--SF-296 remove the progress bar due to soql limit-->
+                       <!-- <th>{!$ObjectType['DialList__c'].Fields.Progress__c.Label}</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <apex:repeat value="{!items}" var="item">
+                        <tr class="dataRow">
+                            <td class="actionColumn">
+                                <apex:commandLink action="{!listViewPageReference}" styleClass="actionLink" rendered="{!item.nbavs__Type__c == 'Static'}">Add Dial Items
+                                    <apex:param value="{!item.Id}" name="selectedId" assignTo="{!selectedId}" />
+                                </apex:commandLink>
+                                <apex:outputLabel value=" | " rendered="{!item.nbavs__Type__c == 'Static'}"/>
+                                <apex:outputLink value="{!URLFOR($Action.nbavs__DialList__c.Edit, item.Id)}" styleClass="actionLink">Edit</apex:outputLink>
+                                    <apex:outputLabel value=" | " />
+                                <apex:commandLink action="{!deleteItem}" styleClass="actionLink" reRender="paging,list,messages" onclick="if(!confirm('Are you sure?')) return false;">Del
+                                    <apex:param value="{!item.Id}" name="selectedId" assignTo="{!selectedId}" />
+                                </apex:commandLink>
+                            </td>
+                            <td><apex:outputLink value="{!URLFOR($Action.nbavs__DialList__c.View, item.Id)}">{!item.Name}</apex:outputLink></td>
+                            <td><apex:outputField value="{!item.nbavs__Description__c}" /></td>
+                            <td><apex:outputField value="{!item.nbavs__Object__c}" /></td>
+                            <td><apex:outputField value="{!item.nbavs__Active__c}" /></td>
+                            <td style="{!IF(item.Type__c=='Dynamic'&&(item.ListViewSOQLCacheStatus__c=='Init'||item.ListViewSOQLCacheStatus__c=='NoCache'||(item.ListViewSOQLCacheStatus__c!='Synced'&&item.ListViewSOQLEnableSync__c)),'background-color:#F99;','')}">
+                                <apex:outputField value="{!item.nbavs__ListViewSOQLCacheStatus__c}" rendered="{!item.nbavs__Type__c=='Dynamic'}"/>
+                            </td>
+                            <td><apex:outputField value="{!item.nbavs__ListViewSOQLEnableSync__c}" rendered="{!item.nbavs__Type__c=='Dynamic'}"/></td>
+                            <td><apex:outputField value="{!item.nbavs__Type__c}" /></td>
+                            <td><apex:outputField value="{!item.nbavs__Audience__c}" /></td>
+                            <td><apex:outputField value="{!item.nbavs__User__c}"/></td>
+                            <td>
+                                <apex:outputField value="{!item.nbavs__TotalItems__c}" rendered="{!item.nbavs__Type__c == 'Static'}"/>
+                                <apex:outputText value="{!reports[item.Id].Scope__c + reports[item.Id].Total__c}" rendered="{!item.nbavs__Type__c == 'Dynamic'}"/>
+                            </td>
+                            <td>
+                                <apex:outputField value="{!item.nbavs__CompletedItemsDynamic__c}" rendered="{!item.nbavs__Type__c == 'Dynamic'}"/>
+                                <apex:outputField value="{!item.nbavs__CompletedItems__c}" rendered="{!item.nbavs__Type__c == 'Static'}"/>
+                            </td>
+                             <!--SF-296 remove the progress bar due to soql limit-->
+                             <!--
+                            <td>
+                                <c:PercentageComplete width="200px" height="20px" complete="{!item.Progress__c}" rendered="{!item.nbavs__Type__c == 'Static'}"/>
+                                <c:PercentageComplete width="200px" height="20px" complete="{!reports[item.Id].Progress__c}" rendered="{!item.nbavs__Type__c == 'Dynamic'}"/>
+                            </td>
+                            -->
+                        </tr>
+                    </apex:repeat>
+                    </tbody>
+                </table>
+                <script type="text/javascript">
+                    j$ = jQuery.noConflict();
+                    j$('#dataTable').DataTable({
+                        "paging": true,
+                        "stateSave": true,
+                        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                        "order": [[ 1, "asc" ]],
+                        "saveState": true,
+                        "columnDefs": [
+                            { 'sortable': false, 'targets': [ 0 ] },
+                        ]
+                    });
+                </script>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,173 @@
+<apex:page controller="nbavs.es">
+    <apex:form id="mainForm" >
+        <apex:pageBlock title="Login" rendered="{!!hasAccess}">
+
+            <apex:pageMessages id="LoginMessages" />
+            <apex:pageBlockSection showHeader="false" columns="1">
+                <apex:pageBlockSectionItem id="accessToken">
+                    <apex:outputLabel value="Access Token" />
+                    <apex:inputText value="{!accessToken}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="login">
+                    <apex:outputLabel value="" />
+                    <apex:commandButton value="Login" action="{!getAccess}"  />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="API Settings" rendered="{!hasAccess}" id="APIBlock">
+            <apex:pageMessages id="APIMessages" />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveAPI}"  reRender="APIBlock"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2">
+                <apex:inputField value="{!api.nbavs__ClientId__c}" />
+                <apex:inputField value="{!api.nbavs__ClientIdSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__ClientSecret__c}" />
+                <apex:inputField value="{!api.nbavs__ClientSecretSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__Host__c}" />
+                <apex:inputField value="{!api.nbavs__HostSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__TelemetryHost__c}" />
+                <apex:inputField value="{!api.nbavs__TelemetryHostSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__DevOrgId__c}" />
+                <apex:inputField value="{!api.nbavs__DevOrgIdSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__OrganizationId__c}" />
+                <apex:inputField value="{!api.nbavs__Sandbox__c}" />
+                <apex:inputField value="{!api.nbavs__NamespacePrefix__c}" />
+                <apex:inputField value="{!api.nbavs__NotifyEmailAddress__c}" />
+                <apex:inputField value="{!api.nbavs__ProvisioningEmailAddress__c}" />
+                <apex:inputField value="{!api.nbavs__SessionRefreshMargin__c}" />
+                <apex:inputField value="{!api.nbavs__SipDomain__c}" />
+                <apex:inputField value="{!api.nbavs__ConnectorId__c}" />
+                <apex:inputField value="{!api.nbavs__Username__c}" />
+                <apex:pageBlockSectionItem id="plainPassword">
+                    <apex:outputLabel value="Updated Redmatter Password" />
+                    <apex:inputSecret value="{!newPassword}" />
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!api.nbavs__Disable_Call_Reporting_Trigger__c}" />
+                <apex:inputField value="{!api.nbavs__Disable_Insight_Trigger__c}" />
+                <apex:inputField value="{!api.nbavs__Disable_Task_Insert_Trigger__c}" />
+                <apex:inputField value="{!api.nbavs__ReportingPolicyId__c}" />
+                <apex:inputField value="{!api.nbavs__ActivatedInProduction__c}" />
+                <apex:inputField value="{!api.nbavs__BatchSize__c}" />
+                <apex:inputField value="{!api.nbavs__WebPhoneHost__c}" />
+                <apex:inputField value="{!api.nbavs__WebPhoneBetaHost__c}" />
+                <apex:inputField value="{!api.nbavs__LicenceAPIHost__c}" />
+                <apex:inputField value="{!api.nbavs__LicenceAPIHostSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__Gatekeeper_Host__c}" />
+                <apex:inputField value="{!api.nbavs__Gatekeeper_Host_Sandbox__c}" />
+                <apex:inputField value="{!api.nbavs__ServiceCloudRecordingHost__c}" />
+                <apex:inputField value="{!api.nbavs__ServiceCloudRecordingHostSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__WallboardAPIHost__c}" />
+                <apex:inputField value="{!api.nbavs__WallboardAPIHostSandbox__c}" />
+                <apex:inputField value="{!api.nbavs__ReduxIPs__c}" />
+                <apex:inputField value="{!api.nbavs__DisableTriggers__c}" />
+                <apex:inputField value="{!api.nbavs__APIUserId__c}" />
+                <apex:inputField value="{!api.nbavs__AllowPrivateRest__c}" />
+                <apex:inputField value="{!api.nbavs__SDOMaximumPhoneNumbers__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Insights Settings" rendered="{!hasAccess}" id="InsightBlock">
+            <apex:pageMessages id="InsightMessages" />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveAPI}" reRender="InsightBlock" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2">
+                <apex:inputField value="{!api.nbavs__CallFlow_Host__c}" />
+                <apex:inputField value="{!api.nbavs__CallFlow_Host_Sandbox__c}" />
+                <apex:inputField value="{!api.nbavs__Sapien_Host__c}" />
+                <apex:inputField value="{!api.nbavs__Sapien_Host_Sandbox__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="License Settings" rendered="{!hasAccess}" id="LicenseBlock">
+            <apex:pageMessages id="LicenseMessages" />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveLicense}" reRender="LicenseBlock"/>
+                <apex:commandButton value="Refresh User Licences" action="{!refreshLicences}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2">
+                <apex:inputField value="{!license.nbavs__PBX__c}" />
+                <apex:inputField value="{!license.nbavs__PBX_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Manager__c}" />
+                <apex:inputField value="{!license.nbavs__Manager_Count__c}" />
+                <apex:inputField value="{!license.nbavs__CTI__c}" />
+                <apex:inputField value="{!license.nbavs__CTI_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Global__c}" />
+                <apex:inputField value="{!license.nbavs__Global_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Numbers__c}" />
+                <apex:inputField value="{!license.nbavs__Numbers_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Record__c}" />
+                <apex:inputField value="{!license.nbavs__Record_Count__c}" />
+                <apex:inputField value="{!license.nbavs__PCI__c}" />
+                <apex:inputField value="{!license.nbavs__PCI_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Insights__c}" />
+                <apex:inputField value="{!license.nbavs__Insights_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Freedom__c}" />
+                <apex:inputField value="{!license.nbavs__Freedom_Count__c}" />
+                <apex:inputField value="{!license.nbavs__SCV__c}" />
+                <apex:inputField value="{!license.nbavs__SCV_Count__c}" />
+                <apex:inputField value="{!license.nbavs__Updated__c}" />
+                <apex:inputField value="{!license.nbavs__AVS_Provisioned__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Organization Settings" rendered="{!hasAccess}" id="OrgBlock">
+            <apex:pageMessages id="OrgMessages" />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveSettings}"  reRender="OrgBlock"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2">
+                <apex:inputField value="{!settings.nbavs__ContactLookupEnable__c}" />
+                <apex:inputField value="{!settings.nbavs__AccountLookupEnable__c}" />
+                <apex:inputField value="{!settings.nbavs__LeadLookupEnable__c}" />
+                <apex:inputField value="{!settings.nbavs__AccessOwnRecordings__c}" />
+                <apex:inputField value="{!settings.nbavs__Phone_Number_Match_Precision__c}" />
+                <apex:inputField value="{!settings.nbavs__Phone_Number_Search_Precision__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Secure Pay Settings" rendered="{!hasAccess}" id="SecPayBlock">
+            <apex:pageMessages id="PayMessages" />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveSecurePayConfig}" reRender="SecPayBlock"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false" columns="2">
+                <apex:inputField value="{!securePayConfig.nbavs__AUTH_URL__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__SESSION_URL__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__SOCKET_URL__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__CALLBACK_URL__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__TenantName__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__TenantId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__Client_Id__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__Client_Secret__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__FlowId__c}" />
+                <apex:pageBlockSectionItem />
+                <apex:inputField value="{!securePayConfig.nbavs__Username__c}" />
+                <apex:pageBlockSectionItem id="securePayPassword">
+                    <apex:outputLabel value="New Password" />
+                    <apex:inputSecret value="{!securePayPassword}" />
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!securePayConfig.nbavs__processPaymentFlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__resetCardPANFlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__resetExpiryFlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__resetCardCV2FlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__processCollectionFlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__resecureFlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__restartFlowId__c}" />
+                <apex:inputField value="{!securePayConfig.nbavs__resendFlowId__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Tools And Utilities" rendered="{!hasAccess}" id="toolsBlock">
+            <apex:pageMessages id="ToolMessages" />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Fix Duplicated CROs" action="{!fixDuplicateCRO}" reRender="toolsBlock"/>
+                <apex:commandButton value="Fix Recording Links" action="{!fixRecordingLinks}" reRender="toolsBlock"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

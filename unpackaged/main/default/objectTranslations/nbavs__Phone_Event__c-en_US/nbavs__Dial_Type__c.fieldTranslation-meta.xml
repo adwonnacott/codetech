@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Dial Type --></label>
+        <name>nbavs__Dial_Type__c</name>
+        <picklistValues>
+            <masterLabel>Call Queue</masterLabel>
+            <translation><!-- Call Queue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DDI</masterLabel>
+            <translation><!-- DDI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Divert</masterLabel>
+            <translation><!-- Divert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Group</masterLabel>
+            <translation><!-- Group --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User</masterLabel>
+            <translation><!-- User --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

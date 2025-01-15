@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Progress__c</fullName>
+    <deprecated>false</deprecated>
+    <formula>IF((nbavs__Scope__c + nbavs__Processing__c + nbavs__Processed__c) &gt; 0, nbavs__Processed__c / (nbavs__Scope__c + nbavs__Processing__c + nbavs__Processed__c), 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Progress</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

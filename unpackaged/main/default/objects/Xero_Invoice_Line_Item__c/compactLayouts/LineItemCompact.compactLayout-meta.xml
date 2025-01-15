@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LineItemCompact</fullName>
+    <fields>Name</fields>
+    <fields>Xero_Invoice__c</fields>
+    <fields>Line_Amount__c</fields>
+    <label>LineItemCompact</label>
+</CompactLayout>

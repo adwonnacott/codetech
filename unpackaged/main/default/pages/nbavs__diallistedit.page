@@ -1,0 +1,173 @@
+<apex:page standardController="nbavs__DialList__c" extensions="nbavs.DialListController" tabstyle="nbavs__DialList__c" docType="html-5.0">
+    <style type="text/css">
+        .editPage .bPageBlock {
+            border-top-width: 3px;
+        }
+        .noRedBar .requiredBlock {
+            visibility: hidden
+        }
+    </style>
+
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-core.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-api-metadata.min.js')}" />
+
+    <apex:sectionHeader title="{!$ObjectType.nbavs__DialList__c.label} Edit"
+         subtitle="{!IF(nbavs__DialList__c.Id!=null, nbavs__DialList__c.Name, 'New ' + $ObjectType.nbavs__DialList__c.label)}"/>
+    <apex:pageMessages id="messages"/>
+    <apex:outputPanel rendered="{!hasAccessToPage}">
+    <apex:form id="form">
+        <apex:actionFunction name="metadataAccessGranted" action="{!updateMetadataAccess}" rerender="enableMetadata,dialListOptions,pageBlockButtons"/>
+        <apex:actionFunction name="metadataFixed" rerender="dialListOptions,pageBlockButtons"/>
+        <apex:outputPanel id="enableMetadata">
+            <c:EnableMetadata metadataHost="{!metadataHostname}" featureName="Dynamic Dial List" onCompleteHandler="metadataAccessGranted" rendered="{!dialListType=='Dynamic' && !metadataAccessible}"/>
+            <c:MetadataFixer featureName="Dynamic Dial List" onCompleteHandler="metadataFixed" rendered="{!dialListType=='Dynamic' && metadataAccessible && statusPicklistUpdateRequired}"/>
+        </apex:outputPanel>
+        <apex:pageBlock title="{!$ObjectType.nbavs__DialList__c.label} Edit" mode="edit">
+            <apex:pageBlockButtons location="top">
+                <apex:outputPanel id="pageBlockButtons">
+                    <apex:commandButton action="{!saveDialList}" value="Save" disabled="{!disableSaveButton}"/>
+                    <apex:commandButton action="{!cancel}" value="Cancel" html-formnovalidate="formnovalidate"/>
+                </apex:outputPanel>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{!nbavs__DialList__c.Name}" required="true"/>
+                <apex:inputField value="{!nbavs__DialList__c.nbavs__Description__c}"/>
+
+                <apex:inputField value="{!nbavs__DialList__c.nbavs__Audience__c}" required="true"
+                                 rendered="{!nbavs__DialList__c.Id==null && allowSharedList}"/>
+                <apex:outputField value="{!nbavs__DialList__c.nbavs__Audience__c}" rendered="{!nbavs__DialList__c.Id!=null}"/>
+
+                <apex:inputField value="{!nbavs__DialList__c.nbavs__Object__c}" required="true" rendered="{!nbavs__DialList__c.Id==null}">
+                    <apex:actionSupport event="onchange" action="{!getObjectFields}"
+                                        reRender="messages,orderBySelector,phoneFieldSelector,secondaryPhoneFieldSelector,dialListOptions"/>
+                </apex:inputField>
+                <apex:outputField value="{!nbavs__DialList__c.nbavs__Object__c}" rendered="{!nbavs__DialList__c.Id!=null}"/>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.PhoneField__c.Label}"/>
+                    <apex:outputPanel id="phoneFieldSelector" styleClass="col02 requiredInput" layout="block">
+                        <apex:panelGroup styleClass="requiredBlock" layout="block"/>
+                        <apex:selectList value="{!nbavs__DialList__c.nbavs__PhoneField__c}" size="1" required="true">
+                            <apex:selectOptions value="{!phoneFieldOptions}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.SecondaryPhoneField__c.Label}"/>
+                    <apex:outputPanel id="secondaryPhoneFieldSelector" styleClass="col02 requiredInput" layout="block">
+                        <apex:panelGroup styleClass="requiredBlock" layout="block"/>
+                        <apex:selectList value="{!nbavs__DialList__c.nbavs__SecondaryPhoneField__c}" size="1" required="true">
+                            <apex:selectOptions value="{!phoneFieldOptions}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.OrderBy__c.Label}"/>
+                    <apex:outputPanel id="orderBySelector" styleClass="col02 requiredInput" layout="block">
+                        <apex:panelGroup styleClass="requiredBlock" layout="block"/>
+                        <apex:selectList value="{!nbavs__DialList__c.nbavs__OrderBy__c}" size="1" required="true">
+                            <apex:selectOptions value="{!orderByOptions}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.OrderDirection__c.Label}"/>
+                    <apex:outputPanel id="orderDirectionSelector" styleClass="col02 requiredInput" layout="block">
+                        <apex:panelGroup styleClass="requiredBlock" layout="block"/>
+                        <apex:selectList value="{!nbavs__DialList__c.nbavs__OrderDirection__c}" size="1" required="true">
+                            <apex:selectOptions value="{!orderDirectionOptions}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:inputField value="{!nbavs__DialList__c.nbavs__Active__c}"/>
+                <apex:inputField value="{!nbavs__DialList__c.nbavs__AllowPreview__c}"/>
+                <apex:inputField value="{!nbavs__DialList__c.nbavs__AllowDiscardPreview__c}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.Type__c.Label}"/>
+                    <apex:selectList value="{!dialListType}" size="1">
+                        <apex:actionSupport event="onchange" action="{!updateListViewSoql}" reRender="enableMetadata,dialListOptions,pageBlockButtons"/>
+                        <apex:selectOptions value="{!dialListTypeOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:outputPanel id="dialListOptions">
+                <apex:pageBlockSection columns="1" rendered="{!dialListType == 'Static'}">
+                    <apex:outputPanel rendered="{!staticDialMessageShow}">
+                       <span style="color: #b94a48;font-weight: bold;">Shield platform encryption is enabled for the selected object. Please select an object list view where the first column is not an encrypted field to add 'Dial Items'.</span>
+                       </apex:outputPanel>
+                    <apex:inputField value="{!nbavs__DialList__c.nbavs__MaximumDialAttempts__c}"/>
+                    <apex:inputField value="{!nbavs__DialList__c.nbavs__Timeout__c}"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" rendered="{!dialListType == 'Dynamic'}">
+                    <apex:inputField value="{!nbavs__DialList__c.nbavs__QueryLimit__c}"/>
+<!--                    <apex:inputField value="{!DialList__c.Source__c}"/>-->
+                    <apex:pageBlockSectionItem HelpText="{!listViewSOQL}">
+                        <apex:outputLabel value="{!nbavs__DialList__c.nbavs__Object__c} List Views"/>
+                        <apex:selectList value="{!listViewID}" size="1">
+                            <apex:actionSupport event="onchange" action="{!updateListViewSoql}" reRender="dialListOptions"/>
+                            <apex:selectOptions value="{!listViewListOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputField value="{!nbavs__DialList__c.nbavs__DialListSortStrategy__c}"/>
+                    <apex:inputField value="{!nbavs__DialList__c.nbavs__ListViewSOQLEnableSync__c}"/>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.RetryStrategy__c.Label}"/>
+                        <apex:selectList value="{!dialListRetryStrategy}" size="1">
+                            <apex:actionSupport event="onchange" reRender="dialListOptions"/>
+                            <apex:selectOptions value="{!dialListRetryStrategyOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputField value="{!nbavs__DialList__c.nbavs__MaximumDialAttempts__c}" rendered="{!dialListRetryStrategy == 'Simple'}"/>
+<!--                    <apex:inputField value="{!DialList__c.UseTargetTimeZone__c}" rendered="{!dialListRetryStrategy == 'Scripted'}"/>-->
+                    <apex:pageBlockSectionItem rendered="{!dialListRetryStrategy == 'Scripted'}">
+                        <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.CallStartTime__c.Label}"/>
+                        <apex:input type="time" value="{!callStartTime}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!dialListRetryStrategy == 'Scripted'}">
+                        <apex:outputLabel value="{!$ObjectType['DialList__c'].Fields.CallEndTime__c.Label}"/>
+                        <apex:input type="time" value="{!callEndTime}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!dialListRetryStrategy == 'Scripted'}">
+                        <apex:outputLabel value="Retry Script"/>
+                        <apex:outputPanel id="retryScript">
+                            <apex:outputPanel id="retryScriptTable" rendered="{!retryItems.size != 0}">
+                                <apex:pageBlockTable value="{!retryItems}" var="item" style="width:fit-content" cellPadding="10px 10px" styleClass="noRedBar">
+                                    <apex:column headerValue="Attempt">
+                                        <apex:outputField value="{!item.nbavs__Order__c}"/>
+                                    </apex:column>
+                                    <apex:column headerValue="Action">
+                                        <div style="display:flex">
+                                            <apex:outputField value="{!item.nbavs__Retry_Action__c}" rendered="{!item.nbavs__Order__c == retryItems.size}"/>
+                                            <apex:inputField value="{!item.nbavs__Retry_Action__c}" rendered="{!item.nbavs__Order__c < retryItems.size}">
+                                                <apex:actionSupport event="onchange" reRender="retryScript"/>
+                                            </apex:inputField>
+                                            <apex:inputField value="{!item.nbavs__Wait_Period__c}" style="width:3em" rendered="{!item.nbavs__Retry_Action__c == 'RetryAfter'}"/>
+                                            <apex:inputField value="{!item.nbavs__Period_Name__c}" rendered="{!item.nbavs__Retry_Action__c == 'RetryAfter'}"/>
+                                        </div>
+                                    </apex:column>
+                                    <apex:column headerValue="">
+                                        <apex:commandButton action="{!retryDelete}" value=" ✖ " style="width:2.5em" reRender="retryScript" disabled="{!item.nbavs__Order__c == retryItems.size}">
+                                            <apex:param name="retryParam" value="{!item.nbavs__Order__c}" assignTo="{!retryParam}"/>
+                                        </apex:commandButton>
+                                        <apex:commandButton action="{!retryUp}" value=" ▲ " style="width:2.5em" reRender="retryScript" disabled="{!item.nbavs__Order__c == 1 || item.nbavs__Order__c == retryItems.size}">
+                                            <apex:param name="retryParam" value="{!item.nbavs__Order__c}" assignTo="{!retryParam}"/>
+                                        </apex:commandButton>
+                                        <apex:commandButton action="{!retryDown}" value=" ▼ " style="width:2.5em" reRender="retryScript" disabled="{!item.nbavs__Order__c >= (retryItems.size - 1)}">
+                                            <apex:param name="retryParam" value="{!item.nbavs__Order__c}" assignTo="{!retryParam}"/>
+                                        </apex:commandButton>
+                                    </apex:column>
+                                </apex:pageBlockTable>
+                            </apex:outputPanel>
+                            <apex:commandButton action="{!retryAdd}" value="Add Action" reRender="retryScript"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+    </apex:outputPanel>
+</apex:page>

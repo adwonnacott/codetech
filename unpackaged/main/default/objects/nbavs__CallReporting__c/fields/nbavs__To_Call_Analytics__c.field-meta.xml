@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Call_Analytics__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>IF(AND(nbavs__To_Flag_Record__c,nbavs__To_Flag_Analytics__c), HYPERLINK(&#39;/apex/nbavs__telemetry?callReportingId=&#39;+Id+&#39;&amp;to&#39;, IMAGE(&quot;/resource/nbavs__playbuttons/TelemetryOn.png&quot;, &quot;Call Analysis&quot;)), IMAGE(&quot;/resource/nbavs__playbuttons/TelemetryOff.png&quot;, &quot;No Recording was made&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>To Call Analytics</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

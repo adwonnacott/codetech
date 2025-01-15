@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Cannot_Be_Inactive</fullName>
+    <active>true</active>
+    <description>For New Cases, Contact cannot be Inactive</description>
+    <errorConditionFormula>AND(ISNEW()=true, Contact.Inactive__c = true)</errorConditionFormula>
+    <errorMessage>Case Contact cannot be Inactive. Please associate the Case with an active Contact for the Account</errorMessage>
+</ValidationRule>

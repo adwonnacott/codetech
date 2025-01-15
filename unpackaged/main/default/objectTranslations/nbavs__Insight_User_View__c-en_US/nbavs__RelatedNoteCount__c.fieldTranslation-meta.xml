@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Number of related notes this user has on this Insight. --></help>
+        <label><!-- Related Note Count --></label>
+        <name>nbavs__RelatedNoteCount__c</name>
+    </CustomFieldTranslation>

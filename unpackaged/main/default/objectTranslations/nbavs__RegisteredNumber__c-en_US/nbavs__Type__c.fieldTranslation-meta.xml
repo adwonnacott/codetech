@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Type --></label>
+        <name>nbavs__Type__c</name>
+        <picklistValues>
+            <masterLabel>CLI</masterLabel>
+            <translation><!-- CLI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOME</masterLabel>
+            <translation><!-- HOME --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOBILE</masterLabel>
+            <translation><!-- MOBILE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MS_TEAMS</masterLabel>
+            <translation><!-- MS_TEAMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OTHER</masterLabel>
+            <translation><!-- OTHER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UNKNOWN</masterLabel>
+            <translation><!-- UNKNOWN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WORK</masterLabel>
+            <translation><!-- WORK --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

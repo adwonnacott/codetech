@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Billing_Address_Check</fullName>
+    <active>true</active>
+    <description>A customer account type must have at least one address field populated</description>
+    <errorConditionFormula>ISPICKVAL(Type,&#39;Customer&#39;)  
+&amp;&amp; ISBLANK(BillingAddressLine1__c)
+&amp;&amp; ISBLANK(BillingAddressLine2__c)
+&amp;&amp; ISBLANK(BillingAddressLine3__c)
+&amp;&amp; ISBLANK(BillingAddressLine4__c)</errorConditionFormula>
+    <errorMessage>AT LEAST ONE BILLING ADDRESS FIELD MUST BE POPULATED TO SET THE ACCOUNT TO CUSTOMER TYPE</errorMessage>
+</ValidationRule>

@@ -1,0 +1,82 @@
+{
+  "events": {
+    "uuid": "e6458bc8-84f8-499a-b0cb-2bdcb63110f7",
+    "callEvents": [
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1554975282755229",
+        "data": {
+          "uuid": "7e0cf09a-f32f-4290-9e17-ee080e7ca79b"
+        }
+      },
+      {
+        "event": "RECORD_START",
+        "timeStamp": "1554975282997059"
+      },
+      {
+        "event": "RECORD_STOP",
+        "timeStamp": "1554975290000000"
+      },
+      {
+        "event": "RECORD_START",
+        "timeStamp": "1554975295000000"
+      },
+      {
+        "event": "CS_UNBRIDGE",
+        "timeStamp": "1554975300848826",
+        "data": {
+          "uuid": "7e0cf09a-f32f-4290-9e17-ee080e7ca79b"
+        }
+      },
+      {
+        "event": "CS_PARKED_TRANSFER",
+        "timeStamp": "1554975301333422",
+        "data": {
+          "uuid": "7e0cf09a-f32f-4290-9e17-ee080e7ca79b"
+        }
+      },
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1554975347390364",
+        "data": {
+          "uuid": "4ed2b381-bf69-4d5d-8f5f-8f1320725abc"
+        }
+      },
+      {
+        "event": "ON_HOLD",
+        "timeStamp": "1554975475000000"
+      },
+      {
+        "event": "UN_HOLD",
+        "timeStamp": "1554975535000000"
+      },
+      {
+        "event": "CS_UNBRIDGE",
+        "timeStamp": "1554975895000000",
+        "data": {
+          "uuid": "4ed2b381-bf69-4d5d-8f5f-8f1320725abc"
+        }
+      },
+      {
+        "event": "RECORD_STOP",
+        "timeStamp": "1554975895000000"
+      },
+      {
+        "event": "CHANNEL_START",
+        "timeStamp": "1554975277250688"
+      },
+      {
+        "event": "CHANNEL_RING",
+        "timeStamp": "1554975277711874"
+      },
+      {
+        "event": "CHANNEL_ANSWER",
+        "timeStamp": "1554975278969818"
+      },
+      {
+        "event": "CHANNEL_END",
+        "timeStamp": "1554975895000000"
+      }
+    ]
+  }
+}

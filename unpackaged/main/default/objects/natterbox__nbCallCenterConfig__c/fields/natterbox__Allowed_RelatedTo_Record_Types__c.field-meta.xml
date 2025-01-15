@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>natterbox__Allowed_RelatedTo_Record_Types__c</fullName>
+    <deprecated>false</deprecated>
+    <inlineHelpText>Allowed &#39;Related To&#39; record types that a call log entry is permitted to be linked to. Deselect all options to disable this feature. 
+This feature is only applicable if &#39;Split Person &amp; Related To Query Results&#39; is checked</inlineHelpText>
+    <label>Allowed Related To Record Types</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

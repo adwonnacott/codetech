@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreateNewLead__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checkbox to identify the creation of a new lead should the opportunity be set to closed/lost</description>
+    <label>Create New Lead</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

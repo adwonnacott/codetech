@@ -1,0 +1,61 @@
+<apex:page standardController="nbavs__Sound__c" extensions="nbavs.SoundAttachmentController" tabstyle="Settings__tab">
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<style type="text/css">
+	.bPageBlock {
+		border-top: 4px solid #00a0c4;
+	}
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}
+	.pageTitleIcon {
+		background-image : URL("{!URLFOR($Resource.img, 'settings.png')}");
+	}
+	</style>
+	<apex:sectionHeader title="{!$ObjectType.nbavs__Sound__c.label}" subtitle="{!nbavs__Sound__c.nbavs__Tag__c}" />
+	<apex:form id="form" enctype="multipart/form-data">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="{!$ObjectType.nbavs__Sound__c.label} Edit" mode="edit">
+			<apex:pageBlockButtons location="top">
+				<apex:actionFunction action="{!addSound}" name="handleAdd"  />
+                <apex:actionFunction action="{!updateSound}" name="handleUpdate" />
+                
+				<apex:commandButton value="Save" onclick="handleNew(true);return false;" rendered="{!nbavs__Sound__c.Id==null}" />
+				<apex:commandButton onclick="handleNew(false);return false;" value="Save" rendered="{!nbavs__Sound__c.Id!=null}" />
+				<apex:commandButton immediate="true" value="Cancel" action="{!cancel}" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Sound Information" columns="2">
+				<apex:inputField value="{!nbavs__Sound__c.nbavs__Id__c}" rendered="false" />
+				<apex:inputField id="tag" required="true" value="{!nbavs__Sound__c.nbavs__Tag__c}" />
+				<apex:inputField id="description" required="true" value="{!nbavs__Sound__c.nbavs__Description__c}" />
+				<!--  <apex:outputField id="size" value="{!Sound__c.Size__c}" />
+				<apex:outputField id="created" value="{!Sound__c.Created__c}" />
+				<apex:outputField id="modified" value="{!Sound__c.Modified__c}" />	-->
+				<apex:pageBlockSectionItem id="pageBlockSectionItem">
+					<apex:outputLabel value="File" for="file" />
+					<apex:inputFile value="{!attachment.body}" accept=".wav" filename="{!attachment.name}" fileSize="{!attachment.BodyLength}" contentType="{!attachment.ContentType}" id="file" />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+	<script type="text/javascript">
+		j$ = jQuery.noConflict();
+        function handleNew(isAdd){
+            if(isAdd === false){
+                handleUpdate();
+            }
+            if(isAdd === true){
+                handleAdd();
+            }
+            buttonsEnabled(false);
+        }
+        function buttonsEnabled(enabled) {
+            var $buttons = jQuery('.btn');
+            if (enabled === false) {
+                $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+            } else {
+                $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+            } 
+        }					
+	</script>
+</apex:page>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Active__c</fullName>
+    <deprecated>false</deprecated>
+    <formula>IF(nbavs__SourceDevice__c != Null  ,  nbavs__SourceDevice__r.nbavs__Enabled__c , false)</formula>
+    <label>Device Enabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

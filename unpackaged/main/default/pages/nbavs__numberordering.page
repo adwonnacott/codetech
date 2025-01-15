@@ -1,0 +1,67 @@
+<apex:page Controller="nbavs.PhoneNumberOrderController" tabstyle="nbavs__PhoneNumber__c" >
+<apex:sectionHeader title="Phone Number"
+		subtitle="New Phone Numbers Request" />
+	<apex:form >
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="Please provide the quantity of numbers for each Area in {!countryName} you require.">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!send}" value="Send" />
+				<apex:commandButton action="{!URLFOR($page.phonenumbers)}" value="Cancel" /> 				
+			</apex:pageBlockButtons>			
+			<apex:pageBlockSection collapsible="false" columns="3" id="requestPhoneNumbers">
+				<apex:outputText value="Quantity"/>
+	            <apex:outputText value="Area"/>
+	            <apex:outputText value="Special Notes" />
+	            
+	            <apex:inputText value="{!quantity1}" size="4" id="quan1" maxlength="4"  onkeydown="validateNumber(event);" />	           
+	           	<apex:inputText value="{!area1}" size="30" id="area1" />
+	            <apex:inputText value="{!note1}" size="60" id="note1"/>
+	            
+	            <apex:inputText value="{!quantity2}" size="4" id="quan2" maxlength="4"  onkeydown="validateNumber(event);" />
+	            <apex:inputText value="{!area2}" size="30" id="area2"/>
+	            <apex:inputText value="{!note2}" size="60" id="note2"/>	
+	            
+	            <apex:inputText value="{!quantity3}" size="4" id="quan3" maxlength="4"  onkeydown="validateNumber(event);" />
+	            <apex:inputText value="{!area3}" size="30" id="area3"/>
+	            <apex:inputText value="{!note3}" size="60" id="note3"/>	
+	            
+	            <apex:inputText value="{!quantity4}" size="4" id="quan4" maxlength="4"  onkeydown="validateNumber(event);" />
+	            <apex:inputText value="{!area4}" size="30" id="area4"/>
+	            <apex:inputText value="{!note4}" size="60" id="note4"/>
+	            
+	             <apex:inputText value="{!quantity5}" size="4" id="quan5" maxlength="4"  onkeydown="validateNumber(event);" />
+	            <apex:inputText value="{!area5}" size="30" id="area5"/>
+	            <apex:inputText value="{!note5}" size="60" id="note5"/> 
+	            					
+			</apex:pageBlockSection> 
+		</apex:pageBlock>
+		<script type="text/javascript">
+			function validateNumber(evt) {
+			    var e = evt || window.event;
+			    var key = e.keyCode || e.which;
+			
+			    if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+			    // numbers   
+			    key >= 48 && key <= 57 ||
+			    // Numeric keypad
+			    key >= 96 && key <= 105 ||
+			    // Backspace and Tab and Enter
+			    key == 8 || key == 9 || key == 13 ||
+			    // Home and End
+			    key == 35 || key == 36 ||
+			    // left and right arrows
+			    key == 37 || key == 39 ||
+			    // Del and Ins
+			    key == 46 || key == 45) {
+			        // input is VALID
+			    }
+			    else {
+			        // input is INVALID
+			        e.returnValue = false;
+			        if (e.preventDefault) e.preventDefault();
+			    }
+			}
+
+		</script>
+	</apex:form>	
+</apex:page>

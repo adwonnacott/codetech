@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Call_Type__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Call Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Connected</fullName>
+                <default>false</default>
+                <label>Connected</label>
+            </value>
+            <value>
+                <fullName>Not connected</fullName>
+                <default>false</default>
+                <label>Not connected</label>
+            </value>
+            <value>
+                <fullName>Voicemail Record</fullName>
+                <default>false</default>
+                <label>Voicemail Record</label>
+            </value>
+            <value>
+                <fullName>ListenIn</fullName>
+                <default>false</default>
+                <label>ListenIn</label>
+            </value>
+            <value>
+                <fullName>Fax To Email</fullName>
+                <default>false</default>
+                <label>Fax To Email</label>
+            </value>
+            <value>
+                <fullName>Call Return</fullName>
+                <default>false</default>
+                <label>Call Return</label>
+            </value>
+            <value>
+                <fullName>Voicemail Login</fullName>
+                <default>false</default>
+                <label>Voicemail Login</label>
+            </value>
+            <value>
+                <fullName>LoginOut Svce</fullName>
+                <default>false</default>
+                <label>LoginOut Svce</label>
+            </value>
+            <value>
+                <fullName>Echo</fullName>
+                <default>false</default>
+                <label>Echo</label>
+            </value>
+            <value>
+                <fullName>Echo Delay</fullName>
+                <default>false</default>
+                <label>Echo Delay</label>
+            </value>
+            <value>
+                <fullName>Who am I</fullName>
+                <default>false</default>
+                <label>Who am I</label>
+            </value>
+            <value>
+                <fullName>Group Login</fullName>
+                <default>false</default>
+                <label>Group Login</label>
+            </value>
+            <value>
+                <fullName>Group Logout</fullName>
+                <default>false</default>
+                <label>Group Logout</label>
+            </value>
+            <value>
+                <fullName>Call Park</fullName>
+                <default>false</default>
+                <label>Call Park</label>
+            </value>
+            <value>
+                <fullName>Sound Manager</fullName>
+                <default>false</default>
+                <label>Sound Manager</label>
+            </value>
+            <value>
+                <fullName>Conference</fullName>
+                <default>false</default>
+                <label>Conference</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,114 @@
+<template>
+    <div class="slds-card slds-p-around_medium">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_12-of-12">
+                        <!-- <p class="slds-text-heading_small"><b>Connection</b></p> -->
+                        <div class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                              <span class="slds-truncate slds-p-horizontal_small" title="Connection">Connection</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content">
+                                <template if:true={settings}>
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-size_4-of-12 slds-m-left_medium">
+                                            <lightning-input name="Consumer_Key__c" data-type="connection" label="Client ID" type="text" value={settings.Consumer_Key__c} onchange={handleChange} required></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12"> <!-- EMPTY DIV --> </div>
+                                        <div class="slds-col slds-size_4-of-12 slds-m-left_medium">
+                                            <template if:false={settings.Tenant_ID__c}>
+                                                <lightning-input name="Consumer_Secret__c" data-type="connection" label="Client Secret" type="text" value={settings.Consumer_Secret__c} onchange={handleChange} required></lightning-input>
+                                            </template>
+                                            <template if:true={settings.Tenant_ID__c}>
+                                                <div class="slds-form-element">
+                                                    <label class="slds-form-element__label" for="text-input-id-47">
+                                                      <!--<abbr class="slds-required" title="required">* </abbr>-->
+                                                      Client Secret
+                                                    </label>
+                                                    <div class="slds-form-element__control">
+                                                        <span>{maskedClientSecret}</span>
+                                                      <!-- <input type="text" id="text-input-id-47" placeholder="Placeholder text…" required="" class="slds-input" /> -->
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12"> <!-- EMPTY DIV --> </div>
+                                        <template if:true={settings.Tenant_ID__c}>
+                                            <div class="slds-col slds-size_4-of-12 slds-m-left_medium">
+                                                <lightning-input name="Tenant_ID__c" label="Tenant ID" type="text" value={settings.Tenant_ID__c} read-only></lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-size_8-of-12"> <!-- EMPTY DIV --> </div>
+                                        </template> 
+                                        <div class="slds-col slds-size_12-of-12 slds-m-top_small slds-m-left_medium">
+                                            <template if:false={settings.Tenant_ID__c}>
+                                                <lightning-button label="Connect" variant="brand" onclick={handleConnect}></lightning-button>
+                                            </template>
+                                            <template if:true={settings.Tenant_ID__c}>
+                                                <lightning-button label="Revoke" variant="destructive" onclick={handleRevoke}></lightning-button>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                          </div>
+                    </div>
+                    <template if:true={settings.Tenant_ID__c}>
+                        <div class="slds-col slds-size_12-of-12 slds-m-top_medium">
+                            <!-- <p class="slds-text-heading_small"><b>Webhook</b></p> -->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade">
+                                  <span class="slds-truncate slds-p-horizontal_small" title="Webhook">Webhook</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                  <div class="slds-grid slds-gutters slds-wrap">
+                                    <div class="slds-col slds-size_4-of-12 slds-m-left_medium">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-47">
+                                                <!--<abbr class="slds-required" title="required">* </abbr>-->
+                                                Webhook Private Key
+                                            </label>
+                                            <template if:true={webhookKeyEditMode}>
+                                                <lightning-input style="width: 85%; display: inline-block;" name="newWebhookKey" data-type="webhook" variant="label-hidden" type="text" value={newWebhookKey} onchange={handleChange}></lightning-input>
+                                                <template if:true={settings.Webhook_Private_Key__c}>
+                                                    <lightning-button 
+                                                        class="slds-m-left_x-small slds-show_inline-block" 
+                                                        variant="base" 
+                                                        label="Cancel" 
+                                                        title="Cancel" 
+                                                        onclick={handleCancelChangeWebhookKey}></lightning-button>
+                                                </template>
+                                            </template>
+                                            <template if:false={webhookKeyEditMode}>
+                                                <div class="slds-form-element__control">
+                                                    <span>{maskedWebhookKey}</span>
+                                                    <lightning-button 
+                                                        class="slds-m-left_x-small slds-show_inline-block" 
+                                                        variant="base" 
+                                                        label="Change" 
+                                                        title="Change" 
+                                                        onclick={handleChangeWebhookKey}></lightning-button>
+                                                    <!-- <input type="text" id="text-input-id-47" placeholder="Placeholder text…" required="" class="slds-input" /> -->
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12"> <!-- EMPTY DIV --> </div>
+                                    <template if:true={webhookKeyEditMode}>
+                                        <div class="slds-col slds-size_12-of-12 slds-m-top_small slds-m-left_medium">
+                                            <lightning-button label="Save" variant="brand" onclick={handleWebhookSave}></lightning-button>
+                                        </div>
+                                    </template>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isLoading}>
+                        <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

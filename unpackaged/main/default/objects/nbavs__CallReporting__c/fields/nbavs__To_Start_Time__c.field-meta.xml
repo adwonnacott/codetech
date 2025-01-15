@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Start_Time__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The start time of this interaction. For instance 0, this will be the time the call hits the switch. For instances &gt; 0, will normally be the same as the To_Bridge</description>
+    <label>To Start Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Insights__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Insights</label>
+    <referenceTo>nbavs__Insights__c</referenceTo>
+    <relationshipLabel>Insights Notes</relationshipLabel>
+    <relationshipName>Insights_Notes</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__User_cannot_be_blank</fullName>
+    <active>true</active>
+    <description>Disallow a blank user when upserting a User type Recording Access</description>
+    <errorConditionFormula>ispickval(nbavs__Type__c,&#39;User&#39;) &amp;&amp;  nbavs__User__c = null</errorConditionFormula>
+    <errorDisplayField>nbavs__User__c</errorDisplayField>
+    <errorMessage>User cannot be left blank</errorMessage>
+</ValidationRule>

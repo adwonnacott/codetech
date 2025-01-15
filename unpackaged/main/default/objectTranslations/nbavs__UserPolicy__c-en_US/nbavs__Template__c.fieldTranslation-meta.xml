@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Template --></label>
+        <name>nbavs__Template__c</name>
+        <picklistValues>
+            <masterLabel>RINGORDER</masterLabel>
+            <translation><!-- RINGORDER --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

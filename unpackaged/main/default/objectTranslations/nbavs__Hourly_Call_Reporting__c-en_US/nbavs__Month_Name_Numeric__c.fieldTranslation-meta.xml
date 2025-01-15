@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Numeric representation of month for the hour of the call record --></help>
+        <label><!-- Month Name Numeric --></label>
+        <name>nbavs__Month_Name_Numeric__c</name>
+    </CustomFieldTranslation>

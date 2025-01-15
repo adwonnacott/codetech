@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Note_Count__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Number of notes on this Insight.</description>
+    <label>Note Count Deprecated</label>
+    <summaryForeignKey>nbavs__Insights_Notes__c.nbavs__Insights__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

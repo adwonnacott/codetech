@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Topics_Primary__c</fullName>
+    <deprecated>false</deprecated>
+    <description>A text field (length to be determined) into which the topics for the Primary channel will be added, e.g. “Solar Power,Artificial Intelligence,Government”</description>
+    <externalId>false</externalId>
+    <label>Topics Primary</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

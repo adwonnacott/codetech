@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Other_Contact__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>nbavs__Call_Reporting__r.nbavs__Other_Contact__r.FirstName +&#39; &#39;+ nbavs__Call_Reporting__r.nbavs__Other_Contact__r.LastName</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Other leg recording related contact</inlineHelpText>
+    <label>Other Contact</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

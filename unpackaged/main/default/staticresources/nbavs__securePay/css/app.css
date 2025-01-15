@@ -1,0 +1,64 @@
+.slds-form-element__label {
+    font-weight: bold;
+    text-transform: capitalize;
+
+}
+.slds-card {
+    width: 600px;
+}
+.slds-form-element__label {
+    font-weight: bold;
+    text-transform: capitalize;
+
+}
+
+.slds-card {
+    width: 600px;
+}
+
+@keyframes blink {
+    50% {
+        border-color: #a3c800;
+        background-color: rgba(163, 200, 0, 0.05);
+    }
+}
+
+@-webkit-keyframes blink {
+    50% {
+        border-color: #a3c800;
+    }
+}
+
+.slds-isCurrent {
+    border: 2px solid !important;
+    animation: blink 1s step-start 0s infinite;
+    -webkit-animation: blink 0.5s step-start 0s infinite;
+}
+
+.slds-verified-input {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+}
+
+.pci-icon {
+	background-image: url("PbPP_full-colour-on-white-S.png");
+	cursor: pointer;
+	width: 63px;
+	height: 57px;
+}
+
+#sessionDetailsModal {
+	visibility: hidden;
+	width: 450px;
+	height: 250px;
+	background-color: #fff;
+	border: 1px solid #222;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 25px auto auto auto;
+	padding: 10px;
+}

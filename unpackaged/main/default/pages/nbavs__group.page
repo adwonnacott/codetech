@@ -1,0 +1,47 @@
+<apex:page standardController="nbavs__Group__c" extensions="nbavs.GroupController" tabstyle="nbavs__Group__c">
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<apex:sectionHeader title="{!$ObjectType.nbavs__Group__c.label}" subtitle="{!nbavs__Group__c.Name}" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock mode="maindetail">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton value="Edit" action="{!URLFOR($Action.Group__c.Edit, Group__c.Id)}" />
+				<apex:commandButton value="Delete" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Group Detail Information" columns="2">
+				<apex:outputField value="{!nbavs__Group__c.nbavs__Id__c}" rendered="false" />
+				<apex:outputField id="groupName" value="{!nbavs__Group__c.Name}" />
+				<apex:outputField id="groupPickup" value="{!nbavs__Group__c.nbavs__GroupPickup__c}" rendered="{!nbavs__Group__c.nbavs__PBX__c || nbavs__Group__c.nbavs__Manager__c}"/>
+				<apex:outputField id="extension" value="{!nbavs__Group__c.nbavs__Extension__c}" rendered="{!nbavs__Group__c.nbavs__PBX__c || nbavs__Group__c.nbavs__Manager__c}" />
+				<apex:outputField id="email" value="{!nbavs__Group__c.nbavs__Email__c}" />
+				<apex:outputField id="description" value="{!nbavs__Group__c.nbavs__Description__c}" />
+			</apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Group Purpose" columns="1">
+                <apex:outputField id="pbx" value="{!nbavs__Group__c.nbavs__PBX__c}" />
+                <apex:outputField id="manager" value="{!nbavs__Group__c.nbavs__Manager__c}" />
+                <apex:outputField id="record" value="{!nbavs__Group__c.nbavs__Record__c}" />
+            </apex:pageBlockSection>
+
+			<apex:pageBlockSection showHeader="false" columns="1">
+			</apex:pageBlockSection>
+			<apex:pageBlockSection showHeader="false" columns="1">
+				<apex:outputPanel layout="block" styleClass="bRelatedList">
+					<apex:outputPanel layout="block" styleClass="noStandardTap">
+						<c:GroupAdministrators />
+					</apex:outputPanel>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection showHeader="false" columns="1">
+				<apex:outputPanel layout="block" styleClass="bRelatedList">
+					<apex:outputPanel layout="block" styleClass="noStandardTap">
+						<c:GroupMember />
+					</apex:outputPanel>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

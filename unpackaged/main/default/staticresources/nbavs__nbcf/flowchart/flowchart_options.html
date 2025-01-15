@@ -1,0 +1,174 @@
+<div class="slds-card dialog-container-inner">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-custom slds-icon--large">
+                    <use xlink:href="" s="standard" i="custom" svg-link/>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading--small slds-truncate">Policy Options</h2>
+            </div>
+        </div>
+    </div>
+    <div class="slds-card__body slds-scrollable--y">
+        <form id="ChartForm" name="ChartForm" class="slds-form--stacked slds-m-horizontal--small">
+            <fieldset class="slds-form-element"
+                      ng-class="{'slds-is-required slds-has-error': !chartViewModel.data.type}">
+                <label class="slds-form-element__label"><strong>Type</strong><strong ng-if="policyTypeLocked()">:
+                    {{chartViewModel.data.type.advanced | translate}}</strong></label>
+                <div class="slds-form-element__control" ng-if="!policyTypeLocked()">
+					<span class="slds-radio">
+						<input type="radio" ng-model="chartViewModel.data.type"
+                               ng-value="model.policyTypeOptions[0].value" id="policyTypeCall" name="policyType"/>
+						<label class="slds-radio__label" for="policyTypeCall">
+                            <span class="slds-radio--faux"></span>
+                            <span class="slds-form-element__label">{{model.policyTypeOptions[0].label}}</span>
+                        </label>
+					</span>
+					<span class="slds-radio">
+						<input type="radio" ng-model="chartViewModel.data.type"
+                               ng-value="model.policyTypeOptions[1].value" id="policyTypeDataAnalytics"
+                               name="policyType" ng-disabled="!model.ALLOW_POLICY_TYPE_DATA_ANALYTICS"/>
+						<label class="slds-radio__label" for="policyTypeDataAnalytics">
+                            <span class="slds-radio--faux"></span>
+                            <span class="slds-form-element__label">{{model.policyTypeOptions[1].label}}</span>
+                            <span class="slds-form-element__label slds-text-color--error"
+                                  ng-if="model.ALLOW_POLICY_TYPE_DATA_ANALYTICS == false">* requires AVS Cloud PBX or AVS Contact Centre License</span>
+                        </label>
+					</span>
+                </div>
+            </fieldset>
+
+
+            <div class="slds-form-element"
+                 ng-class="{'slds-is-required slds-has-error': (ChartForm.ChartName.$error.required || ChartForm.ChartName.$error.maxlength)}">
+                <label class="slds-form-element__label" for="ChartName"><strong>Name</strong></label>
+                <div class="slds-form-element__control">
+                    <input id="ChartName" name="ChartName" class="slds-input" type="text"
+                           placeholder="Please name this Policy"
+                           ng-model="chartViewModel.data.name" aria-describedby="errorName" required="true"
+                           ng-disabled="chartViewModel.data.source=='SYSTEM'" maxlength="64"/>
+                    <span class="slds-form-element__help" ng-show="ChartForm.ChartName.$error.required">This field is required</span>
+                    <span class="slds-form-element__help" ng-show="ChartForm.ChartName.$error.maxlength">Maximum 64 characters</span>
+                </div>
+            </div>
+
+
+            <div class="slds-form-element"
+                 ng-class="{'slds-is-required slds-has-error': (ChartForm.ChartDescription.$error.required || ChartForm.ChartDescription.$error.maxlength)}">
+                <label class="slds-form-element__label" for="ChartName"><strong>Description</strong></label>
+                <div class="slds-form-element__control">
+					<textarea id="ChartDescription" name="ChartDescription" class="slds-textarea" type="text"
+                              placeholder=""
+                              ng-model="chartViewModel.data.description"
+                              ng-disabled="chartViewModel.data.source=='SYSTEM'" maxlength="255"></textarea>
+                    <span class="slds-form-element__help" ng-show="ChartForm.ChartDescription.$error.maxlength">Maximum 255 characters</span>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label"><strong>Connector Type</strong></label>
+                <label class="slds-radio" for="smooth">
+                    <input type="radio" name="smooth" id="smooth" ng-model="chartViewModel.data.connectionType"
+                           value="smooth" ng-change="chartViewModel.updateConnectionType()"/>
+                    <span class="slds-radio--faux"></span>
+                    <span class="slds-form-element__label">Smooth</span>
+                </label>
+                <label class="slds-radio" for="manhattan">
+                    <input type="radio" name="manhattan" id="manhattan" ng-model="chartViewModel.data.connectionType"
+                           value="manhattan" ng-change="chartViewModel.updateConnectionType()"/>
+                    <span class="slds-radio--faux"></span>
+                    <span class="slds-form-element__label">Manhattan</span>
+                </label>
+            </div>
+            <div class="slds-form-element" ng-if="chartViewModel.data.source=='SYSTEM'">
+                <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                    <div class="slds-popover__body">This is a System Policy.<br>There are certain restrictions for this
+                        type of Policies.
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label"><strong>Backup and restore</strong></label>
+            </div>
+            <div class="slds-form-element" ng-if="chartViewModel.data.id != null">
+                <div class="slds-form-element__control">
+                    <button class="slds-button slds-button--neutral slds-button--brand" ng-click="exportPolicy()">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--left" aria-hidden="true">
+                            <use xlink:href="" s="utility" i="download" svg-link/>
+                        </svg>
+                        Export Policy
+                    </button>
+                </div>
+            </div>
+            <div ng-if="chartViewModel.data.id == null">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Import mode</label>
+                    <div class="slds-form-element">
+                        <div class="slds-select_container slds-size--1-of-3">
+                            <select id="importMode" class="slds-select" ng-model="model.importMode"
+                                    ng-options="item.value as item.label for item in model.policyImportOptions">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-has-error">
+                        <span class="slds-form-element__help" ng-if="model.importMode=='clone'">This mode is used to build a clone of a policy.<br/>Whilst we do our best to mitigate any possible conflicts with existing policies, you should verify the result of the cloned policy and inspect every component.</span>
+                        <span class="slds-form-element__help" ng-if="model.importMode=='copy'">This mode is used to restore an exact copy of a policy that exists in the Natterbox Cloud.<br/>This is suitable for restoring policies lost during sandbox refresh.</span>
+                    </div>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-file-selector slds-file-selector_files">
+                                <div>
+                                    <input type="file" class="slds-file-selector__input slds-assistive-text"
+                                           accept='text/plain' id="file-upload-input-01"
+                                           aria-labelledby="file-selector-primary-label file-selector-secondary-label"
+                                           onchange="angular.element(this).scope().uploadPolicyFile(event)"/>
+                                    <label class="slds-file-selector__body" for="file-upload-input-01"
+                                           id="file-selector-secondary-label">
+														<span class="slds-file-selector__button slds-button slds-button--brand">
+														<svg aria-hidden="true"
+                                                             class="slds-button__icon slds-button__icon--left"
+                                                             aria-hidden="true">
+                                                            <use xlink:href="" s="utility" i="upload" svg-link/>
+                                                        </svg>Upload File</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': (ChartForm.notifyEmailAddress.$error.required || ChartForm.notifyEmailAddress.$invalid)}" ng-if="model.uploadedPolicy!=null && model.importMode=='clone'">
+                        <label class="slds-form-element__label">Default Notify Email Address</label>
+                        <div class="slds-form-element__control">
+                            <input id="notifyEmailAddress" name="notifyEmailAddress" class="slds-input" type="email"
+                                   ng-model="model.settings.NotifyEmailAddress__c" aria-describedby="errorName" required="true" />
+                            <span class="slds-form-element__help" ng-show="ChartForm.notifyEmailAddress.$error.required">This field is required</span>
+                            <span class="slds-form-element__help" ng-show="!ChartForm.notifyEmailAddress.$error.required && ChartForm.notifyEmailAddress.$invalid">Invalid email address</span>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <button class="slds-button slds-button--neutral slds-button--brand" ng-click="importPolicy()" ng-if="model.uploadedPolicy!=null && model.settings!=null">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--left" aria-hidden="true">
+                                    <use xlink:href="" s="utility" i="push" svg-link/>
+                                </svg>
+                                Import Policy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="slds-card__footer">
+            <button class="slds-button slds-button--neutral slds-button--neutral" ng-click="cancelNewChartOptions()"
+                    ng-if="chartViewModel.data.id == null">Cancel
+            </button>
+            <button class="slds-button slds-button--neutral slds-button--brand" ng-click="saveChartOptions()"
+                    ng-disabled="ChartForm.$invalid">Done
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,293 @@
+<apex:page controller="nbavs.SettingsController" tabstyle="Settings__tab" action="{!checkAPISetup}" >
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<style type="text/css">
+	.pbSubheader {
+		border-top: 2px solid #00a0c4;
+	}
+	.editPage .bPageBlock {
+    	border-top: 3px solid #00a0c4;;
+	}
+	.bPageBlock {
+		border-top: 4px solid #00a0c4;
+	}
+	.pageTitleIcon {	
+		background-image : URL("{!URLFOR($Resource.nbavs__img, 'settings.png')}");	
+	}
+	</style>
+	<apex:sectionHeader title="Settings" /> 
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="Account Settings" mode="{!IF(editMode==true,'edit','maindetail')}">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton value="Edit" action="{!edit}" rendered="{!editMode!=true}" />
+
+				<apex:actionStatus id="syncAccountSettings">
+					<apex:facet name="stop">
+						<apex:commandButton value="Refresh" status="syncAccountSettings" action="{!getAccount}" rendered="{!editMode!=true}" rerender="form" />
+
+					</apex:facet>
+					<apex:facet name="start">
+				       <apex:outputPanel id="loadingAccountSettings">
+				        	<img src="/img/loading32.gif" width="15" height="14" />
+				       </apex:outputPanel>
+      				</apex:facet>
+				</apex:actionStatus>
+				<apex:commandButton value="Save" action="{!saveAccount}" rendered="{!editMode==true}" onclick="return chkurl();" />
+				<apex:commandButton action="{!IF($CurrentPage.Parameters.retURL!=null,URLFOR($CurrentPage.Parameters.retURL),URLFOR($Page.accountSettings))}" value="Cancel" immediate="true" html-formnovalidate="formnovalidate" rendered="{!editMode==true}" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection showHeader="false" id="editAccountForm" rendered="{!editMode==true}">
+              	<apex:pageblocksectionitem id="pageBlockSectionItem1">
+					<apex:outputLabel value="Hold Music" />
+					<apex:outputPanel id="holdMusic">
+						<apex:selectList value="{!HoldMusic}" id="holdOption" size="1" title="Hold Music">
+							<apex:actionsupport event="onchange" rerender="holdMusic" />
+							<apex:selectOptions value="{!holdMusicOptions}" />
+						</apex:selectList>
+						<apex:outputLabel value=" : " rendered="{!HoldMusic == 'SHOUTCAST'}" />
+						<apex:inputText value="{!HoldMusicShoutcast}" rendered="{!HoldMusic == 'SHOUTCAST'}" id="geturl" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__HoldMusicShoutcast__c.label}"/>
+					</apex:outputPanel>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem id="pageBlockSectionItem2">
+					<apex:outputLabel value="Country" />
+					<apex:outputPanel id="countryCode">
+						<apex:selectList value="{!CountryCode}" id="homeCountryOptions" size="1" title="Country Code">
+							<apex:selectOptions value="{!countryCodeOptions}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem id="pageBlockSectionItem3">
+					<apex:outputLabel value="Time Zone" />
+					<apex:outputPanel id="timeZone">
+						<apex:selectList value="{!TimeZone}" id="timezoneyOptions" size="1" title="Time Zone">
+							<apex:selectOptions value="{!settings.optionsTimezone}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageblocksectionitem>
+				<apex:pageblocksectionitem id="pageBlockSectionItem4">
+					<apex:outputLabel value="Voice" />
+					<apex:outputPanel id="voice">
+						<apex:selectList value="{!Voice}" id="voiceOptions" size="1" title="Voice">
+							<apex:selectOptions value="{!settings.optionsVoice}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageblocksectionitem>
+
+                <apex:inputfield value="{!settings.accountSettings.nbavs__PresentCallerId__c}" >
+                    <apex:actionSupport event="onclick" reRender="ExternalCallerIdNumberBlock,messages" >
+                    </apex:actionSupport>
+                </apex:inputfield>
+                <apex:pageblocksectionitem id="pageBlockSectionItemBlank1" />
+
+                <apex:pageblocksectionitem id="pageBlockSectionItemExternalCallerIdNumber">
+                    <apex:outputLabel value="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__ExternalCallerIdNumber__c.label}" />
+                    <apex:outputPanel id="ExternalCallerIdNumberBlock">
+						<!--AVS-1305 - As part of this ticket, replaced the selectoptions with autocomplete component.
+						This is to overcome the 1000 size limit for list values and display all possible options based on searchText -->
+						<apex:outputPanel id="autocompletePanel" rendered="{!settings.accountSettings.nbavs__PresentCallerId__c}">
+							<c:Autocomplete type="Phone" searchValue="{!ExternalCallerIdNumber}"/>
+							
+							<apex:inputHidden id="searchNumId" value="{!ExternalCallerIdNumber}"/>
+						</apex:outputPanel>
+                        <apex:outputText value="n/a" rendered="{!!settings.accountSettings.nbavs__PresentCallerId__c}"/>
+                    </apex:outputPanel>
+				</apex:pageblocksectionitem>
+				<!--SF-430 field no longer required-->
+               <!--<apex:inputfield value="{!settings.accountSettings.Beta_WebPhone__c}" />-->
+                <apex:inputfield value="{!settings.accountSettings.nbavs__NewUsersTrackCTIDevice__c}" />
+                <!--
+                PLAT-18995 when LogoutEventStreams are eventually made GA by SF
+                we will need the following checkbox as a means of disabling auto logging out of groups on SF logout.
+                But for now this trigger is effectively disabled anyway by default
+                unless a forwarding trigger CustomLogoutEvent as described in LogoutEvent.trigger comments is manually added to the target org.
+                <apex:inputfield value="{!settings.accountSettings.AutoLogoutNBGroupsOnSFLogout__c}" />
+                -->
+			</apex:pageBlockSection>
+			<apex:pageBlockSection title="Settings" columns="2" id="detailForm" rendered="{!editMode!=true}">
+                <apex:pageblocksectionitem id="pageBlockSectionItem5">
+					<apex:outputLabel value="Hold Music" />
+					<apex:outputPanel id="holdMusic">
+						<apex:outputLabel value="{!UPPER(LEFT(settings.accountSettings.nbavs__HoldMusic__c,1))}{!LOWER(MID(settings.accountSettings.nbavs__HoldMusic__c, 2, LEN(settings.accountSettings.nbavs__HoldMusic__c)))}" />
+						<apex:outputLabel value=" : " rendered="{!settings.accountSettings.nbavs__HoldMusic__c == 'SHOUTCAST'}" />
+						<apex:outputField value="{!settings.accountSettings.nbavs__HoldMusicShoutcast__c}" rendered="{!settings.accountSettings.nbavs__HoldMusic__c == 'SHOUTCAST'}" />
+					</apex:outputPanel>
+				</apex:pageblocksectionitem>
+				<apex:outputField value="{!settings.accountSettings.nbavs__CountryCodeLabel__c}" />
+				<apex:outputField value="{!settings.accountSettings.nbavs__TimeZone__c}" />
+				<apex:outputField value="{!settings.accountSettings.nbavs__VoiceLabel__c}" />
+                <apex:outputField value="{!settings.accountSettings.nbavs__PresentCallerId__c}" />
+                <apex:pageblocksectionitem id="pageBlockSectionItemBlank2" />
+                <apex:pageblocksectionitem id="pageBlockSectionItemExternalCallerIdNumber">
+                    <apex:outputLabel value="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__ExternalCallerIdNumber__c.label}" />
+                    <apex:outputPanel id="ExternalCallerIdNumberBlock">
+                        <apex:outputField value="{!settings.accountSettings.nbavs__ExternalCallerIdNumber__c}" rendered="{!settings.accountSettings.nbavs__PresentCallerId__c}" />
+                        <apex:outputText value="n/a" rendered="{!!settings.accountSettings.nbavs__PresentCallerId__c}"/>
+                    </apex:outputPanel>
+                </apex:pageblocksectionitem>
+                <!--SF-430 field no longer required-->
+               <!--<apex:outputField value="{!settings.accountSettings.Beta_WebPhone__c}" />-->
+                <apex:outputField value="{!settings.accountSettings.nbavs__NewUsersTrackCTIDevice__c}" />
+                <!--
+                PLAT-18995 when LogoutEventStreams are eventually made GA by SF
+                we will need the following checkbox as a means of disabling auto logging out of groups on SF logout.
+                But for now this trigger is effectively disabled anyway by default
+                unless a forwarding trigger CustomLogoutEvent as described in LogoutEvent.trigger comments is manually added to the target org.
+                <apex:outputfield value="{!settings.accountSettings.AutoLogoutNBGroupsOnSFLogout__c}" />
+                -->
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		<apex:pageBlock mode="{!IF(editMode==true,'edit','maindetail')}" id="settings">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton value="Save" action="{!saveUI}" rendered="{!editMode==true}" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection showHeader="false" id="editUIForm" rendered="{!editMode==true}">
+				<apex:pageblocksectionitem rendered="{!editMode==true}" id="pageBlockSectionItem6">
+					<apex:outputLabel value="{!$ObjectType['UISettings_v1__c'].Fields.PageSize__c.Label}" />
+					<apex:selectList value="{!PageSize}" size="1">
+						<apex:selectOptions value="{!PageSizeOptions}" />
+					</apex:selectList>
+				</apex:pageblocksectionitem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection title="UI Settings" id="UIForm" rendered="{!editMode!=true}">
+				<apex:outputField value="{!uiSettings.nbavs__PageSize__c}" rendered="{!editMode!=true}" />
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Record Access Settings" id="recordAccess" rendered="{!editMode!=true}">
+				<apex:inputCheckbox value="{!AccessOwnRecordings}" id="recordAccessCheckBox" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__AccessOwnRecordings__c.label}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="recordAccessCheckBox">
+					</apex:actionSupport>
+				</apex:inputCheckbox>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Call Reporting Settings" id="reportingSettings" rendered="{!editMode!=true}">
+				<apex:inputCheckbox value="{!lookupContact}" id="lookUpContact" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__ContactLookupEnable__c.label}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="lookUpContact" />
+				</apex:inputCheckbox>
+				<apex:inputCheckbox value="{!lookupAccount}" id="lookUpAccount" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__AccountLookupEnable__c.label}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="lookUpAccount" />
+				</apex:inputCheckbox>
+				<apex:inputCheckbox value="{!lookupLead}" id="lookUpLead" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__LeadLookupEnable__c.label}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="lookUpLead" />
+				</apex:inputCheckbox>
+                <apex:inputCheckbox value="{!enableSkillsReporting}" id="enableSkillsReportingItem" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__Enable_Skills_Reporting__c.label}">
+                    <apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="enableSkillsReportingItem" />
+                </apex:inputCheckbox>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Service Cloud Voice Settings" id="scvSettings" rendered="{!editMode!=true}">
+				<apex:inputCheckbox value="{!orgSettings.nbavs__SCVNBA_Enabled__c}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="scvSettings" />
+				</apex:inputCheckbox>
+				<apex:selectList value="{!batchSize}" size="1" label="Transcription Event Batch Size" title="This controls how much speech is collected by Natterbox before it is sent over to Next Best Action. Setting this number lower will give next best action recommendations closer to real time but will require more Salesforce API calls. Setting this number higher will mean there will be a longer delay before Next Best Action makes a recommendation in response to the conversation. However, fewer Salesforce API calls will be used.">
+					<apex:actionsupport event="onchange" action="{!updateOrgSettings}" rerender="scvSettings"/>
+					<apex:selectOptions value="{!batchSizeOptions}"/>
+				</apex:selectList>
+                <apex:selectList value="{!orgSettings.nbavs__TranscriptionLanguage__c}" size="1" label="Transcription Language">
+                    <apex:actionsupport event="onchange" action="{!updateTranscriptionLanguage}" rerender="scvSettings"/>
+                    <apex:selectOptions value="{!transcriptionLanguageOptions}"/>
+                </apex:selectList>
+                <apex:pageblocksectionitem >
+					<apex:outputLabel value="Sync Configuration" />
+                    <apex:commandButton value="Sync" action="{!syncDomain}" />
+                </apex:pageblocksectionitem>   
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Insight Settings" id="insightsSettings" rendered="{!editMode!=true && haveInsightAccess}">
+
+				<apex:inputCheckbox value="{!isAllInsightsCategories}" id="insightCategory" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__Enable_All_Insight_Categories__c.label}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="insightCategory" />
+				</apex:inputCheckbox>
+
+				<apex:inputCheckbox value="{!ctrlByRecordingAccess}" id="ctrlRecordAccess" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__Control_by_Recording_Access__c.label}" title="Use Call Recording Access to Control Insight Access">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="insightCategory" />
+				</apex:inputCheckbox>
+
+				
+				<apex:inputCheckbox value="{!isAllInsightsAccess}" id="insightAccess" label="{!$ObjectType.nbavs__Settings_v1__c.fields.nbavs__Enable_End_User_Access_All_Insights__c.label}">
+					<apex:actionSupport event="onclick" action="{!updateOrgSettings}" reRender="insightAccess" />
+				</apex:inputCheckbox>
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+		
+		<apex:outputPanel layout="block" styleClass="bRelatedList" rendered="{!editMode!=true}" id="avprofile">
+			<apex:outputPanel layout="block" styleClass="noStandardTap">
+				<apex:pageBlock mode="detail" id="thisProfile" title="Availability Profiles">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="Add Profile" action="{!URLFOR($Action.AvailabilityProfile__c.New)}" rendered="{!license.nbavs__Manager__c == true}"/>
+						<apex:outputLabel value="Feature not licensed" style="font-weight: bold;font-size:15px;"	rendered="{!license.nbavs__Manager__c == false}"/>
+					</apex:pageBlockButtons>
+					<table class="list display compact" id="dataTableAvailabilityProfileList">
+						<thead>
+						<tr class="headerRow">
+							<th>Action</th>
+							<th>{!$ObjectType['AvailabilityProfile__c'].Fields.Id.Label}</th>
+							<th>Name</th>
+							<th>{!$ObjectType['AvailabilityProfile__c'].Fields.CreatedById.Label}</th>
+						</tr>
+						</thead>
+						<tbody>
+						<apex:repeat value="{!availabilityProfiles}" var="item" id="profile">
+							<tr class="dataRow">
+								<td class="actionColumn">
+									<apex:outputLink value="{!URLFOR($Action.nbavs__AvailabilityProfile__c.Edit, item.Id)}" styleClass="actionLink" >Edit</apex:outputLink>
+									<apex:outputLabel value=" | " />
+									<apex:commandLink action="{!deleteAvailabilityProfile}" reRender="avprofile,messages" onclick="if(!confirm('Are you sure?')) return false;" styleClass="actionLink">Del
+											<apex:param value="{!item.Id}" name="id" assignTo="{!profileId}" />
+									</apex:commandLink>
+								</td>
+								<td>
+									<apex:outputField value="{!item.nbavs__Id__c}" />
+								</td>
+								<td>
+									<apex:outputLink value="{!URLFOR($Action.nbavs__AvailabilityProfile__c.View, item.Id)}" rendered="{!license.nbavs__Manager__c == true}">{!item.Name}</apex:outputLink>
+									<apex:outputLabel value="{!item.Name}" rendered="{!license.nbavs__Manager__c == false}" />
+								</td>
+								<td>
+									<apex:outputField value="{!item.CreatedById}" />
+								</td>
+							</tr>
+						</apex:repeat>
+						</tbody>
+					</table>
+					<script type="text/javascript">
+						j$ = jQuery.noConflict();
+						j$('#dataTableAvailabilityProfileList').DataTable({
+							"paging": true,
+							"stateSave": true,
+							"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+							"order": [[ 1, "desc" ]],
+						});
+					</script>
+				</apex:pageBlock>
+			</apex:outputPanel>
+		</apex:outputPanel>
+
+
+		<c:Skills rendered="{!editMode!=true}" />
+
+		<c:Sounds rendered="{!editMode!=true}" />
+
+	</apex:form>
+	<script>
+	function chkurl()
+	{	    
+	    //var regexp = /(shout):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+	      var regexp = /(shout):\/\/([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?$/	      
+	      var urlvalue=document.getElementById('j_id0:form:j_id28:editAccountForm:j_id33:geturl').value; 
+	      var holdOption = document.getElementById('j_id0:form:j_id28:editAccountForm:j_id33:holdOption').value; 
+	      //alert(holdOption);       
+	      if (holdOption == 'SHOUTCAST') {
+		      if(!regexp.test(urlvalue))
+		      {
+		      	alert('Please enter a valid shoutcast url');
+		      	return false
+		      }
+	      }      
+	     return true;
+	}
+	</script>
+</apex:page>

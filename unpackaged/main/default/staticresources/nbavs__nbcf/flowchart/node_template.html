@@ -1,0 +1,302 @@
+
+
+<div class="slds-card dialog-container-inner">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard slds-icon--large">
+                    <use xlink:href="" s="natterbox" i="action" svg-link ng-if="node.data.templateId == 4 || node.data.templateId == 94"/>
+                    <use xlink:href="" s="natterbox" i="switchboard" svg-link ng-if="node.data.templateId == 9"/>
+                    <use xlink:href="" s="natterbox" i="public" svg-link ng-if="node.data.templateId==3"/>
+                    <use xlink:href="" s="natterbox" i="ddi" svg-link ng-if="node.data.templateId==38"/>
+                    <use xlink:href="" s="natterbox" i="extension" svg-link ng-if="node.data.templateId==31"/>
+                    <use xlink:href="" s="natterbox" i="outbound" svg-link ng-if="node.data.templateId==39"/>
+                    <use xlink:href="" s="natterbox" i="inbound" svg-link ng-if="node.data.templateId==16"/>
+                    <use xlink:href="" s="natterbox" i="finish" svg-link ng-if="node.data.templateId==23"/>
+                    <use xlink:href="" s="natterbox" i="fromPolicy" svg-link ng-if="node.data.templateId==2"/>
+                    <use xlink:href="" s="natterbox" i="toPolicy" svg-link ng-if="node.data.templateId==66"/>
+                    <use xlink:href="" s="natterbox" i="trigger" svg-link ng-if="node.data.templateId==93"/>
+                    <use xlink:href="" s="natterbox" i="process" svg-link ng-if="node.data.templateId==3100000"/>
+                    <use xlink:href="" s="natterbox" i="fromSipTrunk" svg-link ng-if="node.data.templateId==81"/>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <span class="slds-text-heading--label slds-truncate"><strong>{{node.data.title}}</strong></span>
+                <br/>
+                <label class="slds-align-middle slds-text-body--small">{{node.data.description}}</label>
+                <!--
+                <button type="button" class="slds-button slds-button--icon-bare slds-m-right--xx-small">
+                    <svg aria-hidden="true" class="slds-button__icon">
+                        <use xlink:href="" i="info" svg-link/>
+                    </svg>
+                    <span class="slds-assistive-text">info</span>
+                </button>
+                -->
+            </div>
+        </div>
+        <div class="slds-no-flex">
+            <div class="slds-grid slds-grid--pull-padded slds-grid--vertical-align-center">
+                <button type="button" class="slds-button slds-button--destructive" ng-if="model.confirmDelete"
+                        ng-click="deleteNodeById(node.data.id)" click-outside="model.confirmDelete = false">Confirm
+                    Delete
+                </button>
+                <button type="button" class="slds-button slds-button--icon slds-m-right--medium"
+                        ng-click="checkCanDeleteNode(node.data)">
+                    <svg aria-hidden="true" class="slds-button__icon">
+                        <use xlink:href="" i="delete" svg-link/>
+                    </svg>
+                    <span class="slds-assistive-text">delete</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-card__body slds-scrollable--y dialog-container-inner-scroll">
+        <form id="NodeForm" name="NodeForm" class="slds-form--stacked slds-m-horizontal--small">
+            <div class="slds-tabs--scoped">
+                <ul class="slds-tabs--scoped__nav" role="tablist">
+                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="config" role="presentation"
+                        ng-class="node.selectedTab == 'config' ? 'slds-active' : ''">
+                        <a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="0"
+                           aria-selected="true" aria-controls="tab-scoped-config" id="tab-scoped-config__item"
+                           ng-click="node.selectedTab = 'config'">configuration</a>
+                    </li>
+                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="connect" role="presentation"
+                        ng-class="node.selectedTab == 'connect' ? 'slds-active' : ''"
+                        ng-if="node.data.outputConnectorsAllowed">
+                        <a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="-1"
+                           aria-selected="false" aria-controls="tab-scoped-connect" id="tab-scoped-connect__item"
+                           ng-click="node.selectedTab = 'connect'">link</a>
+                    </li>
+                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="apps" role="presentation"
+                        ng-class="node.selectedTab == 'apps' ? 'slds-active' : ''" ng-if="node.data.activeChildren">
+                        <a class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="-1"
+                           aria-selected="false" aria-controls="tab-scoped-apps" id="tab-scoped-apps__item"
+                           ng-click="node.selectedTab = 'apps'">apps</a>
+                    </li>
+                </ul>
+                <div id="tab-scoped-config" class="slds-tabs--scoped__content" role="tabpanel"
+                     aria-labelledby="tab-scoped-config__item"
+                     ng-class="node.selectedTab == 'config' ? 'slds-show' : 'slds-hide'">
+                    <div class="slds-form-element"
+                         ng-class="{'slds-is-required slds-has-error': NodeForm.NodeName.$error.required}">
+                        <label class="slds-form-element__label" for="NodeName"><strong>Name this item</strong></label>
+                        <div class="slds-form-element__control">
+                            <input id="NodeName" name="NodeName" class="slds-input" type="text" placeholder="enter name"
+                                   ng-model="node.data.name" aria-describedby="errorName" required="" ng-disabled="node.data.type=='SYSTEM'"/>
+                            <span id="errorName" class="slds-form-element__help"
+                                  ng-show="NodeForm.NodeName.$error.required">This field is required</span>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element" ng-if="node.data.type=='SYSTEM'">
+                        <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                            <div class="slds-popover__body">This is a System Component.<br>There are certain restrictions for this type of Component.</div>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-form-element" ng-if="dialplanTemplate.jsonSchema.showInfo">
+                        <div class="slds-popover slds-nubbin--left slds-theme--warning" role="dialog">
+                            <div class="slds-popover__body" style="white-space: pre-wrap;">{{dialplanTemplate.jsonSchema.showInfo}}</div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element" ng-if="!dialplanTemplate.jsonSchema.hideConfig">
+                        <label class="slds-form-element__label slds-m-top--small"><strong>Configure this item</strong></label>
+                    </div>
+                    <div class="slds-form-element" ng-if="node.data.configCustom" ng-include
+                         src="'/partials/'+node.data.configCustom+'.html'"></div>
+
+                    <!-- START dynamic conf -->
+                    <div ng-if="!node.data.configCustom">
+                        <div class="slds-form-element"
+                             ng-repeat="(key, value) in dialplanTemplate.jsonSchema.properties"
+                             ng-class="{'slds-is-required slds-has-error': NodeForm[key].$error.required}"
+                             ng-if="value.render!=false">
+                            <label class="slds-form-element__label" for="{{key}}" ng-if="value.render!='checkbox'">{{value.description}}</label>
+                            <div class="slds-form-element__control" ng-switch on="value.render"
+                                 ng-class="{'slds-has-error': !NodeForm[key].$valid, 'slds-input-has-icon slds-input-has-icon--right': (value.macro || value.sound)}">
+                                <svg aria-hidden="true"
+                                     class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                                     ng-if="value.macro" ng-click="showMacros(key)">
+                                    <use xlink:href="" i="push" svg-link/>
+                                </svg>
+                                <svg aria-hidden="true"
+                                     class="slds-input__icon slds-icon-text-default slds-icon-macro-1"
+                                     ng-if="value.sound" ng-click="showSounds(key, node.data)"
+                                     ng-class="{'slds-icon-macro-2': value.macro}">
+                                    <use xlink:href="" i="volume_high" svg-link/>
+                                </svg>
+                                <div class="slds-spinner_container"
+                                     ng-if="value.sound && model.showSounds[key] && data.sounds==null">
+                                    <div class="slds-spinner--brand slds-spinner slds-spinner--small"
+                                         aria-hidden="false" role="alert">
+                                        <div class="slds-spinner__dot-a"></div>
+                                        <div class="slds-spinner__dot-b"></div>
+                                    </div>
+                                </div>
+                                <div class="slds-dropdown slds-dropdown--right"
+                                     ng-if="value.sound && model.showSounds[key]"
+                                     ng-mouseleave="hideSounds(key, node.data)">
+                                    <ul class="dropdown__list" role="menu">
+                                        <li class="slds-dropdown__item" ng-repeat="itm in data.sounds">
+                                            <a href="javascript:void(0)" role="menuitem"
+                                               ng-click="insertSound(key, itm)">
+                                                <p class="slds-truncate">{{itm.Tag__c}}</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <input ng-switch-default id="{{key}}" name="{{key}}"
+                                       class="slds-input slds-input--small"
+                                       type="{{value.type == 'integer' ? 'number' : 'text'}}"
+                                       ng-model="node.data.variables[key]"
+                                       ng-required="value.required"/>
+                                <input ng-switch-when="number" id="{{key}}" name="{{key}}"
+                                       class="slds-input slds-input--small"
+                                       type="number" min="{{value.minimum}}" max="{{value.maximum}}"
+                                       ng-model="node.data.variables[key]" ng-required="value.required"/>
+                        <textarea ng-switch-when="textarea" id="{{key}}" name="{{key}}"
+                                  class="slds-textarea slds-input--small" ng-model="node.data.variables[key]"
+                                  ng-required="value.required" rows="{{value.rows ? value.rows : 1}}"></textarea>
+                                <label ng-switch-when="checkbox" class="slds-checkbox">
+                                    <input type="checkbox" id="{{key}}" name="{{key}}"
+                                           ng-model="node.data.variables[key]"/>
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span class="slds-form-element__label">{{value.description}}</span>
+                                </label>
+                                <div class="slds-select_container" ng-switch-when="select">
+                                    <select id="{{key}}" name="{{key}}" class="slds-select"
+                                            ng-model="node.data.variables[key]"
+                                            ng-options="itm as itm | translate for itm in value.enum"></select>
+                                </div>
+                                <div class="slds-has-error">
+                                    <span class="slds-form-element__help" ng-show="NodeForm[key].$error.required">This field is required</span>
+                            <span class="slds-form-element__help"
+                                  ng-show="NodeForm[key].$error.number">Not valid number!</span>
+                            <span class="slds-form-element__help"
+                                  ng-show="NodeForm[key].$error.min">Minimum value is: <strong>{{value.minimum}}</strong></span>
+                            <span class="slds-form-element__help"
+                                  ng-show="NodeForm[key].$error.max">Maximum value is: <strong>{{value.maximum}}</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END dynamic conf -->
+                </div>
+                <div id="tab-scoped-connect" class="slds-tabs--scoped__content" role="tabpanel"
+                     aria-labelledby="tab-scoped-connect__item"
+                     ng-class="node.selectedTab == 'connect' ? 'slds-show' : 'slds-hide'">
+                    <!--START connection section -->
+                    <div class="slds-form-element" ng-if="node.data.outputConnectorsAllowed">
+                        <label class="slds-form-element__label slds-m-top--small"><strong>Transfer control to existing
+                            Container</strong></label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="connectedTo" class="slds-select " ng-model="node.data.connectedTo"
+                                        ng-options="item.id as item.name for item in otherNodes"
+                                        ng-change="nodeConnectedToChange()">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element" ng-if="node.data.outputConnectorsAllowed">
+                        <label class="slds-form-element__label slds-m-top--small"><strong>Or create new Container</strong></label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size--1-of-2 slds-p-bottom--small" ng-repeat="item in inputTemplates"
+                                     ng-class="$even?'slds-p-right--xx-small':'slds-p-left--xx-small'">
+                                    <button type="button"
+                                            class="slds-button slds-button--neutral slds-size--1-of-1 slds-text-align--left"
+                                            ng-click="addNewNode(item.templateId)" ng-disabled="!item.enabled">
+                                        <svg aria-hidden="true"
+                                             class="slds-button__icon slds-button__icon--left slds-icon--large" ng-class="{'disabled': !item.enabled}">
+                                            <use xlink:href="" s="natterbox" i="action" svg-link
+                                                 ng-if="item.templateId == 4 || item.templateId == 94"/>
+                                            <use xlink:href="" s="natterbox" i="switchboard" svg-link
+                                                 ng-if="item.templateId == 9"/>
+                                            <use xlink:href="" s="natterbox" i="finish" svg-link
+                                                 ng-if="item.templateId == 23"/>
+                                            <use xlink:href="" s="natterbox" i="toPolicy" svg-link
+                                                 ng-if="item.templateId == 66"/>
+                                        </svg>
+                                        {{item.title}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END connection section -->
+                </div>
+                <div id="tab-scoped-apps" class="slds-tabs--scoped__content" role="tabpanel"
+                     aria-labelledby="tab-scoped-apps__item"
+                     ng-class="node.selectedTab == 'apps' ? 'slds-show' : 'slds-hide'">
+                    <!-- START Active Children -->
+                    <div class="slds-form-element" ng-if="node.data.activeChildren">
+                        <div class="slds-form-element__control">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size--1-of-2 slds-p-bottom--small" ng-repeat="item in itemsTemplates"
+                                     ng-class="$even?'slds-p-right--xx-small':'slds-p-left--xx-small'">
+                                    <button type="button"
+                                            class="slds-button slds-button--neutral slds-text-align--left slds-size--1-of-1"
+                                            ng-click="addItem(item)" ng-disabled="!item.enabled">
+                                        <svg aria-hidden="true"
+                                             class="slds-button__icon slds-button__icon--left slds-icon--large grayscale" ng-class="{'disabled': !item.enabled}">
+                                            <use xlink:href="" s="natterbox" i="speak" svg-link
+                                                 ng-if="item.templateClass=='ModAction_Say'"/>
+                                            <use xlink:href="" s="natterbox" i="record" svg-link
+                                                 ng-if="item.templateClass=='ModAction_Record'"/>
+                                                 <use xlink:href="" s="natterbox" i="recordAnalyse" svg-link
+                                                 ng-if="item.templateClass=='ModAction_RecordAnalyse'"/>
+                                            <use xlink:href="" s="natterbox" i="rule" svg-link
+                                                 ng-if="item.templateClass=='ModAction_Rule'"/>
+                                            <use xlink:href="" s="natterbox" i="query" svg-link
+                                                 ng-if="item.templateClass=='ModConnector_SFQuery'"/>
+                                            <use xlink:href="" s="natterbox" i="connect" svg-link
+                                                 ng-if="item.templateClass=='ModConnect'"/>
+                                            <use xlink:href="" s="natterbox" i="followMe" svg-link
+                                                 ng-if="item.templateClass=='ModConnect_FollowMe'"/>
+                                            <use xlink:href="" s="natterbox" i="create" svg-link
+                                                 ng-if="item.templateClass=='ModConnector_SFStore' && item.configCustom == 'ModConnector_SFCreate'"/>
+                                            <use xlink:href="" s="natterbox" i="update" svg-link
+                                                 ng-if="item.templateClass=='ModConnector_SFStore' && item.configCustom == 'ModConnector_SFUpdate'"/>
+                                            <use xlink:href="" s="natterbox" i="switchItem" svg-link
+                                                 ng-if="item.templateClass=='ModSwitchBoard_SwitchItem'"/>
+                                            <use xlink:href="" s="natterbox" i="getInfo" svg-link
+                                                 ng-if="item.templateClass=='ModSwitchBoard_ItemGetInfo'"/>
+                                            <use xlink:href="" s="natterbox" i="notify" svg-link
+                                                 ng-if="item.templateClass=='ModAction_Notify'"/>
+                                            <use xlink:href="" s="natterbox" i="queue" svg-link
+                                                 ng-if="item.templateClass=='ModConnect_Queue'"/>
+                                            <use xlink:href="" s="natterbox" i="voicemail" svg-link
+                                                 ng-if="item.templateClass=='ModFinish_VoiceMail'"/>
+                                            <use xlink:href="" s="natterbox" i="callPolicy" svg-link
+                                                 ng-if="item.templateClass=='ModPolicy_ToCall'"/>
+                                            <use xlink:href="" s="natterbox" i="dataAnalytics" svg-link
+                                                 ng-if="item.templateClass=='ModPolicy_ToNonCall'"/>
+                                            <use xlink:href="" s="natterbox" i="debug" svg-link
+                                                 ng-if="item.templateClass=='ModActionNC_Debug'"/>
+                                            <use xlink:href="" s="natterbox" i="script" svg-link ng-if="item.templateClass=='ModDevelop_Script' || item.templateClass=='ModDevelopNC_Script'"/>
+                                            <use xlink:href="" s="natterbox" i="modifyCharacteristic" svg-link ng-if="item.configCustom=='ModAction_ModifyCharacteristic'"/>
+                                            <use xlink:href="" s="natterbox" i="requestSkills" svg-link ng-if="item.configCustom=='ModAction_RequestSkills'"/>
+                                        </svg>
+                                        {{item.title}}
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- END Active Children -->
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="slds-form-element" ng-include
+         src="'/partials/MacroSelector.html'"></div>
+
+
+</div>

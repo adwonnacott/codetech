@@ -1,0 +1,183 @@
+<apex:page standardController="nbavs__User__c" extensions="nbavs.UserController" tabstyle="nbavs__User__c">
+	<apex:sectionHeader title="{!$ObjectType.nbavs__User__c.label} Edit" subtitle="{!IF(nbavs__User__c.Id!=null,nbavs__User__c.nbavs__FirstName__c + ' ' + nbavs__User__c.nbavs__LastName__c,'New ' + $ObjectType.nbavs__User__c.label)}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<style type="text/css">
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}	
+	</style>
+	 <script type="text/javascript">        
+        function validatePermLevel(perm){
+			var userCVar = '{!JSENCODE(User__c.User__c)}';
+            var userIdVar = '{!JSENCODE($User.Id)}';  
+			if(userCVar === userIdVar){
+				alert('Permission level cannot be amended for self. Please contact another admin to update your user record\'s permission level');
+				perm.value=perm.oldvalue;
+			}
+			else{
+				let throwDowngradeAlert=false; 
+				if(perm.oldvalue === 'Admin'){
+					//any other value changed means downgrading
+					throwDowngradeAlert=true;
+				} 
+				else if(perm.oldvalue === 'Team Leader' && perm.value=== 'Basic'){
+					throwDowngradeAlert=true;
+				}
+
+				if(throwDowngradeAlert){
+					if(window.confirm("Permission level is downgraded from " +perm.oldvalue+ " to "+ perm.value + "\n" + "Are you sure? " )){
+					}
+					else{
+						perm.value=perm.oldvalue;
+					}
+				}
+
+			}
+			
+        }
+        
+    </script>
+	<apex:form id="form">
+		<apex:actionFunction name="doInit" action="{!syncAvailabilityProfileState}" />
+		<apex:outputPanel rendered="{!NOT(initialised)}">
+			<script>
+				window.onload=function()
+				{
+					doInit();
+				};
+			</script>
+		</apex:outputPanel>
+		
+		<apex:pageMessages id="messages" />
+		<apex:outputPanel id="body" rendered="{!hasPrivateAccessToUser}">
+			<apex:pageBlock title="{!$ObjectType.nbavs__User__c.label} Edit" mode="edit" rendered="{!initialised}">
+				<apex:pageBlockButtons location="top">
+					<apex:actionFunction action="{!addUser}" name="handleAdd" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                    <apex:actionFunction action="{!updateUser}" name="handleUpdate" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                
+					<apex:commandButton onclick="handleNew(true);return false;" value="Save" tabindex="8" rendered="{!nbavs__User__c.Id==null}" />
+
+					<apex:actionStatus id="save-button-status">
+						<apex:facet name="start">
+							<apex:commandButton value="Syncing user extension - please wait then click Save" disabled="true" tabindex="8"/>
+						</apex:facet>       
+						<apex:facet name="stop">
+							<apex:commandButton value="Save" onclick="handleNew(false);return false;" rendered="{!nbavs__User__c.Id!=null}" tabindex="8"/>
+						</apex:facet>       
+					</apex:actionStatus> 
+
+					<apex:commandButton action="{!cancel}" tabindex="9" value="Cancel" />
+					
+				</apex:pageBlockButtons>
+				<apex:pageBlockSection title="PBX User Information" id="pgSection" >
+					<apex:outputField value="{!nbavs__User__c.nbavs__Id__c}" rendered="false" />
+					
+					<apex:pageblocksectionitem id="pageblocksectionitem1" rendered="{!nbavs__User__c.nbavs__User__c != null}">
+						<apex:outputLabel value="Salesforce User" />
+						<apex:outputPanel id="outputPanel1">					
+							<apex:outputField value="{!nbavs__User__c.nbavs__User__c}" rendered="{!nbavs__User__c.nbavs__User__c !=null}" />
+						</apex:outputPanel>
+					</apex:pageblocksectionitem>
+					
+					<apex:pageblocksectionitem id="pageblocksectionitem11">
+						<apex:outputLabel value="Email Address" /> 
+						<apex:outputPanel id="outputPanel11">
+						<apex:inputField id="userName" value="{!nbavs__User__c.nbavs__Username__c}" required="true" rendered="{!IF(nbavs__User__c.nbavs__User__c==null,'true','false')}" />
+						<apex:outputField id="userName1" value="{!nbavs__User__c.User__r.Email}" rendered="{!IF(nbavs__User__c.nbavs__User__c!=null,'true','false')}" />
+						</apex:outputPanel>
+					</apex:pageblocksectionitem>
+					
+					<apex:outputLabel rendered="{!nbavs__User__c.nbavs__User__c == null}"></apex:outputLabel>
+					
+					<apex:pageblocksectionitem id="pageblocksectionitem3">
+						<apex:outputLabel value="First Name" /> 
+						<apex:outputPanel id="outputPanel2">
+							<apex:inputField id="firstName" value="{!nbavs__User__c.nbavs__FirstName__c}" required="true" rendered="{!IF(nbavs__User__c.nbavs__User__c==null,'true','false')}" />
+							<apex:outputField id="firstName1" value="{!nbavs__User__c.nbavs__FirstName__c}" rendered="{!IF(nbavs__User__c.nbavs__User__c!=null,'true','false')}" />
+						</apex:outputPanel>
+					</apex:pageblocksectionitem>
+					
+					<apex:pageblocksectionitem id="pageblocksectionitem4">
+						<apex:outputLabel value="Last Name" /> 
+						<apex:outputPanel id="outputPanel3">
+							<apex:inputField id="lastName" value="{!nbavs__User__c.nbavs__LastName__c}" required="true" rendered="{!IF(nbavs__User__c.nbavs__User__c==null,'true','false')}"  />
+							<apex:outputField id="lastName1" value="{!nbavs__User__c.nbavs__LastName__c}" rendered="{!IF(nbavs__User__c.nbavs__User__c!=null,'true','false')}" />
+						</apex:outputPanel>
+					</apex:pageblocksectionitem>
+					
+					<apex:pageblocksectionitem id="pageblocksectionitem5">
+						<apex:outputLabel value="Mobile" /> 
+						<apex:outputPanel id="outputPanel4">
+							<apex:inputField id="mobile" value="{!nbavs__User__c.nbavs__MobilePhone__c}" required="false" rendered="{!IF(nbavs__User__c.nbavs__User__c==null,'true','false')}" />
+							<apex:outputField id="mobile1" value="{!nbavs__User__c.nbavs__MobilePhone__c}" rendered="{!IF(nbavs__User__c.nbavs__User__c!=null,'true','false')}" />
+						</apex:outputPanel>
+					</apex:pageblocksectionitem>	
+					
+					<apex:pageblocksectionitem id="pageblocksectionitem6" >
+						<apex:outputLabel value="Permission Level" /> 
+						<apex:outputPanel id="outputPanel5">
+							<apex:inputField id="pmLevel" value="{!nbavs__User__c.nbavs__PermissionLevel__c}"  onfocus="this.oldvalue = this.value;"  
+								onchange="validatePermLevel(this);this.oldvalue = this.value;" rendered="{!NOT(isChatterOrExternalUser)}"/>
+							<apex:outputField id="pmLevel1" value="{!nbavs__User__c.nbavs__PermissionLevel__c}" rendered="{!isChatterOrExternalUser}" />
+						</apex:outputPanel>
+						
+					</apex:pageblocksectionitem>
+					
+					<apex:inputField value="{!nbavs__User__c.nbavs__Enabled__c}" />
+					
+					<apex:inputField value="{!nbavs__User__c.nbavs__SipExtension__c}" required="{!IF(nbavs__User__c.Id!=null,'true','false')}">
+						<apex:actionSupport event="onchange" action="{!userExtensionUpdated}" rerender="messages, body" status="save-button-status"/>
+					</apex:inputField>
+					<apex:inputsecret id="pin" value="{!nbavs__User__c.nbavs__Pin__c}" required="false" maxlength="8" />
+
+					<apex:selectList value="{!nbavs__User__c.nbavs__AvailabilityProfile__c}" size="1" disabled="{!license.nbavs__Manager__c == false}" rendered="{!nbavs__User__c.nbavs__Manager__c}">
+						<apex:actionsupport event="onchange" action="{!buildProfileStates}" rerender="messages,profileState" />
+						<apex:selectOptions value="{!AvailabilityProfileOptions}"/> 
+					</apex:selectList>
+					<apex:inputField value="{!nbavs__User__c.nbavs__WebPhonePopupDisabled__c}" />
+
+					<apex:selectList size="1" value="{!nbavs__User__c.nbavs__AvailabilityProfileState__c}" id="profileState" disabled="{!license.nbavs__Manager__c == false}" rendered="{!nbavs__User__c.nbavs__Manager__c}">
+						<apex:selectOptions value="{!AvailabilityProfileState}" />
+					</apex:selectList>
+					<apex:inputField value="{!nbavs__User__c.nbavs__WebphoneMode__c}" />
+					<apex:inputField value="{!nbavs__User__c.nbavs__TrackOutboundCTIDevice__c}" rendered="{!nbavs__User__c.Id!=null}"/>
+					
+					<apex:selectList size="1" value="{!monitoredDevice}" label="Change Monitored Device">
+						<apex:selectOptions value="{!deviceOptions}" />
+					</apex:selectList>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+			<script>
+			if (window.history.replaceState) {
+				  window.history.replaceState(null,null,window.location.href);
+			}
+			</script>
+		</apex:outputPanel>
+		
+
+		<c:UserSettings PBXUser="{!nbavs__User__c}" edit="true" rendered="{!AND(nbavs__User__c.Id!=null,hasPrivateAccessToUser)}" />
+
+		<c:UserVoicemailSettings edit="true" rendered="{!AND(nbavs__User__c.Id!=null,hasPrivateAccessToUser)}" />
+
+	</apex:form>
+	<script type="text/javascript">
+		// j$ = jQuery.noConflict(); commented this as it broke saving External CLI https://natterbox.atlassian.net/browse/BAU-1110
+        function handleNew(isAdd){
+            if(isAdd === false){
+                handleUpdate();
+            }
+            if(isAdd === true){
+                handleAdd();
+            }
+            buttonsEnabled(false);
+        }
+        function buttonsEnabled(enabled) {
+            var $buttons = jQuery('.btn');
+            if (enabled === false) {
+                $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+            } else {
+                $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+            } 
+        }					
+	</script>
+</apex:page>

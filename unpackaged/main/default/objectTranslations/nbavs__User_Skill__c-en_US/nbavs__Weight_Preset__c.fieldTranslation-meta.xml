@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Proficiency --></label>
+        <name>nbavs__Weight_Preset__c</name>
+        <picklistValues>
+            <masterLabel>Advanced</masterLabel>
+            <translation><!-- Advanced --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Basic</masterLabel>
+            <translation><!-- Basic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom</masterLabel>
+            <translation><!-- Custom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Expert</masterLabel>
+            <translation><!-- Expert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guru</masterLabel>
+            <translation><!-- Guru --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Intermediate</masterLabel>
+            <translation><!-- Intermediate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minimal</masterLabel>
+            <translation><!-- Minimal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No knowledge</masterLabel>
+            <translation><!-- No knowledge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Novice</masterLabel>
+            <translation><!-- Novice --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

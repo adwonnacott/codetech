@@ -1,0 +1,4311 @@
+{
+  "1": {
+    "Sentences": [
+      {
+        "Sentence": "What joy there is in living",
+        "Start": 2810,
+        "End": 4870,
+        "Sentiment": 0.9
+      },
+      {
+        "Sentence": "The Bucks was thrown beside the pot truck",
+        "Start": 8701,
+        "End": 11411,
+        "Sentiment": 0.41
+      },
+      {
+        "Sentence": "The juice of lemons makes fine punch",
+        "Start": 15291,
+        "End": 17591,
+        "Sentiment": 0.61
+      },
+      {
+        "Sentence": "Take the winding path to reach the lake",
+        "Start": 21052,
+        "End": 23842,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "The friendly gang left the drugstore",
+        "Start": 27472,
+        "End": 30282,
+        "Sentiment": 0.53
+      },
+      {
+        "Sentence": "The chap slipped into the crowd and was lost",
+        "Start": 34033,
+        "End": 36343,
+        "Sentiment": 0.37
+      },
+      {
+        "Sentence": "the war oh Shimit in the hot sun",
+        "Start": 40354,
+        "End": 42284,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "The door was barred locked and bolted as well",
+        "Start": 45835,
+        "End": 48735,
+        "Sentiment": 0.55
+      },
+      {
+        "Sentence": "it was hidden from sight by massive leaves and shrubs",
+        "Start": 52776,
+        "End": 55656,
+        "Sentiment": 0.45
+      },
+      {
+        "Sentence": "what the grace of his dirty face",
+        "Start": 58827,
+        "End": 60967,
+        "Sentiment": 0.56
+      },
+      {
+        "Sentence": "Mash why it keeps chicks inside",
+        "Start": 64278,
+        "End": 66308,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "He takes the oath of office each march",
+        "Start": 69438,
+        "End": 71578,
+        "Sentiment": 0.64
+      },
+      {
+        "Sentence": "the ship was torn apart on the Shark Reef",
+        "Start": 75079,
+        "End": 77669,
+        "Sentiment": 0.35
+      },
+      {
+        "Sentence": "List this quest down over the fence",
+        "Start": 80841,
+        "End": 83291,
+        "Sentiment": 0.56
+      },
+      {
+        "Sentence": "Say it slowly but make it ring clear",
+        "Start": 87091,
+        "End": 89431,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "that so want to tea and not to dinner",
+        "Start": 93021,
+        "End": 95151,
+        "Sentiment": 0.62
+      },
+      {
+        "Sentence": "next Sunday is the twelve of them",
+        "Start": 98661,
+        "End": 100551,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "take the winding path to reach the lake",
+        "Start": 103972,
+        "End": 106842,
+        "Sentiment": 0.49
+      },
+      {
+        "Sentence": "The chap slipped into the crowd and was lost",
+        "Start": 111093,
+        "End": 113323,
+        "Sentiment": 0.33
+      },
+      {
+        "Sentence": "the door was barred locked and bolted as well",
+        "Start": 117254,
+        "End": 120134,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "fastened two pins on each side",
+        "Start": 123876,
+        "End": 126056,
+        "Sentiment": 0.36
+      }
+    ],
+    "Words": [
+      {
+        "s": 2810,
+        "c": 0.8,
+        "e": 3150,
+        "w": "What"
+      },
+      {
+        "s": 3160,
+        "c": 0.675,
+        "e": 3590,
+        "w": "joy"
+      },
+      {
+        "s": 3630,
+        "c": 0.259,
+        "e": 3880,
+        "w": "there"
+      },
+      {
+        "s": 3890,
+        "c": 0.961,
+        "e": 4180,
+        "w": "is"
+      },
+      {
+        "s": 4220,
+        "c": 0.837,
+        "e": 4430,
+        "w": "in"
+      },
+      {
+        "s": 4440,
+        "c": 0.852,
+        "e": 4870,
+        "w": "living"
+      },
+      {
+        "s": 8701,
+        "c": 0.0535,
+        "e": 8841,
+        "w": "The"
+      },
+      {
+        "s": 8851,
+        "c": 0.191,
+        "e": 9361,
+        "w": "Bucks"
+      },
+      {
+        "s": 9371,
+        "c": 0.771,
+        "e": 9561,
+        "w": "was"
+      },
+      {
+        "s": 9571,
+        "c": 0.923,
+        "e": 9971,
+        "w": "thrown"
+      },
+      {
+        "s": 9981,
+        "c": 0.969,
+        "e": 10441,
+        "w": "beside"
+      },
+      {
+        "s": 10451,
+        "c": 0.833,
+        "e": 10521,
+        "w": "the"
+      },
+      {
+        "s": 10531,
+        "c": 0.933,
+        "e": 10901,
+        "w": "pot"
+      },
+      {
+        "s": 10911,
+        "c": 0.791,
+        "e": 11411,
+        "w": "truck"
+      },
+      {
+        "s": 15291,
+        "c": 0.0668,
+        "e": 15441,
+        "w": "The"
+      },
+      {
+        "s": 15451,
+        "c": 0.91,
+        "e": 15831,
+        "w": "juice"
+      },
+      {
+        "s": 15841,
+        "c": 0.95,
+        "e": 15951,
+        "w": "of"
+      },
+      {
+        "s": 15961,
+        "c": 0.901,
+        "e": 16361,
+        "w": "lemons"
+      },
+      {
+        "s": 16371,
+        "c": 0.943,
+        "e": 16661,
+        "w": "makes"
+      },
+      {
+        "s": 16671,
+        "c": 0.943,
+        "e": 17041,
+        "w": "fine"
+      },
+      {
+        "s": 17051,
+        "c": 0.957,
+        "e": 17591,
+        "w": "punch"
+      },
+      {
+        "s": 21052,
+        "c": 0.601,
+        "e": 21442,
+        "w": "Take"
+      },
+      {
+        "s": 21452,
+        "c": 0.955,
+        "e": 21542,
+        "w": "the"
+      },
+      {
+        "s": 21552,
+        "c": 0.943,
+        "e": 22102,
+        "w": "winding"
+      },
+      {
+        "s": 22112,
+        "c": 0.959,
+        "e": 22652,
+        "w": "path"
+      },
+      {
+        "s": 22662,
+        "c": 0.898,
+        "e": 22822,
+        "w": "to"
+      },
+      {
+        "s": 22832,
+        "c": 0.793,
+        "e": 23232,
+        "w": "reach"
+      },
+      {
+        "s": 23242,
+        "c": 0.969,
+        "e": 23352,
+        "w": "the"
+      },
+      {
+        "s": 23362,
+        "c": 0.933,
+        "e": 23842,
+        "w": "lake"
+      },
+      {
+        "s": 27472,
+        "c": 0.0691,
+        "e": 27592,
+        "w": "The"
+      },
+      {
+        "s": 27602,
+        "c": 0.958,
+        "e": 28362,
+        "w": "friendly"
+      },
+      {
+        "s": 28372,
+        "c": 0.959,
+        "e": 28902,
+        "w": "gang"
+      },
+      {
+        "s": 28962,
+        "c": 0.891,
+        "e": 29302,
+        "w": "left"
+      },
+      {
+        "s": 29352,
+        "c": 0.793,
+        "e": 29472,
+        "w": "the"
+      },
+      {
+        "s": 29482,
+        "c": 0.82,
+        "e": 30282,
+        "w": "drugstore"
+      },
+      {
+        "s": 34033,
+        "c": 0.161,
+        "e": 34173,
+        "w": "The"
+      },
+      {
+        "s": 34183,
+        "c": 0.926,
+        "e": 34543,
+        "w": "chap"
+      },
+      {
+        "s": 34553,
+        "c": 0.951,
+        "e": 34843,
+        "w": "slipped"
+      },
+      {
+        "s": 34853,
+        "c": 0.938,
+        "e": 35073,
+        "w": "into"
+      },
+      {
+        "s": 35083,
+        "c": 0.928,
+        "e": 35153,
+        "w": "the"
+      },
+      {
+        "s": 35163,
+        "c": 0.873,
+        "e": 35613,
+        "w": "crowd"
+      },
+      {
+        "s": 35663,
+        "c": 0.808,
+        "e": 35793,
+        "w": "and"
+      },
+      {
+        "s": 35803,
+        "c": 0.801,
+        "e": 35953,
+        "w": "was"
+      },
+      {
+        "s": 35963,
+        "c": 0.655,
+        "e": 36343,
+        "w": "lost"
+      },
+      {
+        "s": 40354,
+        "c": 0.11,
+        "e": 40504,
+        "w": "the"
+      },
+      {
+        "s": 40514,
+        "c": 0.846,
+        "e": 40774,
+        "w": "war"
+      },
+      {
+        "s": 40784,
+        "c": 0.362,
+        "e": 40904,
+        "w": "oh"
+      },
+      {
+        "s": 40914,
+        "c": 0.956,
+        "e": 41344,
+        "w": "Shimit"
+      },
+      {
+        "s": 41354,
+        "c": 0.955,
+        "e": 41504,
+        "w": "in"
+      },
+      {
+        "s": 41514,
+        "c": 0.917,
+        "e": 41584,
+        "w": "the"
+      },
+      {
+        "s": 41594,
+        "c": 0.865,
+        "e": 41894,
+        "w": "hot"
+      },
+      {
+        "s": 41904,
+        "c": 0.96,
+        "e": 42284,
+        "w": "sun"
+      },
+      {
+        "s": 45835,
+        "c": 0.131,
+        "e": 45975,
+        "w": "The"
+      },
+      {
+        "s": 45985,
+        "c": 0.916,
+        "e": 46335,
+        "w": "door"
+      },
+      {
+        "s": 46345,
+        "c": 0.9,
+        "e": 46505,
+        "w": "was"
+      },
+      {
+        "s": 46515,
+        "c": 0.418,
+        "e": 47005,
+        "w": "barred"
+      },
+      {
+        "s": 47195,
+        "c": 0.588,
+        "e": 47645,
+        "w": "locked"
+      },
+      {
+        "s": 47695,
+        "c": 0.941,
+        "e": 47825,
+        "w": "and"
+      },
+      {
+        "s": 47835,
+        "c": 0.841,
+        "e": 48205,
+        "w": "bolted"
+      },
+      {
+        "s": 48215,
+        "c": 0.946,
+        "e": 48325,
+        "w": "as"
+      },
+      {
+        "s": 48335,
+        "c": 0.957,
+        "e": 48735,
+        "w": "well"
+      },
+      {
+        "s": 52776,
+        "c": 0.143,
+        "e": 52956,
+        "w": "it"
+      },
+      {
+        "s": 52966,
+        "c": 0.998,
+        "e": 53086,
+        "w": "was"
+      },
+      {
+        "s": 53096,
+        "c": 0.879,
+        "e": 53406,
+        "w": "hidden"
+      },
+      {
+        "s": 53416,
+        "c": 0.933,
+        "e": 53636,
+        "w": "from"
+      },
+      {
+        "s": 53646,
+        "c": 0.359,
+        "e": 53976,
+        "w": "sight"
+      },
+      {
+        "s": 53986,
+        "c": 0.734,
+        "e": 54206,
+        "w": "by"
+      },
+      {
+        "s": 54216,
+        "c": 0.42,
+        "e": 54616,
+        "w": "massive"
+      },
+      {
+        "s": 54626,
+        "c": 0.978,
+        "e": 54996,
+        "w": "leaves"
+      },
+      {
+        "s": 55006,
+        "c": 0.941,
+        "e": 55136,
+        "w": "and"
+      },
+      {
+        "s": 55146,
+        "c": 0.912,
+        "e": 55656,
+        "w": "shrubs"
+      },
+      {
+        "s": 58827,
+        "c": 0.0843,
+        "e": 59177,
+        "w": "what"
+      },
+      {
+        "s": 59187,
+        "c": 0.9,
+        "e": 59257,
+        "w": "the"
+      },
+      {
+        "s": 59267,
+        "c": 0.926,
+        "e": 59627,
+        "w": "grace"
+      },
+      {
+        "s": 59637,
+        "c": 0.929,
+        "e": 59827,
+        "w": "of"
+      },
+      {
+        "s": 59837,
+        "c": 0.561,
+        "e": 59997,
+        "w": "his"
+      },
+      {
+        "s": 60007,
+        "c": 0.917,
+        "e": 60347,
+        "w": "dirty"
+      },
+      {
+        "s": 60357,
+        "c": 0.962,
+        "e": 60967,
+        "w": "face"
+      },
+      {
+        "s": 64278,
+        "c": 0.0482,
+        "e": 64638,
+        "w": "Mash"
+      },
+      {
+        "s": 64648,
+        "c": 0.939,
+        "e": 64918,
+        "w": "why"
+      },
+      {
+        "s": 64928,
+        "c": 0.944,
+        "e": 64998,
+        "w": "it"
+      },
+      {
+        "s": 65008,
+        "c": 0.681,
+        "e": 65318,
+        "w": "keeps"
+      },
+      {
+        "s": 65328,
+        "c": 0.528,
+        "e": 65668,
+        "w": "chicks"
+      },
+      {
+        "s": 65678,
+        "c": 0.963,
+        "e": 66308,
+        "w": "inside"
+      },
+      {
+        "s": 69438,
+        "c": 0.0626,
+        "e": 69578,
+        "w": "He"
+      },
+      {
+        "s": 69588,
+        "c": 0.929,
+        "e": 69898,
+        "w": "takes"
+      },
+      {
+        "s": 69908,
+        "c": 0.917,
+        "e": 70038,
+        "w": "the"
+      },
+      {
+        "s": 70048,
+        "c": 0.307,
+        "e": 70238,
+        "w": "oath"
+      },
+      {
+        "s": 70248,
+        "c": 0.95,
+        "e": 70368,
+        "w": "of"
+      },
+      {
+        "s": 70378,
+        "c": 0.645,
+        "e": 70758,
+        "w": "office"
+      },
+      {
+        "s": 70798,
+        "c": 0.201,
+        "e": 71058,
+        "w": "each"
+      },
+      {
+        "s": 71068,
+        "c": 0.958,
+        "e": 71578,
+        "w": "march"
+      },
+      {
+        "s": 75079,
+        "c": 0.115,
+        "e": 75219,
+        "w": "the"
+      },
+      {
+        "s": 75229,
+        "c": 0.92,
+        "e": 75539,
+        "w": "ship"
+      },
+      {
+        "s": 75549,
+        "c": 0.833,
+        "e": 75719,
+        "w": "was"
+      },
+      {
+        "s": 75729,
+        "c": 0.955,
+        "e": 76009,
+        "w": "torn"
+      },
+      {
+        "s": 76019,
+        "c": 0.909,
+        "e": 76539,
+        "w": "apart"
+      },
+      {
+        "s": 76579,
+        "c": 0.924,
+        "e": 76719,
+        "w": "on"
+      },
+      {
+        "s": 76729,
+        "c": 0.947,
+        "e": 76799,
+        "w": "the"
+      },
+      {
+        "s": 76809,
+        "c": 0.913,
+        "e": 77119,
+        "w": "Shark"
+      },
+      {
+        "s": 77159,
+        "c": 0.931,
+        "e": 77669,
+        "w": "Reef"
+      },
+      {
+        "s": 80841,
+        "c": 0.065,
+        "e": 81211,
+        "w": "List"
+      },
+      {
+        "s": 81221,
+        "c": 0.9,
+        "e": 81391,
+        "w": "this"
+      },
+      {
+        "s": 81401,
+        "c": 0.952,
+        "e": 81771,
+        "w": "quest"
+      },
+      {
+        "s": 81781,
+        "c": 0.55,
+        "e": 82181,
+        "w": "down"
+      },
+      {
+        "s": 82261,
+        "c": 0.404,
+        "e": 82531,
+        "w": "over"
+      },
+      {
+        "s": 82541,
+        "c": 0.667,
+        "e": 82631,
+        "w": "the"
+      },
+      {
+        "s": 82641,
+        "c": 0.763,
+        "e": 83291,
+        "w": "fence"
+      },
+      {
+        "s": 87091,
+        "c": 0.0839,
+        "e": 87361,
+        "w": "Say"
+      },
+      {
+        "s": 87371,
+        "c": 0.672,
+        "e": 87491,
+        "w": "it"
+      },
+      {
+        "s": 87501,
+        "c": 0.723,
+        "e": 88061,
+        "w": "slowly"
+      },
+      {
+        "s": 88071,
+        "c": 0.938,
+        "e": 88271,
+        "w": "but"
+      },
+      {
+        "s": 88281,
+        "c": 0.931,
+        "e": 88501,
+        "w": "make"
+      },
+      {
+        "s": 88511,
+        "c": 0.857,
+        "e": 88611,
+        "w": "it"
+      },
+      {
+        "s": 88621,
+        "c": 0.704,
+        "e": 88981,
+        "w": "ring"
+      },
+      {
+        "s": 89021,
+        "c": 0.522,
+        "e": 89431,
+        "w": "clear"
+      },
+      {
+        "s": 93021,
+        "c": 0.094,
+        "e": 93221,
+        "w": "that"
+      },
+      {
+        "s": 93231,
+        "c": 0.831,
+        "e": 93401,
+        "w": "so"
+      },
+      {
+        "s": 93411,
+        "c": 0.918,
+        "e": 93691,
+        "w": "want"
+      },
+      {
+        "s": 93701,
+        "c": 0.889,
+        "e": 93791,
+        "w": "to"
+      },
+      {
+        "s": 93801,
+        "c": 0.129,
+        "e": 94261,
+        "w": "tea"
+      },
+      {
+        "s": 94271,
+        "c": 0.976,
+        "e": 94461,
+        "w": "and"
+      },
+      {
+        "s": 94471,
+        "c": 0.878,
+        "e": 94721,
+        "w": "not"
+      },
+      {
+        "s": 94761,
+        "c": 0.813,
+        "e": 94871,
+        "w": "to"
+      },
+      {
+        "s": 94881,
+        "c": 0.85,
+        "e": 95151,
+        "w": "dinner"
+      },
+      {
+        "s": 98661,
+        "c": 0.251,
+        "e": 99011,
+        "w": "next"
+      },
+      {
+        "s": 99021,
+        "c": 0.981,
+        "e": 99421,
+        "w": "Sunday"
+      },
+      {
+        "s": 99431,
+        "c": 0.839,
+        "e": 99581,
+        "w": "is"
+      },
+      {
+        "s": 99591,
+        "c": 0.833,
+        "e": 99651,
+        "w": "the"
+      },
+      {
+        "s": 99661,
+        "c": 0.435,
+        "e": 100111,
+        "w": "twelve"
+      },
+      {
+        "s": 100151,
+        "c": 0.259,
+        "e": 100291,
+        "w": "of"
+      },
+      {
+        "s": 100301,
+        "c": 0.199,
+        "e": 100551,
+        "w": "them"
+      },
+      {
+        "s": 103972,
+        "c": 0.186,
+        "e": 104362,
+        "w": "take"
+      },
+      {
+        "s": 104372,
+        "c": 0.955,
+        "e": 104462,
+        "w": "the"
+      },
+      {
+        "s": 104472,
+        "c": 0.944,
+        "e": 105022,
+        "w": "winding"
+      },
+      {
+        "s": 105032,
+        "c": 0.959,
+        "e": 105572,
+        "w": "path"
+      },
+      {
+        "s": 105582,
+        "c": 0.963,
+        "e": 105742,
+        "w": "to"
+      },
+      {
+        "s": 105752,
+        "c": 0.792,
+        "e": 106242,
+        "w": "reach"
+      },
+      {
+        "s": 106252,
+        "c": 0.974,
+        "e": 106352,
+        "w": "the"
+      },
+      {
+        "s": 106362,
+        "c": 0.911,
+        "e": 106842,
+        "w": "lake"
+      },
+      {
+        "s": 111093,
+        "c": 0.0715,
+        "e": 111233,
+        "w": "The"
+      },
+      {
+        "s": 111243,
+        "c": 0.926,
+        "e": 111603,
+        "w": "chap"
+      },
+      {
+        "s": 111613,
+        "c": 0.951,
+        "e": 111903,
+        "w": "slipped"
+      },
+      {
+        "s": 111913,
+        "c": 0.938,
+        "e": 112133,
+        "w": "into"
+      },
+      {
+        "s": 112143,
+        "c": 0.929,
+        "e": 112213,
+        "w": "the"
+      },
+      {
+        "s": 112223,
+        "c": 0.874,
+        "e": 112613,
+        "w": "crowd"
+      },
+      {
+        "s": 112623,
+        "c": 0.962,
+        "e": 112773,
+        "w": "and"
+      },
+      {
+        "s": 112783,
+        "c": 0.698,
+        "e": 112933,
+        "w": "was"
+      },
+      {
+        "s": 112943,
+        "c": 0.969,
+        "e": 113323,
+        "w": "lost"
+      },
+      {
+        "s": 117254,
+        "c": 0.102,
+        "e": 117404,
+        "w": "the"
+      },
+      {
+        "s": 117414,
+        "c": 0.947,
+        "e": 117754,
+        "w": "door"
+      },
+      {
+        "s": 117764,
+        "c": 0.889,
+        "e": 117924,
+        "w": "was"
+      },
+      {
+        "s": 117934,
+        "c": 0.786,
+        "e": 118444,
+        "w": "barred"
+      },
+      {
+        "s": 118634,
+        "c": 0.524,
+        "e": 119044,
+        "w": "locked"
+      },
+      {
+        "s": 119094,
+        "c": 0.941,
+        "e": 119224,
+        "w": "and"
+      },
+      {
+        "s": 119234,
+        "c": 0.846,
+        "e": 119614,
+        "w": "bolted"
+      },
+      {
+        "s": 119624,
+        "c": 0.946,
+        "e": 119734,
+        "w": "as"
+      },
+      {
+        "s": 119744,
+        "c": 0.957,
+        "e": 120134,
+        "w": "well"
+      },
+      {
+        "s": 123876,
+        "c": 0.233,
+        "e": 124356,
+        "w": "fastened"
+      },
+      {
+        "s": 124396,
+        "c": 0.586,
+        "e": 124666,
+        "w": "two"
+      },
+      {
+        "s": 124676,
+        "c": 0.944,
+        "e": 125176,
+        "w": "pins"
+      },
+      {
+        "s": 125186,
+        "c": 0.972,
+        "e": 125286,
+        "w": "on"
+      },
+      {
+        "s": 125296,
+        "c": 0.883,
+        "e": 125486,
+        "w": "each"
+      },
+      {
+        "s": 125496,
+        "c": 0.93,
+        "e": 126056,
+        "w": "side"
+      }
+    ],
+    "NLE": [],
+    "WordCounts": {
+      "General": {
+        "Total": 164,
+        "Duration": 48220,
+        "Syllables": 0,
+        "LongestWordLength": 9,
+        "LongestWord": "drugstore",
+        "MostSyllabicWord": "",
+        "MostSyllabicWordLength": 0
+      },
+      "Detail": {
+        "and": {
+          "Dur": 860,
+          "Pos": [
+            35663,
+            47695,
+            55006,
+            94271,
+            112623,
+            119094
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "apart": {
+          "Dur": 520,
+          "Pos": [
+            76019
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "as": {
+          "Dur": 220,
+          "Pos": [
+            48215,
+            119624
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "barred": {
+          "Dur": 1000,
+          "Pos": [
+            46515,
+            117934
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "beside": {
+          "Dur": 460,
+          "Pos": [
+            9981
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "bolted": {
+          "Dur": 750,
+          "Pos": [
+            47835,
+            119234
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "bucks": {
+          "Dur": 510,
+          "Pos": [
+            8851
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "but": {
+          "Dur": 200,
+          "Pos": [
+            88071
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "by": {
+          "Dur": 220,
+          "Pos": [
+            53986
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "chap": {
+          "Dur": 720,
+          "Pos": [
+            34183,
+            111243
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "chicks": {
+          "Dur": 340,
+          "Pos": [
+            65328
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "clear": {
+          "Dur": 410,
+          "Pos": [
+            89021
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "crowd": {
+          "Dur": 840,
+          "Pos": [
+            35163,
+            112223
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "dinner": {
+          "Dur": 270,
+          "Pos": [
+            94881
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "dirty": {
+          "Dur": 340,
+          "Pos": [
+            60007
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "door": {
+          "Dur": 690,
+          "Pos": [
+            45985,
+            117414
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "down": {
+          "Dur": 400,
+          "Pos": [
+            81781
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "drugstore": {
+          "Dur": 800,
+          "Pos": [
+            29482
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "each": {
+          "Dur": 450,
+          "Pos": [
+            70798,
+            125296
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "face": {
+          "Dur": 610,
+          "Pos": [
+            60357
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "fastened": {
+          "Dur": 480,
+          "Pos": [
+            123876
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "fence": {
+          "Dur": 650,
+          "Pos": [
+            82641
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "fine": {
+          "Dur": 370,
+          "Pos": [
+            16671
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "friendly": {
+          "Dur": 760,
+          "Pos": [
+            27602
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "from": {
+          "Dur": 220,
+          "Pos": [
+            53416
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "gang": {
+          "Dur": 530,
+          "Pos": [
+            28372
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "grace": {
+          "Dur": 360,
+          "Pos": [
+            59267
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "he": {
+          "Dur": 140,
+          "Pos": [
+            69438
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "hidden": {
+          "Dur": 310,
+          "Pos": [
+            53096
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "his": {
+          "Dur": 160,
+          "Pos": [
+            59837
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "hot": {
+          "Dur": 300,
+          "Pos": [
+            41594
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "in": {
+          "Dur": 360,
+          "Pos": [
+            4220,
+            41354
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "inside": {
+          "Dur": 630,
+          "Pos": [
+            65678
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "into": {
+          "Dur": 440,
+          "Pos": [
+            34853,
+            111913
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "is": {
+          "Dur": 440,
+          "Pos": [
+            3890,
+            99431
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "it": {
+          "Dur": 470,
+          "Pos": [
+            52776,
+            64928,
+            87371,
+            88511
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "joy": {
+          "Dur": 430,
+          "Pos": [
+            3160
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "juice": {
+          "Dur": 380,
+          "Pos": [
+            15451
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "keeps": {
+          "Dur": 310,
+          "Pos": [
+            65008
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lake": {
+          "Dur": 960,
+          "Pos": [
+            23362,
+            106362
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "leaves": {
+          "Dur": 370,
+          "Pos": [
+            54626
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "left": {
+          "Dur": 340,
+          "Pos": [
+            28962
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lemons": {
+          "Dur": 400,
+          "Pos": [
+            15961
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "list": {
+          "Dur": 370,
+          "Pos": [
+            80841
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "living": {
+          "Dur": 430,
+          "Pos": [
+            4440
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "locked": {
+          "Dur": 860,
+          "Pos": [
+            47195,
+            118634
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lost": {
+          "Dur": 760,
+          "Pos": [
+            35963,
+            112943
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "make": {
+          "Dur": 220,
+          "Pos": [
+            88281
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "makes": {
+          "Dur": 290,
+          "Pos": [
+            16371
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "march": {
+          "Dur": 510,
+          "Pos": [
+            71068
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "mash": {
+          "Dur": 360,
+          "Pos": [
+            64278
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "massive": {
+          "Dur": 400,
+          "Pos": [
+            54216
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "next": {
+          "Dur": 350,
+          "Pos": [
+            98661
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "not": {
+          "Dur": 250,
+          "Pos": [
+            94471
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "oath": {
+          "Dur": 190,
+          "Pos": [
+            70048
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "of": {
+          "Dur": 560,
+          "Pos": [
+            15841,
+            59637,
+            70248,
+            100151
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "office": {
+          "Dur": 380,
+          "Pos": [
+            70378
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "oh": {
+          "Dur": 120,
+          "Pos": [
+            40784
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "on": {
+          "Dur": 240,
+          "Pos": [
+            76579,
+            125186
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "over": {
+          "Dur": 270,
+          "Pos": [
+            82261
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "path": {
+          "Dur": 1080,
+          "Pos": [
+            22112,
+            105032
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "pins": {
+          "Dur": 500,
+          "Pos": [
+            124676
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "pot": {
+          "Dur": 370,
+          "Pos": [
+            10531
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "punch": {
+          "Dur": 540,
+          "Pos": [
+            17051
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "quest": {
+          "Dur": 370,
+          "Pos": [
+            81401
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "reach": {
+          "Dur": 890,
+          "Pos": [
+            22832,
+            105752
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "reef": {
+          "Dur": 510,
+          "Pos": [
+            77159
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "ring": {
+          "Dur": 360,
+          "Pos": [
+            88621
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "say": {
+          "Dur": 270,
+          "Pos": [
+            87091
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "shark": {
+          "Dur": 310,
+          "Pos": [
+            76809
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "shimit": {
+          "Dur": 430,
+          "Pos": [
+            40914
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "ship": {
+          "Dur": 310,
+          "Pos": [
+            75229
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "shrubs": {
+          "Dur": 510,
+          "Pos": [
+            55146
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "side": {
+          "Dur": 560,
+          "Pos": [
+            125496
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "sight": {
+          "Dur": 330,
+          "Pos": [
+            53646
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "slipped": {
+          "Dur": 580,
+          "Pos": [
+            34553,
+            111613
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "slowly": {
+          "Dur": 560,
+          "Pos": [
+            87501
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "so": {
+          "Dur": 170,
+          "Pos": [
+            93231
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "sun": {
+          "Dur": 380,
+          "Pos": [
+            41904
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "sunday": {
+          "Dur": 400,
+          "Pos": [
+            99021
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "take": {
+          "Dur": 780,
+          "Pos": [
+            21052,
+            103972
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "takes": {
+          "Dur": 310,
+          "Pos": [
+            69588
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "tea": {
+          "Dur": 460,
+          "Pos": [
+            93801
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "that": {
+          "Dur": 200,
+          "Pos": [
+            93021
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "the": {
+          "Dur": 2480,
+          "Pos": [
+            8701,
+            10451,
+            15291,
+            21452,
+            23242,
+            27472,
+            29352,
+            34033,
+            35083,
+            40354,
+            41514,
+            45835,
+            59187,
+            69908,
+            75079,
+            76729,
+            82541,
+            99591,
+            104372,
+            106252,
+            111093,
+            112143,
+            117254
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "them": {
+          "Dur": 250,
+          "Pos": [
+            100301
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "there": {
+          "Dur": 250,
+          "Pos": [
+            3630
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "this": {
+          "Dur": 170,
+          "Pos": [
+            81221
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "thrown": {
+          "Dur": 400,
+          "Pos": [
+            9571
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "to": {
+          "Dur": 520,
+          "Pos": [
+            22662,
+            93701,
+            94761,
+            105582
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "torn": {
+          "Dur": 280,
+          "Pos": [
+            75729
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "truck": {
+          "Dur": 500,
+          "Pos": [
+            10911
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "twelve": {
+          "Dur": 450,
+          "Pos": [
+            99661
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "two": {
+          "Dur": 270,
+          "Pos": [
+            124396
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "want": {
+          "Dur": 280,
+          "Pos": [
+            93411
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "war": {
+          "Dur": 260,
+          "Pos": [
+            40514
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "was": {
+          "Dur": 1100,
+          "Pos": [
+            9371,
+            35803,
+            46345,
+            52966,
+            75549,
+            112783,
+            117764
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "well": {
+          "Dur": 790,
+          "Pos": [
+            48335,
+            119744
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "what": {
+          "Dur": 690,
+          "Pos": [
+            2810,
+            58827
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "why": {
+          "Dur": 270,
+          "Pos": [
+            64648
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "winding": {
+          "Dur": 1100,
+          "Pos": [
+            21552,
+            104472
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        }
+      }
+    }
+  },
+  "2": {
+    "Sentences": [
+      {
+        "Sentence": "Twisted and turned on the bent hook",
+        "Start": 210,
+        "End": 2140,
+        "Sentiment": 0.33
+      },
+      {
+        "Sentence": "The Colt reared and threw the tall rider",
+        "Start": 5490,
+        "End": 8160,
+        "Sentiment": 0.42
+      },
+      {
+        "Sentence": "A chink in the wall allowed to draw off to blow",
+        "Start": 12170,
+        "End": 14640,
+        "Sentiment": 0.23
+      },
+      {
+        "Sentence": "the ramps lead up to the wind highway",
+        "Start": 18262,
+        "End": 20422,
+        "Sentiment": 0.62
+      },
+      {
+        "Sentence": "snowed rained and hailed the same morning",
+        "Start": 24333,
+        "End": 26833,
+        "Sentiment": 0.28
+      },
+      {
+        "Sentence": "These days a chicken leg radish",
+        "Start": 30845,
+        "End": 33395,
+        "Sentiment": 0.56
+      },
+      {
+        "Sentence": "Beat the dust from the rug on to the lawn",
+        "Start": 37066,
+        "End": 39596,
+        "Sentiment": 0.55
+      },
+      {
+        "Sentence": "a poster to help us to pass the evening",
+        "Start": 42966,
+        "End": 45226,
+        "Sentiment": 0.58
+      },
+      {
+        "Sentence": "The Hogs were fat chopped corn and garbage",
+        "Start": 49307,
+        "End": 52267,
+        "Sentiment": 0.59
+      },
+      {
+        "Sentence": "Mended the coat before you go out",
+        "Start": 56198,
+        "End": 58288,
+        "Sentiment": 0.63
+      },
+      {
+        "Sentence": "This strong arm shall shield on to",
+        "Start": 61379,
+        "End": 63549,
+        "Sentiment": 0.32
+      },
+      {
+        "Sentence": "help the woman get back to her feet",
+        "Start": 66792,
+        "End": 68862,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "The strong nest housed five Robin's",
+        "Start": 72213,
+        "End": 74573,
+        "Sentiment": 0.67
+      },
+      {
+        "Sentence": "take the winding path to reach the lake",
+        "Start": 78114,
+        "End": 80354,
+        "Sentiment": 0.52
+      },
+      {
+        "Sentence": "the door was barred locked and bolted as well",
+        "Start": 83615,
+        "End": 86475,
+        "Sentiment": 0.34
+      },
+      {
+        "Sentence": "it's easy to tell the depth of the well",
+        "Start": 90136,
+        "End": 92386,
+        "Sentiment": 0.55
+      },
+      {
+        "Sentence": "made a bust out loud for pleasure",
+        "Start": 95928,
+        "End": 98008,
+        "Sentiment": 0.78
+      },
+      {
+        "Sentence": "Not closely the size of the gas tank",
+        "Start": 101228,
+        "End": 103508,
+        "Sentiment": 0.54
+      },
+      {
+        "Sentence": "The lobes of her ears were pierced to her rings",
+        "Start": 107440,
+        "End": 110530,
+        "Sentiment": 0.47
+      },
+      {
+        "Sentence": "the wide shimmered in the sun",
+        "Start": 114330,
+        "End": 116700,
+        "Sentiment": 0.47
+      },
+      {
+        "Sentence": "Stood rind and hailed the same morning",
+        "Start": 120972,
+        "End": 123272,
+        "Sentiment": 0.48
+      },
+      {
+        "Sentence": "the wide road",
+        "Start": 126714,
+        "End": 127634,
+        "Sentiment": 0.56
+      }
+    ],
+    "Words": [
+      {
+        "s": 210,
+        "c": 0.967,
+        "e": 680,
+        "w": "Twisted"
+      },
+      {
+        "s": 690,
+        "c": 0.857,
+        "e": 820,
+        "w": "and"
+      },
+      {
+        "s": 830,
+        "c": 0.784,
+        "e": 1230,
+        "w": "turned"
+      },
+      {
+        "s": 1240,
+        "c": 0.976,
+        "e": 1350,
+        "w": "on"
+      },
+      {
+        "s": 1360,
+        "c": 0.695,
+        "e": 1410,
+        "w": "the"
+      },
+      {
+        "s": 1420,
+        "c": 0.917,
+        "e": 1670,
+        "w": "bent"
+      },
+      {
+        "s": 1680,
+        "c": 0.929,
+        "e": 2140,
+        "w": "hook"
+      },
+      {
+        "s": 5490,
+        "c": 0.0665,
+        "e": 5640,
+        "w": "The"
+      },
+      {
+        "s": 5650,
+        "c": 0.197,
+        "e": 6060,
+        "w": "Colt"
+      },
+      {
+        "s": 6100,
+        "c": 0.227,
+        "e": 6560,
+        "w": "reared"
+      },
+      {
+        "s": 6570,
+        "c": 0.962,
+        "e": 6770,
+        "w": "and"
+      },
+      {
+        "s": 6780,
+        "c": 0.455,
+        "e": 7170,
+        "w": "threw"
+      },
+      {
+        "s": 7180,
+        "c": 0.971,
+        "e": 7340,
+        "w": "the"
+      },
+      {
+        "s": 7350,
+        "c": 0.866,
+        "e": 7670,
+        "w": "tall"
+      },
+      {
+        "s": 7680,
+        "c": 0.947,
+        "e": 8160,
+        "w": "rider"
+      },
+      {
+        "s": 12170,
+        "c": 0.064,
+        "e": 12250,
+        "w": "A"
+      },
+      {
+        "s": 12260,
+        "c": 0.923,
+        "e": 12590,
+        "w": "chink"
+      },
+      {
+        "s": 12600,
+        "c": 0.933,
+        "e": 12680,
+        "w": "in"
+      },
+      {
+        "s": 12690,
+        "c": 0.814,
+        "e": 12760,
+        "w": "the"
+      },
+      {
+        "s": 12770,
+        "c": 0.8,
+        "e": 13230,
+        "w": "wall"
+      },
+      {
+        "s": 13240,
+        "c": 0.736,
+        "e": 13560,
+        "w": "allowed"
+      },
+      {
+        "s": 13570,
+        "c": 0.9,
+        "e": 13630,
+        "w": "to"
+      },
+      {
+        "s": 13640,
+        "c": 0.867,
+        "e": 13850,
+        "w": "draw"
+      },
+      {
+        "s": 13860,
+        "c": 0.8,
+        "e": 14120,
+        "w": "off"
+      },
+      {
+        "s": 14130,
+        "c": 0.968,
+        "e": 14240,
+        "w": "to"
+      },
+      {
+        "s": 14250,
+        "c": 0.87,
+        "e": 14640,
+        "w": "blow"
+      },
+      {
+        "s": 18262,
+        "c": 0.445,
+        "e": 18442,
+        "w": "the"
+      },
+      {
+        "s": 18452,
+        "c": 0.394,
+        "e": 18852,
+        "w": "ramps"
+      },
+      {
+        "s": 18862,
+        "c": 0.456,
+        "e": 19062,
+        "w": "lead"
+      },
+      {
+        "s": 19072,
+        "c": 0.846,
+        "e": 19262,
+        "w": "up"
+      },
+      {
+        "s": 19272,
+        "c": 0.917,
+        "e": 19412,
+        "w": "to"
+      },
+      {
+        "s": 19422,
+        "c": 0.899,
+        "e": 19532,
+        "w": "the"
+      },
+      {
+        "s": 19542,
+        "c": 0.883,
+        "e": 19812,
+        "w": "wind"
+      },
+      {
+        "s": 19822,
+        "c": 0.952,
+        "e": 20422,
+        "w": "highway"
+      },
+      {
+        "s": 24333,
+        "c": 0.191,
+        "e": 25003,
+        "w": "snowed"
+      },
+      {
+        "s": 25013,
+        "c": 0.358,
+        "e": 25343,
+        "w": "rained"
+      },
+      {
+        "s": 25353,
+        "c": 0.362,
+        "e": 25493,
+        "w": "and"
+      },
+      {
+        "s": 25503,
+        "c": 0.483,
+        "e": 25933,
+        "w": "hailed"
+      },
+      {
+        "s": 25973,
+        "c": 0.829,
+        "e": 26103,
+        "w": "the"
+      },
+      {
+        "s": 26113,
+        "c": 0.727,
+        "e": 26403,
+        "w": "same"
+      },
+      {
+        "s": 26413,
+        "c": 0.878,
+        "e": 26833,
+        "w": "morning"
+      },
+      {
+        "s": 30845,
+        "c": 0.0994,
+        "e": 31145,
+        "w": "These"
+      },
+      {
+        "s": 31155,
+        "c": 0.941,
+        "e": 31575,
+        "w": "days"
+      },
+      {
+        "s": 31585,
+        "c": 0.217,
+        "e": 31725,
+        "w": "a"
+      },
+      {
+        "s": 31735,
+        "c": 0.724,
+        "e": 32115,
+        "w": "chicken"
+      },
+      {
+        "s": 32125,
+        "c": 0.957,
+        "e": 32425,
+        "w": "leg"
+      },
+      {
+        "s": 32615,
+        "c": 0.737,
+        "e": 33395,
+        "w": "radish"
+      },
+      {
+        "s": 37066,
+        "c": 0.41,
+        "e": 37466,
+        "w": "Beat"
+      },
+      {
+        "s": 37476,
+        "c": 0.912,
+        "e": 37556,
+        "w": "the"
+      },
+      {
+        "s": 37566,
+        "c": 0.91,
+        "e": 37866,
+        "w": "dust"
+      },
+      {
+        "s": 37876,
+        "c": 0.944,
+        "e": 38126,
+        "w": "from"
+      },
+      {
+        "s": 38136,
+        "c": 0.945,
+        "e": 38226,
+        "w": "the"
+      },
+      {
+        "s": 38236,
+        "c": 0.883,
+        "e": 38646,
+        "w": "rug"
+      },
+      {
+        "s": 38686,
+        "c": 0.91,
+        "e": 38886,
+        "w": "on"
+      },
+      {
+        "s": 38896,
+        "c": 0.923,
+        "e": 39016,
+        "w": "to"
+      },
+      {
+        "s": 39026,
+        "c": 0.929,
+        "e": 39116,
+        "w": "the"
+      },
+      {
+        "s": 39126,
+        "c": 0.906,
+        "e": 39596,
+        "w": "lawn"
+      },
+      {
+        "s": 42966,
+        "c": 0.0469,
+        "e": 43066,
+        "w": "a"
+      },
+      {
+        "s": 43076,
+        "c": 0.947,
+        "e": 43406,
+        "w": "poster"
+      },
+      {
+        "s": 43416,
+        "c": 0.778,
+        "e": 43626,
+        "w": "to"
+      },
+      {
+        "s": 43896,
+        "c": 0.97,
+        "e": 44106,
+        "w": "help"
+      },
+      {
+        "s": 44116,
+        "c": 0.833,
+        "e": 44176,
+        "w": "us"
+      },
+      {
+        "s": 44186,
+        "c": 0.884,
+        "e": 44286,
+        "w": "to"
+      },
+      {
+        "s": 44296,
+        "c": 0.779,
+        "e": 44636,
+        "w": "pass"
+      },
+      {
+        "s": 44646,
+        "c": 0.999,
+        "e": 44786,
+        "w": "the"
+      },
+      {
+        "s": 44796,
+        "c": 0.923,
+        "e": 45226,
+        "w": "evening"
+      },
+      {
+        "s": 49307,
+        "c": 0.184,
+        "e": 49487,
+        "w": "The"
+      },
+      {
+        "s": 49497,
+        "c": 0.944,
+        "e": 49967,
+        "w": "Hogs"
+      },
+      {
+        "s": 49977,
+        "c": 0.969,
+        "e": 50147,
+        "w": "were"
+      },
+      {
+        "s": 50157,
+        "c": 0.668,
+        "e": 50637,
+        "w": "fat"
+      },
+      {
+        "s": 50687,
+        "c": 0.563,
+        "e": 51057,
+        "w": "chopped"
+      },
+      {
+        "s": 51067,
+        "c": 0.949,
+        "e": 51397,
+        "w": "corn"
+      },
+      {
+        "s": 51407,
+        "c": 0.833,
+        "e": 51577,
+        "w": "and"
+      },
+      {
+        "s": 51587,
+        "c": 0.763,
+        "e": 52267,
+        "w": "garbage"
+      },
+      {
+        "s": 56198,
+        "c": 0.242,
+        "e": 56688,
+        "w": "Mended"
+      },
+      {
+        "s": 56698,
+        "c": 0.818,
+        "e": 56768,
+        "w": "the"
+      },
+      {
+        "s": 56778,
+        "c": 0.946,
+        "e": 57138,
+        "w": "coat"
+      },
+      {
+        "s": 57148,
+        "c": 0.835,
+        "e": 57508,
+        "w": "before"
+      },
+      {
+        "s": 57518,
+        "c": 0.905,
+        "e": 57588,
+        "w": "you"
+      },
+      {
+        "s": 57598,
+        "c": 0.929,
+        "e": 57858,
+        "w": "go"
+      },
+      {
+        "s": 57868,
+        "c": 0.963,
+        "e": 58288,
+        "w": "out"
+      },
+      {
+        "s": 61379,
+        "c": 0.168,
+        "e": 61599,
+        "w": "This"
+      },
+      {
+        "s": 61609,
+        "c": 0.489,
+        "e": 61989,
+        "w": "strong"
+      },
+      {
+        "s": 61999,
+        "c": 0.958,
+        "e": 62379,
+        "w": "arm"
+      },
+      {
+        "s": 62389,
+        "c": 0.931,
+        "e": 62629,
+        "w": "shall"
+      },
+      {
+        "s": 62639,
+        "c": 0.956,
+        "e": 63059,
+        "w": "shield"
+      },
+      {
+        "s": 63069,
+        "c": 0.75,
+        "e": 63399,
+        "w": "on"
+      },
+      {
+        "s": 63409,
+        "c": 0.248,
+        "e": 63549,
+        "w": "to"
+      },
+      {
+        "s": 66792,
+        "c": 0.245,
+        "e": 67132,
+        "w": "help"
+      },
+      {
+        "s": 67142,
+        "c": 0.841,
+        "e": 67232,
+        "w": "the"
+      },
+      {
+        "s": 67242,
+        "c": 0.459,
+        "e": 67672,
+        "w": "woman"
+      },
+      {
+        "s": 67682,
+        "c": 0.999,
+        "e": 67852,
+        "w": "get"
+      },
+      {
+        "s": 67862,
+        "c": 0.906,
+        "e": 68082,
+        "w": "back"
+      },
+      {
+        "s": 68092,
+        "c": 0.927,
+        "e": 68242,
+        "w": "to"
+      },
+      {
+        "s": 68252,
+        "c": 0.873,
+        "e": 68392,
+        "w": "her"
+      },
+      {
+        "s": 68402,
+        "c": 0.789,
+        "e": 68862,
+        "w": "feet"
+      },
+      {
+        "s": 72213,
+        "c": 0.0559,
+        "e": 72363,
+        "w": "The"
+      },
+      {
+        "s": 72373,
+        "c": 0.951,
+        "e": 72763,
+        "w": "strong"
+      },
+      {
+        "s": 72773,
+        "c": 0.939,
+        "e": 73073,
+        "w": "nest"
+      },
+      {
+        "s": 73083,
+        "c": 0.955,
+        "e": 73493,
+        "w": "housed"
+      },
+      {
+        "s": 73503,
+        "c": 0.946,
+        "e": 74033,
+        "w": "five"
+      },
+      {
+        "s": 74043,
+        "c": 0.505,
+        "e": 74573,
+        "w": "Robin's"
+      },
+      {
+        "s": 78114,
+        "c": 0.89,
+        "e": 78424,
+        "w": "take"
+      },
+      {
+        "s": 78434,
+        "c": 0.999,
+        "e": 78514,
+        "w": "the"
+      },
+      {
+        "s": 78524,
+        "c": 0.93,
+        "e": 78944,
+        "w": "winding"
+      },
+      {
+        "s": 78954,
+        "c": 0.95,
+        "e": 79364,
+        "w": "path"
+      },
+      {
+        "s": 79374,
+        "c": 0.944,
+        "e": 79494,
+        "w": "to"
+      },
+      {
+        "s": 79504,
+        "c": 0.834,
+        "e": 79774,
+        "w": "reach"
+      },
+      {
+        "s": 79784,
+        "c": 0.95,
+        "e": 79874,
+        "w": "the"
+      },
+      {
+        "s": 79884,
+        "c": 0.923,
+        "e": 80354,
+        "w": "lake"
+      },
+      {
+        "s": 83615,
+        "c": 0.106,
+        "e": 83755,
+        "w": "the"
+      },
+      {
+        "s": 83765,
+        "c": 0.931,
+        "e": 84115,
+        "w": "door"
+      },
+      {
+        "s": 84125,
+        "c": 0.9,
+        "e": 84285,
+        "w": "was"
+      },
+      {
+        "s": 84295,
+        "c": 0.869,
+        "e": 84785,
+        "w": "barred"
+      },
+      {
+        "s": 84975,
+        "c": 0.509,
+        "e": 85395,
+        "w": "locked"
+      },
+      {
+        "s": 85435,
+        "c": 0.941,
+        "e": 85565,
+        "w": "and"
+      },
+      {
+        "s": 85575,
+        "c": 0.841,
+        "e": 85945,
+        "w": "bolted"
+      },
+      {
+        "s": 85955,
+        "c": 0.946,
+        "e": 86065,
+        "w": "as"
+      },
+      {
+        "s": 86075,
+        "c": 0.957,
+        "e": 86475,
+        "w": "well"
+      },
+      {
+        "s": 90136,
+        "c": 0.123,
+        "e": 90406,
+        "w": "it's"
+      },
+      {
+        "s": 90446,
+        "c": 0.946,
+        "e": 90846,
+        "w": "easy"
+      },
+      {
+        "s": 90856,
+        "c": 0.944,
+        "e": 91026,
+        "w": "to"
+      },
+      {
+        "s": 91036,
+        "c": 0.735,
+        "e": 91366,
+        "w": "tell"
+      },
+      {
+        "s": 91376,
+        "c": 0.812,
+        "e": 91466,
+        "w": "the"
+      },
+      {
+        "s": 91476,
+        "c": 0.926,
+        "e": 91826,
+        "w": "depth"
+      },
+      {
+        "s": 91836,
+        "c": 0.833,
+        "e": 91906,
+        "w": "of"
+      },
+      {
+        "s": 91916,
+        "c": 0.887,
+        "e": 92006,
+        "w": "the"
+      },
+      {
+        "s": 92016,
+        "c": 0.834,
+        "e": 92386,
+        "w": "well"
+      },
+      {
+        "s": 95928,
+        "c": 0.156,
+        "e": 96278,
+        "w": "made"
+      },
+      {
+        "s": 96288,
+        "c": 0.25,
+        "e": 96328,
+        "w": "a"
+      },
+      {
+        "s": 96338,
+        "c": 0.922,
+        "e": 96768,
+        "w": "bust"
+      },
+      {
+        "s": 96808,
+        "c": 0.875,
+        "e": 97038,
+        "w": "out"
+      },
+      {
+        "s": 97048,
+        "c": 0.912,
+        "e": 97358,
+        "w": "loud"
+      },
+      {
+        "s": 97368,
+        "c": 0.895,
+        "e": 97538,
+        "w": "for"
+      },
+      {
+        "s": 97548,
+        "c": 0.935,
+        "e": 98008,
+        "w": "pleasure"
+      },
+      {
+        "s": 101228,
+        "c": 0.106,
+        "e": 101548,
+        "w": "Not"
+      },
+      {
+        "s": 101558,
+        "c": 0.944,
+        "e": 102088,
+        "w": "closely"
+      },
+      {
+        "s": 102098,
+        "c": 0.598,
+        "e": 102238,
+        "w": "the"
+      },
+      {
+        "s": 102248,
+        "c": 0.94,
+        "e": 102578,
+        "w": "size"
+      },
+      {
+        "s": 102588,
+        "c": 0.917,
+        "e": 102668,
+        "w": "of"
+      },
+      {
+        "s": 102678,
+        "c": 0.9,
+        "e": 102748,
+        "w": "the"
+      },
+      {
+        "s": 102758,
+        "c": 0.88,
+        "e": 103038,
+        "w": "gas"
+      },
+      {
+        "s": 103048,
+        "c": 0.957,
+        "e": 103508,
+        "w": "tank"
+      },
+      {
+        "s": 107440,
+        "c": 0.0685,
+        "e": 107580,
+        "w": "The"
+      },
+      {
+        "s": 107590,
+        "c": 0.944,
+        "e": 107940,
+        "w": "lobes"
+      },
+      {
+        "s": 107950,
+        "c": 0.875,
+        "e": 108040,
+        "w": "of"
+      },
+      {
+        "s": 108050,
+        "c": 0.826,
+        "e": 108210,
+        "w": "her"
+      },
+      {
+        "s": 108220,
+        "c": 0.825,
+        "e": 108620,
+        "w": "ears"
+      },
+      {
+        "s": 108630,
+        "c": 0.842,
+        "e": 108710,
+        "w": "were"
+      },
+      {
+        "s": 108720,
+        "c": 0.914,
+        "e": 109210,
+        "w": "pierced"
+      },
+      {
+        "s": 109250,
+        "c": 0.563,
+        "e": 109370,
+        "w": "to"
+      },
+      {
+        "s": 109380,
+        "c": 0.916,
+        "e": 109490,
+        "w": "her"
+      },
+      {
+        "s": 109920,
+        "c": 0.36,
+        "e": 110530,
+        "w": "rings"
+      },
+      {
+        "s": 114330,
+        "c": 0.0924,
+        "e": 114500,
+        "w": "the"
+      },
+      {
+        "s": 114510,
+        "c": 0.916,
+        "e": 114890,
+        "w": "wide"
+      },
+      {
+        "s": 114930,
+        "c": 0.752,
+        "e": 115520,
+        "w": "shimmered"
+      },
+      {
+        "s": 115560,
+        "c": 0.792,
+        "e": 115730,
+        "w": "in"
+      },
+      {
+        "s": 115740,
+        "c": 0.877,
+        "e": 115820,
+        "w": "the"
+      },
+      {
+        "s": 116290,
+        "c": 0.568,
+        "e": 116700,
+        "w": "sun"
+      },
+      {
+        "s": 120972,
+        "c": 0.451,
+        "e": 121392,
+        "w": "Stood"
+      },
+      {
+        "s": 121402,
+        "c": 0.147,
+        "e": 121782,
+        "w": "rind"
+      },
+      {
+        "s": 121792,
+        "c": 0.626,
+        "e": 121932,
+        "w": "and"
+      },
+      {
+        "s": 121942,
+        "c": 0.285,
+        "e": 122372,
+        "w": "hailed"
+      },
+      {
+        "s": 122412,
+        "c": 0.331,
+        "e": 122542,
+        "w": "the"
+      },
+      {
+        "s": 122552,
+        "c": 0.718,
+        "e": 122852,
+        "w": "same"
+      },
+      {
+        "s": 122862,
+        "c": 0.88,
+        "e": 123272,
+        "w": "morning"
+      },
+      {
+        "s": 126714,
+        "c": 0.169,
+        "e": 126874,
+        "w": "the"
+      },
+      {
+        "s": 126884,
+        "c": 0.924,
+        "e": 127364,
+        "w": "wide"
+      },
+      {
+        "s": 127374,
+        "c": 0.92,
+        "e": 127634,
+        "w": "road"
+      }
+    ],
+    "NLE": [],
+    "WordCounts": {
+      "General": {
+        "Total": 169,
+        "Duration": 47800,
+        "Syllables": 0,
+        "LongestWordLength": 9,
+        "LongestWord": "shimmered",
+        "MostSyllabicWord": "",
+        "MostSyllabicWordLength": 0
+      },
+      "Detail": {
+        "a": {
+          "Dur": 360,
+          "Pos": [
+            12170,
+            31585,
+            42966,
+            96288
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "allowed": {
+          "Dur": 320,
+          "Pos": [
+            13240
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "and": {
+          "Dur": 910,
+          "Pos": [
+            690,
+            6570,
+            25353,
+            51407,
+            85435,
+            121792
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "arm": {
+          "Dur": 380,
+          "Pos": [
+            61999
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "as": {
+          "Dur": 110,
+          "Pos": [
+            85955
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "back": {
+          "Dur": 220,
+          "Pos": [
+            67862
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "barred": {
+          "Dur": 490,
+          "Pos": [
+            84295
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "beat": {
+          "Dur": 400,
+          "Pos": [
+            37066
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "before": {
+          "Dur": 360,
+          "Pos": [
+            57148
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "bent": {
+          "Dur": 250,
+          "Pos": [
+            1420
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "blow": {
+          "Dur": 390,
+          "Pos": [
+            14250
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "bolted": {
+          "Dur": 370,
+          "Pos": [
+            85575
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "bust": {
+          "Dur": 430,
+          "Pos": [
+            96338
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "chicken": {
+          "Dur": 380,
+          "Pos": [
+            31735
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "chink": {
+          "Dur": 330,
+          "Pos": [
+            12260
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "chopped": {
+          "Dur": 370,
+          "Pos": [
+            50687
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "closely": {
+          "Dur": 530,
+          "Pos": [
+            101558
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "coat": {
+          "Dur": 360,
+          "Pos": [
+            56778
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "colt": {
+          "Dur": 410,
+          "Pos": [
+            5650
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "corn": {
+          "Dur": 330,
+          "Pos": [
+            51067
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "days": {
+          "Dur": 420,
+          "Pos": [
+            31155
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "depth": {
+          "Dur": 350,
+          "Pos": [
+            91476
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "door": {
+          "Dur": 350,
+          "Pos": [
+            83765
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "draw": {
+          "Dur": 210,
+          "Pos": [
+            13640
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "dust": {
+          "Dur": 300,
+          "Pos": [
+            37566
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "ears": {
+          "Dur": 400,
+          "Pos": [
+            108220
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "easy": {
+          "Dur": 400,
+          "Pos": [
+            90446
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "evening": {
+          "Dur": 430,
+          "Pos": [
+            44796
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "fat": {
+          "Dur": 480,
+          "Pos": [
+            50157
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "feet": {
+          "Dur": 460,
+          "Pos": [
+            68402
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "five": {
+          "Dur": 530,
+          "Pos": [
+            73503
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "for": {
+          "Dur": 170,
+          "Pos": [
+            97368
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "from": {
+          "Dur": 250,
+          "Pos": [
+            37876
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "garbage": {
+          "Dur": 680,
+          "Pos": [
+            51587
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "gas": {
+          "Dur": 280,
+          "Pos": [
+            102758
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "get": {
+          "Dur": 170,
+          "Pos": [
+            67682
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "go": {
+          "Dur": 260,
+          "Pos": [
+            57598
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "hailed": {
+          "Dur": 860,
+          "Pos": [
+            25503,
+            121942
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "help": {
+          "Dur": 550,
+          "Pos": [
+            43896,
+            66792
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "her": {
+          "Dur": 410,
+          "Pos": [
+            68252,
+            108050,
+            109380
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "highway": {
+          "Dur": 600,
+          "Pos": [
+            19822
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "hogs": {
+          "Dur": 470,
+          "Pos": [
+            49497
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "hook": {
+          "Dur": 460,
+          "Pos": [
+            1680
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "housed": {
+          "Dur": 410,
+          "Pos": [
+            73083
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "in": {
+          "Dur": 250,
+          "Pos": [
+            12600,
+            115560
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "it's": {
+          "Dur": 270,
+          "Pos": [
+            90136
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lake": {
+          "Dur": 470,
+          "Pos": [
+            79884
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lawn": {
+          "Dur": 470,
+          "Pos": [
+            39126
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lead": {
+          "Dur": 200,
+          "Pos": [
+            18862
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "leg": {
+          "Dur": 300,
+          "Pos": [
+            32125
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "lobes": {
+          "Dur": 350,
+          "Pos": [
+            107590
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "locked": {
+          "Dur": 420,
+          "Pos": [
+            84975
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "loud": {
+          "Dur": 310,
+          "Pos": [
+            97048
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "made": {
+          "Dur": 350,
+          "Pos": [
+            95928
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "mended": {
+          "Dur": 490,
+          "Pos": [
+            56198
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "morning": {
+          "Dur": 830,
+          "Pos": [
+            26413,
+            122862
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "nest": {
+          "Dur": 300,
+          "Pos": [
+            72773
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "not": {
+          "Dur": 320,
+          "Pos": [
+            101228
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "of": {
+          "Dur": 240,
+          "Pos": [
+            91836,
+            102588,
+            107950
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "off": {
+          "Dur": 260,
+          "Pos": [
+            13860
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "on": {
+          "Dur": 640,
+          "Pos": [
+            1240,
+            38686,
+            63069
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "out": {
+          "Dur": 650,
+          "Pos": [
+            57868,
+            96808
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "pass": {
+          "Dur": 340,
+          "Pos": [
+            44296
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "path": {
+          "Dur": 410,
+          "Pos": [
+            78954
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "pierced": {
+          "Dur": 490,
+          "Pos": [
+            108720
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "pleasure": {
+          "Dur": 460,
+          "Pos": [
+            97548
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "poster": {
+          "Dur": 330,
+          "Pos": [
+            43076
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "radish": {
+          "Dur": 780,
+          "Pos": [
+            32615
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "rained": {
+          "Dur": 330,
+          "Pos": [
+            25013
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "ramps": {
+          "Dur": 400,
+          "Pos": [
+            18452
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "reach": {
+          "Dur": 270,
+          "Pos": [
+            79504
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "reared": {
+          "Dur": 460,
+          "Pos": [
+            6100
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "rider": {
+          "Dur": 480,
+          "Pos": [
+            7680
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "rind": {
+          "Dur": 380,
+          "Pos": [
+            121402
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "rings": {
+          "Dur": 610,
+          "Pos": [
+            109920
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "road": {
+          "Dur": 260,
+          "Pos": [
+            127374
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "robin's": {
+          "Dur": 530,
+          "Pos": [
+            74043
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "rug": {
+          "Dur": 410,
+          "Pos": [
+            38236
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "same": {
+          "Dur": 590,
+          "Pos": [
+            26113,
+            122552
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "shall": {
+          "Dur": 240,
+          "Pos": [
+            62389
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "shield": {
+          "Dur": 420,
+          "Pos": [
+            62639
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "shimmered": {
+          "Dur": 590,
+          "Pos": [
+            114930
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "size": {
+          "Dur": 330,
+          "Pos": [
+            102248
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "snowed": {
+          "Dur": 670,
+          "Pos": [
+            24333
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "stood": {
+          "Dur": 420,
+          "Pos": [
+            120972
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "strong": {
+          "Dur": 770,
+          "Pos": [
+            61609,
+            72373
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "sun": {
+          "Dur": 410,
+          "Pos": [
+            116290
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "take": {
+          "Dur": 310,
+          "Pos": [
+            78114
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "tall": {
+          "Dur": 320,
+          "Pos": [
+            7350
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "tank": {
+          "Dur": 460,
+          "Pos": [
+            103048
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "tell": {
+          "Dur": 330,
+          "Pos": [
+            91036
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "the": {
+          "Dur": 3120,
+          "Pos": [
+            1360,
+            5490,
+            7180,
+            12690,
+            18262,
+            19422,
+            25973,
+            37476,
+            38136,
+            39026,
+            44646,
+            49307,
+            56698,
+            67142,
+            72213,
+            78434,
+            79784,
+            83615,
+            91376,
+            91916,
+            102098,
+            102678,
+            107440,
+            114330,
+            115740,
+            122412,
+            126714
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "these": {
+          "Dur": 300,
+          "Pos": [
+            30845
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "this": {
+          "Dur": 220,
+          "Pos": [
+            61379
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "threw": {
+          "Dur": 390,
+          "Pos": [
+            6780
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "to": {
+          "Dur": 1440,
+          "Pos": [
+            13570,
+            14130,
+            19272,
+            38896,
+            43416,
+            44186,
+            63409,
+            68092,
+            79374,
+            90856,
+            109250
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "turned": {
+          "Dur": 400,
+          "Pos": [
+            830
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "twisted": {
+          "Dur": 470,
+          "Pos": [
+            210
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "up": {
+          "Dur": 190,
+          "Pos": [
+            19072
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "us": {
+          "Dur": 60,
+          "Pos": [
+            44116
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "wall": {
+          "Dur": 460,
+          "Pos": [
+            12770
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "was": {
+          "Dur": 160,
+          "Pos": [
+            84125
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "well": {
+          "Dur": 770,
+          "Pos": [
+            86075,
+            92016
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "were": {
+          "Dur": 250,
+          "Pos": [
+            49977,
+            108630
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "wide": {
+          "Dur": 860,
+          "Pos": [
+            114510,
+            126884
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "wind": {
+          "Dur": 270,
+          "Pos": [
+            19542
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "winding": {
+          "Dur": 420,
+          "Pos": [
+            78524
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "woman": {
+          "Dur": 430,
+          "Pos": [
+            67242
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        },
+        "you": {
+          "Dur": 70,
+          "Pos": [
+            57518
+          ],
+          "Exp": null,
+          "Rank": null,
+          "Tags": []
+        }
+      }
+    }
+  }
+}

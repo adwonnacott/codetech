@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Metric_Primary_OverTalk_Ratio__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The percentage of the call where both parties talked at the same time, and where the primary party began talking first (e.g. the primary party talked over the other party) expressed as a number from 0 to 1 with .01 resolution.</description>
+    <externalId>false</externalId>
+    <label>Metric Primary OverTalk Ratio</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>3</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

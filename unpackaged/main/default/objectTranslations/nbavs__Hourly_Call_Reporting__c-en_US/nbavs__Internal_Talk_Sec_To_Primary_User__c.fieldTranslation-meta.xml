@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many seconds of talk time have I spent on calls that I received from other internal users in my organisation, where the call was not transferred --></help>
+        <label><!-- Internal To Talk Seconds as Primary --></label>
+        <name>nbavs__Internal_Talk_Sec_To_Primary_User__c</name>
+    </CustomFieldTranslation>

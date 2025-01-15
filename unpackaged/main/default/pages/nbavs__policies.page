@@ -1,0 +1,83 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" standardController="nbavs__CallFlow__c" extensions="nbavs.CallFlowRemoting" action="{!checkAPISetup}" recordSetVar="items">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+<title>{!$ObjectType.CallFlow__c.label} Builder</title>
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__nbcf, 'css/app.css')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-route.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-drag-and-drop-lists.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-translate.min.js')}" />
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-ui-notification.min.css')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-ui-notification.min.js')}" />
+<!-- Flowchart code -->
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'flowchart/svg_class.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'flowchart/mouse_capture_service.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'flowchart/dragging_service.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'flowchart/flowchart_viewmodel.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'flowchart/flowchart_directive.js')}" />
+<!-- App code -->
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'js/presets.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'js/app.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'js/controllers.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'js/services.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'js/directives.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'js/filters.js')}" />
+
+<!-- Date picker -->
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/ng-flat-datepicker.min.css')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/moment.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/moment-timezone.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-moment.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/ng-flat-datepicker.min.js')}" />
+
+<!--angular selector-->
+<apex:stylesheet value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-selector.min.css')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-selector.min.js')}" />
+
+<!-- mobile touch support -->
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/hammer.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/hammer-time.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular.hammer.min.js')}" />
+
+<!--ace editor -->
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/ace-builds/src-min-noconflict/ace.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/ace-builds/src-min-noconflict/ext-language_tools.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/angular-ui-ace/ui-ace.js')}" />
+
+<!-- file saver -->
+<apex:includeScript value="{!URLFOR($Resource.nbavs__nbcf, 'vendor/FileSaver.min.js')}" />
+
+<script>
+(function() {
+   
+	var namespacePrefix = '{!$RemoteAction.CallFlowRemoting.query}';
+    namespacePrefix = namespacePrefix.substring(0,namespacePrefix.indexOf('.CallFlowRemoting')+1);
+    
+    var vForce = {
+    	namespacePrefix: namespacePrefix,
+        resource_slds : "{!URLFOR($Resource.slds, '')}",
+        resource_nbcf : "{!URLFOR($Resource.nbcf, '')}",
+        userUITheme : "{!$User.UIThemeDisplayed}"
+    }
+    
+    // This configures the Angular app (declared in app.js)
+    app.constant('VISUALFORCE', vForce);
+	
+})();
+
+
+
+
+</script>
+</head>
+<body>
+<div id="main" class="nbvc slds container" ng-app="app"
+     ng-keydown="keyDown($event)"
+     ng-keyup="keyUp($event)">
+	<div ng-view="true" class="container-inner"></div>
+</div>
+</body>
+</html>
+</apex:page>

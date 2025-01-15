@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Commission_Earners</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>CommissionStructure__c</columns>
+    <columns>CORE.USERS.FIRST_NAME</columns>
+    <columns>CommissionPercentage__c</columns>
+    <columns>FixedCommissionAmount__c</columns>
+    <columns>EmailAddress__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>PersonAccount.ExternalReferrer</value>
+    </filters>
+    <label>All Commission Earners</label>
+</ListView>

@@ -1,0 +1,94 @@
+<apex:page docType="html-5.0" standardController="nbavs__User__c" extensions="nbavs.UserController" tabstyle="nbavs__User__c">
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />
+	<apex:sectionHeader title="{!$ObjectType.nbavs__User__c.label}" subtitle="{!nbavs__User__c.nbavs__FirstName__c + ' ' + nbavs__User__c.nbavs__LastName__c}" />
+	<apex:form id="form">
+		<apex:actionFunction name="doInit" action="{!syncAvailabilityProfileState}"/>
+		<apex:outputPanel id="body">
+			<apex:outputPanel rendered="{!NOT(initialised)}">
+				<p align="center" style='{font-family:"Arial", Helvetica, sans-serif; font-size:20px;}'><apex:image value="/img/loading.gif"/>&nbsp;Loading</p>
+				<script>
+				window.onload=function()
+				{
+					doInit();
+				};
+				</script>
+			</apex:outputPanel>
+			<apex:outputPanel rendered="{!initialised}">
+				<apex:pageMessages id="messages" />
+				<apex:pageBlock mode="maindetail" rendered="{!hasPrivateAccessToUser}">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton value="Edit" action="{!URLFOR($Action.User__c.Edit, User__c.Id)}" />
+						<apex:commandButton value="Delete" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;" />
+						<apex:commandButton value="Sync Voicemail Settings" action="{!syncAvailabilityProfileState}" rendered="{!!nbavs__User__c.nbavs__VoicemailUpdated__c}"/>
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection title="Natterbox User Information" columns="2">
+						<apex:outputField value="{!nbavs__User__c.nbavs__Id__c}" rendered="false" />
+						<apex:outputField value="{!nbavs__User__c.nbavs__User__c}" rendered="{!nbavs__User__c.nbavs__User__c !=null}" />
+						<apex:outputField id="userName" value="{!nbavs__User__c.nbavs__Username__c}" rendered="{!nbavs__User__c.nbavs__User__c ==null}"/>
+						<apex:outputField id="email" value="{!nbavs__User__c.User__r.Email}" rendered="{!nbavs__User__c.nbavs__User__c !=null}"/>
+						<apex:outputLabel rendered="{!nbavs__User__c.nbavs__User__c == null}" />
+						<apex:outputField id="firstName" value="{!nbavs__User__c.nbavs__FirstName__c}" />
+						<apex:outputField id="lastName" value="{!nbavs__User__c.nbavs__LastName__c}" />
+						<apex:outputField id="mobile" value="{!nbavs__User__c.nbavs__MobilePhone__c}" />
+						<apex:outputField value="{!nbavs__User__c.nbavs__PermissionLevel__c}"  style="float:left">
+							&nbsp; <apex:commandButton value="" action="{!refreshPermission}" rendered="{!showRefreshPermission}" 
+								style="background: url(/img/alohaSkin/sync.png) no-repeat; width: 20px;height: 20px; background-position: 2px 2px; vertical-align: bottom;"/>  
+						</apex:outputField>
+						<apex:outputField id="status" value="{!nbavs__User__c.nbavs__Enabled__c}" />
+						<apex:outputField value="{!nbavs__User__c.nbavs__SipExtension__c}" />
+						<apex:pageblocksectionitem id="pageBlockSectionItemBlank1" />
+						<apex:outputField value="{!nbavs__User__c.nbavs__WebPhonePopupDisabled__c}" />
+						<apex:outputField value="{!nbavs__User__c.nbavs__AvailabilityProfile__c}"  />
+						<apex:outputField value="{!nbavs__User__c.nbavs__WebphoneMode__c}" />
+						<apex:outputText value="{!nbavs__User__c.AvailabilityProfileState__r.Name}" Label="Availability State" />
+						<apex:outputField value="{!nbavs__User__c.nbavs__TrackOutboundCTIDevice__c}" />
+						<apex:outputText value="{!monitoredDeviceReadOnly}" Label="Monitored Device"/>
+					</apex:pageBlockSection>
+					<c:UserSettings PBXUser="{!nbavs__User__c}" />
+					<c:UserVoicemailSettings />
+					<c:UserRingOrder />
+					<apex:pageBlockSection showHeader="false" columns="1">
+						<apex:outputPanel layout="block" styleClass="bRelatedList">
+							<apex:outputPanel layout="block" styleClass="noStandardTap">
+								<c:UserVoicemail />
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection showHeader="false" columns="1">
+						<apex:outputPanel layout="block" styleClass="bRelatedList">
+							<apex:outputPanel layout="block" styleClass="noStandardTap">
+								<c:UserGroups />
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection showHeader="false" columns="1">
+						<apex:outputPanel layout="block" styleClass="bRelatedList">
+							<apex:outputPanel layout="block" styleClass="noStandardTap">
+								<c:RegisteredNumber />
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+
+
+					<apex:pageBlockSection showHeader="false" columns="1">
+						<apex:outputPanel layout="block" styleClass="bRelatedList">
+							<apex:outputPanel layout="block" styleClass="noStandardTap">
+								<c:UserSkill standalone="false"/>
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+
+				</apex:pageBlock>
+			</apex:outputPanel>
+			<script>
+			if (window.history.replaceState) {
+  				window.history.replaceState(null,null,window.location.href);
+			}
+			</script>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

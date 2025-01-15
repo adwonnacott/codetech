@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Accounts</fullName>
+        <default>false</default>
+        <label>Accounts</label>
+    </customValue>
+    <customValue>
+        <fullName>Signatory</fullName>
+        <default>false</default>
+        <label>Signatory</label>
+    </customValue>
+    <customValue>
+        <fullName>Purchaser</fullName>
+        <default>false</default>
+        <label>Purchaser</label>
+    </customValue>
+    <customValue>
+        <fullName>Main</fullName>
+        <default>false</default>
+        <label>Main</label>
+    </customValue>
+    <masterLabel>Role</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

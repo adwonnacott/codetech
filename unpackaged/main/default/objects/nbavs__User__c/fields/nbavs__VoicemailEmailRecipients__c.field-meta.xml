@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__VoicemailEmailRecipients__c</fullName>
+    <deprecated>false</deprecated>
+    <inlineHelpText>Recipient Email Address(es) must be a comma-separated list of email addresses with no preceding or following characters.</inlineHelpText>
+    <label>Recipient Email Address(es)</label>
+    <length>4096</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

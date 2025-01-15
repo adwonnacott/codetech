@@ -1,0 +1,43 @@
+<apex:page id="natterboxCTI" Controller="nbavs.WebphoneAutoLoadController" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false">
+    <apex:includeLightning />
+
+    <div id="lightning" />
+
+    <apex:slds />
+    <apex:outputPanel rendered="{!byotLicensed}">
+        <script>
+            $Lightning.use("{!BLANKVALUE(JSENCODE(autoNamespace), 'c')}:SCVServiceDependencyApp", function() {
+                $Lightning.createComponent("{!BLANKVALUE(JSENCODE(autoNamespace), 'c')}:scvService",
+                    {},
+                    "lightning",
+                    function(cmp) {
+                        console.log("*** scvService created ***");
+                    }
+                );
+            });
+        </script>
+
+        <script type="text/javascript">
+            window.nbScvByotConfig = {
+                salesforceSessionId: "{!apexSessionId}",
+                cometdUrl: "{!JSENCODE(ctiHost)}/cometd",
+                webphoneWindowSrc: "{!JSENCODE(webphoneHost)}/natterbox/mphone.html",
+                avsNamespace: "{!JSENCODE(autoNamespace)}"
+            };
+        </script>
+        <script type="module" src="{!JSENCODE(ctiFileHost)}/scv-byot-connector.bundle.js"></script>
+        <form id="CTI_webPhoneIFrameHiddenForm" target="CTI_webPhoneIFrame" action="{!JSENCODE(webphoneHost)}/natterbox/phone.php" method="POST">
+            <input type="text" name="authToken" value="{!authToken}" />
+            <input type="text" name="hidden" value="1" />
+            <input type="submit" />
+        </form>
+        <iframe id="CTI_webPhoneIFrame" name="CTI_webPhoneIFrame" style="width:100%; height:0px; border:0" scrolling="no" src="">
+        </iframe>
+        <script type="text/javascript">
+            //hide CTI_webPhoneIFrame form and submit
+            var form = document.getElementById("CTI_webPhoneIFrameHiddenForm");
+            form.style.display = "none";
+            form.submit();
+        </script>
+    </apex:outputPanel>
+</apex:page>

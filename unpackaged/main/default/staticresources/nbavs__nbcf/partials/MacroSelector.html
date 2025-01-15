@@ -1,0 +1,266 @@
+<!-- macros form Start -->
+<div ng-if="model.showMacros">
+    <div class="slds-modal slds-fade-in-open slds-modal--medium" aria-hidden="false" role="dialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+                        ng-click="model.showMacros=false">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                        <use xlink:href="" i="close" svg-link/>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <div class="slds-form--horizontal">
+
+                    <div class="slds-form-element" ng-if="model.macrosSelectedTab == 'predefined'">
+                        <label class="slds-text-heading--medium">Macro Category:</label>
+                        <div class="slds-form-element__control" >
+                            <div class="slds-select_container">
+                                <select id="macroCategory" name="macroCategory" class="slds-select"
+                                        ng-model="model.filterCategory"
+                                        ng-options="category.value as category.label for category in model.predefinedMacrosCategories">
+                                </select>
+                            </div>
+                        </div>
+                     </div>
+
+                    <div class="slds-form-element">
+                        <label class="slds-text-heading--medium">Search Keyword:</label>
+                        <div class="slds-form-element__control">
+                            <input id="filterMacros" name="filterMacros" class="slds-input" type="text"
+                                   placeholder="...type keyword..."
+                                   ng-model="model.filterMacros"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="slds-tabs--scoped">
+                    <ul class="slds-tabs--scoped__nav" role="tablist">
+                        <li class="slds-tabs--scoped__item slds-text-heading--label" title="Predefined"
+                            role="presentation"
+                            ng-class="model.macrosSelectedTab  == 'predefined' ? 'slds-active' : ''">
+                            <a ng-click="model.macrosSelectedTab  = 'predefined'" class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="0"
+                               aria-selected="true" aria-controls="tab-scoped-config" id="tab-scoped-predefined__item">Predefined</a>
+                        </li>
+                        <li class="slds-tabs--scoped__item slds-text-heading--label" title="User Defined"
+                            role="presentation"
+                            ng-class="model.macrosSelectedTab  == 'userDefined' ? 'slds-active' : ''">
+                            <a ng-click="model.macrosSelectedTab  = 'userDefined'" class="slds-tabs--scoped__link" href="javascript:;" role="tab" tabindex="0"
+                               aria-selected="true" aria-controls="tab-scoped-config" id="tab-scoped-userDefined__item">User Defined</a>
+                        </li>
+                    </ul>
+                    <div ng-class="model.macrosSelectedTab == 'predefined' ? 'slds-show' : 'slds-hide'"
+                         id="tab-scoped-predefined" class="slds-tabs--scoped__content slds-scrollable--y" role="tabpanel"
+                         aria-labelledby="tab-scoped-predefined__item" style="max-height: 400px">
+                        <table class="slds-table slds-table--bordered slds-text-body--small" >
+                            <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Macro</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" s="utility" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Category</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Type</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Description</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Action</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="slds-hint-parent"
+                                ng-repeat="itm in model.predefinedMacros | filter : model.filterMacros | filter : {category: model.filterCategory} | orderBy:'macro'">
+                                <td data-label="macro">
+                                    <a href="javascript:;" ng-click="insertMacro(itm)">{{itm.macro}}</a>
+                                </td>
+                                <td data-label="type">{{itm.category}}</td>
+                                <td data-label="type">{{itm.type}}</td>
+                                <td data-label="description">
+                                    <div class="slds-cell-wrap" ng-bind-html="showMacroDescription(itm)"
+                                         ng-click="itm.showFullDescription = !itm.showFullDescription"></div>
+                                </td>
+                                <td data-label="add">
+                                    <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                                            ng-click="insertMacro(itm)">Add
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-class="model.macrosSelectedTab == 'userDefined' ? 'slds-show' : 'slds-hide'"
+                         id="tab-scoped-userDefined" class="slds-tabs--scoped__content slds-scrollable--y" role="tabpanel"
+                         aria-labelledby="tab-scoped-userDefined__item">
+
+
+                        <table class="slds-table slds-table--bordered slds-text-body--small ">
+                            <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Type</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" s="utility" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Object</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" s="utility" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Name</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Result Set</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Fields</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Row</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+                                <th class="slds-is-sortable--not" scope="col">
+                                    <span class="slds-truncate">Action</span>
+                                    <button type="button" class="slds-button slds-button--icon-bare">
+                                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+                                            <use xlink:href="" i="arrowdown" svg-link/>
+                                        </svg>
+                                        <span class="slds-assistive-text">Sort</span>
+                                    </button>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="slds-hint-parent"
+                                ng-repeat="itm in model.userDefinedMacros | filter : model.filterMacros">
+                                <td data-label="type">{{itm.type}}</td>
+                                <td data-label="type">{{itm.sObject}}</td>
+                                <td data-label="name">{{itm.name}}</td>
+                                <td data-label="resultSet">
+                                    <div class="slds-box slds-box--x-small" ng-if="!itm.duplicate">
+                                        {{itm.resultSet}}
+                                    </div>
+                                    <div class="slds-box slds-box--x-small slds-theme--warning" ng-if="itm.duplicate" ng-click="showDuplicateMacrosWarning(itm.resultSet)">
+                                        <button type="button" class="slds-button slds-button--icon-bare slds-m-right--xx-small" >
+                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                <use xlink:href="" i="info" svg-link/>
+                                            </svg>
+                                            <span class="slds-assistive-text">info</span>
+                                        </button>
+                                        {{itm.resultSet}}
+                                    </div>
+                                </td>
+                                <td data-label="fields">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                            <select id="field-{{$index}}" name="field-{{$index}}" class="slds-select"
+                                                    ng-model="itm.field"
+                                                    ng-options="field.name as field.label for field in itm.fields">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td data-label="selectedRow">
+                                    <div class="slds-form-element__control" ng-if="itm.selectedRow">
+                                        <div class="slds-select_container">
+                                            <select id="selectedRow-{{$index}}" name="selectedRow-{{$index}}" class="slds-select"
+                                                    ng-model="itm.selectedRow"
+                                                    ng-options="row.value as row.label for row in itm.resultSize">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td data-label="add">
+                                    <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                                            ng-click="insertUserDefinedMacro(itm)">Add
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                        ng-click="model.showMacros=false">Close
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop slds-backdrop--open"></div>
+</div>
+<!-- macros form END -->

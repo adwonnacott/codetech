@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Code End User Manager Permission Group</label>
+    <permissionSets>Code_End_User_Manager</permissionSets>
+    <permissionSets>force__SalesUserPsl</permissionSets>
+    <permissionSets>nbavs__NBVC_Administrator_PermissionSet</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

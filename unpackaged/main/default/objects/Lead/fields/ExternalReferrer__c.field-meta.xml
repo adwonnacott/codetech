@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExternalReferrer__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup relationship to the external referrer</description>
+    <label>External Referrer</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>EXTERNAL REFERRER LOOKUP RELATIONSHIP MUST BE ACCOUNT TYPE = EXTERNAL REFERRER</errorMessage>
+        <filterItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>External Referrer</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Leads</relationshipLabel>
+    <relationshipName>Leads</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

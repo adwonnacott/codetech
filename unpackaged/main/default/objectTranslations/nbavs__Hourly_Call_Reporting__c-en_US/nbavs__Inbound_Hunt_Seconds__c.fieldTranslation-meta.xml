@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many seconds have callers calling into my organisation been spending waiting to talk to a real person --></help>
+        <label><!-- Inbound Hunt Seconds --></label>
+        <name>nbavs__Inbound_Hunt_Seconds__c</name>
+    </CustomFieldTranslation>

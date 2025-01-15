@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- How many inbound calls have I received where I picked up the call as the initial recipient --></help>
+        <label><!-- Inbound Calls as Primary --></label>
+        <name>nbavs__Inbound_Connected_Calls_Primary_User__c</name>
+    </CustomFieldTranslation>

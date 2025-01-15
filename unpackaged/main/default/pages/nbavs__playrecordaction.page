@@ -1,0 +1,179 @@
+<apex:page standardcontroller="Task" extensions="nbavs.RecordingRemotingAction" showHeader="false" sidebar="false" action="{!recordAccessEventLog}">
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__slds, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.nbavs__voicemailplayer, 'voicemailplayer.css')}" />
+    <style>
+        .player {
+        }
+        #playerInfo {
+        position: absolute;
+        top: 40px;
+        left: 2px;
+        color: white;
+        font-size: small;
+        display: none;
+        }
+        a.recordingLink:link,  a.recordingLink:visited, a.recordingLink:hover, a.recordingLink:active  {color:white; text-decoration: none; opacity: 0.5}
+        
+	</style>
+	<script>
+		window.onload=function()
+		{
+			doInit();
+		};
+	</script>
+    <apex:form id="form" style="padding:10px;padding-top:20px;">
+		<apex:actionFunction name="doInit" action="{!addEventLog}" rerender="pgMsg"/>
+        <apex:outputPanel style="font-size:12px;" id="pgMsg">
+            <apex:pageMessages id="messages" />
+        </apex:outputPanel> 
+        <!-- phoneContainer -->
+        <apex:outputPanel rendered="{!hasAccess}">
+            <div id="phoneContainer" style="width:0px;height:0px"> 
+                <!-- phoneInner -->
+                <div id="phoneInner">
+                    <!-- phoneHeader -->
+                    <div id="phoneHeader">
+                        <div id="phoneHeaderTopLine">
+                            <a id="phoneHeaderLogo" href="http://natterbox.com/" target="_blank"></a>
+                        </div>
+                        <div id="phoneHeaderBottomLine"><apex:outputText Value="Secure Call Recording Player" style="font-weight:bold;padding-top:30px;" /></div>
+                        <div id="playerInfo" class="playerInfo"><a class="recordingLink" href="javascript:void(0)" id="primaryRecording" onclick="toggleRecording(true)">Primary Recording</a> | <a class="recordingLink" href="javascript:void(0)" id="secondaryRecording" onclick="toggleRecording(false)">Secondary Recording</a></div>
+                    </div>
+                    <!-- phoneDisplay -->
+                    <div id="phoneDisplay">
+                        <audio id="player1" class="player" preload="none" controls="controls" style=""></audio>
+                        <audio id="player2" class="player" preload="none" controls="controls" style=""></audio>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <script type="text/javascript">
+            
+            
+            var uuid1 = '{!JSENCODE(uuid1)}'.trim();
+            var uuid2 = '{!JSENCODE(uuid2)}'.trim();
+            
+            var playerInfo = document.getElementById('playerInfo');
+            var primaryRecording = document.getElementById('primaryRecording');
+            var secondaryRecording = document.getElementById('secondaryRecording');
+            var audio1 = document.getElementById('player1') || new Audio();
+            var audio2 = document.getElementById('player2') || new Audio();
+            
+            
+            var loadSecondaryRecording = function (primaryLoaded) {
+                
+                if (uuid2 != null && uuid2 != '') {
+                    
+                    var url2 = '{!JSENCODE(api.Host__c)}organisation/{!orgId}/archive/recording/' + uuid2;
+                    var authToken = '{!JSENCODE(session.AccessToken__c)}';
+                    
+                    var xhr2 = new XMLHttpRequest();
+                    xhr2.open('GET', encodeURI(url2), true);
+                    xhr2.setRequestHeader('Accept', 'audio/mpeg');
+                    xhr2.setRequestHeader('Content-Type', 'application/json');
+                    xhr2.setRequestHeader('Authorization', 'Bearer ' + authToken);
+                    xhr2.responseType = 'blob';
+                    xhr2.onload = function(evt) {
+                        if (xhr2.status ==  200) {
+                            var blob2 = new Blob([xhr2.response], {type: 'audio/mpeg'});
+                            var objectUrl2 = window.URL.createObjectURL(blob2);
+                            audio2.src = objectUrl2;
+                            // Release resource when it's loaded
+                            audio2.onload = function(evt) {
+                                URL.revokeObjectUrl(objectUrl2);
+                            };
+                            if (primaryLoaded) {
+                                playerInfo.style.display = 'block';
+                            } else {
+                                audio1.style.display = 'none';
+                                audio2.style.display = 'block';
+                                primaryRecording.style.opacity = 0.5;
+                                secondaryRecording.style.opacity = 1;
+                                audio2.play();
+                            }
+                        } else {
+                            showErrorInfo(xhr2.status, uuid2);
+                        }
+                    };
+                    xhr2.send();
+                }
+            }
+            
+            var loadPrimaryRecording = function () {
+                if (uuid1 != null && uuid1 != '') {
+                    var url1 = '{!JSENCODE(api.Host__c)}organisation/{!orgId}/archive/recording/' + uuid1;
+                    var authToken = '{!JSENCODE(session.AccessToken__c)}';
+                    
+                    var xhr1 = new XMLHttpRequest();
+                    xhr1.open('GET', encodeURI(url1), true);
+                    xhr1.setRequestHeader('Accept', 'audio/mpeg');
+                    xhr1.setRequestHeader('Content-Type', 'application/json');
+                    xhr1.setRequestHeader('Authorization', 'Bearer ' + authToken);
+                    xhr1.responseType = 'blob';
+                    xhr1.onload = function(evt) {
+                        if (xhr1.status ==  200) {
+                            audio1.style.display = 'block';
+                            audio2.style.display = 'none';
+                            primaryRecording.style.opacity = 1;
+                            secondaryRecording.style.opacity = 0.5;
+                            var blob1 = new Blob([xhr1.response], {type: 'audio/mpeg'});
+                            var objectUrl1 = window.URL.createObjectURL(blob1);
+                            audio1.src = objectUrl1;
+                            // Release resource when it's loaded
+                            audio1.onload = function(evt) {
+                                URL.revokeObjectUrl(objectUrl1);
+                            };
+                            audio1.play();
+                        } else {
+                            showErrorInfo(xhr1.status, uuid1);
+                        }
+                        loadSecondaryRecording(xhr1.status ==  200);
+                    };
+                    xhr1.send(xhr1.status ==  200);
+                } else {
+                    loadSecondaryRecording(false);
+                }
+            }
+            
+            
+            var toggleRecording = function (primary) {
+                if (primary) {
+                    primaryRecording.style.opacity = 1;
+                    secondaryRecording.style.opacity = 0.5;
+                    audio1.style.display = 'block';
+                    audio2.style.display = 'none';
+                    audio2.pause();
+                } else {
+                    primaryRecording.style.opacity = 0.5;
+                    secondaryRecording.style.opacity = 1;
+                    audio1.style.display = 'none';
+                    audio2.style.display = 'block';
+                    audio1.pause();
+                }
+            }
+            
+            var showErrorInfo = function (code, uuid) {
+                var message = null;
+                switch (code) {
+                    case 403: message = 'Logged-in user does not have permission to access this resource'; break;
+                    case 404: message = 'Archived recording does not exist for the specified call channel: ' + uuid; break;
+                    case 410: message = 'Archived recording no longer exists for the specified call channel: ' + uuid; break;
+                    default: message = 'Internal error. Please try again later.';
+                }
+                alert(message);
+            }
+            
+            loadPrimaryRecording();
+            
+			if (window.history.replaceState) {
+				  window.history.replaceState(null,null,window.location.href);
+			}
+            </script>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

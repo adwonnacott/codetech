@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__All</fullName>
+    <columns>NAME</columns>
+    <columns>nbavs__CallReporting_Relationship__c</columns>
+    <columns>nbavs__Insights_Player__c</columns>
+    <columns>nbavs__Call_Type__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>nbavs__UUID__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

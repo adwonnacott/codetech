@@ -1,0 +1,61 @@
+<apex:page standardController="nbavs__Insight_Category_Configuration__c" extensions="nbavs.InsightCategoryConfigControllerClassic">
+
+    <apex:form >
+        <br/>
+        <apex:outputPanel id="ListViewConfiguration" rendered="{!!showEditMode && haveInsightAccess}" >
+            <apex:pageBlock title="Insight Category Configuration" mode="edit">
+
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Save" action="{!save}" />
+                    <apex:commandButton value="Cancel" action="{!cancel}" />
+                </apex:pageBlockButtons>
+
+
+
+                <apex:pageBlockSection >
+                    <apex:inputField value="{!icc.nbavs__Category_Name__c}" required="true"/>
+                    <apex:inputField value="{!icc.nbavs__Category_Type__c}" required="true"/>
+                    <apex:inputField value="{!icc.nbavs__Trigger__c}" required="true"/>
+
+                </apex:pageBlockSection>
+
+            </apex:pageBlock>
+        </apex:outputPanel>
+
+        <apex:outputPanel id="EditConfiguration" rendered="{!showEditMode && haveInsightAccess}" >
+            <apex:pageBlock mode="edit" title="Edit Category Configuration">
+                <apex:pageBlockButtons location="both">
+                    <apex:commandButton value="Save" action="{!Save}"  />
+                    <apex:commandButton value="Cancel" action="{!cancel}" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection >
+                    <apex:inputField value="{!icc.nbavs__Category_Name__c}" required="true"/>
+                    <apex:inputField value="{!icc.nbavs__Category_Type__c}" required="true"/>
+                    <apex:inputField value="{!icc.nbavs__Trigger__c}" required="true"/>
+
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+<!--    <apex:includeLightning />-->
+
+<!--    <div id="ICCLayout"></div>-->
+
+<!--    <script>-->
+<!--        var recordIdVar = '{!Insight_Category_Configuration__c.id}';-->
+<!--        console.log('from vf page record id '+recordIdVar);-->
+<!--        //need to update here to use the namespace prefix in lightning use-->
+<!--        $Lightning.use("c:ICCforVFPage", function() {-->
+<!--            /* syntax for create lightning component dynamically :-->
+<!--             * $Lightning.createComponent(String type, Object attributes, String locator, function callback) */-->
+<!--            $Lightning.createComponent("c:InsightsCategoryConfigLayout",-->
+<!--                {-->
+<!--                    // Set Lightning Component Attributes Property before creating Lightning Component In Visualforce page-->
+<!--                    textColor : "Red",-->
+<!--                    recordId : recordIdVar-->
+<!--                },-->
+<!--                "ICCLayout",-->
+<!--                function(component) {});-->
+<!--        });-->
+<!--    </script>-->
+</apex:page>

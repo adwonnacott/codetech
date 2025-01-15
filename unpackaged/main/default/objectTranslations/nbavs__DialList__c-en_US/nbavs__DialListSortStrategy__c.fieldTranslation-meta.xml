@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Dial List Sort Strategy --></label>
+        <name>nbavs__DialListSortStrategy__c</name>
+        <picklistValues>
+            <masterLabel>First In First Out</masterLabel>
+            <translation><!-- First In First Out --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sort All Items</masterLabel>
+            <translation><!-- Sort All Items --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

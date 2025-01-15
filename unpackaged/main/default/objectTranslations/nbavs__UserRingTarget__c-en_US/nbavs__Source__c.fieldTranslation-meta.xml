@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Source --></label>
+        <name>nbavs__Source__c</name>
+        <picklistValues>
+            <masterLabel>Device</masterLabel>
+            <translation><!-- Device --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+    </CustomFieldTranslation>

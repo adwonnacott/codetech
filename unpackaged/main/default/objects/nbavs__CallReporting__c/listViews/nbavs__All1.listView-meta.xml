@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__All1</fullName>
+    <columns>NAME</columns>
+    <columns>nbavs__From_Start_Time__c</columns>
+    <columns>nbavs__From_End_Time__c</columns>
+    <columns>nbavs__Call_Direction__c</columns>
+    <columns>nbavs__From_Channel_Start_Time__c</columns>
+    <columns>nbavs__From_AVS_User__c</columns>
+    <columns>nbavs__To_AVS_User__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

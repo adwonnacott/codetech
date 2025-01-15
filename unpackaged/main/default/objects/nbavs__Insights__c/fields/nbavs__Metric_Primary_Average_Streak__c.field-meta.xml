@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Metric_Primary_Average_Streak__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The average time for all streaks of the primary party talking, expressed in seconds. A streak starts with the first word spoken by the party at the beginning of a call or the next word spoken after a pause of 3 seconds or more and ends with a pause of 3 seconds or more or the end of the call.</description>
+    <externalId>false</externalId>
+    <label>Metric Primary Average Streak</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>3</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

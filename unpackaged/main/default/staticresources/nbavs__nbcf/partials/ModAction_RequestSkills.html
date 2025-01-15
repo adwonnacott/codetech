@@ -1,0 +1,79 @@
+<div ng-controller="ModActionRequestSkills">
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <label class="slds-checkbox">
+                <input type="checkbox" name="deleteSkills" id="deleteSkills" ng-model="item.data.config.deleteSkills">
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label">Delete all current requested skills</span>
+            </label>
+        </div>
+    </div>
+    <div class="slds-box slds-theme--default slds-box--x-small slds-m-top--small" style="border: 1px solid #006eb3" >
+        <div class="slds-form--horizontal" ng-repeat="skill in item.data.config.skills">
+            <div class="slds-box slds-theme--shade slds-box--x-small slds-m-bottom--small"
+                 style="border: 1px solid #006eb3">
+                <div class="slds-form-element">
+
+                    <button type="button"  class="slds-button slds-button--icon slds-float--left"
+                            ng-click="item.data.config.skills.splice($index, 1)">
+                        <svg aria-hidden="true" class="slds-button__icon">
+                            <use xlink:href="" i="close" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">delete</span>
+                    </button>
+
+                    <div>
+                        <label class="slds-form-element__label">Skill</label>
+
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="skill_{{$index}}" name="skill_{{$index}}" class="slds-select"
+                                        ng-model="skill.Id" ng-change="changeSkill(skill)"
+                                        ng-options="itm.Id as itm.Name disable when (skill.Id != itm.Id && (item.data.config.skills | filter: {Id: itm.Id}).length > 0) for itm in model.skills" >
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Minimum Proficiency</label>
+                    <div class="slds-form-element__control slds-p-left--small" ng-class="{'slds-is-required slds-has-error': ItemForm.skillMinWeight_{{$index}}.$error.required || ItemForm.skillMinWeight_{{$index}}.$error.min || ItemForm.skillMinWeight_{{$index}}.$error.max}">
+                        <div style="vertical-align: bottom">
+                            <span style="position: absolute; top: -6px">{{skill.minLabel}}</span>
+                            <input class="slds-float--left" style="margin-top:10px" string-to-integer id="skillMinWeightPreset_{{$index}}" name="skillMinWeightPreset_{{$index}}" type="range" min="0" max="100" step="{{skill.minStep}}" ng-model="skill.minWeight" ng-change="skillWeightChange(skill, true, true)">
+
+                            <input class="slds-input slds-float--left" style="width: 60px; padding-right: 0" id="skillMinWeight_{{$index}}" name="skillMinWeight_{{$index}}" type="number" placeholder=""
+                                   ng-model="skill.minWeight" aria-describedby="skillMinWeight_{{$index}}" required="true"  min="1" max="100" ng-change="skillWeightChange(skill, false, true)" />
+                            <div class="slds-form-element__help" style="float:left" ng-show="ItemForm['skillMinWeight_'+$index].$error.min || ItemForm['skillMinWeight_'+$index].$error.max">The value must be in range [1-100]</div>
+                            <div class="slds-form-element__help" style="float:left" ng-show="ItemForm['skillMinWeight_'+$index].$error.required">The value must be in range [1-100]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Maximum Proficiency</label>
+                    <div class="slds-form-element__control slds-p-left--small" ng-class="{'slds-is-required slds-has-error': ItemForm.skillMaxWeight_{{$index}}.$error.required || ItemForm.skillMaxWeight_{{$index}}.$error.min || ItemForm.skillMaxWeight_{{$index}}.$error.max}">
+                        <div style="vertical-align: bottom">
+                            <span style="position: absolute; top: -6px">{{skill.maxLabel}}</span>
+                            <input class="slds-float--left" style="margin-top:10px" string-to-integer id="skillMaxWeightPreset_{{$index}}" name="skillMaxWeightPreset_{{$index}}" type="range" min="0" max="100" step="{{skill.maxStep}}" ng-model="skill.maxWeight" ng-change="skillWeightChange(skill, true, false)">
+
+                            <input class="slds-input slds-float--left" style="width: 60px; padding-right: 0" id="skillMaxWeight_{{$index}}" name="skillMaxWeight_{{$index}}" type="number" placeholder=""
+                                   ng-model="skill.maxWeight" aria-describedby="skillMaxWeight_{{$index}}" required="true"  min="1" max="100" ng-change="skillWeightChange(skill, false, false)" />
+                            <div class="slds-form-element__help" style="float:left" ng-show="ItemForm['skillMaxWeight_'+$index].$error.min || ItemForm['skillMaxWeight_'+$index].$error.max">The value must be in range [1-100]</div>
+                            <div class="slds-form-element__help" style="float:left" ng-show="ItemForm['skillMaxWeight_'+$index].$error.required">The value must be in range [1-100]</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <button type="button" class="slds-button slds-button--icon" ng-click="addSkill()" ng-if="item.data.config.skills.length < model.skills.length">
+            <svg aria-hidden="true" class="slds-button__icon">
+                <use xlink:href="" i="add" svg-link />
+            </svg>
+            <span class="slds-assistive-text">add skill</span>
+            Add Skill
+        </button>
+    </div>
+</div>

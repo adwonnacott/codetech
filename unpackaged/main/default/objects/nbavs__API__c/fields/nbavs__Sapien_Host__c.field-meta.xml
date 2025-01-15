@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Sapien_Host__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Url is retrieved and returned to insights player based on environment</description>
+    <externalId>false</externalId>
+    <label>Sapien Host</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

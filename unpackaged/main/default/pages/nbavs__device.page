@@ -1,0 +1,46 @@
+<apex:page standardController="nbavs__Device__c" extensions="nbavs.DeviceController" tabstyle="nbavs__Device__c">
+	<apex:sectionHeader title="{!$ObjectType.nbavs__Device__c.label}" subtitle="{! Device__c.Extension__c}" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock mode="maindetail">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton value="Edit" action="{!URLFOR($Action.Device__c.Edit, Device__c.Id)}" />
+				<apex:commandButton value="Delete" Rendered="{!IF(nbavs__Device__c.nbavs__Type__c != 'Web Phone', true, false)}" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Device Information" columns="2">
+				<apex:outputField value="{!nbavs__Device__c.nbavs__Id__c}" rendered="false" />
+				<apex:pageblocksectionitem id="pageblocksectionitem1">
+					<apex:outputLabel value="{!$ObjectType['Device__c'].Fields.Extension__c.Label}" />
+					<apex:outputPanel id="outputPanel1">
+						<apex:outputField value="{!nbavs__Device__c.nbavs__Extension__c}" />
+						<apex:outputPanel id="outputPanel2">
+							<apex:outputLabel value="@{!apiSettings.nbavs__SipDomain__c}" />
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:pageblocksectionitem>
+				<apex:outputField value="{!nbavs__Device__c.nbavs__Location__c}" />
+				<apex:outputField value="{!nbavs__Device__c.nbavs__Description__c}" />
+				<apex:outputField value="{!nbavs__Device__c.nbavs__Enabled__c}" />
+				<apex:outputField value="{!nbavs__Device__c.nbavs__Model__c}" />
+				<apex:outputField value="{!nbavs__Device__c.nbavs__Type__c}" />
+                <apex:outputField value="{!nbavs__Device__c.nbavs__MAC__c}" />
+				<apex:pageblocksectionitem id="pageblocksectionitem2">
+					<apex:outputLabel value="Password" />
+                    <apex:outputPanel id="passwordChange" >
+                        <apex:outputPanel id="passwordItem" rendered="{!IF(nbavs__Device__c.nbavs__Type__c != 'Web Phone', true, false)}">
+                            <apex:commandButton action="{!generatePassword}" value="Generate New Password" reRender="passwordItem" />
+                            <apex:outputPanel style="font-weight:bold;padding-left:15px;">
+                                <apex:outputLabel value="{!newPassword}" />
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="resetPassword" rendered="{!IF(nbavs__Device__c.nbavs__Type__c == 'Web Phone', true, false)}">
+                            <apex:commandButton action="{!resetPassword}" value="Reset Password" reRender="messages,pageform" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+				</apex:pageblocksectionitem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+	<head>
+	</head>
+</apex:page>

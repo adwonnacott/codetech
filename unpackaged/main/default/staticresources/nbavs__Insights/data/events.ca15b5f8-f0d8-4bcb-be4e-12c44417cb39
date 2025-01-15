@@ -1,0 +1,90 @@
+{
+  "events": {
+    "uuid": "ca15b5f8-f0d8-4bcb-be4e-12c44417cb39",
+    "callEvents": [
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1555072780917395",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6"
+        }
+      },
+      {
+        "event": "RECORD_START",
+        "timeStamp": "1555072781411536"
+      },
+      {
+        "event": "UNBRIDGE",
+        "timeStamp": "1555072802290945",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6",
+          "link": "5cb087224fc03"
+        }
+      },
+      {
+        "event": "PARK_OTHER_FOR_TRANSFER",
+        "timeStamp": "1555072802756010",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6"
+        }
+      },
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1555072815330037",
+        "data": {
+          "uuid": "baf44c82-ed64-40d2-9913-fd3f4d9c0c2a"
+        }
+      },
+      {
+        "event": "CONFERENCE_IN",
+        "timeStamp": "1555072825870913",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6"
+        }
+      },
+      {
+        "event": "UNBRIDGE",
+        "timeStamp": "1555072833151543",
+        "data": {
+          "uuid": "baf44c82-ed64-40d2-9913-fd3f4d9c0c2a",
+          "link": "5cb087412afa9"
+        }
+      },
+      {
+        "event": "CS_BRIDGE",
+        "timeStamp": "1555072833232823",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6"
+        }
+      },
+      {
+        "event": "UNBRIDGE",
+        "timeStamp": "1555072840512239",
+        "data": {
+          "uuid": "2962dec7-dcae-4550-b70b-cb0a2ba3dcb6",
+          "link": "5cb08748970a6"
+        }
+      },
+      {
+        "event": "RECORD_STOP",
+        "timeStamp": "1555072840852892"
+      },
+      {
+        "event": "CHANNEL_START",
+        "timeStamp": "1555072779595776"
+      },
+      {
+        "event": "CHANNEL_RING",
+        "timeStamp": "1555072779611585"
+      },
+      {
+        "event": "CHANNEL_ANSWER",
+        "timeStamp": "1555072780851486"
+      },
+      {
+        "event": "CHANNEL_END",
+        "timeStamp": "1555072840852892"
+      }
+    ]
+  }
+}

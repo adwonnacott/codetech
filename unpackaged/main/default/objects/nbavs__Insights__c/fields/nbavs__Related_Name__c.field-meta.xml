@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Related_Name__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>if( nbavs__Account__c != null,  nbavs__Account__r.Name , 
+   if(nbavs__Contact__c != null,  nbavs__Contact__r.FirstName + &#39; &#39; +  nbavs__Contact__r.LastName ,
+      if(nbavs__Lead__c != null, nbavs__Lead__r.FirstName + &#39; &#39;+ nbavs__Lead__r.LastName,
+         if( nbavs__Natterbox_User__c != null ,  nbavs__Natterbox_User__r.Name,
+            if(nbavs__Natterbox_Group__c != null, nbavs__Natterbox_Group__r.Name,
+               if( nbavs__Opportunity__c != null ,  nbavs__Opportunity__r.Account.Name, null ))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Related Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

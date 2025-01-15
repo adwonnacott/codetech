@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <label><!-- Xero Invoice --></label>
+        <name>Xero_Invoice__c</name>
+        <relationshipLabel><!-- Xero Log Activities --></relationshipLabel>
+    </CustomFieldTranslation>

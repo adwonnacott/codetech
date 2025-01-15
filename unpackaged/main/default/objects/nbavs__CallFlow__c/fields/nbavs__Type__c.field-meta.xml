@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Type__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>POLICY_TYPE_CALL</fullName>
+                <default>true</default>
+                <label>POLICY_TYPE_CALL</label>
+            </value>
+            <value>
+                <fullName>POLICY_TYPE_DATA_ANALYTICS</fullName>
+                <default>false</default>
+                <label>POLICY_TYPE_DATA_ANALYTICS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

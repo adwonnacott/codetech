@@ -1,0 +1,19 @@
+{
+  "channelData": {
+    "uuid": "7e0cf09a-f32f-4290-9e17-ee080e7ca79b",
+    "userId": "61",
+    "devId": "155",
+    "fullNumber": "4004",
+    "localNumber": "4004",
+    "callCategory": "STC",
+    "hangupCause": "NORMAL_CLEARING",
+    "start": "1554975281607542",
+    "ring": "1554975281607542",
+    "answer": "1554975282687202",
+    "end": "1554975347229526",
+    "name": "Agent One",
+    "orgName": "",
+    "externalNameId": "",
+    "externalOrgId": ""
+  }
+}

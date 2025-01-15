@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Last_Queue__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <label>From Call Queue Last Queue</label>
+    <referenceTo>nbavs__Call_Queue__c</referenceTo>
+    <relationshipLabel>Call Reporting (From Call Queue Last Queue)</relationshipLabel>
+    <relationshipName>Call_Reporting1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

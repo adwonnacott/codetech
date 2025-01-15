@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Account_Billing_Address</fullName>
+    <active>true</active>
+    <description>Check account billing address is present before the opportunity can be set to closed/won</description>
+    <errorConditionFormula>((
+ISBLANK(Account.BillingAddressLine1__c)
+&amp;&amp; ISBLANK(Account.BillingAddressLine2__c)
+&amp;&amp; ISBLANK(Account.BillingAddressLine3__c)
+&amp;&amp; ISBLANK(Account.BillingAddressLine4__c)
+)
+|| ISBLANK(Account.BillingAddressPostcode__c)
+)
+&amp;&amp; ISPICKVAL(StageName,&#39;Closed Won&#39;)</errorConditionFormula>
+    <errorMessage>BILLING ADDRESS ON THE ACCOUNT MUST HAVE AT LEAST ONE ADDRESS FIELD AND POSTAL CODE FOR OPPORTUNITY TO CLOSE WON</errorMessage>
+</ValidationRule>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Trigger__c</fullName>
+    <deprecated>false</deprecated>
+    <label>Trigger</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Info</fullName>
+                <default>false</default>
+                <label>Info</label>
+            </value>
+            <value>
+                <fullName>Expected</fullName>
+                <default>false</default>
+                <label>Expected</label>
+            </value>
+            <value>
+                <fullName>Unexpected</fullName>
+                <default>false</default>
+                <label>Unexpected</label>
+            </value>
+            <value>
+                <fullName>Not Expected</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not Expected</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

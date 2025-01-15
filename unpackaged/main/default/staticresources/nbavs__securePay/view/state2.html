@@ -1,0 +1,175 @@
+<div class="slds-card" ng-if="model.securePaySession.CurrentFlowState != 3">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-custom slds-icon--large">
+                    <use xlink:href="" s="utility" i="edit_form" svg-link/>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading--small slds-truncate">Payment Details</h2>
+            </div>
+        </div>
+		<div class="pci-icon" ng-click="showSessionDetails()"></div>
+    </div>
+    <div class="slds-card__body slds-scrollable--y">
+        <form id="thisForm" name="thisForm" class="slds-form--horizontal slds-m-horizontal--small">
+            <div class="slds-form-element" ng-if="model.prompt != null">
+                <label class="slds-form-element__label">Status</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-notify  slds-theme--info" role="alert" style="padding: 4px">
+                        {{model.prompt}}
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="model.securePaySession.IsMediaLinked">
+                <label class="slds-form-element__label" for="amount">Amount</label>
+                <div class="slds-form-element__control">
+                    <input id="amount" name="amount" class="slds-input" type="text" required="true" ng-value="model.securePaySession.VariableData.Amount.Value / 100 | currency : model.securePaySession.VariableData.Currency.Value : 2" readonly/>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="model.securePaySession.IsMediaLinked">
+                <label class="slds-form-element__label" for="CardPAN">card number</label>
+                <div class="slds-form-element__control">
+                    <input id="CardPAN" name="CardPAN" class="slds-input" type="text" ng-value="model.responseFields.CardPAN" readonly ng-class="{'slds-isCurrent': (model.securePaySession.VariableData.CardPAN.IsCurrent && !model.securePaySession.VariableData.CardPAN.IsValid)}"/>
+                    <span class="slds-icon_container slds-icon-action-canvas slds-verified-input" style="right: 30px!important; cursor: pointer" ng-click="webCallback('resetCardPAN')">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="reset_password" svg-link/>
+                        </svg>
+                    </span>
+                    <span class="slds-icon_container slds-icon-action-approval slds-verified-input" ng-if="model.securePaySession.VariableData.CardPAN.IsValid">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="approval" svg-link/>
+                        </svg>
+                    </span>
+                    <span class="slds-icon_container slds-icon-action-close slds-verified-input" ng-if="model.securePaySession.VariableData.CardPAN.IsInvalid">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="close" svg-link/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="model.securePaySession.IsMediaLinked">
+                <label class="slds-form-element__label" for="expiry">Expiry Date (4 digits)</label>
+                <div class="slds-form-element__control">
+                    <input id="expiry" name="expiry" class="slds-input" type="text" ng-value="model.responseFields.expiry" readonly ng-class="{'slds-isCurrent': (model.securePaySession.VariableData.expiry.IsCurrent && !model.securePaySession.VariableData.expiry.IsValid)}"/>
+                    <span class="slds-icon_container slds-icon-action-canvas slds-verified-input" style="right: 30px!important; cursor: pointer" ng-click="webCallback('resetExpiry')">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="utility" i="refresh" svg-link/>
+                        </svg>
+                    </span>
+                    <span class="slds-icon_container slds-icon-action-approval slds-verified-input" ng-if="model.securePaySession.VariableData.expiry.IsValid">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="approval" svg-link/>
+                        </svg>
+                    </span>
+                    <span class="slds-icon_container slds-icon-action-close slds-verified-input" ng-if="model.securePaySession.VariableData.expiry.IsInvalid">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="close" svg-link/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="model.securePaySession.IsMediaLinked">
+                <label class="slds-form-element__label" for="CardCV2">Security Code (CV2)</label>
+                <div class="slds-form-element__control">
+                    <input id="CardCV2" name="CardCV2" class="slds-input" type="text" ng-model="model.responseFields.CardCV2" readonly ng-class="{'slds-isCurrent': (model.securePaySession.VariableData.CardCV2.IsCurrent && !model.securePaySession.VariableData.CardCV2.IsValid)}"/>
+                    <span class="slds-icon_container slds-icon-action-canvas slds-verified-input" style="right: 30px!important; cursor: pointer;" ng-click="webCallback('resetCardCV2')">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="reset_password" svg-link/>
+                        </svg>
+                    </span>
+                    <span class="slds-icon_container slds-icon-action-approval slds-verified-input" ng-if="model.securePaySession.VariableData.CardCV2.IsValid">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="approval" svg-link/>
+                        </svg>
+                    </span>
+                    <span class="slds-icon_container slds-icon-action-close slds-verified-input" ng-if="model.securePaySession.VariableData.CardCV2.IsInvalid">
+                        <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                            <use xlink:href="" s="action" i="close" svg-link/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </form>
+        <div class="slds-card__footer">
+            <button class="slds-button slds-button--neutral slds-button--destructive" ng-click="restart()">Restart Secure Payment</button>
+            <button class="slds-button slds-button--neutral slds-button--brand" ng-disabled="!(model.securePaySession.VariableData.CardPAN.IsValid && model.securePaySession.VariableData.expiry.IsValid && model.securePaySession.VariableData.CardCV2.IsValid)" ng-click="processPayment()">Submit Payment</button>
+        </div>
+    </div>
+	<div id="sessionDetailsModal">
+	</div>
+</div>
+
+
+<div class="slds-card" ng-if="model.securePaySession.CurrentFlowState == 3">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-custom slds-icon--large">
+                    <use xlink:href="" s="utility" i="edit_form" svg-link/>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading--small slds-truncate">Payment Result</h2>
+            </div>
+        </div>
+        <div class="pci-icon" ng-click="showSessionDetails()"></div>
+    </div>
+    <div class="slds-card__body slds-scrollable--y">
+        <form id="thisForm" name="thisForm" class="slds-form--horizontal slds-m-horizontal--small">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Outcome</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-media__figure" ng-if="model.securePaySession.VariableData.decision.Value == 'ACCEPT'">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-action-approval">
+                            <use xlink:href="" s="action" i="approval" svg-link/>
+                        </svg>
+                    </div>
+                    <div class="slds-media__figure" ng-if="model.securePaySession.VariableData.decision.Value != 'ACCEPT'">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-action-close">
+                            <use xlink:href="" s="action" i="close" svg-link/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Auth Code</label>
+                <div class="slds-form-element__control">
+                    <input id="requestId" name="requestId" class="slds-input" type="text" placeholder="" readonly ng-model="model.securePaySession.VariableData.requestID.Value"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Reason Code</label>
+                <div class="slds-form-element__control">
+                    <input id="reasonCode" name="reasonCode" class="slds-input" type="text" placeholder="" readonly ng-value="model.securePaySession.VariableData.reasonCode.Value"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Reason</label>
+                <div class="slds-form-element__control">
+                    <textarea id="reasonText" class="slds-textarea" placeholder="">{{model.reasonCodes[model.securePaySession.VariableData.reasonCode.Value]}}</textarea>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Result</label>
+                <div class="slds-form-element__control">
+                    <input id="result" name="result" class="slds-input" type="text" placeholder="" readonly ng-model="model.securePaySession.VariableData.decision.Value"/>
+                </div>
+            </div>
+            <div class="slds-form-element" ng-if="model.securePaySession.VariableData.decision.Value == 'ACCEPT' && model.securePaymentObjectId != null">
+                <div class="slds-form-element__control">
+                    <button class="slds-button slds-button--neutral slds-button--brand" ng-click="goToParent()">Finish</button>
+                    <button class="slds-button slds-button--neutral slds-button--brand" ng-click="goToRecord()">Finish & View Payment</button>
+                </div>
+                <p>&nbsp;</p>
+            </div>
+        </form>
+        <div class="slds-card__footer" ng-if="model.securePaySession.VariableData.decision.Value != 'ACCEPT' || model.securePaymentObjectId == null">
+            <button class="slds-button slds-button--neutral slds-button--destructive" ng-click="restart()">Restart Secure Payment</button>
+            <button class="slds-button slds-button--neutral slds-button--brand" ng-click="goToParent()" >Finish</button>
+        </div>
+    </div>
+	<div id="sessionDetailsModal">
+	</div>
+</div>

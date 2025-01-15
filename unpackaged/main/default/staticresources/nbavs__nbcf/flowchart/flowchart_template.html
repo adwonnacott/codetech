@@ -1,0 +1,420 @@
+<svg
+        class="draggable-container"
+        xmlns="http://www.w3.org/2000/svg"
+        ng-mousedown="mouseDown($event)"
+        ng-mousemove="mouseMove($event)"
+        >
+    <!-- viewport start -->
+    <g ng-attr-transform="translate({{chart.data.translateX || 0}},{{chart.data.translateY || 0}}) scale({{chart.data.zoom}})" id="viewport" >
+        <defs>
+            <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
+                <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#A7B8D1" stroke-width="0.2"/>
+            </pattern>
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                <rect width="80" height="80" fill="url(#smallGrid)"/>
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#A7B8D1" stroke-width="0.4"/>
+            </pattern>
+
+        </defs>
+        <rect width="100%" height="100%" ng-attr-fill="{{chart.data.grid ? 'url(#grid)' : 'white'}}"/>
+
+        <!-- connections start -->
+        <g>
+            <g
+                    ng-repeat="connection in chart.connections"
+                    class="connection"
+                    ng-dblclick="connectionMouseDown($event, connection)"
+            >
+                <!-- wire start -->
+                <path
+                        ng-attr-class="{{connection.selected() && 'selected-connection-line' || (connection == mouseOverConnection && 'mouseover-connection-line' || 'connection-line')}}"
+                        ng-attr-d="{{connection.dConnection($index)}}"
+                >
+                </path>
+                <!-- wire end -->
+            </g>
+        </g>
+        <!-- connections end -->
+
+
+
+        <!-- nodes start -->
+        <g
+                ng-repeat="node in chart.nodes"
+                ng-mousedown="nodeMouseDown($event, node)"
+                ng-attr-transform="translate({{node.x()}}, {{node.y()}})"
+                >
+            <!-- node body start -->
+            <rect
+                    ng-attr-class="{{node.selected() && 'selected-node-rect' || (node == mouseOverNode && 'mouseover-node-rect' || 'node-rect')}}"
+                    ry="4"
+                    rx="4"
+                    x="-2"
+                    y="-2"
+                    ng-attr-width="{{chart.nodeWidth + 4}}"
+                    ng-attr-height="{{node.height() + 4}}"
+                    >
+            </rect>
+            <!-- node header start -->
+            <g ng-mousedown="nodeHeaderMouseDown($event, node)" hm-panstart="onHammer($event, node)" hm-panmove="onHammer($event, node)">
+                <rect ng-attr-class="{{(chart.data.color && 'node-header-template--'+node.data.templateId || 'node-header')}}"
+                      ry="0"
+                      rx="0"
+                      x="0"
+                      y="0"
+                      ng-attr-width="{{node.width()}}"
+                      ng-attr-height="{{chart.nodeNameHeight}}"
+                        >
+                </rect>
+                <svg x="0" y="0" width="190" height="80">
+                    <text x="20"
+                          y="16"
+                          alignment-baseline="middle"
+                          fill="#ffffff"
+                          class="svg-cursor"
+                    >
+                        {{node.data.name}}
+                    </text>
+                </svg>
+            </g>
+            <-- node header end -->
+            <!--input start -->
+            <g ng-repeat="connector in node.input"
+               ng-mousedown="inputConnectorMouseDown($event, node, connector, 0, true)"
+               class="connector input-connector"
+            >
+                <svg viewBox="0 0 16 16" ng-attr-x="{{connector._x-8}}"
+                     ng-attr-y="{{connector._y-8}}" width="16" height="16">
+                    <circle cx="8" cy="8" r="8" ng-attr-fill="{{(draggingConnection && !isInputConnector) && '#4BC076' || (connector.connected && '#a6b8d2' || '#EC6281')}}"/>
+                    <polygon points="8.29 3.47 7.69 3.47 7.69 7.71 3.47 7.71 3.47 8.31 7.69 8.31 7.69 12.53 8.29 12.53 8.29 8.31 12.53 8.31 12.53 7.71 8.29 7.71 8.29 3.47" fill="#fff" ng-if="!connector.connected"/>
+                    <polygon points="5.74 12.4 12.06 7.92 5.74 3.44 5.74 4.26 10.9 7.92 5.74 11.57 5.74 12.4" fill="#fff" ng-if="connector.connected"/>
+                </svg>
+
+
+
+
+            </g>
+            <!-- input end -->
+
+
+            <!-- outputs start -->
+            <g
+                    ng-repeat="connector in node.outputs"
+                    class="connector output-connector"
+                    ng-mousedown="itemMouseDown($event, node, connector, $index)" ng-attr-transform="translate(0, {{connector.translatedY || 0}})"
+                    >
+
+                <rect ng-attr-class="{{connector.selected() && 'selected-node-item' || 'node-item' }}"
+                      ry="0"
+                      rx="0"
+                      ng-attr-width="{{chart.nodeWidth}}"
+                      ng-attr-height="{{chart.itemHeight}}"
+                      x="0"
+                      ng-attr-y="{{connector._y -  chart.itemHeight/2}}"
+                        >
+                </rect>
+                <svg width="200" height="200" x="0" ng-attr-y="{{connector.y() - 12 }}">
+                    <g ng-if="connector.data.config.hasOwnProperty('trigger')">
+                        <rect width="6" height="6" fill="#00ff00" stroke="#737373" stroke-width="0.5" x="3" y="1" ng-if="connector.data.config.trigger.indexOf('RECORDS_FOUND') != -1" ></rect>
+                        <rect width="6" height="6" fill="#00ff00" stroke="#737373" stroke-width="0.5" x="3" y="1" ng-if="connector.data.config.trigger.indexOf('RECORD_CREATED') != -1" ></rect>
+                        <rect width="6" height="6" fill="#00ff00" stroke="#737373" stroke-width="0.5" x="3" y="1" ng-if="connector.data.config.trigger.indexOf('CALL_CONNECTED') != -1" ></rect>
+                        <rect width="6" height="6" fill="#ffff00" stroke="#737373" stroke-width="0.5" x="3" y="9" ng-if="connector.data.config.trigger.indexOf('RECORDS_NOT_FOUND') != -1" ></rect>
+                        <rect width="6" height="6" fill="#ffff00" stroke="#737373" stroke-width="0.5" x="3" y="9" ng-if="connector.data.config.trigger.indexOf('CALL_NOT_CONNECTED') != -1" ></rect>
+                        <rect width="6" height="6" fill="#ff0000" stroke="#737373" stroke-width="0.5" x="3" y="17" ng-if="connector.data.config.trigger.indexOf('SF_ERROR') != -1" ></rect>
+                        <rect width="6" height="6" fill="#ff0000" stroke="#737373" stroke-width="0.5" x="3" y="17" ng-if="connector.data.config.trigger.indexOf('CAMP_EXIT') != -1" ></rect>
+                     </g>
+
+
+                    <text class="svg-cursor"
+                            x="186"
+                            y="12"
+                            text-anchor="end"
+                            dominant-baseline="central"
+                            ng-attr-class="{{connector.selected() && 'selected-node-item-text' || 'node-item-text' }}"
+                            >
+                        {{connector.data.name}}
+                    </text>
+                </svg>
+
+
+
+
+
+                <svg viewBox="0 0 16 16" ng-if="connector.data.outputConnectorsAllowed" ng-attr-x="{{connector._x-8}}"
+                     ng-attr-y="{{connector._y-8}}" width="16" height="16" ng-mousedown="itemMouseDown($event, node, connector, $index); connectorMouseDown($event, node, connector, $index, false)">
+                    <circle cx="8" cy="8" r="8" ng-attr-fill="{{(draggingConnection && !connector.connected && isInputConnector) && '#4BC076' || (connector.connected && '#a6b8d2' || '#EC6281')}}"/>
+                    <polygon points="8.29 3.47 7.69 3.47 7.69 7.71 3.47 7.71 3.47 8.31 7.69 8.31 7.69 12.53 8.29 12.53 8.29 8.31 12.53 8.31 12.53 7.71 8.29 7.71 8.29 3.47" fill="#fff" ng-if="!connector.connected"/>
+                    <path d="M8,3.8A4.2,4.2,0,1,0,12.2,8,4.2,4.2,0,0,0,8,3.8Zm0,7.76A3.56,3.56,0,1,1,11.56,8,3.56,3.56,0,0,1,8,11.56Z" fill="#fff" ng-if="connector.connected"/>
+                </svg>
+
+
+
+            </g>
+            <!-- outputs end -->
+
+            <!-- ModNumber_Public numbers list START -->
+            <g ng-if="node.data.configCustom == 'ModNumber_Public'"
+                    ng-repeat="phoneNumber in node.data.subItems.slice(0,chart.maxPhoneNumbersShown)"
+                    class="connector output-connector"
+                    ng-attr-transform="translate(0, {{connector.translatedY || 0}})"
+            >
+
+                <rect class="node-item"
+                      ry="0"
+                      rx="0"
+                      ng-attr-width="{{chart.nodeWidth}}"
+                      ng-attr-height="{{chart.itemHeight}}"
+                      x="0"
+                      ng-attr-y="{{(($index  + 1) * (chart.itemHeight + 2) + 4)}}"
+                >
+                </rect>
+                <svg width="190" height="200" x="4" ng-attr-y="{{(($index + 1) * (chart.itemHeight + 2) + 7)}}">
+
+                    <text class="svg-cursor node-item-text"
+                          x="190"
+                          y="12"
+                          text-anchor="end"
+                          dominant-baseline="central"
+                    >
+                        {{phoneNumber.name}}
+                    </text>
+                </svg>
+
+            </g>
+
+            <g ng-if="node.data.configCustom == 'ModNumber_Public' && node.data.subItems.length > chart.maxPhoneNumbersShown"
+               class="connector output-connector"
+               ng-attr-transform="translate(0, {{connector.translatedY || 0}})"
+            >
+
+                <rect class="node-item"
+                      ry="0"
+                      rx="0"
+                      ng-attr-width="{{chart.nodeWidth}}"
+                      ng-attr-height="{{chart.itemHeight}}"
+                      x="0"
+                      ng-attr-y="{{((chart.maxPhoneNumbersShown) * (chart.itemHeight + 2) + 4)}}"
+                >
+                </rect>
+                <svg width="190" height="200" x="0" ng-attr-y="{{((chart.maxPhoneNumbersShown) * (chart.itemHeight + 2) + 8)}}">
+
+                    <text class="svg-cursor node-item-text"
+                          x="190"
+                          y="12"
+                          text-anchor="end"
+                          dominant-baseline="central"
+                    >
+                        ... {{node.data.subItems.length - chart.maxPhoneNumbersShown + 1}} more...
+                    </text>
+                </svg>
+
+            </g>
+            <!-- ModNumber_Public numbers list END -->
+
+
+            <!-- ModNumber_Internal label START -->
+            <g ng-if="node.data.templateId == 31 || node.data.templateId == 3100000"
+               class="connector output-connector"
+               ng-attr-transform="translate(0, {{connector.translatedY || 0}})"
+            >
+                <rect class="node-item"
+                      ry="0"
+                      rx="0"
+                      ng-attr-width="{{chart.nodeWidth}}"
+                      ng-attr-height="{{chart.itemHeight}}"
+                      x="0"
+                      ng-attr-y="{{( (chart.itemHeight + 2) + 4)}}"
+                >
+                </rect>
+                <svg width="190" height="200" x="0" ng-attr-y="{{( (chart.itemHeight + 2) + 8)}}">
+                    <text class="svg-cursor node-item-text"
+                          x="190"
+                          y="12"
+                          text-anchor="end"
+                          dominant-baseline="central"
+                    >
+                        {{node.data.variables.internalExtension}}
+                    </text>
+                </svg>
+            </g>
+            <!--  ModNumber_Internal label END -->
+
+
+            <!-- ModStartNC_Trigger label START -->
+            <g ng-if="node.data.templateId == 93"
+               class="connector output-connector"
+               ng-attr-transform="translate(0, {{connector.translatedY || 0}})"
+            >
+                <rect class="node-item"
+                      ry="0"
+                      rx="0"
+                      ng-attr-width="{{chart.nodeWidth}}"
+                      ng-attr-height="{{chart.itemHeight}}"
+                      x="0"
+                      ng-attr-y="{{( (chart.itemHeight + 2) + 4)}}"
+                >
+                </rect>
+                <svg width="190" height="200" x="0" ng-attr-y="{{( (chart.itemHeight + 2) + 8)}}">
+                    <text class="svg-cursor node-item-text"
+                          x="190"
+                          y="12"
+                          text-anchor="end"
+                          dominant-baseline="central"
+                    >
+                        {{node.data.variables.triggerName}}
+                    </text>
+                </svg>
+            </g>
+            <!--  ModStartNC_Trigger label END -->
+
+
+            <!-- default output start -->
+            <g
+                    ng-repeat="connector in node.output"
+                    class="connector output-connector"
+                    ng-mousedown="nodeFooterMouseDown($event, node)"
+                    hm-panstart="onHammer($event, node)" hm-panmove="onHammer($event, node)"
+                    >
+
+                <rect ng-attr-class="{{(chart.data.color && 'node-footer-template--'+node.data.templateId || 'node-footer')}}"
+                      ry="0"
+                      rx="0"
+                      ng-attr-width="{{chart.nodeWidth}}"
+                      ng-attr-height="{{chart.itemHeight}}"
+                      stroke="#4BC076"
+                      ng-attr-x="0"
+                      ng-attr-y="{{connector.y() -  chart.itemHeight/2}}"
+                        >
+                </rect>
+                <text
+                        ng-attr-x="{{connector.x() -  chart.itemHeight/2}}"
+                        ng-attr-y="{{connector.y() }}"
+                        text-anchor="end"
+                        alignment-baseline="middle"
+                        fill="#ffffff"
+                        class="svg-cursor"
+                        >
+                    {{connector.data.name}}
+                </text>
+
+                <svg viewBox="0 0 16 16" ng-if="connector.data.outputConnectorsAllowed" ng-attr-x="{{connector._x-8}}"
+                     ng-attr-y="{{connector._y-8}}" width="16" height="16" ng-mousedown="nodeMouseDown($event, node); connectorMouseDown($event, node, connector, node.outputs.length, false)">
+                    <circle cx="8" cy="8" r="8" ng-attr-fill="{{(draggingConnection && !connector.connected && isInputConnector) && '#4BC076' || (connector.connected && '#a6b8d2' || '#EC6281')}}"/>
+                    <polygon points="8.29 3.47 7.69 3.47 7.69 7.71 3.47 7.71 3.47 8.31 7.69 8.31 7.69 12.53 8.29 12.53 8.29 8.31 12.53 8.31 12.53 7.71 8.29 7.71 8.29 3.47" fill="#fff" ng-if="!connector.connected"/>
+                    <path d="M8,3.8A4.2,4.2,0,1,0,12.2,8,4.2,4.2,0,0,0,8,3.8Zm0,7.76A3.56,3.56,0,1,1,11.56,8,3.56,3.56,0,0,1,8,11.56Z" fill="#fff" ng-if="connector.connected"/>
+                </svg>
+
+            </g>
+            <!-- default output end -->
+        </g>
+        <!-- nodes end -->
+
+        <!-- dragging connections start -->
+        <g
+             ng-if="draggingConnection"
+             >
+            <path
+                    class="dragging-connection dragging-connection-line"
+                    ng-attr-d="{{dDraggingConnection()}}"
+                    >
+            </path>
+            <circle
+                    class="dragging-connection dragging-connection-endpoint"
+                    r="4"
+                    ng-attr-cx="{{dragPoint1.x}}"
+                    ng-attr-cy="{{dragPoint1.y}}"
+                    >
+            </circle>
+            <circle
+                    class="dragging-connection dragging-connection-endpoint"
+                    r="4"
+                    ng-attr-cx="{{dragPoint2.x}}"
+                    ng-attr-cy="{{dragPoint2.y}}"
+                    >
+            </circle>
+        </g>
+        <!-- dragging connections end -->
+        <!-- dragging selection start -->
+        <rect
+                ng-if="dragSelecting"
+                class="drag-selection-rect"
+                ng-attr-x="{{dragSelectionRect.x}}"
+                ng-attr-y="{{dragSelectionRect.y}}"
+                ng-attr-width="{{dragSelectionRect.width}}"
+                ng-attr-height="{{dragSelectionRect.height}}"
+                >
+        </rect>
+        <!-- dragging selection end -->
+
+        <!-- init START -->
+        <svg x="26" y="26" ng-mouseover="showInputs=true" ng-mouseleave="showInputs=false">
+
+            <rect class="node-rect" ng-attr-class="{{showInputs && 'selected-node-rect' || 'node-rect'}}" ng-attr-height="{{showInputs ? (chart.data.type.advanced == 'POLICY_TYPE_CALL' ? 156 : 66) : 32}}"ry="4" rx="4" x="0" y="0" width="200" />
+            <rect class="node-header" ng-attr-class="{{showInputs && 'selected-node-header' || 'node-header'}}" ry="0" rx="0" x="2" y="2" width="200" height="32" />
+            <text x="20" y="18" alignment-baseline="middle" fill="#ffffff" class="svg-cursor">Click here to START</text>
+
+            <g ng-if="showInputs">
+
+                <g ng-if="!chart.data.type" >
+                    <g ng-click="showChartOptionsDialog()">
+                        <rect class="node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="36" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="50" alignment-baseline="middle">Select Policy Type</text>
+                    </g>
+                </g>
+
+                <g ng-if="chart.data.type.advanced == 'POLICY_TYPE_CALL'">
+                    <g ng-click="addStartNode(3)">
+                        <rect class="node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="36" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="50" alignment-baseline="middle">Add Inbound Numbers</text>
+                    </g>
+
+                    <g ng-click="addStartNode(31)" ng-if="$parent.$parent.$parent.model.license.Manager__c || $parent.$parent.$parent.model.license.PBX__c">
+                        <rect class="node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="66" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="80" alignment-baseline="middle">Add Extension</text>
+                    </g>
+                    <g ng-if="!($parent.$parent.$parent.model.license.Manager__c || $parent.$parent.$parent.model.license.PBX__c)">
+                        <title>requires AVS Cloud PBX or AVS Contact Centre License</title>
+                        <rect class="disabled-node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="66" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="80" alignment-baseline="middle">&#9940;  Extension</text>
+                    </g>
+
+                    <g ng-click="addStartNode(3100000)" ng-if="$parent.$parent.$parent.model.license.Manager__c">
+                        <rect class="node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="96" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="110" alignment-baseline="middle">Add Invokable Destination</text>
+                    </g>
+                    <g ng-if="!$parent.$parent.$parent.model.license.Manager__c">
+                        <title>requires AVS Contact Centre License</title>
+                        <rect class="disabled-node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="96" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="110" alignment-baseline="middle" >&#9940; Invokable Destination</text>
+
+                    </g>
+
+                    <g ng-click="addStartNode(81)" ng-if="$parent.$parent.$parent.model.license.Manager__c || $parent.$parent.$parent.model.license.PBX__c">
+                        <rect class="node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="126" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="140" alignment-baseline="middle">From SIP Trunk</text>
+                    </g>
+                    <g ng-if="!($parent.$parent.$parent.model.license.Manager__c || $parent.$parent.$parent.model.license.PBX__c)">
+                        <title>requires AVS Cloud PBX or AVS Contact Centre License</title>
+                        <rect class="disabled-node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="126" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="140" alignment-baseline="middle">&#9940;  From SIP Trunk</text>
+                    </g>
+
+                </g>
+                <g ng-if="chart.data.type.advanced == 'POLICY_TYPE_DATA_ANALYTICS'">
+                    <g ng-click="addStartNode(93)" ng-if="$parent.$parent.$parent.model.license.Manager__c">
+                        <rect class="node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="36" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="50" alignment-baseline="middle">Add Inbound Message</text>
+                    </g>
+                    <g ng-if="!$parent.$parent.$parent.model.license.Manager__c">
+                        <title>requires AVS Contact Centre License</title>
+                        <rect class="disabled-node-item" ry="0" rx="0" width="194" height="28" stroke="none" stroke-width="0" x="3" y="36" />
+                        <text class="slds-truncate svg-cursor node-item-text" x="10" y="50" alignment-baseline="middle">&#9940; Inbound Message</text>
+                    </g>
+                </g>
+            </g>
+
+        </svg>
+        <!-- init END -->
+    </g>
+    <!-- viewport end -->
+</svg>

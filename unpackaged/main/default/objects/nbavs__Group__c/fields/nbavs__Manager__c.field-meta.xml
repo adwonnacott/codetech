@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__Manager__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Contact Centre: grants group access to Listen In, Call Queues, Group Dial</description>
+    <inlineHelpText>Contact Centre: grants group access to Listen In, Call Queues, Group Dial</inlineHelpText>
+    <label>Contact Centre</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

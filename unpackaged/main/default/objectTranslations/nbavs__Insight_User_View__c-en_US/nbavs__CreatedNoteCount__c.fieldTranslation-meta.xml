@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Number of notes this user has created on this Insight. --></help>
+        <label><!-- Created Note Count --></label>
+        <name>nbavs__CreatedNoteCount__c</name>
+    </CustomFieldTranslation>

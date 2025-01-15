@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Flag_Picked_Off__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>The other leg of this call was intercepted via a pickup from another channel</description>
+    <label>To Flag Picked Off</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

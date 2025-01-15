@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__SupervisorCreated__c</fullName>
+    <deprecated>false</deprecated>
+    <formula>nbavs__Natterbox_User__c != nbavs__Insights__r.nbavs__Natterbox_User__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Supervisor Created</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

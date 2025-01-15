@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__From_Recording__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>IF(nbavs__From_Flag_Record__c, HYPERLINK(&#39;/apex/nbavs__playrecording?callReportingId=&#39;+Id+&#39;&amp;from&#39;, IMAGE(&quot;/resource/nbavs__playbuttons/PlayOn.png&quot;, &quot;Play&quot;)), IMAGE(&quot;/resource/nbavs__playbuttons/PlayOff.png&quot;, &quot;No Recording was made&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>From Recording</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

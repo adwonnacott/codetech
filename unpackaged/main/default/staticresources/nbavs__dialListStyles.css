@@ -1,0 +1,86 @@
+#natterboxCTI\3A dialListPanel {
+    padding: 0 0 4px 0;
+}
+
+#natterboxCTI\3A dialListPanel.dl-in-lightning {
+    padding: 8px;
+}
+
+#dialListFormControl {
+    padding-top: 3px;
+}
+
+#dialListFormControl select {
+    width: 100%;
+}
+
+#natterboxCTI\3A dialListForm {
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #F0F0F0;
+}
+
+.dialListButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dl-in-lightning .dialListButtons input {
+    width: 100%;
+    margin: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.dialListButtons input {
+    width: 100%;
+    margin: 0;
+}
+
+.dialListButtons input:not(:last-child) {
+    margin-right: 2px;
+}
+
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListPreview,
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDiscardPreview {
+    color: #FFFFFF;
+    background-color: #77AA66;
+    border-color: #77AA66;
+}
+
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDial {
+    color: #000000;
+    background-color: #B0E700;
+    border-color: #B0E700;
+    padding-left: 1.5rem;
+    padding-right: 0.5rem;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20height%3D%2224%22%20width%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%3Cpath%20stroke%3D%22black%22%20stroke-width%3D%220%22%20d%3D%22M22.4%2017.5l-2.8-2.3c-.7-.5-1.6-.5-2.2%200L15%2016.9c-.3.3-.7.2-1-.1l-3.6-3.2L7.2%2010c-.3-.3-.3-.6-.1-1l1.7-2.4c.5-.6.5-1.5%200-2.2L6.5%201.6C5.8.8%204.6.7%203.8%201.5L1.4%203.9c-.4.3-.6.9-.6%201.4.3%204.7%202.4%209.1%205.5%2012.3s7.6%205.2%2012.3%205.5c.6%200%201.1-.2%201.4-.6l2.4-2.4c.9-.7.9-2%200-2.6zM22.3.9h-7.1c-.4%200-.6.5-.2.9l2.3%202.3-4.2%204.2c-.2.2-.2.7%200%20.9l1.7%201.7c.2.2.6.2.9%200l4.2-4.2L22.2%209c.4.4.9.2.9-.2V1.7c0-.3-.4-.8-.8-.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-position: calc(50% - 15px) 9px;
+    background-size: 13px 13px;
+    background-Repeat: no-repeat;
+}
+
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListPreview:hover,
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDiscardPreview:hover {
+    background-color: #70A060;
+    border-color: #70A060;
+}
+
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDial:hover {
+    background-color: #C0F000;
+    border-color: #C0F000;
+}
+
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListPreview:disabled,
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDiscardPreview:disabled,
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDial:disabled {
+    color: #FFFFFF;
+    background-color: #BBBBBB;
+    border-color: #999999;
+}
+.dl-in-lightning #natterboxCTI\3A dialListForm\3A dialListDial:disabled {
+    background-image: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

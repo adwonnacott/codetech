@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nbavs__To_Call_Reporting__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <label>To Call Reporting record</label>
+    <referenceTo>nbavs__CallReporting__c</referenceTo>
+    <relationshipLabel>Phone Event to Call Reporting</relationshipLabel>
+    <relationshipName>Call_Reporting1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,40 @@
+<apex:page showheader="true" sidebar="true" >
+
+    <style>
+        #col1{width:59%;display:inline-block;}
+        #col2{width:39%;display:inline-block;}
+    </style>
+    <div id="col1">
+        <apex:outputPanel title="Insight Category Configuration" >
+            <apex:enhancedList type="Insight_Category_Configuration__c" rowsPerPage="10" height="500" width="1000" />
+        </apex:outputPanel>
+    </div>
+
+
+    <div id="col2">
+        <!-- this section to show the reports/dashboard -->
+    </div>
+    <div id="col1">
+        <!-- section to include dictionary list view -->
+    </div>
+
+    <!-- Below section to try using lightning component. Namespace issue when packaging. Might need to revisit -->
+<!--    <apex:includeLightning />-->
+
+<!--    <div id="ConfigLayout"></div>-->
+
+<!--    <script>-->
+<!--        //need to update here to use the namespace prefix in lightning use-->
+<!--        $Lightning.use("c:InsightConfigApp", function() {-->
+<!--            /* syntax for create lightning component dynamically :-->
+<!--             * $Lightning.createComponent(String type, Object attributes, String locator, function callback) */-->
+<!--            $Lightning.createComponent("c:InsightsConfiguration",-->
+<!--                {-->
+<!--                    // Set Lightning Component Attributes Property before creating Lightning Component In Visualforce page-->
+<!--                    textColor : "Red"-->
+<!--                },-->
+<!--                "ConfigLayout",-->
+<!--                function(component) {});-->
+<!--        });-->
+<!--    </script>-->
+</apex:page>

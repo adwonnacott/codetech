@@ -1,0 +1,93 @@
+<apex:page standardController="nbavs__Group__c" extensions="nbavs.GroupController" tabstyle="nbavs__Group__c">
+	<style type="text/css">
+	.editPage .bPageBlock {
+    	border-top-width: 3px;
+	}
+	</style>
+	<apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+	<script type="text/javascript">
+	j$ = jQuery.noConflict();
+    			var editAlerted = false;
+                var alertOnChange = function(edit){
+                 	if (edit && !editAlerted) {
+					    alert('Warning: changing a group name may invalidate reports based on this group.');
+					    editAlerted = true;
+					    }
+                }
+				
+        function handleNew(isAdd){
+            if(isAdd === false){
+                handleUpdate();
+            }
+            if(isAdd === true){
+                handleAdd();
+            }
+            buttonsEnabled(false);
+        }
+        function buttonsEnabled(enabled) {
+            var $buttons = jQuery('.btn');
+            if (enabled === false) {
+                $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+            } else {
+                $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+            } 
+        }
+           </script>
+	<apex:sectionHeader title="{!$ObjectType.nbavs__Group__c.label} Edit" subtitle="{!IF(nbavs__Group__c.Id!=null, nbavs__Group__c.Name, 'New ' + $ObjectType.nbavs__Group__c.label)}" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock title="{!$ObjectType.nbavs__Group__c.label} Edit" mode="edit">
+			<apex:pageBlockButtons id="pageBlockButtons">
+				<apex:actionFunction action="{!addGroup}" name="handleAdd" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                <apex:actionFunction action="{!updateGroup}" name="handleUpdate" oncomplete="buttonsEnabled(true);" reRender="messages"/>
+                <apex:commandButton onclick="handleNew(true);return false;" value="Save" rendered="{!nbavs__Group__c.Id == null}" />
+				<apex:commandButton onclick="handleNew(false);return false;" value="Save" rendered="{!nbavs__Group__c.Id != null}" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Group Information" columns="2">
+				<apex:outputField value="{!nbavs__Group__c.nbavs__Id__c}" rendered="false" />
+				<apex:inputField value="{!nbavs__Group__c.Name}" required="true" onkeydown="alertOnChange({!IF(nbavs__Group__c.Id!=null, true, false)})" onmousedown="alertOnChange({!IF(nbavs__Group__c.Id!=null, true, false)})"/>
+				<apex:inputField value="{!nbavs__Group__c.nbavs__Email__c}" required="true" />
+				<apex:inputField value="{!nbavs__Group__c.nbavs__Extension__c}" required="true" rendered="{!nbavs__Group__c.Id==null || nbavs__Group__c.nbavs__PBX__c || nbavs__Group__c.nbavs__Manager__c}"/>
+				<apex:inputField value="{!nbavs__Group__c.nbavs__Description__c}" />				
+			</apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Group Purpose" columns="1">
+				<apex:outputText styleClass="warning" value="Note that once a Group Purpose has been set, it may not be unset again." />
+                <apex:outputText styleClass="warning" value="Any users you add to this group must have the corresponding license to use this functionality." />
+
+                <apex:inputField id="pbxOff" value="{!nbavs__Group__c.nbavs__PBX__c}" rendered="{!!nbavs__Group__c.nbavs__PBX__c && licenseManager.pbx_licenseEnabled}"/>
+                <apex:outputField id="pbxOn" value="{!nbavs__Group__c.nbavs__PBX__c}" rendered="{!nbavs__Group__c.nbavs__PBX__c && licenseManager.pbx_licenseEnabled}"/>
+				<apex:pageBlockSectionItem rendered="{!!licenseManager.pbx_licenseEnabled}" helpText="{!$ObjectType['Group__c'].Fields.PBX__c.inlineHelpText}">
+                    <apex:outputText value="{!$ObjectType['Group__c'].Fields.PBX__c.Label}" />
+					<apex:outputPanel >
+						<apex:outputField id="pbxDisabled" value="{!nbavs__Group__c.nbavs__PBX__c}" />
+                    	<apex:outputText value="{!$ObjectType['Group__c'].Fields.PBX__c.Label} License disabled" />
+                    </apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+                <apex:inputField id="managerOff" value="{!nbavs__Group__c.nbavs__Manager__c}" rendered="{!!nbavs__Group__c.nbavs__Manager__c && licenseManager.manager_licenseEnabled}" />
+                <apex:outputField id="managerOn" value="{!nbavs__Group__c.nbavs__Manager__c}" rendered="{!nbavs__Group__c.nbavs__Manager__c && licenseManager.manager_licenseEnabled}" />
+                <apex:pageBlockSectionItem rendered="{!!licenseManager.manager_licenseEnabled}" helpText="{!$ObjectType['Group__c'].Fields.Manager__c.inlineHelpText}">
+                    <apex:outputText value="{!$ObjectType['Group__c'].Fields.Manager__c.Label}" />
+                    <apex:outputPanel >
+                        <apex:outputField id="managerDisabled" value="{!nbavs__Group__c.nbavs__Manager__c}" />
+                        <apex:outputText value="{!$ObjectType['Group__c'].Fields.Manager__c.Label} License disabled" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:inputField id="recordOff" value="{!nbavs__Group__c.nbavs__Record__c}" rendered="{!!nbavs__Group__c.nbavs__Record__c && licenseManager.record_licenseEnabled}" />
+                <apex:outputField id="recordOn" value="{!nbavs__Group__c.nbavs__Record__c}" rendered="{!nbavs__Group__c.nbavs__Record__c && licenseManager.record_licenseEnabled}" />
+                <apex:pageBlockSectionItem rendered="{!!licenseManager.record_licenseEnabled}" helpText="{!$ObjectType['Group__c'].Fields.record__c.inlineHelpText}">
+                    <apex:outputText value="{!$ObjectType['Group__c'].Fields.Record__c.Label}" />
+                    <apex:outputPanel >
+                        <apex:outputField id="recordDisabled" value="{!nbavs__Group__c.nbavs__Record__c}" />
+                        <apex:outputText value="{!$ObjectType['Group__c'].Fields.Record__c.Label} License disabled" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

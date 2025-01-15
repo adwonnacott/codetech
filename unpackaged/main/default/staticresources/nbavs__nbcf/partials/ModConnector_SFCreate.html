@@ -1,0 +1,249 @@
+<div ng-controller="SalesforceCreate">
+	<div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': ItemForm.resultSet.$error.required}">
+		<label class="slds-form-element__label" for="resultSet">Result Set</label>
+		<div class="slds-form-element__control">
+			<input id="resultSet" name="resultSet" class="slds-input slds-size--3-of-5" type="text" placeholder=""
+			       ng-model="item.data.config.resultSet" aria-describedby="errorName" required="true" ng-change="updateScript()" result-set-name />
+			<button type="button" class="slds-button slds-button--brand slds-float--right" ng-click="testCreate()">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+					<use xlink:href="" s="utility" i="preview" svg-link />
+				</svg>
+				Test Create
+			</button>
+		</div>
+	</div>
+
+	<div class="slds-form-element">
+		<label class="slds-form-element__label">Trigger When</label>
+		<div class="slds-form-element__control">
+			<div>
+				<label class="slds-checkbox">
+					<input type="checkbox" name="options" id="RECORDS_FOUND" ng-model="model.triggerOptionsStore.RECORD_CREATED" ng-click="updateTrigger()">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label" translate>RECORD_CREATED</span>
+				</label>
+			</div>
+			<div>
+				<label class="slds-checkbox">
+					<input type="checkbox" name="options" id="SF_ERROR" ng-model="model.triggerOptionsStore.SF_ERROR" ng-click="updateTrigger()">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label" translate>SF_ERROR</span>
+				</label>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+
+			<fieldset class="slds-form--compound">
+				<div class="form-element__group">
+
+					<div class="slds-form-element__row slds-form-element__row--labels-local">
+						<div class="slds-form-element__control slds-size--5-of-12">
+							<label class="slds-form-element__label">Record Type</label>
+						</div>
+						<div class="slds-form-element__control slds-size--6-of-12">
+							<label class="slds-form-element__label">Owner ID</label>
+						</div>
+					</div>
+
+					<div class="slds-form-element__row">
+						<div class="slds-form-element__control slds-size--5-of-12" >
+							<div class="slds-select_container">
+								<select ng-if="!item.data.config.showAPIName" id="sObject" name="sObject" class="slds-select slds-size--3-of-3"
+								        ng-model="item.data.config.sObject"
+								        ng-options="itm.name as itm.label for itm in model.sObjects  | filter: {createable: true}"
+								        ng-change="sObjectChange()">
+								</select>
+								<select ng-if="item.data.config.showAPIName" id="sObject" name="sObject" class="slds-select slds-size--3-of-3"
+										ng-model="item.data.config.sObject"
+										ng-options="itm.name as itm.name for itm in model.sObjects  | filter: {createable: true}"
+										ng-change="sObjectChange()">
+								</select>
+							</div>
+						</div>
+
+						<div class="slds-form-element__control slds-size--6-of-12 slds-input-has-icon slds-input-has-icon--right">
+							<svg aria-hidden="true"
+								 class="slds-input__icon slds-icon-text-default"
+								 ng-click="showMacros('ownerId')">
+								<use xlink:href="" i="push" svg-link/>
+							</svg>
+							<input id="ownerId" name="ownerId" class="slds-input" type="text" placeholder=""
+							       ng-model="item.data.config.ownerId" aria-describedby="ownerId" ng-change="updateScript()"/>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+
+		</div>
+	</div>
+
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+			<div>
+				<label class="slds-checkbox">
+					<input type="checkbox" name="fieldName" id="fieldName"
+						   ng-model="item.data.config.showAPIName">
+					<span class="slds-checkbox--faux"></span>
+					<span class="slds-form-element__label">Show Salesforce API Names</span>
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" >Set Fields Values</label>
+	</div>
+	<div class="slds-box slds-theme--shade slds-box--x-small" style="border: 1px solid #006eb3" >
+	<div class="slds-form--inline" ng-repeat="field in item.data.config.fields">
+		<fieldset class="slds-form--compound">
+			<div class="form-element__group">
+
+				<div class="slds-form-element__row--labels-local" ng-if="$index==0">
+					<div class="slds-form-element__control slds-size--5-of-12">
+						<label class="slds-form-element__label">Field</label>
+					</div>
+					<div class="slds-form-element__control slds-size--6-of-12">
+						<label class="slds-form-element__label">Value</label>
+					</div>
+				</div>
+
+				<div class="slds-form-element__row">
+					<div class="slds-form-element__control slds-size--5-of-12" >
+						<div class="slds-select_container">
+							<select ng-if="!item.data.config.showAPIName" id="field_name_{{$index}}" name="field_name_{{$index}}" class="slds-select"
+							        ng-model="field.name"
+							        ng-options="itm.name as itm.label for itm in model.sObjectFields | filter: {createable: true, name: '!OwnerId'}" ng-disabled="field.required" ng-change="changeFieldType(field);" >
+							</select>
+							<select ng-if="item.data.config.showAPIName" id="field_name_{{$index}}" name="field_name_{{$index}}" class="slds-select"
+									ng-model="field.name"
+									ng-options="itm.name as itm.name for itm in model.sObjectFields | filter: {createable: true, name: '!OwnerId'}" ng-disabled="field.required" ng-change="changeFieldType(field);" >
+							</select>
+						</div>
+					</div>
+					<div class="slds-form-element__control slds-size--6-of-12 slds-input-has-icon slds-input-has-icon--right" ng-class="{'slds-is-required slds-has-error': ItemForm.field_value_{{$index}}.$error.required}">
+
+						<input id="field_value_{{$index}}" name="field_value_{{$index}}" class="slds-input" type="text" placeholder=""
+						       ng-model="field.value" aria-describedby="field_value_{{$index}}" required="true" ng-change="updateScript()" ng-if="field.macroMode || (field.type != 'boolean' && field.type!='picklist')"/>
+
+						<div class="slds-select_container"
+							 ng-if="field.type == 'boolean' && !field.macroMode">
+							<select id="field_value_{{$index}}" name="field_value_{{$index}}" class="slds-select"
+									ng-model="field.value"
+									ng-options="itm as itm for itm in model.booleanOptions"
+									ng-change="updateScript();">
+							</select>
+						</div>
+
+
+						<div class="slds-select_container"
+							 ng-if="field.type == 'picklist' && !field.macroMode">
+							<select id="field_value_{{$index}}"
+									name="field_value_{{$index}}" class="slds-select"
+									ng-model="field.value"
+									ng-options="itm.value as itm.label for itm in field.picklistValues"
+									ng-change="updateScript();">
+							</select>
+						</div>
+
+						<svg aria-hidden="true"
+							 class="slds-input__icon slds-icon-text-default slds-icon-picklist-lock"
+							 ng-click="field.macroMode = !field.macroMode" ng-if="field.type == 'boolean' || field.type=='picklist'">
+							<use xlink:href="" i="lock" svg-link ng-if="!field.macroMode"/>
+							<use xlink:href="" i="unlock" svg-link ng-if="field.macroMode"/>
+						</svg>
+
+						<svg aria-hidden="true"
+							 class="slds-input__icon slds-icon-text-default"
+							 ng-click="showMacros('field_value_'+$index)" ng-if="field.macroMode || (field.type != 'boolean' && field.type!='picklist')">
+							<use xlink:href="" i="push" svg-link/>
+						</svg>
+
+					</div>
+					<div class="slds-form-element__control slds-size--1-of-10" ng-show="$index!=0 || item.data.config.fields.length > 0">
+						<button type="button" class="slds-button slds-button--icon" ng-click="item.data.config.fields.splice($index, 1); updateScript()" ng-show="field.required != true">
+							<svg aria-hidden="true" class="slds-button__icon">
+								<use xlink:href="" s="utility" i="close" svg-link />
+							</svg>
+							<span class="slds-assistive-text">delete</span>
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</fieldset>
+	</div>
+		<button type="button" class="slds-button slds-button--icon" ng-click="addStoreRow()" ng-if="item.data.config.fields.length < (model.sObjectFields | filter: {createable:true}).length">
+			<svg aria-hidden="true" class="slds-button__icon">
+				<use xlink:href="" i="add" svg-link />
+			</svg>
+			<span class="slds-assistive-text">add row</span>
+			Add Row
+		</button>
+		</div>
+
+
+	<!-- tokens form Start -->
+	<div ng-if="model.showTokensForm">
+		<div class="slds-modal slds-fade-in-open" aria-hidden="false" role="dialog">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header">
+					<button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+							ng-click="model.showTokensForm=false">
+						<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+							<use xlink:href="" i="close" svg-link/>
+						</svg>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="slds-text-heading--medium">Please set actual values for tokens</h2>
+				</div>
+				<div class="slds-modal__content slds-p-around--medium">
+					<div class="slds-form--horizontal">
+						<div class="slds-form-element"
+							 ng-class="{'slds-is-required slds-has-error': ItemForm.Token_{{$index}}.$error.required}"
+							 ng-repeat="token in model.tokens">
+							<label class="slds-form-element__label"
+								   for="Token_{{$index}}"><strong>{{token.token}}</strong></label>
+							<div class="slds-form-element__control">
+								<input id="Token_{{$index}}" name="Token_{{$index}}" class="slds-input" type="text"
+									   ng-model="token.value" aria-describedby="errorName" required=""/>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="slds-modal__footer">
+					<button type="button" class="slds-button slds-button--neutral slds-button--brand"
+							ng-click="model.showTokensForm=false">Close
+					</button>
+
+					<button type="button" class="slds-button slds-button--brand slds-float--right"
+							ng-click="replaceTokensCreate()">
+						<svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+							<use xlink:href="" s="utility" i="preview" svg-link/>
+						</svg>
+						Test Create
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="slds-backdrop slds-backdrop--open"></div>
+	</div>
+	<!-- tokens form END -->
+</div>
+
+
+
+
+
+
+
+
+
+

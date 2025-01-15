@@ -1,0 +1,77 @@
+<style type="text/css" media="screen">
+    #ace_editor_inline { height: 260px; }
+    #ace_editor_modal { height: 70vh }
+    .readonly-highlight {
+        background-color: #2b2b2b;
+        opacity: 0.2;
+        position: absolute;
+    }
+</style>
+
+<div ng-controller="ModDevelopScriptController">
+    <div class="slds-form-element">
+        <button type="button"  class="slds-button slds-button--icon"
+                ng-click="model.showModalEditor=true">
+            <svg aria-hidden="true" class="slds-button__icon slds-icon--x-small slds-icon-text-default">
+                <use xlink:href="" s="utility" i="expand" svg-link />
+            </svg>
+            <span class="slds-assistive-text">expand</span>
+        </button>
+
+        <label class="slds-form-element__label" for="script">Lua Script</label>
+        <div id="script" class="slds-form-element__control" style="border: inset 1px">
+            <div id="ace_editor_inline" ui-ace="{onLoad:aceLoaded}" ng-model="item.data.variables.script"></div>
+        </div>
+    </div>
+    <div class="slds-form-element" ng-class="{'slds-is-required slds-has-error': !ItemForm.notifyEmailAddress.$valid}">
+        <label class="slds-form-element__label" for="notifyEmailAddress">Email address to be emailed if a script error is encountered</label>
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+            <!--
+            <svg aria-hidden="true"
+                 class="slds-input__icon slds-icon-text-default"
+                 ng-click="showMacros('notifyEmailAddress')">
+                <use xlink:href="" i="push" svg-link/>
+            </svg>
+            -->
+            <input id="notifyEmailAddress" name="notifyEmailAddress" class="slds-input" type="text"
+                   ng-model="item.data.variables.notifyEmailAddress" ng-pattern="model.emailOrMacroRegex"/>
+        </div>
+        <span id="errorName" class="slds-form-element__help"
+              ng-show="!ItemForm.notifyEmailAddress.$valid">{{model.notifyEmailAddressInvalidMessage}}</span>
+    </div>
+
+
+    <!-- modal editor Start -->
+    <div ng-if="model.showModalEditor">
+        <div class="slds-modal slds-fade-in-open slds-modal--large" aria-hidden="false" role="dialog">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close"
+                            ng-click="model.showModalEditor=false">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            <use xlink:href="" i="close" svg-link/>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium">Edit Lua script</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-form--horizontal" style="border: inset 1px">
+                        <div id="ace_editor_modal" ui-ace="{onLoad:aceLoaded}" ng-model="item.data.variables.script"></div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button type="button" class="slds-button slds-button--neutral slds-button--brand"
+                            ng-click="model.showModalEditor=false">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+    <!-- modal editor END -->
+</div>
+
+
+
+

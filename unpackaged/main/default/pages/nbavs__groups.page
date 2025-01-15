@@ -1,0 +1,121 @@
+<apex:page standardController="nbavs__Group__c" extensions="nbavs.GroupListController" action="{!checkAPISetup}" tabstyle="nbavs__Group__c" recordSetVar="items">
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__css, 'style.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/css/jquery.dataTables.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'jQuery-3.6.0/jquery-3.6.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__DataTables, 'DataTables-1.12.1/js/jquery.dataTables.min.js')}" />   
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-core.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.nbavs__jsforce, 'jsforce-api-metadata.min.js')}" />
+	<apex:sectionHeader title="Groups" subtitle="Home" />
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock id="pageBlock">
+			<apex:outputPanel layout="block" styleClass="buttonsBox">
+				<apex:outputPanel layout="block" id="buttons" styleClass="buttonsLeft">
+					<apex:commandButton value="New {!$ObjectType.nbavs__Group__c.label}" action="{!URLFOR($Action.Group__c.New)}" />
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<apex:actionFunction name="deleteGroupFn" action="{!deleteItem}" reRender="paging,list,messages" oncomplete="reLoadFilters();">     
+                    <apex:param id="itemId" name="id" value="" assignTo="{!id}"/>
+                </apex:actionFunction>  
+			<apex:outputPanel layout="block" id="list">
+				<table class="list display compact" id="dataTable">
+					<thead>
+						<tr class="headerRow">
+							<th>Action</th>
+							<th>{!$ObjectType['Group__c'].Fields.Name.Label}</th>
+							<th>{!$ObjectType['Group__c'].Fields.Email__c.Label}</th>
+							<th>{!$ObjectType['Group__c'].Fields.Extension__c.Label}</th>
+							<th>{!$ObjectType['Group__c'].Fields.Description__c.Label}</th>
+                            <th>{!$ObjectType['Group__c'].Fields.PBX__c.Label}</th>
+                            <th>{!$ObjectType['Group__c'].Fields.Manager__c.Label}</th>
+                            <th>{!$ObjectType['Group__c'].Fields.Record__c.Label}</th>
+							<th>{!$ObjectType['Group__c'].Fields.LastModifiedDate.Label}</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<script type="text/javascript">
+				var q = "{!JSENCODE(tableSoql)}";
+            	j$ = jQuery.noConflict();
+	            j$('#dataTable').DataTable({
+                    "ajax": function(data, callback, settings) {
+                        var ret = [];
+                        var ajaxcall = function(url) {
+                            j$.ajaxSetup({
+                                headers:{
+                                    'Authorization': "Bearer {!$Api.Session_ID}"
+                                }
+                            });
+                            (async function(){
+                                let json = await j$.get(url);
+                                if (json != null) {
+                                    var sofar = ret.length;
+                                    for (var i = 0, ien = json.records.length; i < ien; i++) {
+                                        var item = json.records[i];
+                                        var ns = item.attributes.type.startsWith('nbavs__') ? 'nbavs__' : '';
+                                        
+                                        r = [];
+                                        r[0] = actionLink('apex/'+ns+'GroupEdit?id='+item['Id']+'&retURL=apex/'+ns+'groups') + '|' + actionDelLink(item['Id']);
+										r[1] = linkCurrentObject(item['Id'],encodeStr(item['Name']));
+                                        r[2] = item[ns+'Email__c'];
+                                        r[3] = item[ns+'Extension__c'];
+                                        r[4] = item[ns+'Description__c'];
+                                        r[5] = (item[ns+'PBX__c'])? '✓' : '';
+                                        r[6] = (item[ns+'Manager__c'])? '✓' : '';
+                                        r[7] = (item[ns+'Record__c'])? '✓' : '';
+										r[8] = formatDate(item['LastModifiedDate']);
+										ret[i+sofar] = r;
+                                    }
+                                    if (json.hasOwnProperty('nextRecordsUrl')) {
+                                        ajaxcall(json.nextRecordsUrl);
+                                        return;
+                                    }
+                                }
+                                callback({data: ret});
+                            })();
+                        };
+                        ajaxcall('/services/data/v45.0/query/?q='+encodeURI("{!JSENCODE(tableSoql)}"));
+                    },
+                    "paging": true,
+                    "stateSave": true,
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "order": [[ 8, "asc" ]],
+                    "saveState": true,
+                    "columnDefs": [
+                        { 'sortable': false, 'targets': [ 0 ] }
+                    ]
+                });
+                function encodeStr(eValue){
+                    if(eValue!==null && eValue!=='' && eValue!=='undefined' )
+                    {
+                        return eValue.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+                        return '&#'+i.charCodeAt(0)+';';
+                        });
+                    }
+                    return eValue;
+                }
+				function actionLink(url) {
+                    
+                    return '<a href="/'+url+'" style="text-decoration:none;color:#005FB2;"> Edit </a>';
+                }
+				function formatDate(datestr) {
+                    if (datestr == null || datestr === '') {
+                        return '';
+                    }
+					let dat= new Date(datestr);
+                    return dat.toLocaleString('en-GB');
+                }
+				function actionDelLink(groupId) {
+                return '<a href="#" style="text-decoration:none;color:#005FB2;" onclick="if(!confirm(\'Are you sure?\'))return false; deleteGroupFn(\''+groupId+'\'); return false;"> Del </a>';
+                }
+                function linkCurrentObject(idVar,nameVar) {
+                
+                return '<a href="/'+idVar+'">'+nameVar+'</a>';
+               }
+
+              </script>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

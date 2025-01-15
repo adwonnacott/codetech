@@ -1,0 +1,37 @@
+<apex:page standardController="nbavs__RecordingAccess__c" extensions="nbavs.RecordingAccessController" >
+	<apex:sectionHeader title="{!$ObjectType.nbavs__RecordingAccess__c.label}" subtitle="{!nbavs__RecordingAccess__c.nbavs__Type__c}: {!nbavs__RecordingAccess__c.Group__r.Name} {!nbavs__RecordingAccess__c.User__r.Name}" />
+	<style type="text/css">
+	.pbSubheader {
+		border-top: 2px solid #8cccd3;
+	}	
+	.editPage .bPageBlock {
+    	border-top: 3px solid #00a0c4;
+	}
+	.pageTitleIcon {
+		background-image : URL("{!URLFOR($Resource.img, 'settings.png')}");
+	}
+	</style>
+	<apex:form id="form">
+		<apex:pageMessages id="messages" />
+		<apex:pageBlock mode="maindetail">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton value="Edit" action="{!URLFOR($Action.RecordingAccess__c.Edit, RecordingAccess__c.Id)}" />
+				<apex:commandButton value="Delete" action="{!deleteItem}" onclick="if(!confirm('Are you sure?')) return false;" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Record Access Information" columns="1">
+				<apex:outputField value="{!nbavs__RecordingAccess__c.Id}" rendered="false" />
+				<apex:outputField value="{!nbavs__RecordingAccess__c.nbavs__Type__c}" />				
+				<apex:outputField value="{!nbavs__RecordingAccess__c.nbavs__Group__c}" rendered="{!nbavs__RecordingAccess__c.nbavs__Type__c != 'User'}"  />
+				<apex:outputField value="{!nbavs__RecordingAccess__c.nbavs__User__c}" rendered="{!nbavs__RecordingAccess__c.nbavs__Type__c != 'Group'}"/>
+				<apex:outputField value="{!nbavs__RecordingAccess__c.nbavs__Access__c}" />
+				<apex:outputField value="{!nbavs__RecordingAccess__c.nbavs__Groups__c}" rendered="false" />
+				<apex:pageBlockSectionItem rendered="{!nbavs__RecordingAccess__c.nbavs__Access__c == 'Groups'}">
+					<apex:outputText value="{!$ObjectType['RecordingAccess__c'].Fields.Groups__c.Label}"  />
+					<apex:outputText value="{!groupNames}" />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+	<head> 
+	</head>
+</apex:page>

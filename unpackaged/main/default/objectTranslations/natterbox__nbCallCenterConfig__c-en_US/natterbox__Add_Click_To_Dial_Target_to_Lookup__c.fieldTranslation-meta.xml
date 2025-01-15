@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+        <help><!-- Add &apos;Click To Dial&apos; target object to lookup results if not already included --></help>
+        <label><!-- Add Click To Dial Target to Lookup --></label>
+        <name>natterbox__Add_Click_To_Dial_Target_to_Lookup__c</name>
+    </CustomFieldTranslation>
